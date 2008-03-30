@@ -1,6 +1,6 @@
 #ifndef BASE_FACTORY_H
 #define BASE_FACTORY_H
-
+  
 namespace sof
 {
 namespace classloading
