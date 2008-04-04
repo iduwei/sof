@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="C:\software_entwicklung\Test\sof\impl\src;C:\software_entwicklung\Test\sof\test\src"
+				AdditionalIncludeDirectories="..\..\impl\src;..\src"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -63,7 +63,7 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="kernel32.lib sof.lib $(NOINHERIT)"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="C:\software_entwicklung\Test\sof\impl\bin"
+				AdditionalLibraryDirectories="..\..\impl\bin"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"

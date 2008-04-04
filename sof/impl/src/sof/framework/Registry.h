@@ -19,12 +19,52 @@ using namespace std;
 using namespace sof::framework;
 using namespace sof::util::logging;
 
+/**
+ * The central class (the 'brain') of the SOF framework which
+ * stores and holds all relevant data of the bundles.<br>
+ * The <code>Registry</code> class has the knowledge about
+ * all registered service objects and service listeners for
+ * example.<br>
+ * The main tasks of the registry are:<br>* <ul>
+ *		<li>Storing the information about started bundles wheres
+ *			the bundle data consists of bundle name, activator object
+ *			registered services and registered listeners.
+ *		<li>Notifying the accordant service listener objects when 
+ *			a new service object is registered or a service
+ *			object is removed.<br>
+ * </ul>
+ */
 class Registry 
 {
 	private:
+
+		/**
+		 * The logger instance.
+		 */
 		static Logger &logger;
+
+		/**
+		 * The vector storing <code>BundleInfo</code> objects
+		 * which hold all bundle relevant data.
+		 */
 		vector<BundleInfo*> bundleInfoVec;
+
+		/**
+		 * Stores vectors of <code>ServiceInfo</code> objects 
+		 * relating to the service name. <code>ServiceInfo</code>
+		 * objects store the name of the service, the service object 
+		 * and the service properties. There can be several services
+		 * (several <code>ServiceInfo</code> objects) with the same 
+		 * service name.
+		 * 
+		 */
 		map<string, vector<ServiceInfo*>* > serviceInfoMap;
+
+		/**
+		 * Maps <code>ServiceListenerInfo</code>  objects to the
+		 * service name. <code>ServiceListenerInfo</code> objects contain
+		 * the service name they are listen for.
+		 */
 		map<string, vector<ServiceListenerInfo*>* > serviceListenerMap;		
 
 		void notifyListenersAboutRegisteredService( const string& bundleName, vector<ServiceInfo*>* serviceInfoVec, vector<ServiceListenerInfo*>* serviceListenerInfoVec, const string& serviceName );
