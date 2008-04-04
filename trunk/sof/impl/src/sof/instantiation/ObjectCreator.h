@@ -56,21 +56,115 @@ template<typename BaseT>
 class ObjectCreator
 {
 	private:	
+
 		/**
-		 *
+		 * The map which stores factory objects. The factory objects are responsible for
+		 * creating instances of a certain type.
+		 */
 		static map<string,BaseFactory<BaseT>* >* instanceMap;	
+
+		/**
+		 * The flag indicates whether the <code>ObjectCreator</code> instance only tries to
+		 * create 'local' (not from DLL) objects.
+		 */
 		bool localSearch;
+
+		/**
+		 * The DLL path.
+		 */
 		string path;
+
+		/**
+		 * The name of the DLL from which a object is created.
+		 */
 		string dllName;
 
 	public:
+
+		/**
+		 * The default constructor which creates instances of class <code>ObjectCreator</code>. 
+		 * <code>ObjectCreator</code> instances which are created by default constructor do only
+		 * allow creating local objects.
+		 */
 		ObjectCreator();
+
+		/**
+		 * Creates instances of class <code>ObjectCreator</code>.
+		 *
+		 * @param localSearch
+		 *				Indicates whether the object creator only allows creating local objects.
+		 *
+		 * @param path
+		 *				The path to the DLL from which objects are created.
+		 *
+		 * @param dllName
+		 *				The name of the DLL from which objects are created.
+		 */
 		ObjectCreator( bool localSearch, const string &path, const string &dllName );
+
+		/**
+		 * Sets the configuration for creating objects.
+		 *
+		 * @param localSearch
+		 *				Indicates whether the object creator only allows creating local objects.
+		 *
+		 * @param path
+		 *				The path to the DLL from which objects are created.
+		 *
+		 * @param dllName
+		 *				The name of the DLL from which objects are created.
+		 */
 		void setSearchConfiguration( bool localSearch, const string &path, const string &dllName );
+
+		/**
+		 * Creates an object of type <code>BaseT</code>.
+		 *
+		 * @param key
+		 *			Defines which type of object is created (the name of the class).
+		 * 
+		 * @return
+		 *			The created object of type <code>BaseT</code>.
+		 */
 		BaseT* createObject( const string &key );	
+	
+		/**
+		 * Provides the logger instance.
+		 */
 		static Logger& getLogger();
+
+		/**
+		 * Adds a factory object for a certain class name. This method is only called
+		 * by <code>REGISTER</code> macro.
+		 *
+		 * @param key
+		 *			The name of the class.
+		 *
+		 * @param intantiator
+		 *			The factory object which creates objects of classes whose name is specified by
+		 *			first parameter.
+		 */
 		static void addFactory( const string &key, BaseFactory<BaseT>* intantiator );
+
+		/**
+		 * Creates only 'local' objects of classes.
+		 * 
+		 * @param key
+		 *			The name of the class.
+		 */
 		static BaseT* createLocalObject( const string &key );		
+
+		/**
+		 * Creates only objects of classes which are located in a DLL.
+		 *
+		 * @param path
+		 *			The path to the DLL.
+		 *
+		 * @param dllName
+		 *			The name of the DLL where the class is located.
+		 *
+		 * @param className
+		 *			The name of the class which is intantiated.
+		 */
 		static BaseT* createObjectFromDll( const string &path, const string &dllName, const string &className );	
 };
 
