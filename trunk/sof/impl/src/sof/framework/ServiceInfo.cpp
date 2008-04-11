@@ -1,5 +1,7 @@
 #include "ServiceInfo.h"
 
+using namespace sof::framework;
+
 Logger& ServiceInfo::logger = LoggerFactory::getLogger( "Framework" );
 
 ServiceInfo::ServiceInfo( const string &servName, IService::ConstPtr service, const Properties &properties ) : serviceName( servName ), props( properties ), service( service )

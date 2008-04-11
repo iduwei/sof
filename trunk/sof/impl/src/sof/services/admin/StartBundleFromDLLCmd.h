@@ -12,13 +12,39 @@ using namespace std;
 
 using namespace sof::services::admin;
 
+/**
+ * The <code>StartBundleFromDLLCmd<code> represents a console command
+ * which starts a bundle from DLL.<br>
+ * Example:<br>
+ * <code>stbdll <bundle name> <class name> <lib path> <lib name></code>
+ */
 class StartBundleFromDLLCmd : public ConsoleCommand
 {
 	public:
+
+		/**
+		 * Creates instances of class </code>StartBundleFromDLLCmd</code>.
+		 */
 		StartBundleFromDLLCmd();
+
+		/**
+		 * @see sof::services::admin::ConsoleCommand::getName
+		 */
 		string getName();
+
+		/**
+		 * @see sof::services::admin::ConsoleCommand::getDescription
+		 */
 		string getDescription();
+
+		/**
+		 * @see sof::services::admin::ConsoleCommand::getParameterNum
+		 */
 		int getParameterNum();
+
+		/**
+		 * @see sof::services::admin::ConsoleCommand::execute
+		 */
 		string execute( IAdministrationService* const adminService, vector<string> params );
 };
 

@@ -7,20 +7,66 @@ namespace sof { namespace framework {
 
 using namespace sof::framework;
 
+/**
+ * The <code>ServiceEvent</code> class describes
+ * a change in the lifecycle of a service.<br>
+ * Currently there are two events defined:<br>
+ * <ul>
+ *		<li>REGISTER: Service is registered with the 
+ *						framework.
+ *		<li>UNREGISTER: Service is unregistered with the 
+ *						framework.
+ * </ul>
+ */
 class ServiceEvent
 {
 	private:		
+		
+		/**
+		 * The type of the event.
+		 */
 		int type;
+
+		/**
+		 * The service reference which represents
+		 * the service whose lifecycle changed.
+		 */
 		ServiceReference reference;
 
 	public:
-		// Attention: bei Verwendung von REGISTERED anstatt REGISTER gibt es bei der Kompilierung
-		// der Unit-Tests zu Kompilierfehlern!!!
+
+		/**
+		 * Definition of the events.
+		 */
 		enum EventType { REGISTER, UNREGISTER };
 
-	public:		
+	public:
+
+		/**
+		 * Creates instances of class <code>ServiceEvent</code>.
+		 *
+		 * @param type
+		 *				The type of the event.
+		 *
+		 * @param reference
+		 *				Describes the service.
+		 */
 		ServiceEvent( const int &type, const ServiceReference &reference );
+
+		/**
+		 * Returns the type of the event.
+		 *
+		 * @return
+		 *			The event type.
+		 */
 		int getType() const;
+
+		/**
+		 * Returns the service reference.
+		 *
+		 * @return
+		 *			The <code>ServiceReference</code> object.
+		 */
 		ServiceReference getReference() const;
 
 };
