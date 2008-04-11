@@ -162,6 +162,7 @@ vector<ServiceInfo*>* Registry::addToServiceInfoVector( const string& serviceNam
 	return serviceVec;
 }
 
+
 void Registry::removeFromServiceInfoVector( ServiceInfo* serviceInfo ) 
 {
 	logger.log( Logger::DEBUG, "[Registry#removeFromServiceInfoVector] Called, service name: %1", serviceInfo->getServiceName() );	
