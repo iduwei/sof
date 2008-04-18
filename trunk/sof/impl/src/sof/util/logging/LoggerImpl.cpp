@@ -245,7 +245,4 @@ void LoggerImpl::setLogLevel( Logger::LogLevel logLevel )
 	this->level = logLevel;
 }
 
-string LoggerImpl::getLastLogMessage()
-{
-	return this->lastLogMessage;
-}
+
