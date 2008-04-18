@@ -170,23 +170,16 @@ void Registry::removeFromServiceInfoVector( ServiceInfo* serviceInfo )
 	vector<ServiceInfo*>* vec = this->getServiceInfo( serviceInfo->getServiceName() );
 	
 	vector<ServiceInfo*>::iterator iter;	
-	bool serviceFound;
-	do 
-	{
-		serviceFound = false;
-		for ( iter = vec->begin(); iter != vec->end(); iter++ )
-		{
-			if ( (*(*iter)) == (*serviceInfo) )
-			{
-				logger.log( Logger::DEBUG, "[Registry#removeFromServiceInfoVector] Service was found in ServiceInfo vector." );	
-				serviceFound = true;
-				vec->erase( iter );
-				break;
-			}	
-		}
-	}
-	while ( serviceFound );	
 
+	for ( iter = vec->begin(); iter != vec->end(); iter++ )
+	{
+		if ( (*(*iter)) == (*serviceInfo) )
+		{
+			logger.log( Logger::DEBUG, "[Registry#removeFromServiceInfoVector] Service was found in ServiceInfo vector." );	
+			iter = vec->erase( iter );
+			break;
+		}	
+	}
 	logger.log( Logger::DEBUG, "[Registry#removeFromServiceInfoVector] Left." );	
 }
 

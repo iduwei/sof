@@ -1,14 +1,12 @@
-// Dies ist die Haupt-DLL.
-
 #include <windows.h>
 
 #include <stdlib.h>
 #include <string>
 #include <iostream>
+
 #include "dll_test.h"
 #include "ITest.h"
-#include "ITestImpl.h"
-#include "ITestImpl2.h"
+
 #include "sof/instantiation/ObjectCreator.h"
 #include "sof/framework/IBundleActivator.h"
 #include "sof/util/logging/LoggerFactory.h"
@@ -30,36 +28,36 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 					 )
 {				
 	if(ul_reason_for_call==DLL_THREAD_ATTACH)
-  {
+	{
 	  LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[dll_test1#DllMain] Called, dll thread attach." );
-  }
+	}
 
-if(ul_reason_for_call==DLL_THREAD_DETACH)
-  {
-  	  LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[dll_test1#DllMain] Called, dll thread detach." );
-  }
+	if(ul_reason_for_call==DLL_THREAD_DETACH)
+	{
+	  LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[dll_test1#DllMain] Called, dll thread detach." );
+	}
 
-if(ul_reason_for_call==DLL_PROCESS_ATTACH)
-  {
+	if(ul_reason_for_call==DLL_PROCESS_ATTACH)
+	{
 	  LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[dll_test1#DllMain] Called, dll process attach." );
-  }
+	}
 
-if(ul_reason_for_call==DLL_PROCESS_DETACH)
-  {
+	if(ul_reason_for_call==DLL_PROCESS_DETACH)
+	{
 	  LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[dll_test1#DllMain] Called, dll process detach." );
-  }
+	}
+
 	LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[dll_test1#DllMain] Left." );
-    return TRUE;
+	return TRUE;
 }
 
 
 DLL ITest* createObject( const string &className )
 {	
-	ObjectCreator<ITest> OC_TEST;
+	ObjectCreator<ITest> OC;
 	ObjectCreator<IBundleActivator> OC_BUNDLE_ACTIVATOR;
 
 	LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[dll_test1#createObject] Loading instance of class '%1'.", className );
-	return OC_TEST.createObject( className );				
-	
+	return OC.createObject( className );					
 }
 

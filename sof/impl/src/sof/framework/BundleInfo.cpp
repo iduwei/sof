@@ -35,6 +35,7 @@ IBundleContext::ConstPtr BundleInfo::getBundleContext()
 
 void BundleInfo::addRegisteredService( ServiceInfo* serviceInfo )
 {
+	logger.log( Logger::DEBUG, "[BundleInfo#addRegisteredService] Called." );
 	this->registeredServices.push_back( serviceInfo );
 }
 
@@ -53,7 +54,9 @@ void BundleInfo::removeDeregisteredService( ServiceInfo* serviceInfo )
 			delete (*iter);
 			logger.log( Logger::DEBUG, "[BundleInfo#removeDeregisteredService] Service object deleted." );									
 			logger.log( Logger::DEBUG, "[BundleInfo#removeDeregisteredService] Remove element from vector of registered services." );					
-			iter = this->registeredServices.erase( iter );			
+			iter = this->registeredServices.erase( iter );		
+			
+			// TODO: Why breaking here?
 			break;
 		}
 	}
@@ -61,68 +64,83 @@ void BundleInfo::removeDeregisteredService( ServiceInfo* serviceInfo )
 
 void BundleInfo::removeUsedService( ServiceInfo* serviceInfo )
 {
-	bool serviceFound;
-	do
+	logger.log( Logger::DEBUG, "[BundleInfo#removeUsedService] Called, service info: %1", serviceInfo->toString() );
+
+	logger.log( Logger::DEBUG, "[BundleInfo#removeUsedService] Iterate over vector of used services." );					
+	
+	vector<ServiceInfo*>::iterator iter;
+	for ( iter = this->usedServices.begin(); iter != this->usedServices.end(); iter++ )
 	{
-		serviceFound = false;
-		vector<ServiceInfo*>::iterator iter;
-		for ( iter = this->usedServices.begin(); iter != this->usedServices.end(); iter++ )
+		if ( (*(*iter)) == (*serviceInfo) )
 		{
-			if ( (*(*iter)) == (*serviceInfo) )
-			{
-				serviceFound = true;
-				this->usedServices.erase( iter );
-				break;
-			}
-		}	
-	}
-	while( serviceFound );		
+			logger.log( Logger::DEBUG, "[BundleInfo#removeUsedService] Service found." );	
+			logger.log( Logger::DEBUG, "[BundleInfo#removeUsedService] Remove element from vector of used services." );					
+			
+			// TODO: Why not deleting object like in 'removeDeregisteredService'?
+			iter = this->usedServices.erase( iter );
+			
+			// TODO: Why breaking here?
+			break;
+		}
+	}		
 }
 
 void BundleInfo::removeAllUsedServices()
 {
+	logger.log( Logger::DEBUG, "[BundleInfo#removeAllUsedServices] Called." );				
 	this->usedServices.clear();
 }
 
 void BundleInfo::removeUsedService( const string& serviceName )
 {
-	bool serviceFound;
-	do
+	logger.log( Logger::DEBUG, "[BundleInfo#removeUsedService] Called, service name: %1", serviceName );		
+	logger.log( Logger::DEBUG, "[BundleInfo#removeUsedService] Iterate over vector of used services." );					
+	
+	vector<ServiceInfo*>::iterator iter;
+	for ( iter = this->usedServices.begin(); iter != this->usedServices.end(); iter++ )
 	{
-		serviceFound = false;
-		vector<ServiceInfo*>::iterator iter;
-		for ( iter = this->usedServices.begin(); iter != this->usedServices.end(); iter++ )
+		if ( (*iter)->getServiceName() == serviceName )
 		{
-			if ( (*iter)->getServiceName() == serviceName )
-			{
-				serviceFound = true;
-				this->usedServices.erase( iter );
-				break;
-			}
-		}	
-	}
-	while( serviceFound );		
+			logger.log( Logger::DEBUG, "[BundleInfo#removeUsedService] Service found." );	
+			logger.log( Logger::DEBUG, "[BundleInfo#removeUsedService] Remove element from vector of used services." );					
+			
+			iter = this->usedServices.erase( iter );
+			break;
+		}
+	}		
 }
 
 void BundleInfo::addUsedService( ServiceInfo* serviceInfo )
 {
-
+	logger.log( Logger::DEBUG, "[BundleInfo#addUsedService] Called, service info: %1", serviceInfo->toString() );				
 	this->usedServices.push_back( serviceInfo );
 }
 
 void BundleInfo::addRegisteredListener( ServiceListenerInfo* listenerInfo )
 {
+	logger.log( Logger::DEBUG, "[BundleInfo#addRegisteredListener] Called, service listener info: %1", listenerInfo->toString() );					
 	this->registeredListeners.push_back( listenerInfo );
 }
 
 void BundleInfo::removeRegisteredListener( ServiceListenerInfo* listenerInfo )
 {
+	logger.log( Logger::DEBUG, "[BundleInfo#removeRegisteredListener] Called, service listener info: %1", 
+		listenerInfo->toString() );		
+	logger.log( Logger::DEBUG, "[BundleInfo#removeRegisteredListener] Iterate over vector of registered listeners." );					
+	
 	vector<ServiceListenerInfo*>::iterator iter;
 	for ( iter = this->registeredListeners.begin(); iter != this->registeredListeners.end(); iter++ )
 	{
 		if ( (*(*iter)) == (*listenerInfo) )
 		{
+			logger.log( Logger::DEBUG, "[BundleInfo#removeRegisteredListener] Listener found." );	
+			logger.log( Logger::DEBUG, "[BundleInfo#removeRegisteredListener] Delete service listener info object." );					
+			
 			delete (*iter);
+
+			logger.log( Logger::DEBUG, "[BundleInfo#removeRegisteredListener] Listener info object deleted." );									
+			logger.log( Logger::DEBUG, "[BundleInfo#removeRegisteredListener] Remove element from vector of registered listeners." );					
+			
 			this->registeredListeners.erase( iter );			
 			return;
 		}
