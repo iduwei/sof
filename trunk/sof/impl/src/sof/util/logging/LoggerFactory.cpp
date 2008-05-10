@@ -17,7 +17,7 @@ LoggerFactory::LoggerFactory()
 Logger& LoggerFactory::getLogger( const string& logChannel )
 {
 	if ( loggerMap == 0 )
-	{
+	{		
 		loggerMap = new map<string,Logger*>;
 	}
 	Logger* log = (*loggerMap)[logChannel];
@@ -25,22 +25,23 @@ Logger& LoggerFactory::getLogger( const string& logChannel )
 	{
 		log = new LoggerImpl( logChannel );
 		(*loggerMap)[logChannel] = log;
-	}
-	(*log).setLogLevel( level );
+		(*log).setLogLevel( level );
+	}		
 	return (*log);
 }
 
-void LoggerFactory::setLogLevel( Logger::LogLevel level )
+void LoggerFactory::setLogLevel( Logger::LogLevel logLevel )
 {
 	if ( loggerMap == 0 )
 	{
 		return;
 	}
 
+	level = logLevel;
 	map<string,Logger*>::iterator iter;
 	for ( iter = loggerMap->begin(); iter != loggerMap->end(); iter++ )
 	{
-		Logger* log = (*loggerMap)[iter->first];
+		Logger* log = (*loggerMap)[iter->first];		
 		log->setLogLevel( level );
 	}
 }
