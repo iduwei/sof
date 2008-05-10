@@ -1,0 +1,65 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof", "sof.vcproj", "{13262EFC-93BD-4D96-8698-EABCAE205144}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_test", "..\test\sof_test.vcproj", "{3E6E4359-71BE-4984-A388-4C7F371028AC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E1D93D4F-73C7-447F-89CE-002941A8DE9B} = {E1D93D4F-73C7-447F-89CE-002941A8DE9B}
+		{18A77859-C8B3-4380-862C-791F23D4A10D} = {18A77859-C8B3-4380-862C-791F23D4A10D}
+		{1A6E2C79-513B-448A-93F5-344306151697} = {1A6E2C79-513B-448A-93F5-344306151697}
+		{13262EFC-93BD-4D96-8698-EABCAE205144} = {13262EFC-93BD-4D96-8698-EABCAE205144}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_TestDll1", "..\test\TestDll1\TestDll1.vcproj", "{E1D93D4F-73C7-447F-89CE-002941A8DE9B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{13262EFC-93BD-4D96-8698-EABCAE205144} = {13262EFC-93BD-4D96-8698-EABCAE205144}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_TestDll2", "..\test\TestDll2\TestDll2.vcproj", "{1A6E2C79-513B-448A-93F5-344306151697}"
+	ProjectSection(ProjectDependencies) = postProject
+		{13262EFC-93BD-4D96-8698-EABCAE205144} = {13262EFC-93BD-4D96-8698-EABCAE205144}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_console", "..\console\sof_console.vcproj", "{D24A60A7-25CA-4FE0-A766-83F3C6B949DC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{13262EFC-93BD-4D96-8698-EABCAE205144} = {13262EFC-93BD-4D96-8698-EABCAE205144}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppUnitLite", "..\extern\CppUnitLite\CppUnitLite.vcproj", "{18A77859-C8B3-4380-862C-791F23D4A10D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{13262EFC-93BD-4D96-8698-EABCAE205144}.Debug|Win32.ActiveCfg = Debug|Win32
+		{13262EFC-93BD-4D96-8698-EABCAE205144}.Debug|Win32.Build.0 = Debug|Win32
+		{13262EFC-93BD-4D96-8698-EABCAE205144}.Release|Win32.ActiveCfg = Release|Win32
+		{13262EFC-93BD-4D96-8698-EABCAE205144}.Release|Win32.Build.0 = Release|Win32
+		{3E6E4359-71BE-4984-A388-4C7F371028AC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3E6E4359-71BE-4984-A388-4C7F371028AC}.Debug|Win32.Build.0 = Debug|Win32
+		{3E6E4359-71BE-4984-A388-4C7F371028AC}.Release|Win32.ActiveCfg = Release|Win32
+		{3E6E4359-71BE-4984-A388-4C7F371028AC}.Release|Win32.Build.0 = Release|Win32
+		{E1D93D4F-73C7-447F-89CE-002941A8DE9B}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E1D93D4F-73C7-447F-89CE-002941A8DE9B}.Debug|Win32.Build.0 = Debug|Win32
+		{E1D93D4F-73C7-447F-89CE-002941A8DE9B}.Release|Win32.ActiveCfg = Release|Win32
+		{E1D93D4F-73C7-447F-89CE-002941A8DE9B}.Release|Win32.Build.0 = Release|Win32
+		{1A6E2C79-513B-448A-93F5-344306151697}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1A6E2C79-513B-448A-93F5-344306151697}.Debug|Win32.Build.0 = Debug|Win32
+		{1A6E2C79-513B-448A-93F5-344306151697}.Release|Win32.ActiveCfg = Release|Win32
+		{1A6E2C79-513B-448A-93F5-344306151697}.Release|Win32.Build.0 = Release|Win32
+		{D24A60A7-25CA-4FE0-A766-83F3C6B949DC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D24A60A7-25CA-4FE0-A766-83F3C6B949DC}.Debug|Win32.Build.0 = Debug|Win32
+		{D24A60A7-25CA-4FE0-A766-83F3C6B949DC}.Release|Win32.ActiveCfg = Release|Win32
+		{D24A60A7-25CA-4FE0-A766-83F3C6B949DC}.Release|Win32.Build.0 = Release|Win32
+		{18A77859-C8B3-4380-862C-791F23D4A10D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{18A77859-C8B3-4380-862C-791F23D4A10D}.Debug|Win32.Build.0 = Debug|Win32
+		{18A77859-C8B3-4380-862C-791F23D4A10D}.Release|Win32.ActiveCfg = Release|Win32
+		{18A77859-C8B3-4380-862C-791F23D4A10D}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
