@@ -70,6 +70,11 @@ class IAdministrationServiceImpl : public IAdministrationService
 		 * @see sof::services::admin::IAdministrationService::dumpBundleInfo
 		 */
 		string dumpBundleInfo( const string& bundleName );
+
+		/**
+		 * @see sof::services::admin::IAdministrationService::dumpAllBundleNames
+		 */
+		string dumpAllBundleNames();
 		
 		/**
 		 * @see sof::services::admin::IAdministrationService::stopBundle

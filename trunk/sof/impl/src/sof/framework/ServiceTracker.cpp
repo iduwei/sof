@@ -30,20 +30,22 @@ void ServiceTracker::stopTracking()
 	this->bundleCtxt->removeServiceListener( this );
 }
 
-void ServiceTracker::serviceChanged( const ServiceEvent &serviceEvent )
+bool ServiceTracker::serviceChanged( const ServiceEvent &serviceEvent )
 {
 	if ( serviceEvent.getType() == ServiceEvent::REGISTER )
 	{
 		logger.log( Logger::DEBUG, "[ServiceTracker#serviceChanged] Service is registered, service name: %1", serviceEvent.getReference().getServiceName() );
-		this->serviceTracker->addingService( serviceEvent.getReference() );
+		return this->serviceTracker->addingService( serviceEvent.getReference() );
 	}
 	else if ( serviceEvent.getType() == ServiceEvent::UNREGISTER )
 	{
 		logger.log( Logger::DEBUG, "[ServiceTracker#serviceChanged] Service is unregistered, service name: %1", serviceEvent.getReference().getServiceName() );		
 		this->serviceTracker->removedService( serviceEvent.getReference() );
+		return true;
 	}
 	else
 	{
 		logger.log( Logger::DEBUG, "[ServiceTracker#serviceChanged] Unhandled event, service name: %1", serviceEvent.getReference().getServiceName() );				
+		return false;
 	}
 }

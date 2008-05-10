@@ -11,6 +11,8 @@
 #include "StartBundleFromDLLCmd.h"
 #include "StopBundleCmd.h"
 #include "StartBundlesFromFileCmd.h"
+#include "StopAllBundlesCmd.h"
+#include "DumpAllBundlesCmd.h"
 
 using namespace std;
 using namespace sof::framework;
@@ -35,6 +37,12 @@ string IAdministrationServiceImpl::dumpBundleInfo( const string& bundleName )
 {
 	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#dumpBundleInfo] Called, bundle name: %1", bundleName );
 	return this->launcher->dumpBundleInfo( bundleName );
+}
+
+string IAdministrationServiceImpl::dumpAllBundleNames()
+{
+	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#dumpAllBundleNames] Called." );
+	return this->launcher->dumpAllBundleNames();
 }
 
 void IAdministrationServiceImpl::stopBundle( const string& bundleName )
@@ -92,6 +100,12 @@ void IAdministrationServiceImpl::startConsole()
 
 	StartBundlesFromFileCmd startBundlesFromFile;
 	this->cmdMap[startBundlesFromFile.getName()] = &startBundlesFromFile;	
+
+	StopAllBundlesCmd stopAllBundlesCmd;
+	this->cmdMap[stopAllBundlesCmd.getName()] = &stopAllBundlesCmd;
+
+	DumpAllBundlesCmd dumpAllBundlesCmd;
+	this->cmdMap[dumpAllBundlesCmd.getName()] = &dumpAllBundlesCmd;
 	
 	string input;
 	vector<string> tokens;

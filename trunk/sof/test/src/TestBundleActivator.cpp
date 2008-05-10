@@ -14,11 +14,16 @@ using namespace sof::util::logging;
 
 IBundleContext* TestBundleActivator::context = 0;
 IServiceRegistration* TestBundleActivator::serviceReg = 0;
+ServiceTracker* TestBundleActivator::tracker = 0;
 
 void TestBundleActivator::start( IBundleContext::ConstPtr ctxt )
 {
 	context = ctxt;
 	UnitTestLogger::getInstance().log( Logger::DEBUG, "[TestBundleActivator#start] Called." );
+	
+	tracker = new ServiceTracker( context, "ServiceA", this );
+	tracker->startTracking();
+
 	Properties props;
 	props.put( "instance", "1" );
 
@@ -36,12 +41,51 @@ TestBundleActivator::~TestBundleActivator()
 void TestBundleActivator::stop( IBundleContext::ConstPtr context )
 {
 	UnitTestLogger::getInstance().log( Logger::DEBUG, "[TestBundleActivator#stop] Called." );		
+	serviceReg->unregister();
+	delete serviceReg;
+
+	tracker->stopTracking();
+	delete tracker;
 }
 
 void TestBundleActivator::unregisterServiceB()
 {
 	UnitTestLogger::getInstance().log( Logger::DEBUG, "[TestBundleActivator#unregisterServiceB] Called." );		
 	serviceReg->unregister();
+	delete serviceReg;
+}
+
+void TestBundleActivator::stopServiceListener()
+{
+	tracker->stopTracking();
+}
+
+bool TestBundleActivator::addingService( const ServiceReference& ref )
+{
+	UnitTestLogger::getInstance().log( Logger::DEBUG, "[TestBundleActivator#addingService] Called." );
+	if ( ref.getServiceName() == "ServiceA" )
+	{
+		UnitTestLogger::getInstance().log( Logger::DEBUG, "[TestBundleActivator#addingService] ServiceA found." );	
+		Properties props = ref.getServiceProperties();
+		if ( props.get( "instance" ) == "1" )
+		{
+			UnitTestLogger::getInstance().log( Logger::DEBUG, "[TestBundleActivator#addingService] Instance 1 found." );	
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void TestBundleActivator::removedService( const ServiceReference& ref )
+{
+	UnitTestLogger::getInstance().log( Logger::DEBUG, "[TestBundleActivator#removedService] Called." );		
 }
 
 REGISTER_CLASS( "TestBundleActivator", IBundleActivator, TestBundleActivator )

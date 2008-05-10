@@ -39,8 +39,12 @@ class IServiceTrackerCustomizer
 		 * @param ref
 		 *			The <code>ServiceReference</code> which contains the
 		 *			name of the service, the service properties etc.
+		 *
+		 * @return True, if the service tracker is interested in the registered
+		 *			service, which means that it wants to use it. Otherwise false
+		 *			is returned.
 		 */
-		virtual void addingService( const ServiceReference& ref ) = 0;
+		virtual bool addingService( const ServiceReference& ref ) = 0;
 		
 		/**
 		 * Is called when a service was deregistered with the framework.
@@ -48,6 +52,7 @@ class IServiceTrackerCustomizer
 		 * @param ref
 		 *			The <code>ServiceReference</code> which contains the
 		 *			name of the service, the service properties etc.
+		 *
 		 */		
 		virtual void removedService( const ServiceReference& ref ) = 0;
 };

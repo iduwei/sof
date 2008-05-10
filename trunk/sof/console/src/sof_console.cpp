@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 
 	Launcher launcher;
 
-	launcher.setLogLevel( logLevel );
+	launcher.setLogLevel( Logger::LogLevel::NOLOG );
 	launcher.startAdministrationBundle();
 	return 0;
 }

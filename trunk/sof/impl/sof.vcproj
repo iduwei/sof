@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="8,00"
 	Name="sof"
 	ProjectGUID="{13262EFC-93BD-4D96-8698-EABCAE205144}"
 	RootNamespace="classloader"
 	Keyword="Win32Proj"
-	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -129,8 +128,6 @@
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
-				RandomizedBaseAddress="1"
-				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -150,6 +147,9 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -274,6 +274,10 @@
 							>
 						</File>
 						<File
+							RelativePath=".\src\sof\services\admin\DumpAllBundlesCmd.cpp"
+							>
+						</File>
+						<File
 							RelativePath=".\src\sof\services\admin\DumpBundleInfoCmd.cpp"
 							>
 						</File>
@@ -291,6 +295,10 @@
 						</File>
 						<File
 							RelativePath=".\src\sof\services\admin\StartBundlesFromFileCmd.cpp"
+							>
+						</File>
+						<File
+							RelativePath=".\src\sof\services\admin\StopAllBundlesCmd.cpp"
 							>
 						</File>
 						<File
@@ -460,6 +468,10 @@
 							>
 						</File>
 						<File
+							RelativePath=".\src\sof\services\admin\DumpAllBundlesCmd.h"
+							>
+						</File>
+						<File
 							RelativePath=".\src\sof\services\admin\DumpBundleInfoCmd.h"
 							>
 						</File>
@@ -481,6 +493,10 @@
 						</File>
 						<File
 							RelativePath=".\src\sof\services\admin\StartBundlesFromFileCmd.h"
+							>
+						</File>
+						<File
+							RelativePath=".\src\sof\services\admin\StopAllBundlesCmd.h"
 							>
 						</File>
 						<File

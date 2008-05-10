@@ -1,3 +1,1 @@
-test_bundle1,TestBundleActivator1
-test_bundle2,TestBundleActivator2,c:/temp/libraries,test_bundle2.dll
-test_bundle3,TestBundleActivator3,c:/temp/foo/libraries,test_bundle3.dll
+test_bundle1,BundleActivator2,../../test/bin,sof_TestDll2.dll
