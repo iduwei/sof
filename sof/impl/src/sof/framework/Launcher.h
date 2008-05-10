@@ -129,6 +129,14 @@ class Launcher
 		string dumpBundleInfo( const string& bundleName );
 
 		/**
+		 * Dumps the name of all started bundles.
+		 *
+		 * @return
+		 *			A string containing all bundle names.
+		 */
+		string dumpAllBundleNames();
+
+		/**
 		 * Returns the registry object.
 		 *
 		 * @return

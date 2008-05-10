@@ -94,8 +94,11 @@ class ServiceTracker : public IServiceListener
 		 *
 		 * @param serviceEvent
 		 *			The event which occurred (registering, deregistering).
+		 *
+		 * @return True, if the service tracker is interested in the
+		 *			changed service, otherwise false.
 		 */
-		void serviceChanged( const ServiceEvent &serviceEvent );
+		bool serviceChanged( const ServiceEvent &serviceEvent );
 		
 };
 

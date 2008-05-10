@@ -39,11 +39,23 @@ vector<BundleInfo*> Registry::getBundleInfos()
 void Registry::removeAllBundleInfos()
 {
 	logger.log( Logger::DEBUG, "[Registry#removeAllBundleInfos] Called." );
-	vector<BundleInfo*>::iterator iter;
-	for ( iter = this->bundleInfoVec.begin(); iter != this->bundleInfoVec.end(); iter++ )
+
+	// At first the name of the bundles have to be cached in a vector
+	// in inverted order the bundles were started.
+	vector<string> bundleNames;
+	vector<BundleInfo*>::reverse_iterator iter;
+	for ( iter = this->bundleInfoVec.rbegin(); iter < this->bundleInfoVec.rend(); iter++ )
 	{						
-		this->removeBundleInfo( (*iter)->getBundleName() );
+		logger.log( Logger::DEBUG, "[Registry#removeAllBundleInfos] Add bundle name: %1", (*iter)->getBundleName() );
+		bundleNames.push_back( (*iter)->getBundleName() );
 	}	
+
+	vector<string>::iterator strIterator;
+	for ( strIterator = bundleNames.begin(); strIterator != bundleNames.end(); strIterator++ )
+	{
+		logger.log( Logger::DEBUG, "[Registry#removeAllBundleInfos] Remove bundle: %1", (*strIterator) );
+		this->removeBundleInfo( (*strIterator) );
+	}
 	logger.log( Logger::DEBUG, "[Registry#removeAllBundleInfos] Left." );
 }
 
@@ -195,8 +207,17 @@ void Registry::notifyListenersAboutRegisteredService( const string& bundleName, 
 		{
 			ServiceReference serviceRef( (*serviceIter)->getServiceName(), (*serviceIter)->getProperties(), (*serviceIter)->getService() );
 			ServiceEvent serviceEvent( ServiceEvent::REGISTER, serviceRef );
-			(*listenerIter)->getServiceListenerObj()->serviceChanged( serviceEvent );
-			this->addUsedServiceToBundleInfo( bundleName, (*serviceIter) );
+			bool interested = (*listenerIter)->getServiceListenerObj()->serviceChanged( serviceEvent );
+			if ( interested )
+			{
+				logger.log( Logger::DEBUG, "[Registry#notifyListenersAboutRegisteredService] Service listener is interested in registered service '%1'.",
+					(*serviceIter)->getServiceName() );
+				this->addUsedServiceToBundleInfo( bundleName, (*serviceIter) );	
+			} else
+			{
+				logger.log( Logger::DEBUG, "[Registry#notifyListenersAboutRegisteredService] Service listener is NOT interested in registered service '%1'.",
+					(*serviceIter)->getServiceName() );
+			}
 		}
 	}	
 
@@ -212,8 +233,17 @@ void Registry::notifyListenersAboutRegisteredService( const string& bundleName, 
 	{
 		ServiceReference serviceRef( serviceInfo->getServiceName(), serviceInfo->getProperties(), serviceInfo->getService() );
 		ServiceEvent serviceEvent( ServiceEvent::REGISTER, serviceRef );
-		(*listenerIter)->getServiceListenerObj()->serviceChanged( serviceEvent );
-		this->addUsedServiceToBundleInfo( (*listenerIter)->getBundleName(), serviceInfo );		
+		bool interested = (*listenerIter)->getServiceListenerObj()->serviceChanged( serviceEvent );
+		if ( interested )
+		{
+			logger.log( Logger::DEBUG, "[Registry#notifyListenersAboutRegisteredService] Service listener is interested in registered service '%1'.",
+				serviceInfo->getServiceName() );
+			this->addUsedServiceToBundleInfo( (*listenerIter)->getBundleName(), serviceInfo );		
+		} else
+		{
+			logger.log( Logger::DEBUG, "[Registry#notifyListenersAboutRegisteredService] Service listener is NOT interested in registered service '%1'.",
+				serviceInfo->getServiceName() );
+		}
 	}	
 
 	logger.log( Logger::DEBUG, "[Registry#notifyListenersAboutRegisteredService] Left." );	
@@ -228,8 +258,16 @@ void Registry::notifyListenersAboutDeregisteredService( const string& bundleName
 	{
 		ServiceReference serviceRef( serviceInfo->getServiceName(), serviceInfo->getProperties(), serviceInfo->getService() );
 		ServiceEvent serviceEvent( ServiceEvent::UNREGISTER, serviceRef );
-		(*listenerIter)->getServiceListenerObj()->serviceChanged( serviceEvent );		
-		this->removeUsedServiceFromBundleInfo( (*listenerIter)->getBundleName(), serviceInfo );		
+		bool interested = (*listenerIter)->getServiceListenerObj()->serviceChanged( serviceEvent );	
+		if ( interested )
+		{
+			logger.log( Logger::DEBUG, "[Registry#notifyListenersAboutDeregisteredService] Listener is interested in deregistered service '%1'.", serviceInfo->getServiceName() );	
+			this->removeUsedServiceFromBundleInfo( (*listenerIter)->getBundleName(), serviceInfo );		
+		} else
+		{
+			logger.log( Logger::DEBUG, "[Registry#notifyListenersAboutDeregisteredService] Listener is NOT interested in deregistered service '%1'.", serviceInfo->getServiceName() );	
+		}
+
 	}	
 
 	logger.log( Logger::DEBUG, "[Registry#notifyListenersAboutDeregisteredService] Left." );	

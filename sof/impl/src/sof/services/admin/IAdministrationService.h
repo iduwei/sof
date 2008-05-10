@@ -44,6 +44,15 @@ class IAdministrationService
 		virtual string dumpBundleInfo( const string& bundleName ) = 0;
 
 		/**
+		 * Dumps the name of all started bundles.		 
+		 *
+		 * @return  
+		 *			The string containing the names of all started
+		 *			bundles.
+		 */
+		virtual string dumpAllBundleNames() = 0;
+
+		/**
 		 * Stops the specified bundle.
 		 *
 		 * @param bundleName

@@ -27,7 +27,7 @@ TEST( ConfigFileReader, ReadValidFileCheckNumberOfConfigEntries )
 
 	try
 	{
-		vector<BundleConfiguration> bc = ConfigFileReader::readFromFile( "./test_config_file.sof" );	
+		vector<BundleConfiguration> bc = ConfigFileReader::readFromFile( "./config_file_reader_test.sof" );	
 		CHECK( bc.size() == 3 );
 	}
 	catch( ConfigurationException &exc )
@@ -44,7 +44,7 @@ TEST( ConfigFileReader, ReadValidFileCheckContent )
 
 	try
 	{
-		vector<BundleConfiguration> bc = ConfigFileReader::readFromFile( "./test_config_file.sof" );	
+		vector<BundleConfiguration> bc = ConfigFileReader::readFromFile( "./config_file_reader_test.sof" );	
 		vector<BundleConfiguration>::iterator iter;
 		int counter = 0;
 		for ( iter = bc.begin(); iter != bc.end(); iter++ )

@@ -1,6 +1,7 @@
 #include "Launcher.h"
 
 #include <iostream>
+#include <sstream>
 
 #include "IBundleContextImpl.h"
 #include "../util/logging/LoggerFactory.h"
@@ -131,4 +132,20 @@ string Launcher::dumpBundleInfo( const string& bundleName )
 	{
 		return bi->toString();
 	}
+}
+
+string Launcher::dumpAllBundleNames()
+{
+	vector<BundleInfo*> vec = this->registry.getBundleInfos();
+	vector<BundleInfo*>::iterator it;
+	
+	ostringstream stream;
+	stream << "*** Started Bundles *** " << endl;
+
+	for ( it = vec.begin(); it != vec.end(); it++ )
+	{
+		stream << (*it)->getBundleName() << endl;				
+	}
+	stream << endl;	
+	return stream.str();
 }
