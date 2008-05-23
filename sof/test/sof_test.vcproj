@@ -21,7 +21,7 @@
 			OutputDirectory=".\bin"
 			IntermediateDirectory=".\build"
 			ConfigurationType="1"
-			CharacterSet="0"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -215,6 +215,10 @@
 			</File>
 			<File
 				RelativePath=".\src\TestClass.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\ThreadingTest.cpp"
 				>
 			</File>
 			<File

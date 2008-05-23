@@ -4,14 +4,14 @@
 #include "../../framework/IBundleActivator.h"
 #include "../../util/logging/LoggerFactory.h"
 #include "../../util/logging/Logger.h"
-#include "../../framework/Launcher.h"
-#include "../../instantiation/ObjectCreator.h"
+#include "../../services/admin/IAdministrationProvider.h"
 
 namespace sof { namespace services { namespace admin {
 
 using namespace sof::framework;
-using namespace sof::instantiation;
 using namespace sof::util::logging;
+using namespace sof::services::admin;
+
 
 /**
  * The <code>AdministrationActivator</code> is the activator
@@ -34,7 +34,7 @@ class AdministrationActivator : public IBundleActivator
 		/**
 		 * The launcher instance.
 		 */
-		Launcher* launcher;
+		IAdministrationProvider* adminProvider;
 
 	public:
 
@@ -53,7 +53,7 @@ class AdministrationActivator : public IBundleActivator
 		 * Sets the <code>Launcher</code> instance to be able
 		 * to communicate with the framework.
 		 */
-		void setLauncher( Launcher* launcher );
+		void setAdministrationProvider( IAdministrationProvider* adminProvider );
 };
 
 }}}

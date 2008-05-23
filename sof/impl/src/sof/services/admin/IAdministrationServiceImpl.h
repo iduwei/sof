@@ -7,12 +7,12 @@
 
 #include "../../util/logging/Logger.h"
 #include "../../util/logging/LoggerFactory.h"
-#include "../../framework/Launcher.h"
+#include "../../services/admin/IAdministrationProvider.h"
 #include "IAdministrationService.h"
+#include "IAdministrationProvider.h"
 #include "ConsoleCommand.h"
 
 using namespace std;
-using namespace sof::framework;
 using namespace sof::util::logging;
 
 namespace sof { namespace services { namespace admin {
@@ -29,7 +29,7 @@ class IAdministrationServiceImpl : public IAdministrationService
 		/**
 		 * The <code>Launcher</code> the calls are forwarded to.
 		 */
-		Launcher* launcher;
+		IAdministrationProvider* adminProvider;
 
 		/**
 		 * The logger instance.
@@ -49,7 +49,7 @@ class IAdministrationServiceImpl : public IAdministrationService
 		 * @param launcher
 		 *				The <code>Launcher</code> object.
 		 */
-		IAdministrationServiceImpl( Launcher* launcher );
+		IAdministrationServiceImpl( IAdministrationProvider* provider );
 
 		/**
 		 * Starts the administration console.

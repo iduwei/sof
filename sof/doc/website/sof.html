@@ -496,16 +496,22 @@ Also see AdvancedOptions</pre>
 </div>
 <!--POST-SHADOWAREA-->
 <div id="storeArea">
-<div title="About" modifier="magro74" modified="200802131442" created="200802091422" changecount="11">
-<pre>SOF (Service Oriented Framework) wants to help software developers to avoid developing monolithic software. It is implemented in C++ and provides a framework for developing component based software. The SOF API is very similar to the OSGI API (see [[OSGI|http://www.osgi.org]]), so SOF can be seen as C++ implementation of the OSGI reference.
+<div title="API" modifier="magr74" created="200805101011" changecount="1">
+<pre>The API documentation of following versions are available:
+* [[sof_8050|http://sof.sourceforge.net/api_8050/html/]]</pre>
+</div>
+<div title="About" modifier="magro74" modified="200805090852" created="200802091422" changecount="17">
+<pre>SOF (Service Oriented Framework) wants to help software developers to avoid developing monolithic software. It is implemented in C++ and provides a framework for developing component based software. The SOF API is very similar to the OSGI API (see [[OSGI|http://www.osgi.org]]), so SOF can be seen as a C++ implementation of the OSGI reference.
 
 ''Note:''
 * SOF calls components (like OSGI) as bundles.
 * Bundles can consist of one or several classes.
 * Bundles can be also implemented as DLL (currently only Windows libraries are supported).
 * Bundles are loaded, started and stopped by SOF.
-* Each bundle can register one or several services which can be tracked by other bundles.
+* Each bundle can register zero or several services which can be tracked by other bundles.
 * Each bundle can track (listen to) one or several services.
+
+[img[http://farm4.static.flickr.com/3271/2477292881_b67f8ff660_o.png]]
 </pre>
 </div>
 <div title="Building" modifier="YourName" modified="200804061020" created="200802181627" changecount="10">
@@ -520,28 +526,80 @@ Start the Visual Studio, go to the //sof/impl// directory and load the //sof.sln
 After building SOF the //bin// directory of the //impl// directory contains a library called //sof.lib// which can be linked.
 </pre>
 </div>
-<div title="Bundle Lifecycle" modifier="magro74" modified="200803271552" created="200803110608" changecount="16">
+<div title="Bundle Lifecycle" modifier="magr74" modified="200805071917" created="200803110608" changecount="17">
 <pre>This chapter describes how bundles are created, started and stopped by the framework.
 ![[Instantiation of the Bundle Activator]]
 ![[Starting SOF]]
-</pre>
+![[Starting Bundles]]
+![[Stopping Bundles]]</pre>
 </div>
-<div title="Console" modifier="magr74" modified="200804161813" created="200804161803" changecount="5">
+<div title="Console" modifier="magr74" modified="200805081849" created="200804161803" changecount="15">
 <pre>The SOF console provides a text based user interface for starting and stopping bundles. The console can be started by calling {{{sof_console.exe}}} which is located in directory '//sof\console\bin//'. See [[Starting SOF]] for further information.
 
-[img[http://farm3.static.flickr.com/2281/2419351570_aec2d46bf6_o.gif]]</pre>
+[img[http://farm3.static.flickr.com/2281/2419351570_aec2d46bf6_o.gif]]
+
+If you enter 'help' the console prints out all possible commands which can be executed within the console application. Following commands are available:
+
+''Commands for creating and starting bundles''
+* //stb//: 
+** Starts a local bundle which means that the bundle activator class is linked to the console application.
+** Parameters:
+*** The name of the bundle.
+*** The name of the bundle activator class.
+** Example: {{{stb test_bundle TestBundleActivator}}}
+* //stbdll//:
+** Starts a bundle from DLL.
+** Parameters:
+*** The name of the bundle.
+*** The name of the bundle activator class.
+*** The directory where the DLL is located.
+*** The name of the DLL.
+** Example: {{{stbdll test_bundle TestBundleActivator c:/libs test_bundle.dll}}}
+* //stbfile//:
+** Starts bundles which are specified in a configuration file.
+** Example: {{{stbfile c:/test/test_config_file.sof}}}
+** Each line of the configuration file represents the bundle configuration of one bundle.
+*** Configuration line for a local bundle: &lt;bundle_name&gt;,&lt;bundle_activator_class_name&gt;
+*** Configuration line for a bundle loaded from a DLL: &lt;bunde_name&gt;,&lt;bundle_activator_class_name&gt;,&lt;dll_directory&gt;,&lt;dll_name&gt; 
+''Commands for stopping bundles''
+* //spb//:
+** Stops a bundle.
+** Parameters:
+*** The name of the bundle.
+** Example: {{{spb test_bundle}}}
+''Commands for getting bundle information''
+* //dbi//:
+** Dumps all relevant information of the specified bundle.
+** Parameters:
+*** The name of the bundle.
+** Example: {{{dbi test_bundle}}}</pre>
 </div>
 <div title="DefaultTiddlers" modifier="magro74" created="200802110608" changecount="1">
 <pre>[[About]]</pre>
 </div>
-<div title="Documentation" modifier="magr74" modified="200804121451" created="200802161605" changecount="25">
-<pre>!The ''S''ervice ''O''riented ''F''ramework
+<div title="Documentation" modifier="magr74" modified="200804281822" created="200802161605" changecount="29">
+<pre>!The ''S''ervice ''O''riented ''F''ramework (SOF)
 The SOF supports developing modular software which consists of components (bundles). Each component can register services which can be used by other bundles. 
 !![[Building]]
 !![[Implementing a bundle]]
 !![[Bundle Lifecycle]]
 !![[Implementing a service]]
-!![[Registering and tracking services]]</pre>
+!![[Registering services]]
+!![[Tracking services]]</pre>
+</div>
+<div title="Download" modifier="magr74" modified="200805181453" created="200805101452" changecount="8">
+<pre>Following stable builds are available:
+* ''sof_8050''
+** Release notes:
+*** Supported features:
+**** Implementing bundles
+**** Starting and stopping bundles via //SOF// console
+**** Implementing services
+**** Registering, unregistering and tracking services
+*** Open issues:
+**** Only single threaded solution available
+**** Hard coded windows solution for starting bundles from ~DLLs.
+For downloading the software please click [[here|http://sourceforge.net/project/showfiles.php?group_id=217435]]</pre>
 </div>
 <div title="Implementing a bundle" modifier="magro74" modified="200804161029" created="200802181643" changecount="39">
 <pre>For implementing a bundle the {{{sof::framework::IBundleActivator}}} interface has to be implemented:
@@ -651,7 +709,61 @@ DLL ITest* createObject( const string &amp;className )
 }
 }}}</pre>
 </div>
-<div title="Instantiation of the Bundle Activator" modifier="magr74" modified="200804161803" created="200803271552" changecount="2">
+<div title="Implementing a service" modifier="magro74" modified="200804210502" created="200804180512" changecount="23">
+<pre>A service is registered with the framework by a bundle and implements a well known interface. The service can be tracked and then called by other bundles. Each bundle can register zero or several services.
+!The {{{IService}}} interface
+Every service has to implement the {{{IService}}} interface which is defined in the {{{sof::framework}}} namespace. The {{{IService}}} interface does not provide any methods. It is only a marker interface which declares a class as a service.
+!Example:
+
+''The service interface:''
+{{{
+#ifndef I_MY_SERVICE_H
+#define I_MY_SERVICE_H
+
+#include &quot;sof/framework/IService.h&quot;
+
+using namespace sof::framework;
+
+class IMyService: public IService
+{
+	public:
+		virtual int getValue() = 0;
+};
+#endif
+}}}
+The user defined service interface {{{IMyService}}} which inherits from the service interface of the framework ({{{sof::framework::IService}}}) provides here only one method called {{{int getValue()}}}.
+
+''The implementation:''
+The following code snippets show the implementation of the user defined service  interface.
+Header file:
+{{{
+#ifndef I_MY_SERVICE_IMPL_H
+#define I_MY_SERVICE_IMPL_H
+
+#include &quot;IMyService.h&quot;
+
+using namespace sof::framework;
+
+class IMyServiceImpl: public IMyService
+{
+
+	public:
+		int getValue();
+};
+#endif
+}}}
+CPP file:
+{{{
+#include &quot;IMyServiceImpl.h&quot;
+
+int IMyServiceImpl::getValue()
+{
+	return 42;
+}
+}}}
+Now instances of class {{{IMyServiceImpl}}} can be registered with the framework. See chapter [[Registering services]]</pre>
+</div>
+<div title="Instantiation of the Bundle Activator" modifier="magro74" modified="200804240520" created="200803271552" changecount="3">
 <pre>The intention of the framework is to avoid that the application developer is responsible for the lifecycle of his implemented bundles. That means the creation, starting and stopping of the software bundles must be done by the framework:
 
 [img[http://farm3.static.flickr.com/2183/2326314896_c15355177a_o.gif]]
@@ -726,12 +838,13 @@ loadRemoteFile = function(url,callback,params)
 //}}}
 </pre>
 </div>
-<div title="MainMenu" modifier="YourName" modified="200803301540" created="200802080839" changecount="21">
+<div title="MainMenu" modifier="magr74" modified="200805101450" created="200802080839" changecount="23">
 <pre>[img[netzwerk|http://farm3.static.flickr.com/2271/2249573201_120174d813_o.png]]
 [[About]]
 [[Project Structure]]
 [[Documentation|Documentation]]
-[[API|http://sof.sourceforge.net/api/html]]
+[[API|API]]
+[[Download|Download]]
 [[SOF Console|Console]]
 [[Open Issues|Open Issues]]
 </pre>
@@ -781,14 +894,41 @@ The 'doc' directory contains the SOF documentation including the API documentati
 
 </pre>
 </div>
+<div title="Registering services" modifier="magro74" modified="200804290501" created="200804210455" changecount="18">
+<pre>Service objects can be registered during the total lifetime of a bundle. In the following example a service object is registered by the {{{start( IBundleContext )}}} method. For registering a service the {{{registerService}}} method of the bundle context object has to be called.
+The {{{registerService}}} method expects three parameters:
+* The arbitrary service name
+* The service object (which implements the {{{IService}}} interface)
+* The {{{Properties}}} object which contains user defined additional information regarding to the service object.
+{{{
+...
+void BundleActivator::start( IBundleContext::ConstPtr context )
+{
+	LoggerFactory::getLogger( &quot;Test&quot; ).log( Logger::DEBUG, &quot;[BundleActivator#start] Called.&quot; );
+	
+	Properties props;
+        props.put( &quot;ID&quot;, &quot;4711 );
+	IServiceRegistration::ConstPtr serviceReg = context-&gt;registerService( &quot;ServiceA&quot;, new IMyServiceImpl(), props );
+}
+...
+}}}
+After a service is registered the framework notifies all service listeners (which were registered for the specified service name, here: &quot;~ServiceA&quot;) about the registered service object. See chapter [[Tracking services]].
+
+''Note:''
+The {{{registerService}}} method returns a pointer to a {{{IServiceRegistration}}} object which provides only one method called {{{unregister}}}. That means the registration object allows to unregister the service object with the framework (if it is no longer needed) and the framework notifies all other bundles which are using this service via the service listeners.
+
+The following diagram shows an use case where one bundle registers a service object and the other bundles (which track this service) are notified via the service listeners. This diagram shows the case when the service listeners are registered after the service object was registered. It could also happen that the service object is registered after the service listener objects were registered. In this case the service listeners would be notified after the registration of the service object.
+
+[img[http://farm3.static.flickr.com/2362/2437534147_4e84b3db6b_o.jpg]]</pre>
+</div>
 <div title="SiteSubtitle" modifier="magro74" created="200802080850" changecount="1">
 <pre>Service Oriented Framework</pre>
 </div>
 <div title="SiteTitle" modifier="magro74" modified="200802080850" created="200802080626" changecount="2">
 <pre>SOF</pre>
 </div>
-<div title="Starting SOF" modifier="magro74" created="200803271552" changecount="1">
-<pre>Before bundles can be created the SOF framework has to be started. For this you have to create a class with following {{{main}}} method:
+<div title="Starting SOF" modifier="magr74" modified="200805071906" created="200803271552" changecount="9">
+<pre>Before bundles can be created and started the SOF framework has to be started. For this you have to create a class with following {{{main}}} method:
 {{{
 #include &lt;iostream&gt;
 
@@ -799,10 +939,15 @@ using namespace sof::framework;
 
 int main(int argc, char* argv[])
 {	
+        // Framework launcher class
 	Launcher launcher;
 
-	launcher.setLogLevel( logLevel );
+        // Sets the log level of the framework
+	launcher.setLogLevel( Logger::LogLevel::DEBUG );
+
+        // Starts the administration bundle which implements the SOF console
 	launcher.startAdministrationBundle();
+
 	return 0;
 }
 
@@ -813,6 +958,7 @@ After starting your program (or the //sof_console.exe// of the //console\bin// d
 
 [img[http://farm3.static.flickr.com/2295/2323942752_44bd18e0d5_o.gif]]
 
+The //SOF// console, which provides a text based user interface, is started and waits for user input.
 If you are not interested in log messages of the framework, the log level of the framework can be changed or deactivated as follows:
 {{{
 #include &lt;iostream&gt;
@@ -850,13 +996,24 @@ int main(int argc, char* argv[])
 }
 }}}
 
-If you enter 'help' the console prints out all possible commands which can be executed within the console application. For creating and starting a bundle three different commands are possible:
-* //stb//: 
-** Example: {{{stb test_bundle TestBundleActivator}}}
-* //stbdll//:
-** Example: {{{stbdll test_bundle TestBundleActivator c:/libs test_bundle.dll}}}
-* //stbfile//:
-** Example: {{{stbfile c:/test/test_config_file.sof}}}</pre>
+For getting more information relating to the //SOF// console please clicke [[here|Console]].
+</pre>
+</div>
+<div title="Tracking services" modifier="magro74" modified="200804231029" created="200804230511" changecount="5">
+<pre>Tracking a service means that a bundle instructs the framework to watch over a registered or deregistered service. When the specified service is registered or deregistered the framework notifies the interested bundle about the registered or deregistered service.
+For tracking a service the bundle has to create a {{{ServiceTracker}}} object. Tracking begins as soon as the {{{startTracking}}} method is called and ends when the {{{stopTracking}}} method is called. Only during the tracking is active the bundle is notified about lifetime changes of a service.
+{{{
+void BundleActivator::start( IBundleContext::ConstPtr context )
+{
+	LoggerFactory::getLogger( &quot;Test&quot; ).log( Logger::DEBUG, &quot;[BundleActivator#start] Called.&quot; );
+	this-&gt;tracker = new ServiceTracker( context, &quot;ServiceA&quot;, this );
+	this-&gt;tracker-&gt;startTracking();
+}
+}}}
+The constructor of the tracker object requires three parameters:
+* The bundle context object which allows the tracker object to communicate with the framework
+* The name of the service which is tracked
+* An object of type {{{IServiceTrackerCustomizer}}} which is notified about lifetime changes of the service object.</pre>
 </div>
 <div title="TspotSetupPlugin" modifier="YourName" created="200711220809" tags="systemConfig">
 <pre>/***
@@ -924,18 +1081,18 @@ merge(config.shadowTiddlers,{
 //}}}
 </pre>
 </div>
-<div title="UploadLog" modifier="magr74" modified="200804161813" created="200802080629">
+<div title="UploadLog" modifier="magr74" modified="200805181548" created="200802080629">
 <pre>| !date | !user | !location | !storeUrl | !uploadDir | !toFilename | !backupdir | !origin |
-| 12/04/2008 16:42:17 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 12/04/2008 16:46:07 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 12/04/2008 16:51:08 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 12/04/2008 16:57:59 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 12/04/2008 17:09:24 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 13/04/2008 20:04:28 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 16/04/2008 12:29:41 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 16/04/2008 20:04:07 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 16/04/2008 20:11:08 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 16/04/2008 20:13:46 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
+| 09/05/2008 10:07:17 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 09/05/2008 10:52:10 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 10/05/2008 12:11:50 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 10/05/2008 16:52:50 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 10/05/2008 16:53:06 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 10/05/2008 16:54:28 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 18/05/2008 16:49:43 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 18/05/2008 16:53:42 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 18/05/2008 16:54:52 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 18/05/2008 17:48:30 | magr74 | [[index.20080518.0755460000.html|http://sof.tiddlyspot.com/backup/index.20080518.0755460000.html]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
 </div>
 <div title="UploadPlugin" modifier="YourName" modified="200802080624" created="200706061221" tags="systemConfig">
 <pre>/***
