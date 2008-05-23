@@ -22,7 +22,7 @@ using namespace sof::util::helper;
 
 Logger& IAdministrationServiceImpl::logger = LoggerFactory::getLogger( "services" );
 
-IAdministrationServiceImpl::IAdministrationServiceImpl( Launcher* launch ) : launcher( launch )
+IAdministrationServiceImpl::IAdministrationServiceImpl( IAdministrationProvider* provider ) : adminProvider( provider )
 {
 	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#ctor] Called." );
 }
@@ -30,31 +30,31 @@ IAdministrationServiceImpl::IAdministrationServiceImpl( Launcher* launch ) : lau
 vector<string> IAdministrationServiceImpl::getBundleNames()
 {
 	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#getBundleNames] Called." );
-	return this->launcher->getBundleNames();
+	return this->adminProvider->getBundleNames();
 }
 
 string IAdministrationServiceImpl::dumpBundleInfo( const string& bundleName )
 {
 	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#dumpBundleInfo] Called, bundle name: %1", bundleName );
-	return this->launcher->dumpBundleInfo( bundleName );
+	return this->adminProvider->dumpBundleInfo( bundleName );
 }
 
 string IAdministrationServiceImpl::dumpAllBundleNames()
 {
 	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#dumpAllBundleNames] Called." );
-	return this->launcher->dumpAllBundleNames();
+	return this->adminProvider->dumpAllBundleNames();
 }
 
 void IAdministrationServiceImpl::stopBundle( const string& bundleName )
 {
 	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#stopBundle] Called, bundle name: %1", bundleName );
-	this->launcher->stopBundle( bundleName );
+	this->adminProvider->stopBundle( bundleName );
 }
 
 void IAdministrationServiceImpl::stopAllBundles()
 {
 	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#stopAllBundles] Called." );
-	this->launcher->stop();
+	this->adminProvider->stop();
 }
 
 void IAdministrationServiceImpl::startBundleFromDLL( const string& bundleName, const string& className, const string& libPath, const string& libName )
@@ -63,7 +63,7 @@ void IAdministrationServiceImpl::startBundleFromDLL( const string& bundleName, c
 	BundleConfiguration bundleConf( bundleName, className, libPath, libName );
 	vector<BundleConfiguration> vec;
 	vec.push_back( bundleConf );
-	this->launcher->start( vec );
+	this->adminProvider->start( vec );
 }
 
 void IAdministrationServiceImpl::startBundle( const string& bundleName, const string& className )
@@ -72,14 +72,14 @@ void IAdministrationServiceImpl::startBundle( const string& bundleName, const st
 	BundleConfiguration bundleConf( bundleName, className );
 	vector<BundleConfiguration> vec;
 	vec.push_back( bundleConf );
-	this->launcher->start( vec );
+	this->adminProvider->start( vec );
 }
 
 void IAdministrationServiceImpl::startBundlesFromConfigFile( const string& configFile )
 {
 	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#startBundles] Called, configFile: %1", configFile );
 	vector<BundleConfiguration> bundleConfVec = ConfigFileReader::readFromFile( configFile );
-	this->launcher->start( bundleConfVec );
+	this->adminProvider->start( bundleConfVec );
 }
 
 void IAdministrationServiceImpl::startConsole()

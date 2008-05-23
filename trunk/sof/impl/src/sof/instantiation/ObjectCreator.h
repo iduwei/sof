@@ -205,7 +205,6 @@ ObjectCreator<BaseT>::ObjectCreator( bool doLocalSearch, const string &dllPath, 
 	
 	getLogger().log( Logger::DEBUG, "[ObjectCreator#ctor] Called, dll path: %1, lib name: %2",
 		dllPath, dll );
-	
 }
 
 template<typename BaseT>

@@ -21,7 +21,7 @@
 			OutputDirectory=".\bin"
 			IntermediateDirectory=".\build"
 			ConfigurationType="4"
-			CharacterSet="0"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -180,10 +180,6 @@
 					</File>
 					<File
 						RelativePath=".\src\sof\framework\IServiceRegistrationImpl.cpp"
-						>
-					</File>
-					<File
-						RelativePath=".\src\sof\framework\Launcher.cpp"
 						>
 					</File>
 					<File
@@ -417,6 +413,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\src\sof\instantiation\NullCreator.h"
+						>
+					</File>
+					<File
 						RelativePath=".\src\sof\instantiation\ObjectCreationException.h"
 						>
 					</File>
@@ -452,6 +452,14 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="threading"
+						>
+						<File
+							RelativePath=".\src\sof\util\threading\SingleThreaded.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="services"
@@ -473,6 +481,10 @@
 						</File>
 						<File
 							RelativePath=".\src\sof\services\admin\DumpBundleInfoCmd.h"
+							>
+						</File>
+						<File
+							RelativePath=".\src\sof\services\admin\IAdministrationProvider.h"
 							>
 						</File>
 						<File
