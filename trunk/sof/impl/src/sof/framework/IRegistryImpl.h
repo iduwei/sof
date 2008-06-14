@@ -1,5 +1,5 @@
-#ifndef REGISTRY_H
-#define REGISTRY_H
+#ifndef IREGISTRY_IMPL_H
+#define IREGISTRY_IMPL_H
 
 #include <map>
 #include <string>
@@ -9,20 +9,26 @@
 #include "ServiceInfo.h"
 #include "ServiceListenerInfo.h"
 #include "IServiceListener.h"
+#include "ServiceEvent.h"
+#include "ServiceReference.h"
+#include "IRegistry.h"
 
 #include "../util/logging/Logger.h"
-
-namespace sof { namespace framework {
+#include "../util/logging/LoggerFactory.h"
+#include "../util/threading/SingleThreaded.h"
 
 using namespace std;
 
 using namespace sof::framework;
 using namespace sof::util::logging;
+using namespace sof::util::threading;
+
+namespace sof { namespace framework {
 
 /**
  * The central class (the 'brain') of the SOF framework which
  * stores and holds all relevant data of the bundles.<br>
- * The <code>Registry</code> class has the knowledge about
+ * The <code>IRegistryImpl</code> class has the knowledge about
  * all registered service objects and service listeners for
  * example.<br>
  * The main tasks of the registry are:<br>* <ul>
@@ -34,7 +40,8 @@ using namespace sof::util::logging;
  *			object is removed.<br>
  * </ul>
  */
-class Registry 
+template<class ThreadingModel=SingleThreaded>
+class IRegistryImpl : public IRegistry
 {
 	private:
 
@@ -321,6 +328,8 @@ class Registry
 		void removeServiceListener( const string& bundleName, IServiceListener::ConstPtr serviceListener ) ;
 
 };
+
+#include "IRegistryImpl.cpp"
 
 }}
 #endif

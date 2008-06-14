@@ -7,7 +7,6 @@ using namespace std;
 
 namespace sof { namespace util { namespace threading {
 
-template <class T>
 class SingleThreaded
 {
 
@@ -15,11 +14,15 @@ public:
 	class Lock
 	{
 		public:
-			Lock( T )
+			Lock()
 			{
-				cout << "[SingleThreaded#Lock#ctor] Enter." << endl;
+				cout << "[SingleThreaded#Lock#ctor] Called." << endl;
 			}
-			
+
+			virtual ~Lock()
+			{
+				cout << "[SingleThreaded#Lock#destructor] Called." << endl;
+			}			
 	};
 };
 

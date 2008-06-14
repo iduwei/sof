@@ -10,7 +10,7 @@ using namespace sof::util::logging;
 
 Logger& IBundleContextImpl::logger = LoggerFactory::getLogger( "Framework" );
 
-IBundleContextImpl::IBundleContextImpl( const string& bdleName, Registry* const reg ) : bundleName( bdleName ), registry( reg )
+IBundleContextImpl::IBundleContextImpl( const string& bdleName, IRegistry* const reg ) : bundleName( bdleName ), registry( reg )
 {
 	logger.log( Logger::DEBUG, "[IBundleContextImpl#ctor] Called, bundle name: %1", bdleName );
 }

@@ -6,7 +6,7 @@
 #include "../util/logging/Logger.h"
 
 #include "IServiceRegistration.h"
-#include "Registry.h"
+#include "IRegistry.h"
 #include "ServiceInfo.h"
 
 namespace sof { namespace framework {
@@ -25,7 +25,7 @@ class IServiceRegistrationImpl : public IServiceRegistration
 		/**
 		 * The registry object which stores all bundle relevant data.
 		 */
-		Registry* const registry;
+		IRegistry* const registry;
 
 		/**
 		 * The <code>ServiceInfo</code> describing the service which can
@@ -57,7 +57,7 @@ class IServiceRegistrationImpl : public IServiceRegistration
 		 * @param serviceInfo
 		 *				The service info object.
 		 */
-		IServiceRegistrationImpl( const string& bundleName, Registry* const reg, ServiceInfo* const serviceInfo );
+		IServiceRegistrationImpl( const string& bundleName, IRegistry* const reg, ServiceInfo* const serviceInfo );
 
 		/**
 		 * Deletes the object.

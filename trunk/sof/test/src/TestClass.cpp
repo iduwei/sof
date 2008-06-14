@@ -1,8 +1,11 @@
 #include "TestClass.h"
+
 #include "sof/instantiation/ObjectCreator.h"
+#include "sof/instantiation/win/WinDllCreator.h"
 #include "BaseTestClass.h"
 
 using namespace sof::instantiation;
+using namespace sof::instantiation::win;
 
 TestClass::TestClass()
 {

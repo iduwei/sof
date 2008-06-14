@@ -6,11 +6,13 @@
 using namespace std;
 
 #include "sof/instantiation/ObjectCreator.h"
+#include "sof/framework/IBundleActivator.h"
+
 #include "ITest.h"
 #include "BaseTestClass.h"
 #include "TestClass.h"
 #include "ITestImpl.h"
-#include "sof/framework/IBundleActivator.h"
+
 #include "UnitTestLogger.h"
 
 using namespace sof::instantiation;
