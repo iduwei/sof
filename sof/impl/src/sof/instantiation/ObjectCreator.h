@@ -7,10 +7,10 @@
 #include "BaseFactory.h"
 #include "Factory.h"
 #include "ObjectCreationException.h"
+#include "NullCreator.h"
 #include "../util/logging/Logger.h"
 #include "../util/logging/LoggerFactory.h"
 
-#include <windows.h>
 #include <iostream>
 #include <tchar.h>
 #include <sstream>
@@ -52,10 +52,15 @@ using namespace std;
  * IBundleActivator* activator = OC.createObjectFromDll( "c:/libraries", "test.dll", "TestBundleActivator" );<p>
  */
 
-template<typename BaseT>
+template<
+	typename BaseT,
+	template <class> class CreationPolicy = NullCreator>
 class ObjectCreator
-{
-	private:	
+{		
+
+	friend class ObjectCreator;
+
+	private:					
 
 		/**
 		 * The map which stores factory objects. The factory objects are responsible for
@@ -79,7 +84,7 @@ class ObjectCreator
 		 */
 		string dllName;
 
-	public:
+	public:		
 
 		/**
 		 * The default constructor which creates instances of class <code>ObjectCreator</code>. 
@@ -168,25 +173,33 @@ class ObjectCreator
 		static BaseT* createObjectFromDll( const string &path, const string &dllName, const string &className );	
 };
 
-template<typename BaseT>
-Logger& ObjectCreator<BaseT>::getLogger()
+template<
+	typename BaseT,
+	template <class> class CreationPolicy>
+Logger& ObjectCreator<BaseT,CreationPolicy>::getLogger()
 {
 	static Logger& logger = LoggerFactory::getLogger( "ObjectCreation" );
 	return logger;
 }
 
-template<typename BaseT>
-map<string,BaseFactory<BaseT>* >* ObjectCreator<BaseT>::instanceMap;	
+template<
+	typename BaseT,
+	template <class> class CreationPolicy>
+map<string,BaseFactory<BaseT>* >* ObjectCreator<BaseT,CreationPolicy>::instanceMap;	
 
 
-template<typename BaseT>
-ObjectCreator<BaseT>::ObjectCreator() : localSearch( true ), path( "" ), dllName( "" )
+template<
+	typename BaseT,
+	template <class> class CreationPolicy>
+ObjectCreator<BaseT,CreationPolicy>::ObjectCreator() : localSearch( true ), path( "" ), dllName( "" )
 {	
 	getLogger().log( Logger::DEBUG, "[ObjectCreator#ctor] Called" );
 }
 
-template<typename BaseT>
-void ObjectCreator<BaseT>::setSearchConfiguration( bool searchLocal, const string &pathName, const string &libName )
+template<
+	typename BaseT,
+	template <class> class CreationPolicy>
+void ObjectCreator<BaseT,CreationPolicy>::setSearchConfiguration( bool searchLocal, const string &pathName, const string &libName )
 {
 	getLogger().log( Logger::DEBUG, "[ObjectCreator#setSearchConfiguration] Called, local search: %1", searchLocal );
 	
@@ -197,8 +210,10 @@ void ObjectCreator<BaseT>::setSearchConfiguration( bool searchLocal, const strin
 	this->dllName = libName;
 }
 
-template<typename BaseT>
-ObjectCreator<BaseT>::ObjectCreator( bool doLocalSearch, const string &dllPath, const string &dll ) : 
+template<
+	typename BaseT,
+	template <class> class CreationPolicy>
+ObjectCreator<BaseT,CreationPolicy>::ObjectCreator( bool doLocalSearch, const string &dllPath, const string &dll ) : 
 	localSearch( doLocalSearch ), path( dllPath ), dllName( dll )
 {
 	getLogger().log( Logger::DEBUG, "[ObjectCreator#ctor] Called, local search: %1", doLocalSearch );
@@ -207,8 +222,10 @@ ObjectCreator<BaseT>::ObjectCreator( bool doLocalSearch, const string &dllPath, 
 		dllPath, dll );
 }
 
-template<typename BaseT>
-void ObjectCreator<BaseT>::addFactory( const string &key, BaseFactory<BaseT>* intantiator )
+template<
+	typename BaseT,
+	template <class> class CreationPolicy>
+void ObjectCreator<BaseT,CreationPolicy>::addFactory( const string &key, BaseFactory<BaseT>* intantiator )
 {
 	if ( instanceMap == 0 )
 	{
@@ -220,8 +237,10 @@ void ObjectCreator<BaseT>::addFactory( const string &key, BaseFactory<BaseT>* in
 	getLogger().log( Logger::DEBUG, "[ObjectCreator#addFactory] Factory for key '%1' added.", key );		
 }
 
-template<typename BaseT>
-BaseT* ObjectCreator<BaseT>::createObject( const string &key )
+template<
+	typename BaseT,
+	template <class> class CreationPolicy>
+BaseT* ObjectCreator<BaseT,CreationPolicy>::createObject( const string &key )
 {	
 	if ( this->localSearch )
 	{
@@ -253,10 +272,12 @@ BaseT* ObjectCreator<BaseT>::createObject( const string &key )
 	}		
 }
 
-template<typename BaseT>
-BaseT* ObjectCreator<BaseT>::createLocalObject( const string &key )
+template<
+	typename BaseT,
+	template <class> class CreationPolicy>
+BaseT* ObjectCreator<BaseT,CreationPolicy>::createLocalObject( const string &key )
 {	
-	BaseFactory<BaseT>* intantiator = (*ObjectCreator<BaseT>::instanceMap)[key];
+	BaseFactory<BaseT>* intantiator = (*ObjectCreator<BaseT,NullCreator>::instanceMap)[key];
 	if ( intantiator == 0 )
 	{
 		ObjectCreationException exc( "No intantiator for class available." );
@@ -265,61 +286,15 @@ BaseT* ObjectCreator<BaseT>::createLocalObject( const string &key )
 	return intantiator->newInstance();
 }
 
-template<typename BaseT>
-BaseT* ObjectCreator<BaseT>::createObjectFromDll( const string &path, const string &dllName, const string &className )
+template<
+	typename BaseT,
+	template <class> class CreationPolicy>
+BaseT* ObjectCreator<BaseT,CreationPolicy>::createObjectFromDll( const string &path, const string &dllName, const string &className )
 {	
-	typedef BaseT* (*DLLPROC) ( const string& );
-
-	DLLPROC pFunc = NULL;
-
-	ostringstream str;
-	
-	int pos = path.find_last_of( '/' );
-	if ( pos == ( path.size() - 1 ) )
-	{
-		str << path << dllName;	
-	}
-	else
-	{
-		str << path << '/' << dllName;	
-	}
-	
-	getLogger().log( Logger::DEBUG, "[ObjectCreator#createObjectFromDll] Loading DLL: '%1'", str.str() );
-
-	HMODULE hMod = NULL;
-	try
-	{
-		hMod = LoadLibrary( str.str().c_str() );
-	}
-	catch( exception &exc )
-	{
-		getLogger().log( Logger::ERROR_, "[ObjectCreator#createObjectFromDll] Error occurred during loading DLL: %1", exc.what() );
-		hMod = NULL;
-	}
-
-	if ( hMod == NULL )
-	{
-		ObjectCreationException exc( "Error during loading DLL." );
-		throw exc;
-	}
-	
-	try
-	{
-		pFunc = ( DLLPROC ) GetProcAddress(hMod, "createObject"); 
-	}
-	catch( exception &exc)
-	{
-		getLogger().log( Logger::ERROR_, "[ObjectCreator#createObjectFromDll] Error occurred during calling DLL entry method, %1", exc.what() );
-		pFunc = NULL;
-	}
-
-	if ( pFunc == NULL )
-	{
-		ObjectCreationException exc( "Error during loading object from DLL." );
-		throw exc;
-	}	
-	return ((*pFunc)(className));
+	return CreationPolicy<BaseT>::createObjectFromDll( path, dllName, className );
 }
+
+#define REGISTER_BUNDLE_ACTIVATOR_CLASS(key,subType) REGISTER_CLASS(key,IBundleActivator,subType)
 
 #define REGISTER_CLASS(key,baseType,subType) \
 class Register##baseType##with##subType \
@@ -327,7 +302,7 @@ class Register##baseType##with##subType \
 		public: \
 			Register##baseType##with##subType () \
 			{\
-			ObjectCreator<baseType>::addFactory( key, new Factory<baseType,subType> );\
+			ObjectCreator<baseType,NullCreator>::addFactory( key, new Factory<baseType,subType> );\
 			} \
 	} Register##baseType##with##subType##Instance; \
 

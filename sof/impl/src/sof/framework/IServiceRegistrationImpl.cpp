@@ -5,7 +5,7 @@ using namespace sof::util::logging;
 
 Logger& IServiceRegistrationImpl::logger = LoggerFactory::getLogger( "Framework" );
 
-IServiceRegistrationImpl::IServiceRegistrationImpl( const string& bName, Registry* const reg, ServiceInfo* const info ) : bundleName( bName ), registry( reg ), serviceInfo( info )
+IServiceRegistrationImpl::IServiceRegistrationImpl( const string& bName, IRegistry* const reg, ServiceInfo* const info ) : bundleName( bName ), registry( reg ), serviceInfo( info )
 {
 	logger.log( Logger::DEBUG, "[IServiceRegistrationImpl#ctor] Called." );
 }

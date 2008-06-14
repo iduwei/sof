@@ -2,6 +2,7 @@
 
 #include "IAdministrationServiceImpl.h"
 #include "../../instantiation/ObjectCreator.h"
+#include "../../instantiation/NullCreator.h"
 
 using namespace sof::services::admin;
 using namespace sof::util::logging;
@@ -27,5 +28,5 @@ void AdministrationActivator::setAdministrationProvider( IAdministrationProvider
 	this->adminProvider = provider;
 }
 
-REGISTER_CLASS( "sof::services::admin::AdministrationActivator", IBundleActivator, AdministrationActivator );
+REGISTER_BUNDLE_ACTIVATOR_CLASS( "sof::services::admin::AdministrationActivator", AdministrationActivator );
 

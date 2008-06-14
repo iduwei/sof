@@ -1,38 +1,38 @@
-#include "Launcher.h"
 
-#include <iostream>
-#include <sstream>
 
-#include "IBundleContextImpl.h"
-#include "../util/logging/LoggerFactory.h"
-#include "../util/logging/Logger.h"
-#include "../services/admin/AdministrationActivator.h"
-#include "BundleInfo.h"
+template<
+	class ThreadingModel,
+	template <class> class CreationPolicy>
+Logger& Launcher<ThreadingModel, CreationPolicy>::logger = LoggerFactory::getLogger( "Framework" );
 
-using namespace std;
-
-using namespace sof::framework;
-using namespace sof::util::logging;
-using namespace sof::services::admin;
-
-Logger& Launcher::logger = LoggerFactory::getLogger( "Framework" );
-
-Launcher::Launcher() 
+template<
+	class ThreadingModel,
+	template <class> class CreationPolicy>
+Launcher<ThreadingModel, CreationPolicy>::Launcher() 
 {
 	logger.log( Logger::DEBUG, "[Launcher#ctor] Called." );
 }
 
-Registry& Launcher::getRegistry()
+template<
+	class ThreadingModel,
+	template <class> class CreationPolicy>
+IRegistry& Launcher<ThreadingModel, CreationPolicy>::getRegistry()
 {
 	return this->registry;
 }
 
-void Launcher::setLogLevel( Logger::LogLevel level )
+template<
+	class ThreadingModel,
+	template <class> class CreationPolicy>
+void Launcher<ThreadingModel, CreationPolicy>::setLogLevel( Logger::LogLevel level )
 {
 	LoggerFactory::setLogLevel( level );
 }
 
-void Launcher::start( vector<BundleConfiguration> &configVector )
+template<
+	class ThreadingModel,
+	template <class> class CreationPolicy>
+void Launcher<ThreadingModel, CreationPolicy>::start( vector<BundleConfiguration> &configVector )
 {
 	logger.log( Logger::DEBUG, "[Launcher#start] Called." );
 
@@ -73,7 +73,10 @@ void Launcher::start( vector<BundleConfiguration> &configVector )
 	}	
 }
 
-void Launcher::startAdministrationBundle()
+template<
+	class ThreadingModel,
+	template <class> class CreationPolicy>
+void Launcher<ThreadingModel, CreationPolicy>::startAdministrationBundle()
 {
 	logger.log( Logger::DEBUG, "[Launcher#startAdministrationBundle] Called." );
 	IBundleActivator* adminBundleActivator = this->objectCreator.createObject( "sof::services::admin::AdministrationActivator" );
@@ -85,17 +88,23 @@ void Launcher::startAdministrationBundle()
 	logger.log( Logger::DEBUG, "[Launcher#start] Start bundle." );
 		
 	AdministrationActivator* adminActivator = static_cast<AdministrationActivator*> (adminBundleActivator);	
-	adminActivator->setLauncher( this );
+	adminActivator->setAdministrationProvider( this );
 	adminActivator->start( bundleCtxt );
 }
 
-void Launcher::stop()
+template<
+	class ThreadingModel,
+	template <class> class CreationPolicy>
+void Launcher<ThreadingModel, CreationPolicy>::stop()
 {
 	logger.log( Logger::DEBUG, "[Launcher#stop] Called." );	
 	this->registry.removeAllBundleInfos();
 }
 
-void Launcher::startBundle( BundleConfiguration bundleConfig )
+template<
+	class ThreadingModel,
+	template <class> class CreationPolicy>
+void Launcher<ThreadingModel, CreationPolicy>::startBundle( BundleConfiguration bundleConfig )
 {
 	logger.log( Logger::DEBUG, "[Launcher#startBundle] Called, bundle config: %1", bundleConfig.toString() );	
 	vector<BundleConfiguration> vec;
@@ -103,13 +112,19 @@ void Launcher::startBundle( BundleConfiguration bundleConfig )
 	this->start( vec );
 }
 
-void Launcher::stopBundle( const string& bundleName )
+template<
+	class ThreadingModel,
+	template <class> class CreationPolicy>
+void Launcher<ThreadingModel, CreationPolicy>::stopBundle( const string& bundleName )
 {
 	logger.log( Logger::DEBUG, "[Launcher#stopBundle] Called, bundle name: %1", bundleName );		
 	this->registry.removeBundleInfo( bundleName );
 }
 
-vector<string> Launcher::getBundleNames()
+template<
+	class ThreadingModel,
+	template <class> class CreationPolicy>
+vector<string> Launcher<ThreadingModel, CreationPolicy>::getBundleNames()
 {
 	vector<string> bundleNameVec;
 	vector<BundleInfo*> vec = this->registry.getBundleInfos();
@@ -121,7 +136,10 @@ vector<string> Launcher::getBundleNames()
 	return bundleNameVec;
 }
 
-string Launcher::dumpBundleInfo( const string& bundleName )
+template<
+	class ThreadingModel,
+	template <class> class CreationPolicy>
+string Launcher<ThreadingModel, CreationPolicy>::dumpBundleInfo( const string& bundleName )
 {
 	BundleInfo* bi = this->registry.getBundleInfo( bundleName );
 	if ( bi == 0 )
@@ -134,7 +152,10 @@ string Launcher::dumpBundleInfo( const string& bundleName )
 	}
 }
 
-string Launcher::dumpAllBundleNames()
+template<
+	class ThreadingModel,
+	template <class> class CreationPolicy>
+string Launcher<ThreadingModel, CreationPolicy>::dumpAllBundleNames()
 {
 	vector<BundleInfo*> vec = this->registry.getBundleInfos();
 	vector<BundleInfo*>::iterator it;

@@ -7,7 +7,7 @@
 #include "Properties.h"
 #include "IServiceListener.h"
 #include "IServiceRegistration.h"
-#include "Registry.h"
+#include "IRegistry.h"
 #include "../util/logging/Logger.h"
 
 namespace sof { namespace framework {
@@ -28,7 +28,7 @@ class IBundleContextImpl : public IBundleContext
 		 * The registry which stores all relevant information
 		 * about the bundles (registered services, registered listeners etc.)
 		 */
-		Registry* const registry;
+		IRegistry* const registry;
 
 		/**
 		 * The logger instance.
@@ -53,7 +53,7 @@ class IBundleContextImpl : public IBundleContext
 		 *				The registry which stores bundle information of all
 		 *				bundles.
 		 */
-		IBundleContextImpl( const string& bundleName, Registry* const reg );
+		IBundleContextImpl( const string& bundleName, IRegistry* const reg );
 
 		/**
 		 * The destructor of the bundle context.

@@ -17,25 +17,25 @@ using namespace std;
 using namespace sof::util::threading;
 using namespace sof::instantiation;
 
-template <template <class> class ThreadingModel>
-class Foo : public ThreadingModel<string>
+template <class ThreadingModel>
+class Foo : public ThreadingModel
 {
 	public:
 		void doAnything();
 };
 
 
-template <template <class> class ThreadingModel>
+template <class ThreadingModel>
 void Foo<ThreadingModel>::doAnything()
 {
 	cout << "[ThreadingTest#Foo#doAnything] Enter." << endl;
 	string s;
-	Lock l(s);
+	Lock l;
 	cout << "[ThreadingTest#Foo#doAnything] Leave." << endl;
 }
 
 template <
-	template <class> class ThreadingModel = SingleThreaded,
+	class ThreadingModel = SingleThreaded,
 	template <class> class CreationPolicy = NullCreator>
 class Bar
 {
@@ -48,7 +48,7 @@ class Bar
 };
 
 template <
-	template <class> class ThreadingModel,
+	class ThreadingModel,
 	template <class> class CreationPolicy>
 void Bar<ThreadingModel,CreationPolicy>::callFoo()
 {
@@ -58,7 +58,7 @@ void Bar<ThreadingModel,CreationPolicy>::callFoo()
 }
 
 template <
-	template <class> class ThreadingModel,
+	class ThreadingModel,
 	template <class> class CreationPolicy>
 void Bar<ThreadingModel,CreationPolicy>::createObjectFromDll( const string &path, const string &dllName, const string &className )
 {

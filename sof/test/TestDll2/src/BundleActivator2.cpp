@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include "sof/instantiation/ObjectCreator.h"
+#include "sof/instantiation/win/WinDllCreator.h"
 
 #include "sof/util/logging/Logger.h"
 #include "sof/util/logging/LoggerFactory.h"
@@ -14,6 +15,7 @@
 using namespace std;
 
 using namespace sof::instantiation;
+using namespace sof::instantiation::win;
 using namespace sof::framework;
 
 
@@ -86,4 +88,4 @@ void BundleActivator2::removedService( const ServiceReference& ref )
 	LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[BundleActivator2#removedService] Called, service name: %1", ref.getServiceName() );
 }
 
-REGISTER_CLASS("BundleActivator2",IBundleActivator,BundleActivator2)
+REGISTER_BUNDLE_ACTIVATOR_CLASS("BundleActivator2",BundleActivator2)
