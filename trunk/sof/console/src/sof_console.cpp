@@ -2,14 +2,21 @@
 
 #include "sof/framework/Launcher.h"
 #include "sof/framework/Global.h"
+
+#ifdef WIN
 #include "sof/instantiation/win/WinDllCreator.h"
+#endif
+
 #include "sof/instantiation/NullCreator.h"
 #include "sof/util/threading/SingleThreaded.h"
 
 using namespace std;
 using namespace sof::framework;
 using namespace sof::util::threading;
+
+#ifdef WIN
 using namespace sof::instantiation::win;
+#endif
 
 int main(int argc, char* argv[])
 {
