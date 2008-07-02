@@ -274,6 +274,33 @@ void IRegistryImpl<ThreadingModel>::notifyListenersAboutRegisteredService( const
 }
 
 template<class ThreadingModel>
+void IRegistryImpl<ThreadingModel>::notifyListenerAboutRegisteredService( const string& bundleName, vector<ServiceInfo*>* serviceVec, ServiceListenerInfo* serviceListenerInfo, const string& serviceName ) 
+{
+	logger.log( Logger::DEBUG, "[IRegistryImpl#notifyListenerAboutRegisteredService] Called." );	
+
+	vector<ServiceInfo*>::iterator serviceIter;
+	for ( serviceIter = serviceVec->begin(); serviceIter != serviceVec->end(); serviceIter++ )
+	{
+		ServiceReference serviceRef( (*serviceIter)->getServiceName(), (*serviceIter)->getProperties(), (*serviceIter)->getService() );
+		ServiceEvent serviceEvent( ServiceEvent::REGISTER, serviceRef );
+		bool interested = serviceListenerInfo->getServiceListenerObj()->serviceChanged( serviceEvent );
+		if ( interested )
+		{
+			logger.log( Logger::DEBUG, "[IRegistryImpl#notifyListenerAboutRegisteredService] Service listener is interested in registered service '%1'.",
+				(*serviceIter)->getServiceName() );
+			this->addUsedServiceToBundleInfo( bundleName, (*serviceIter) );	
+		} else
+		{
+			logger.log( Logger::DEBUG, "[IRegistryImpl#notifyListenerAboutRegisteredService] Service listener is NOT interested in registered service '%1'.",
+				(*serviceIter)->getServiceName() );
+		}
+	}
+	
+
+	logger.log( Logger::DEBUG, "[IRegistryImpl#notifyListenerAboutRegisteredService] Left." );	
+}
+
+template<class ThreadingModel>
 void IRegistryImpl<ThreadingModel>::notifyListenersAboutDeregisteredService( const string& bundleName, ServiceInfo* serviceInfo, vector<ServiceListenerInfo*>* serviceListenerInfoVec ) 
 {
 	logger.log( Logger::DEBUG, "[IRegistryImpl#notifyListenersAboutDeregisteredService] Called." );	
@@ -350,7 +377,7 @@ void IRegistryImpl<ThreadingModel>::addServiceListener( const string& bundleName
 
 	vector<ServiceInfo*>* serviceVec = this->getServiceInfo( serviceName );
 
-	this->notifyListenersAboutRegisteredService( bundleName, serviceVec, this->getServiceListenerInfoVector( serviceName ), serviceName );	
+	this->notifyListenerAboutRegisteredService( bundleName, serviceVec, listenerInfo, serviceName );	
 	logger.log( Logger::DEBUG, "[IRegistryImpl#addServiceListener] Left." );				
 }
 
