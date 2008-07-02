@@ -98,6 +98,27 @@ class IRegistryImpl : public IRegistry
 		/**
 		 * Notifies service listener objects about a specific service which was
 		 * registered.<br>
+		 * Is called when a new service listener object is registered.
+		 *
+		 * @param bundleName
+		 *				The name of the bundle the registered service belongs to.
+		 *
+		 * @param serviceInfoVec
+		 *				A vector of <code>ServiceInfo</code> objects which have all the same
+		 *				service name.
+		 * 
+		 * @param serviceListenerInfoVec
+		 *				A vector of <code>ServiceListenerInfo</code> objects containing the
+		 *				service listener objects which are notified.
+	     * 
+		 * @param serviceName
+		 *				The name of the service which is registered.
+		 */
+		void notifyListenerAboutRegisteredService( const string& bundleName, vector<ServiceInfo*>* serviceInfoVec, ServiceListenerInfo* serviceListenerInfo, const string& serviceName );
+
+		/**
+		 * Notifies service listener objects about a specific service which was
+		 * registered.<br>
 		 * Is called when a new service is registered.
 		 *
 		 * @param bundleName
