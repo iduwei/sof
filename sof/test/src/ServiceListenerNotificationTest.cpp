@@ -20,26 +20,79 @@ using namespace sof::framework;
 using namespace sof::instantiation;
 using namespace sof::util::threading;
 
-class BundleActivatorServiceListenerNotification : public IBundleActivator, public IServiceTrackerCustomizer
+class DefaultServiceListener : public IServiceTrackerCustomizer
+{
+	private:
+		int callCounter;
+
+	public:
+		virtual bool addingService( const ServiceReference& ref );
+		virtual void removedService( const ServiceReference& ref );
+		int getCounter();
+};
+
+bool DefaultServiceListener::addingService( const ServiceReference& ref )
+{
+	UnitTestLogger::getInstance().log( Logger::DEBUG, "[DefaultServiceListener#addingService] Called." );
+	if ( ref.getServiceName() == "ServiceB" )
+	{
+		UnitTestLogger::getInstance().log( Logger::DEBUG, "[DefaultServiceListener#addingService] ServiceB found." );	
+		Properties props = ref.getServiceProperties();
+		if ( props.get( "instance" ) == "1" )
+		{
+			UnitTestLogger::getInstance().log( Logger::DEBUG, "[DefaultServiceListener#addingService] Instance 1 found." );	
+			callCounter++;
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void DefaultServiceListener::removedService( const ServiceReference& ref )
+{
+	UnitTestLogger::getInstance().log( Logger::DEBUG, "[DefaultServiceListener#removedService] Called." );		
+}
+
+int DefaultServiceListener::getCounter()
+{
+	return this->callCounter;
+}
+
+class BundleActivatorServiceListenerNotification : public IBundleActivator
 {
 	private:
 		ServiceTracker* tracker1;
 		ServiceTracker* tracker2;
 		IBundleContext* context;
 		IServiceRegistration* serviceReg;
-		IServiceBImpl serviceB;		
+		IServiceBImpl serviceB;	
 
 	public:		
 		virtual ~BundleActivatorServiceListenerNotification();
 		virtual void start( IBundleContext::ConstPtr context );
-		virtual void stop( IBundleContext::ConstPtr context );
-		virtual bool addingService( const ServiceReference& ref );
-		virtual void removedService( const ServiceReference& ref );
-
-		static int callCounter;
+		virtual void stop( IBundleContext::ConstPtr context );	
+		static DefaultServiceListener& getServiceListener1();
+		static DefaultServiceListener& getServiceListener2();
 };
 
-int BundleActivatorServiceListenerNotification::callCounter = 0;
+DefaultServiceListener& BundleActivatorServiceListenerNotification::getServiceListener1()
+{
+	static DefaultServiceListener listener1;
+	return listener1;
+}
+
+DefaultServiceListener& BundleActivatorServiceListenerNotification::getServiceListener2()
+{
+	static DefaultServiceListener listener2;
+	return listener2;
+}
 
 void BundleActivatorServiceListenerNotification::start( IBundleContext::ConstPtr ctxt )
 {
@@ -54,10 +107,10 @@ void BundleActivatorServiceListenerNotification::start( IBundleContext::ConstPtr
 	
 	UnitTestLogger::getInstance().log( Logger::DEBUG, "[TestBundleActivator#start] ServiceB registered." );	
 	
-	this->tracker1 = new ServiceTracker( context, "ServiceB", this );
+	this->tracker1 = new ServiceTracker( context, "ServiceB", &(getServiceListener1()) );
 	this->tracker1->startTracking();
 
-	this->tracker2 = new ServiceTracker( context, "ServiceB", this );
+	this->tracker2 = new ServiceTracker( context, "ServiceB", &(getServiceListener2()) );
 	this->tracker2->startTracking();	
 
 	UnitTestLogger::getInstance().log( Logger::DEBUG, "[TestBundleActivator#start] Left." );
@@ -81,39 +134,14 @@ void BundleActivatorServiceListenerNotification::stop( IBundleContext::ConstPtr 
 	delete this->tracker2;	
 }
 
-bool BundleActivatorServiceListenerNotification::addingService( const ServiceReference& ref )
-{
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[TestBundleActivator#addingService] Called." );
-	if ( ref.getServiceName() == "ServiceB" )
-	{
-		UnitTestLogger::getInstance().log( Logger::DEBUG, "[TestBundleActivator#addingService] ServiceB found." );	
-		Properties props = ref.getServiceProperties();
-		if ( props.get( "instance" ) == "1" )
-		{
-			UnitTestLogger::getInstance().log( Logger::DEBUG, "[TestBundleActivator#addingService] Instance 1 found." );	
-			callCounter++;
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	else
-	{
-		return false;
-	}
-}
-
-void BundleActivatorServiceListenerNotification::removedService( const ServiceReference& ref )
-{
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[TestBundleActivator#removedService] Called." );		
-}
-
 REGISTER_BUNDLE_ACTIVATOR_CLASS( "BundleActivatorServiceListenerNotification", BundleActivatorServiceListenerNotification )
 
 /**
- * Tests whether it is possible to load bundles locally and from DLL.
+ * Tests whether the notification of the service listeners works correctly.
+ * - At first the service object is registered.
+ * - Afterwards the service listener objects are registered.
+ * - Both service listener objects have to be notified only once about the registered
+ *		service.
  */
 TEST( ServiceListener, Notification  )
 {
@@ -125,5 +153,6 @@ TEST( ServiceListener, Notification  )
 	
 	Launcher<SingleThreaded,NullCreator> launcher;
 	launcher.start( bundleConfVec );
-	CHECK( BundleActivatorServiceListenerNotification::callCounter == 2 );
+	CHECK( BundleActivatorServiceListenerNotification::getServiceListener1().getCounter() == 1 );
+	CHECK( BundleActivatorServiceListenerNotification::getServiceListener2().getCounter() == 1 );
 }
