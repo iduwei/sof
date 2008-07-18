@@ -4,7 +4,10 @@
 #include <string>
 #include <vector>
 
+#include "../../framework/IService.h"
+
 using namespace std;
+using namespace sof::framework;
 
 namespace sof { namespace services { namespace admin {
 
@@ -18,7 +21,7 @@ namespace sof { namespace services { namespace admin {
  * The administration service is not registered with
  * the framework and can not be used by other bundles.
  */
-class IAdministrationService
+class IAdministrationService : public IService
 {
 	public:
 
