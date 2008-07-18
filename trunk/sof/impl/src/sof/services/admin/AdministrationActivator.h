@@ -1,17 +1,19 @@
 #ifndef ADMINISTRATION_ACTIVATOR_H
 #define ADMINISTRATION_ACTIVATOR_H
 
+#include "IAdministrationProvider.h"
+#include "IAdministrationServiceImpl.h"
+
 #include "../../framework/IBundleActivator.h"
+#include "../../framework/IServiceRegistration.h"
 #include "../../util/logging/LoggerFactory.h"
 #include "../../util/logging/Logger.h"
-#include "../../services/admin/IAdministrationProvider.h"
 
 namespace sof { namespace services { namespace admin {
 
 using namespace sof::framework;
 using namespace sof::util::logging;
 using namespace sof::services::admin;
-
 
 /**
  * The <code>AdministrationActivator</code> is the activator
@@ -32,9 +34,23 @@ class AdministrationActivator : public IBundleActivator
 		static Logger& log;
 
 		/**
-		 * The launcher instance.
+		 * The administration service providing the interface for administrating
+		 * the SOF runtime environment.
+		 */
+		IAdministrationServiceImpl* adminService;
+
+		/**
+		 * The administration provider the administration commands
+		 * are forwarded to.
 		 */
 		IAdministrationProvider* adminProvider;
+
+		/**
+		 * The <code>IServiceRegistration</code> object of
+		 * the administration service.
+		 */
+		IServiceRegistration* serviceReg;
+
 
 	public:
 

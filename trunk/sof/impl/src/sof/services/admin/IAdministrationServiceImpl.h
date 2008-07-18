@@ -5,14 +5,16 @@
 #include <vector>
 #include <map>
 
-#include "../../util/logging/Logger.h"
-#include "../../util/logging/LoggerFactory.h"
-#include "../../services/admin/IAdministrationProvider.h"
 #include "IAdministrationService.h"
 #include "IAdministrationProvider.h"
 #include "ConsoleCommand.h"
 
+#include "../../util/logging/Logger.h"
+#include "../../util/logging/LoggerFactory.h"
+#include "../../services/admin/IAdministrationProvider.h"
+
 using namespace std;
+
 using namespace sof::util::logging;
 
 namespace sof { namespace services { namespace admin {
@@ -22,7 +24,7 @@ namespace sof { namespace services { namespace admin {
  * the <code>IAdministrationService</code> interface which provides
  * functionality for interacting with the framework.
  */
-class IAdministrationServiceImpl : public IAdministrationService
+	class IAdministrationServiceImpl : public IAdministrationService
 {
 	private:
 
