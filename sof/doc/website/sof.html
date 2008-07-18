@@ -496,8 +496,9 @@ Also see AdvancedOptions</pre>
 </div>
 <!--POST-SHADOWAREA-->
 <div id="storeArea">
-<div title="API" modifier="magr74" created="200805101011" changecount="1">
+<div title="API" modifier="magr74" modified="200807180958" created="200805101011" changecount="2">
 <pre>The API documentation of following versions are available:
+* [[sof_8070|http://sof.sourceforge.net/api_8070/html/]]
 * [[sof_8050|http://sof.sourceforge.net/api_8050/html/]]</pre>
 </div>
 <div title="About" modifier="magr74" modified="200806151521" created="200802091422" changecount="24">
@@ -531,10 +532,10 @@ After building SOF the //bin// directory of the //impl// directory contains a li
 ![[Starting Bundles]]
 ![[Stopping Bundles]]</pre>
 </div>
-<div title="Console" modifier="magro74" modified="200806260512" created="200804161803" changecount="16">
+<div title="Console" modifier="magr74" modified="200807180856" created="200804161803" changecount="19">
 <pre>The SOF console provides a text based user interface for starting and stopping bundles. The console can be started by calling {{{sof_console.exe}}} which is located in directory '//sof\console\bin//'. See [[Starting SOF]] for further information.
 
-[img[http://farm3.static.flickr.com/2281/2419351570_aec2d46bf6_o.gif]]
+[img[http://farm4.static.flickr.com/3251/2678806149_914f03de0d_o.gif]]
 
 If you enter 'help' the console prints out all possible commands which can be executed within the console application. Following commands are available:
 
@@ -572,7 +573,12 @@ If you enter 'help' the console prints out all possible commands which can be ex
 ** Dumps all relevant information of the specified bundle.
 ** Parameters:
 *** The name of the bundle.
-** Example: {{{dbi test_bundle}}}</pre>
+** Example: {{{dbi test_bundle}}}
+* //dab//:
+** Dumps all relevant information of all bundles.
+** Parameters:
+*** None
+** Example: {{{dab}}}</pre>
 </div>
 <div title="DefaultTiddlers" modifier="magro74" created="200802110608" changecount="1">
 <pre>[[About]]</pre>
@@ -587,8 +593,17 @@ The SOF supports developing modular software which consists of components (bundl
 !![[Registering services]]
 !![[Tracking services]]</pre>
 </div>
-<div title="Download" modifier="magr74" modified="200805181453" created="200805101452" changecount="8">
+<div title="Download" modifier="magr74" modified="200807180957" created="200805101452" changecount="17">
 <pre>Following stable builds are available:
+* ''sof_8070''
+** Release notes:
+*** New features:
+**** The {{{addingService}}} method of the {{{IServiceTrackerCustomizer}}} interface has been extended by a boolean return value. By this the service tracker can accept or refuse found services. If the service tracker accepts a service by returning 'true', the service is regarded as a 'used service', otherwise not.  
+**** The threading and creation policies have been introduced. This allows to make the way of loading bundles and the threading behaviour of the framework configurable.
+**** An 'examples' project has been added which gives examples for implementing bundles, registering and tracking services.
+*** Bugfixes:
+**** Registering the administration service [[2002904|http://sourceforge.net/tracker/index.php?func=detail&amp;aid=2002904&amp;group_id=217435&amp;atid=1040234]]
+**** Bugfix for service listener notification problem [[1997433|http://sourceforge.net/tracker/index.php?func=detail&amp;aid=1997433&amp;group_id=217435&amp;atid=1040234]] 
 * ''sof_8050''
 ** Release notes:
 *** Supported features:
@@ -848,28 +863,29 @@ loadRemoteFile = function(url,callback,params)
 [[Open Issues|Open Issues]]
 </pre>
 </div>
-<div title="Open Issues" modifier="magro74" modified="200804080735" created="200802150652" changecount="4">
+<div title="Open Issues" modifier="magr74" modified="200807180928" created="200802150652" changecount="6">
 <pre>* Remote access to the SOF container
 ** via Browser
 ** via TCP and proprietary GUI
 * Making SOF distributable
 ** Services can be registered and tracked across several processes and machines
-* Portability which means support for several platforms (Windows, Linux etc.)
+* Introducing a platform independent build tool
 </pre>
 </div>
-<div title="Project Structure" modifier="magro74" created="200802181620" changecount="1">
-<pre>[&lt;img[netzwerk|http://farm3.static.flickr.com/2252/2266693776_2d4c510ec1_o.gif]]
-''The SOF software consists of the three projects:''
+<div title="Project Structure" modifier="magr74" modified="200807180922" created="200802181620" changecount="6">
+<pre>[&lt;img[netzwerk|http://farm4.static.flickr.com/3202/2679653624_fc6aed3ace_o.gif]]
+''The SOF software consists of the four projects:''
 * //impl//: The SOF kernel
 * //test//: Unit tests for testing the framework
+* //examples//: Examples of implemented bundles (which register/track services)
 * //console//: The SOF console which provides a text based user interface for starting and stopping bundles, dump bundle infos etc.
 
-''Each project has following sub directories:''
+''Each project can consist of following sub directories:''
 * //src//: Contains header and source files
 * //build//: Used for building the project
 * //bin//: Contains the output of the build process, e.g. an '.exe' of '.dll' file
 
-The 'doc' directory contains the SOF documentation including the API documentation and the website content as local file. For implemented unit tests an extern unit test library is necessary called 'CppUniteLite' which is located in the 'extern directory'.
+The 'doc' directory contains the SOF documentation including the API documentation and the website content as local file. For implemented unit tests an extern unit test library is necessary called '~CppUniteLite' which is located in the 'extern directory'.
 
 
 
@@ -1217,18 +1233,18 @@ merge(config.shadowTiddlers,{
 //}}}
 </pre>
 </div>
-<div title="UploadLog" modifier="magr74" modified="200807180823" created="200802080629">
+<div title="UploadLog" modifier="magr74" modified="200807181001" created="200802080629">
 <pre>| !date | !user | !location | !storeUrl | !uploadDir | !toFilename | !backupdir | !origin |
-| 24/06/2008 07:02:25 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 25/06/2008 07:05:05 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 25/06/2008 07:06:13 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 25/06/2008 07:50:08 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 26/06/2008 07:00:48 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 26/06/2008 07:13:24 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 26/06/2008 07:30:51 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
 | 18/07/2008 10:18:05 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
 | 18/07/2008 10:21:27 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 18/07/2008 10:23:28 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
+| 18/07/2008 10:23:28 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 18/07/2008 10:56:57 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 18/07/2008 11:24:32 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 18/07/2008 11:28:21 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 18/07/2008 11:42:20 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 18/07/2008 11:57:46 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 18/07/2008 11:59:46 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 18/07/2008 12:01:14 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
 </div>
 <div title="UploadPlugin" modifier="YourName" modified="200802080624" created="200706061221" tags="systemConfig">
 <pre>/***
