@@ -6,6 +6,7 @@
 #include "ObjectCreationException.h"
 
 using namespace std;
+
 using namespace sof::instantiation;
 
 namespace sof { namespace instantiation {

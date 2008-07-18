@@ -242,7 +242,7 @@ void LoggerImpl::logMessage( const string& msgStr, const vector<bool>& messagePa
 
 void LoggerImpl::setLogLevel( Logger::LogLevel logLevel )
 {
-	this->level = logLevel;
+	this->level = logLevel;	
 }
 
 

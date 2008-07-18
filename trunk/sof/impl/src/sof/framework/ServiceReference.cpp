@@ -19,7 +19,7 @@ Properties ServiceReference::getServiceProperties() const
 	return this->props;
 }
 
-IService::ConstPtr ServiceReference::getService() const
+IService* ServiceReference::getService() const
 {
 	return this->service;
 }

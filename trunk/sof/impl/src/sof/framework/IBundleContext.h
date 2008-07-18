@@ -11,6 +11,7 @@
 namespace sof { namespace framework {
 
 using namespace std;
+
 using namespace sof::framework;
 
 /**
@@ -50,7 +51,7 @@ class IBundleContext
 		 *				a method for unregistering the service object.
 		 *
 		 */
-		virtual IServiceRegistration::ConstPtr registerService( const string &className, IService::ConstPtr service, const Properties &dict ) = 0;
+		virtual IServiceRegistration* registerService( const string &className, IService::ConstPtr service, const Properties &dict ) = 0;
 
 		/**
          * Adds a service listener object to the framework. The service listener is notified when the service

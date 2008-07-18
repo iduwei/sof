@@ -2,15 +2,13 @@
 #define SERVICE_INFO_H
 
 #include <string>
+#include <sstream>
 
 #include "IService.h"
 #include "Properties.h"
 
 #include "../util/logging/LoggerFactory.h"
 #include "../util/logging/Logger.h"
-
-#include <sstream>
-#include <string>
 
 namespace sof { namespace framework {
 

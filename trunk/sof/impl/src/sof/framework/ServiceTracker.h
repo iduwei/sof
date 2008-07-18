@@ -7,6 +7,7 @@
 #include "IServiceTrackerCustomizer.h"
 #include "IServiceListener.h"
 #include "ServiceEvent.h"
+
 #include "../util/logging/Logger.h"
 #include "../util/logging/LoggerFactory.h"
 
