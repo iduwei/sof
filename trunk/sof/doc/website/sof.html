@@ -500,13 +500,13 @@ Also see AdvancedOptions</pre>
 <pre>The API documentation of following versions are available:
 * [[sof_8050|http://sof.sourceforge.net/api_8050/html/]]</pre>
 </div>
-<div title="About" modifier="magro74" modified="200805090852" created="200802091422" changecount="17">
-<pre>SOF (Service Oriented Framework) wants to help software developers to avoid developing monolithic software. It is implemented in C++ and provides a framework for developing component based software. The SOF API is very similar to the OSGI API (see [[OSGI|http://www.osgi.org]]), so SOF can be seen as a C++ implementation of the OSGI reference.
+<div title="About" modifier="magr74" modified="200806151521" created="200802091422" changecount="24">
+<pre>//SOF// (Service Oriented Framework) wants to help software developers to avoid developing monolithic software. The //SOF// framework allows to separate a software system in several small components which are communicating via clearly defined interfaces. Components can be started and stopped at runtime and the components are notified about the lifecycle of other components if necessary. //SOF// is implemented in standard C++ and provides an OS independent framework for developing component based software. The //SOF// API is very similar to the OSGI API (see [[OSGI|http://www.osgi.org]]).
 
 ''Note:''
-* SOF calls components (like OSGI) as bundles.
+* SOF names components (like OSGI) as bundles.
 * Bundles can consist of one or several classes.
-* Bundles can be also implemented as DLL (currently only Windows libraries are supported).
+* Bundles can be also implemented as DLL (=''D''ynamic ''L''ink ''L''ibrary).
 * Bundles are loaded, started and stopped by SOF.
 * Each bundle can register zero or several services which can be tracked by other bundles.
 * Each bundle can track (listen to) one or several services.
@@ -514,11 +514,9 @@ Also see AdvancedOptions</pre>
 [img[http://farm4.static.flickr.com/3271/2477292881_b67f8ff660_o.png]]
 </pre>
 </div>
-<div title="Building" modifier="YourName" modified="200804061020" created="200802181627" changecount="10">
+<div title="Building" modifier="magr74" modified="200807180819" created="200802181627" changecount="14">
 <pre>!!!Supported Platforms
-!!!!Windows
-Currently SOF can be only build for the Windows platform, because the {{{ObjectCreator}}} class only allows to create bundles from a Windows DLL and does not support library types of other operating systems.
-If you intend to extend the {{{ObjectCreator}}} class for the operating systems you use, you only have to change the {{{ObjectCreator::createObjectFromDll}}} method.
+Basically //SOF// is implemented platform independent and can be compiled and run for all possible platforms where a standard C++ compiler is available. But at the moment there is no build environment which allows building //SOF// for different platforms. Since //SOF// was implemented on a Windows PC with Visual Studio only Visual Studio project files are available for building the framework. But the use of platform independent build tools (e.g. ~CMake) are planned.
 !!!Building SOF
 !!!!Visual Studio
 Start the Visual Studio, go to the //sof/impl// directory and load the //sof.sln// (Microsoft Visual Studio Solution) file. Afterwards the build process can be started with Visual Studio.
@@ -533,7 +531,7 @@ After building SOF the //bin// directory of the //impl// directory contains a li
 ![[Starting Bundles]]
 ![[Stopping Bundles]]</pre>
 </div>
-<div title="Console" modifier="magr74" modified="200805081849" created="200804161803" changecount="15">
+<div title="Console" modifier="magro74" modified="200806260512" created="200804161803" changecount="16">
 <pre>The SOF console provides a text based user interface for starting and stopping bundles. The console can be started by calling {{{sof_console.exe}}} which is located in directory '//sof\console\bin//'. See [[Starting SOF]] for further information.
 
 [img[http://farm3.static.flickr.com/2281/2419351570_aec2d46bf6_o.gif]]
@@ -567,6 +565,8 @@ If you enter 'help' the console prints out all possible commands which can be ex
 ** Parameters:
 *** The name of the bundle.
 ** Example: {{{spb test_bundle}}}
+* //spab//:
+** Stops all active bundles.
 ''Commands for getting bundle information''
 * //dbi//:
 ** Dumps all relevant information of the specified bundle.
@@ -601,7 +601,7 @@ The SOF supports developing modular software which consists of components (bundl
 **** Hard coded windows solution for starting bundles from ~DLLs.
 For downloading the software please click [[here|http://sourceforge.net/project/showfiles.php?group_id=217435]]</pre>
 </div>
-<div title="Implementing a bundle" modifier="magro74" modified="200804161029" created="200802181643" changecount="39">
+<div title="Implementing a bundle" modifier="magr74" modified="200806151507" created="200802181643" changecount="45">
 <pre>For implementing a bundle the {{{sof::framework::IBundleActivator}}} interface has to be implemented:
 {{{
 class IBundleActivator
@@ -613,7 +613,7 @@ class IBundleActivator
 }}}
 In the {{{start( IBundleContext::ConstPtr )}}} method you have to do all the things which are necessary for running the application code. The passed bundle context object allows you to interact with the SOF framework, like registering or tracking services (see [[Registering and tracking services]]).
 When {{{stop( IBundleContext::ConstPtr )}}} is called all the application relevant resources which were allocated by the bundle must be cleaned. The {{{start}}} and {{{stop}}} methods are called by the framework. When {{{stop}}} method is called, the bundle context pointer need not be deleted by the bundle but is deleted by the SOF framework. 
-The bundle activator need not be instantiated by the application developer but is created also by the framework (see [[Bundle Lifecycle]]). For this the developer of the every bundle has to make known the bundle activator class with the framework. This is done by using the {{{REGISTER_CLASS}}} macro defined in the {{{sof/instantiation/ObjectCreator.h}}} header file:
+The bundle activator need not be instantiated by the application developer but is created also by the framework (see [[Bundle Lifecycle]]). For this the developer of every bundle has to make known the bundle activator class with the framework. This is done by using the {{{REGISTER_BUNDLE_ACTIVATOR_CLASS}}} macro defined in the {{{sof/instantiation/ObjectCreator.h}}} header file:
 {{{
 #include &quot;BundleActivatorImpl.h&quot;
 
@@ -634,18 +634,18 @@ void BundleActivatorImpl::stop( IBundleContext::ConstPtr context )
 {
 }
 
-REGISTER_CLASS( &quot;BundleActivatorImpl&quot;, IBundleActivator, BundleActivatorImpl)
+REGISTER_BUNDLE_ACTIVATOR_CLASS( &quot;BundleActivatorImpl&quot;, BundleActivatorImpl)
 }}}
 
-The {{{REGISTER_CLASS}}} macro expects three parameters:
+The {{{REGISTER_BUNDLE_ACTIVATOR_CLASS}}} macro expects three parameters:
 * The name of the activator class (can be any name, but normally the name of the bundle activator class is chosen).
-* The type of the base class (is always the {{{IBundleActivator}}})
 * The type of the specific bundle activator class which implements the {{{IBundleActivator}}} interface.
 
 !Implementing a Local Bundle
-Local means, that the class which implements the {{{IBundleActivator}}} interface is linked to the executable within the framework runs. The bundle need not to be created by loading a DLL. For implementing a local bundle you have to do the things as described above (implementing the {{{IBundleActivator}}} interface and registering the activator class). Afterwards the bundle classes have to be linked with the main class which starts the framework.
+Local means, that the class which implements the {{{IBundleActivator}}} interface is linked to the executable within the framework runs. The bundle need not to be created by loading a DLL (=''D''ynamic ''L''ink ''L''ibrary). For implementing a local bundle you have to do the things as described above (implementing the {{{IBundleActivator}}} interface and registering the activator class). Afterwards the bundle classes have to be linked with the main class which starts the framework.
 !Implementing a DLL Bundle
-For implementing a bundle which is loaded from a DLL following operations have to be done:
+Loading bundles from a dynamic link library is dependent on the used operating system. 
+For implementing a bundle which is loaded from a Windows DLL following operations have to be done:
 * A {{{DllMain}}} method has to be implemented (instead of implementing a common {{{main}}} method for executable code)
 * The DLL code must provide the method {{{ITest* createObject( const string &amp;className )}}}. This method uses the {{{ObjectCreator}}} class (provided by //SOF//) for creating the {{{IBundleActivator}}} object by name.
 * A bundle activator class has to be implemented.
@@ -763,12 +763,12 @@ int IMyServiceImpl::getValue()
 }}}
 Now instances of class {{{IMyServiceImpl}}} can be registered with the framework. See chapter [[Registering services]]</pre>
 </div>
-<div title="Instantiation of the Bundle Activator" modifier="magro74" modified="200804240520" created="200803271552" changecount="3">
+<div title="Instantiation of the Bundle Activator" modifier="magr74" modified="200806111841" created="200803271552" changecount="4">
 <pre>The intention of the framework is to avoid that the application developer is responsible for the lifecycle of his implemented bundles. That means the creation, starting and stopping of the software bundles must be done by the framework:
 
 [img[http://farm3.static.flickr.com/2183/2326314896_c15355177a_o.gif]]
 
-The only thing the developer must do is [[implementing the bundle|Implementing a bundle]] and specifiying (by configuration file for example) which bundles shall be created and started. Consequently the framework must be able to create instances of type {{{sof::framework::IBundleActivator}}} by name. Ok, you have to do a little more than only implementing the {{{IBundleActivator}}} interface. The name of the class which implements the {{{IBundleActivator}}} interface has to be registered with the framework (see usage of {{{REGISTER}}} macro in following code example):
+The only thing the developer must do is [[implementing the bundle|Implementing a bundle]] and specifiying (by configuration file for example) which bundles shall be created and started. Consequently the framework must be able to create instances of type {{{sof::framework::IBundleActivator}}} by name. Ok, you have to do a little more than only implementing the {{{IBundleActivator}}} interface. The name of the class which implements the {{{IBundleActivator}}} interface has to be registered with the framework (see usage of {{{REGISTER_BUNDLE_ACTIVATOR_CLASS}}} macro in following code example):
 
 {{{
 #include &quot;TestBundleActivator.h&quot;
@@ -801,10 +801,9 @@ void TestBundleActivator::stop( IBundleContext::ConstPtr context )
 REGISTER_CLASS(&quot;TestBundleActivator&quot;,IBundleActivator,TestBundleActivator)
 }}}
 
-The {{{REGISTER}}} macro is defined in the header file named {{{sof/instantiation/ObjectCreator.h}}}  and asks for three parameters:
+The {{{REGISTER_BUNDLE_ACTIVATOR_CLASS}}} macro is defined in the header file named {{{sof/instantiation/ObjectCreator.h}}}  and asks for two parameters:
 * The name of the class which is used for instantiation
-* The name of the base class (for creating bundle activators it is always {{{IBundleActivator}}}
-* The name of the class which implements the base class (the activator class)
+* The name of the class which implements the {{{IBundleActivator}}} interface
 </pre>
 </div>
 <div title="LoadThroughProxy" modifier="YourName" modified="200802080624" created="200710162159" tags="systemConfig">
@@ -894,7 +893,7 @@ The 'doc' directory contains the SOF documentation including the API documentati
 
 </pre>
 </div>
-<div title="Registering services" modifier="magro74" modified="200804290501" created="200804210455" changecount="18">
+<div title="Registering services" modifier="magr74" modified="200807180823" created="200804210455" changecount="19">
 <pre>Service objects can be registered during the total lifetime of a bundle. In the following example a service object is registered by the {{{start( IBundleContext )}}} method. For registering a service the {{{registerService}}} method of the bundle context object has to be called.
 The {{{registerService}}} method expects three parameters:
 * The arbitrary service name
@@ -908,7 +907,7 @@ void BundleActivator::start( IBundleContext::ConstPtr context )
 	
 	Properties props;
         props.put( &quot;ID&quot;, &quot;4711 );
-	IServiceRegistration::ConstPtr serviceReg = context-&gt;registerService( &quot;ServiceA&quot;, new IMyServiceImpl(), props );
+	IServiceRegistration* serviceReg = context-&gt;registerService( &quot;ServiceA&quot;, new IMyServiceImpl(), props );
 }
 ...
 }}}
@@ -927,20 +926,127 @@ The following diagram shows an use case where one bundle registers a service obj
 <div title="SiteTitle" modifier="magro74" modified="200802080850" created="200802080626" changecount="2">
 <pre>SOF</pre>
 </div>
-<div title="Starting SOF" modifier="magr74" modified="200805071906" created="200803271552" changecount="9">
+<div title="Starting Bundles" modifier="magro74" modified="200806260500" created="200806151510" changecount="34">
+<pre>!By program at framework startup
+The {{{Launcher}}} class offers following method for starting bundles:
+{{{
+void start( vector&lt;BundleConfiguration&gt; &amp;configuration );
+}}}
+The parameter which has to be passed to the method call represents a vector of {{{sof::config::BundleConfiguration}}} objects. Each {{{BundleConfiguration}}} object defines the configuration of one bundle.
+
+''Example:''
+{{{
+BundleConfiguration bundleConf( &quot;MyBundle&quot;, &quot;MyBundleActivator&quot;, &quot;c:/temp&quot;, &quot;mybundle.dll&quot; );
+}}}
+The {{{BundleConfiguration}}} constructor requires following parameters:
+* The name of the bundle (e.g. &quot;~MyBundle&quot; )
+* The name of the activator class (e.g. &quot;~MyBundleActivator&quot;) which must be defined in the implementation class by using the  {{{REGISTER_BUNDLE_ACTIVATOR_CLASS}}} macro .
+* The following parameters are optional and only necessary for configuring an external bundle (which is loaded from a library):
+** The path to the directory where the bundle library is located (e.g. &quot;c:/temp&quot;)
+** The name of the bundle library (e.g. &quot;mybundle.dll&quot;)
+In the following example the launcher starts two bundles, one local and one external bundle:
+{{{
+#include &lt;iostream&gt;
+
+#include &quot;sof/framework/Launcher.h&quot;
+#include &quot;sof/framework/Global.h&quot;
+#include &quot;sof/config/BundleConfiguration.h&quot;
+#include &quot;sof/instantiation/win/WinDllCreator.h&quot;
+#include &quot;sof/util/threading/SingleThreaded.h&quot;
+
+using namespace std;
+using namespace sof::framework;
+using namespace sof::instantiation::win;
+using namespace sof::config;
+using namespace sof::util::threading;
+
+int main(int argc, char* argv[])
+{	
+        // Framework launcher class
+	Launcher&lt;SingleThreaded,WinDllCreator&gt; launcher;
+
+        // Sets the log level of the framework
+	launcher.setLogLevel( Logger::LogLevel::DEBUG );
+
+        // Creating the bundle configuration
+        BundleConfiguration bundleConf1( &quot;bundle1&quot;, &quot;BundleActivator2&quot;, &quot;.&quot;, &quot;sof_TestDll2.dll&quot; );
+	BundleConfiguration bundleConf2( &quot;bundle2&quot;, &quot;TestBundleActivator&quot; );
+	vector&lt;BundleConfiguration&gt; bundleConfVec;
+	bundleConfVec.push_back( bundleConf1 );
+	bundleConfVec.push_back( bundleConf2 );
+
+        // Starts the bundles which are configured by BundleConfiguration vector
+        launcher.start( bundleConfVec );
+
+        // Starts the administration bundle which implements the SOF console
+	launcher.startAdministrationBundle();
+
+	return 0;
+}
+}}}
+!By program via administration interface
+//SOF// offers an administration interface which can be tracked and called. The administration interface or bundle can be started as follows:
+{{{
+laucher.startAdministrationBundle();
+}}}
+The administration interface is defined in class {{{sof::services::admin::IAdministrationService}}} and can be tracked by using the name 'sof::services::admin::~IAdministrationService'. The provided methods for starting bundles are:
+{{{
+class IAdministrationService
+{
+	public:
+		virtual void startBundleFromDLL( const string&amp; bundleName, const string&amp; className, const string&amp; libPath, const string&amp; libName ) = 0;
+		virtual void startBundle( const string&amp; bundleName, const string&amp; className ) = 0;
+		virtual void startBundlesFromConfigFile( const string&amp; configFile ) = 0;
+};
+}}}
+
+Method parameters:
+* {{{startBundle}}}: Starts a local bundle.
+** //bundleName//: The name of the bundle which is started.
+** //className//: The name of the bundle activator class.
+* {{{startBundleFromDLL}}}: Starts a bundle from a dynamic link library.
+** //bundleName//: The name of the bundle which is started.
+** //className//: The name of the bundle activator class.
+** //libPath//: The path to the directory where the library file is located (e.g. 'c:/bundles').
+** //libName//: The name of the library which contains the bundle classes.
+* {{{startBundlesFromConfigFile}}}: Starts a bundle which is configured in a file.
+** //configFile//: The configuration file which specifies the bundle configuration data.
+*** The configuration file can contain several entries whereas one entry consists of:
+**** for external bundles (loaded from DLL): bundle_name,bundle_activator_class_name,library_path,library_name
+**** for local bundles: bundle_name,bundle_activator_class_name
+!By //SOF// console
+It is also possible to start bundles via console after //SOF// was started. For starting the framework please look [[here|Starting SOF]]. When framework is up and the //SOF// console is ready for processing commands, following commands for starting bundles are available:
+* stb (= starting bundle)
+* stbdll (= starting bundle from DLL)
+The exact notation of the commands (including passing parameters) you can find [[here|Console]]</pre>
+</div>
+<div title="Starting SOF" modifier="magro74" modified="200806240453" created="200803271552" changecount="33">
 <pre>Before bundles can be created and started the SOF framework has to be started. For this you have to create a class with following {{{main}}} method:
 {{{
 #include &lt;iostream&gt;
 
 #include &quot;sof/framework/Launcher.h&quot;
+#include &quot;sof/framework/Global.h&quot;
+#ifdef WIN
+    #include &quot;sof/instantiation/win/WinDllCreator.h&quot;
+#endif
+#include &quot;sof/util/threading/SingleThreaded.h&quot;
 
 using namespace std;
 using namespace sof::framework;
+#ifdef WIN
+    using namespace sof::instantiation::win;
+#endif
+using namespace sof::util::threading;
 
 int main(int argc, char* argv[])
 {	
         // Framework launcher class
-	Launcher launcher;
+	#ifdef WIN
+		Launcher&lt;SingleThreaded,WinDllCreator&gt; launcher;
+	#else
+		Launcher&lt;SingleThreaded,NullCreator&gt; launcher;
+	#endif
 
         // Sets the log level of the framework
 	launcher.setLogLevel( Logger::LogLevel::DEBUG );
@@ -950,10 +1056,15 @@ int main(int argc, char* argv[])
 
 	return 0;
 }
-
-
 }}}
-Such a class is also provided by the SOF framework itself. Please look into class {{{sof_console.cpp}}} in source folder of //console// project.
+Such a class is also provided by the SOF framework itself. Please look into class {{{sof_console.cpp}}} in source folder of //console// project. The {{{Launcher}}} is a template based class and requires the definition of two policies:
+!! Threading policy 
+By implementing the threading policy it can be defined whether the {{{Launcher}}} class is able to act in a multi-threaded environment or supports only a single-threaded environment. The //SOF// framework provides a default implementation of the threading policy called {{{sof::util::threading::SingleThreaded}}} which demands that framework calls (registering and unregistering listeners, services etc.) have to be done in a single thread and the calls don't have to be synchronized. 
+If the user of the //SOF// framework wants to develop a multithreaded software which includes registering services and service listeners concurrently, the user ought to implement the threading policy in order to avoid race conditions due to concurrent modifications in the {{{sof::framework::IRegistry}}} class. 
+!! Creation policy
+The creation policy defines how bundle activator instances can be created from a DLL (=''D''ynamic ''L''ink ''L''ibrary). Standard C++ provides no support for loading dynamic link libraries. By implementing the creation policy the user of the //SOF// framework is able to adapt the DLL loading mechanism for different platforms. 
+//SOF//  currently provides only an implementation of the creation policy for the windows platform (see {{{sof::instantiation::win::WinDllCreator}}}).
+!! Startup
 After starting your program (or the //sof_console.exe// of the //console\bin// directory), you see following output:
 
 [img[http://farm3.static.flickr.com/2295/2323942752_44bd18e0d5_o.gif]]
@@ -964,9 +1075,19 @@ If you are not interested in log messages of the framework, the log level of the
 #include &lt;iostream&gt;
 
 #include &quot;sof/framework/Launcher.h&quot;
+#include &quot;sof/framework/Global.h&quot;
+#ifdef WIN
+   #include &quot;sof/instantiation/win/WinDllCreator.h&quot;
+#endif
+#include &quot;sof/instantiation/NullCreator.h&quot;
+#include &quot;sof/util/threading/SingleThreaded.h&quot;
 
 using namespace std;
 using namespace sof::framework;
+using namespace sof::util::threading;
+#ifdef WIN
+    using namespace sof::instantiation::win;
+#endif
 
 int main(int argc, char* argv[])
 {
@@ -988,15 +1109,30 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	Launcher launcher;
-
+	#ifdef WIN
+		Launcher&lt;SingleThreaded,WinDllCreator&gt; launcher;
+	#else
+		Launcher&lt;SingleThreaded,NullCreator&gt; launcher;
+	#endif
 	launcher.setLogLevel( logLevel );
 	launcher.startAdministrationBundle();
 	return 0;
 }
+
 }}}
 
-For getting more information relating to the //SOF// console please clicke [[here|Console]].
+For getting more information relating to the //SOF// console please click [[here|Console]].
+</pre>
+</div>
+<div title="Stopping Bundles" modifier="magro74" modified="200806260513" created="200806260501" changecount="3">
+<pre>!By //SOF// console
+The //SOF// console provides following commands for stopping bundles:
+* //spb//: Stops one bundle specified by name.
+* //spab//: Stops all active bundles.
+For precise explanation of the commands please look [[here|Console]]
+!By administration interface
+
+
 </pre>
 </div>
 <div title="Tracking services" modifier="magro74" modified="200804231029" created="200804230511" changecount="5">
@@ -1081,18 +1217,18 @@ merge(config.shadowTiddlers,{
 //}}}
 </pre>
 </div>
-<div title="UploadLog" modifier="magr74" modified="200805181548" created="200802080629">
+<div title="UploadLog" modifier="magr74" modified="200807180823" created="200802080629">
 <pre>| !date | !user | !location | !storeUrl | !uploadDir | !toFilename | !backupdir | !origin |
-| 09/05/2008 10:07:17 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 09/05/2008 10:52:10 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 10/05/2008 12:11:50 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 10/05/2008 16:52:50 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 10/05/2008 16:53:06 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 10/05/2008 16:54:28 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 18/05/2008 16:49:43 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 18/05/2008 16:53:42 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 18/05/2008 16:54:52 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 18/05/2008 17:48:30 | magr74 | [[index.20080518.0755460000.html|http://sof.tiddlyspot.com/backup/index.20080518.0755460000.html]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
+| 24/06/2008 07:02:25 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 25/06/2008 07:05:05 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 25/06/2008 07:06:13 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 25/06/2008 07:50:08 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 26/06/2008 07:00:48 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 26/06/2008 07:13:24 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 26/06/2008 07:30:51 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 18/07/2008 10:18:05 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 18/07/2008 10:21:27 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 18/07/2008 10:23:28 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
 </div>
 <div title="UploadPlugin" modifier="YourName" modified="200802080624" created="200706061221" tags="systemConfig">
 <pre>/***
