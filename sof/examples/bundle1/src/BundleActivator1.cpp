@@ -26,6 +26,7 @@ void BundleActivator1::start(IBundleContext::ConstPtr context)
 void BundleActivator1::stop(IBundleContext::ConstPtr context) 
 {
 	this->serviceReg->unregister();
+	delete this->serviceReg;
 	delete this->service;
 }
 
