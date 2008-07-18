@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string>
 #include <iostream>
-#include "dll_test.h"
 #include "sof/instantiation/ObjectCreator.h"
 #include "sof/framework/IBundleActivator.h"
 #include "TestBundleActivator.h"

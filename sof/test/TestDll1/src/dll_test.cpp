@@ -4,7 +4,6 @@
 #include <string>
 #include <iostream>
 
-#include "dll_test.h"
 #include "ITest.h"
 
 #include "sof/instantiation/ObjectCreator.h"
