@@ -1,9 +1,10 @@
 #ifndef LOGGER_IMPL_H
 #define LOGGER_IMPL_H
 
-#include "Logger.h"
 #include <string>
 #include <vector>
+
+#include "Logger.h"
 
 namespace sof { namespace util { namespace logging {
 

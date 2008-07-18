@@ -20,7 +20,7 @@ IBundleContextImpl::~IBundleContextImpl()
 	logger.log( Logger::DEBUG, "[IBundleContextImpl#destructor] Called." );
 }
 
-IServiceRegistration::ConstPtr IBundleContextImpl::registerService( const string& className, IService::ConstPtr service, const Properties &dict )
+IServiceRegistration* IBundleContextImpl::registerService( const string& className, IService::ConstPtr service, const Properties &dict )
 {
 	logger.log( Logger::DEBUG, "[IBundleContextImpl#registerService] Called, bundle name: %1, service name: %2", this->bundleName, className );
 	ServiceInfo *serviceInfo = new ServiceInfo( className, service, dict );

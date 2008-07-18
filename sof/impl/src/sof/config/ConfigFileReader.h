@@ -11,6 +11,7 @@
 namespace sof { namespace config {
 
 using namespace std;
+
 using namespace sof::config;
 using namespace sof::util::logging;
 

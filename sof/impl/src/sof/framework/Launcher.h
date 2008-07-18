@@ -8,14 +8,15 @@
 #include "IBundleActivator.h"
 #include "IRegistry.h"
 #include "IRegistryImpl.h"
+#include "BundleInfo.h"
+#include "IBundleContextImpl.h"
+
 #include "../services/admin/AdministrationActivator.h"
 #include "../services/admin/IAdministrationProvider.h"
 #include "../config/BundleConfiguration.h"
 #include "../instantiation/ObjectCreator.h"
 #include "../util/logging/Logger.h"
 #include "../util/logging/LoggerFactory.h"
-#include "BundleInfo.h"
-#include "IBundleContextImpl.h"
 
 using namespace std;
 

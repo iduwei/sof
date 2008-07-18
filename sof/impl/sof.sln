@@ -5,10 +5,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof", "sof.vcproj", "{13262
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_test", "..\test\sof_test.vcproj", "{3E6E4359-71BE-4984-A388-4C7F371028AC}"
 	ProjectSection(ProjectDependencies) = postProject
-		{E1D93D4F-73C7-447F-89CE-002941A8DE9B} = {E1D93D4F-73C7-447F-89CE-002941A8DE9B}
-		{18A77859-C8B3-4380-862C-791F23D4A10D} = {18A77859-C8B3-4380-862C-791F23D4A10D}
-		{1A6E2C79-513B-448A-93F5-344306151697} = {1A6E2C79-513B-448A-93F5-344306151697}
 		{13262EFC-93BD-4D96-8698-EABCAE205144} = {13262EFC-93BD-4D96-8698-EABCAE205144}
+		{1A6E2C79-513B-448A-93F5-344306151697} = {1A6E2C79-513B-448A-93F5-344306151697}
+		{18A77859-C8B3-4380-862C-791F23D4A10D} = {18A77859-C8B3-4380-862C-791F23D4A10D}
+		{E1D93D4F-73C7-447F-89CE-002941A8DE9B} = {E1D93D4F-73C7-447F-89CE-002941A8DE9B}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_TestDll1", "..\test\TestDll1\TestDll1.vcproj", "{E1D93D4F-73C7-447F-89CE-002941A8DE9B}"
@@ -27,6 +27,21 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_console", "..\console\s
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CppUnitLite", "..\extern\CppUnitLite\CppUnitLite.vcproj", "{18A77859-C8B3-4380-862C-791F23D4A10D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_examples", "..\examples\sof_examples.vcproj", "{2E371446-2D48-400B-B7FE-2C0F41182BC1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{13262EFC-93BD-4D96-8698-EABCAE205144} = {13262EFC-93BD-4D96-8698-EABCAE205144}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_examples_bundle1", "..\examples\bundle1\sof_examples_bundle1.vcproj", "{98E0C29C-B4D8-4255-888D-A33D291BBFAC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{13262EFC-93BD-4D96-8698-EABCAE205144} = {13262EFC-93BD-4D96-8698-EABCAE205144}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_examples_bundle2", "..\examples\bundle2\sof_examples_bundle2.vcproj", "{FD723042-494D-44A8-AD92-80B2D8E504FB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{13262EFC-93BD-4D96-8698-EABCAE205144} = {13262EFC-93BD-4D96-8698-EABCAE205144}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -58,6 +73,18 @@ Global
 		{18A77859-C8B3-4380-862C-791F23D4A10D}.Debug|Win32.Build.0 = Debug|Win32
 		{18A77859-C8B3-4380-862C-791F23D4A10D}.Release|Win32.ActiveCfg = Release|Win32
 		{18A77859-C8B3-4380-862C-791F23D4A10D}.Release|Win32.Build.0 = Release|Win32
+		{2E371446-2D48-400B-B7FE-2C0F41182BC1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{2E371446-2D48-400B-B7FE-2C0F41182BC1}.Debug|Win32.Build.0 = Debug|Win32
+		{2E371446-2D48-400B-B7FE-2C0F41182BC1}.Release|Win32.ActiveCfg = Release|Win32
+		{2E371446-2D48-400B-B7FE-2C0F41182BC1}.Release|Win32.Build.0 = Release|Win32
+		{98E0C29C-B4D8-4255-888D-A33D291BBFAC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{98E0C29C-B4D8-4255-888D-A33D291BBFAC}.Debug|Win32.Build.0 = Debug|Win32
+		{98E0C29C-B4D8-4255-888D-A33D291BBFAC}.Release|Win32.ActiveCfg = Release|Win32
+		{98E0C29C-B4D8-4255-888D-A33D291BBFAC}.Release|Win32.Build.0 = Release|Win32
+		{FD723042-494D-44A8-AD92-80B2D8E504FB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FD723042-494D-44A8-AD92-80B2D8E504FB}.Debug|Win32.Build.0 = Debug|Win32
+		{FD723042-494D-44A8-AD92-80B2D8E504FB}.Release|Win32.ActiveCfg = Release|Win32
+		{FD723042-494D-44A8-AD92-80B2D8E504FB}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

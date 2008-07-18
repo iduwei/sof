@@ -3,18 +3,18 @@
 
 #include <map>
 #include <string>
+#include <iostream>
+#include <tchar.h>
+#include <sstream>
+#include <exception>
 
 #include "BaseFactory.h"
 #include "Factory.h"
 #include "ObjectCreationException.h"
 #include "NullCreator.h"
+
 #include "../util/logging/Logger.h"
 #include "../util/logging/LoggerFactory.h"
-
-#include <iostream>
-#include <tchar.h>
-#include <sstream>
-#include <exception>
 
 using namespace std;
 

@@ -69,6 +69,11 @@ class Properties
 		 * specified object.
 		 */
 		bool operator==( const Properties& props );
+
+		/**
+		 * Returns the number of entries in the 
+		 * <code>Properties</code> object.
+		 */
 		int getSize();
 
 };

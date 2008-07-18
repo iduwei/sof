@@ -6,10 +6,10 @@
 #include "Properties.h"
 #include "IService.h"
 
-namespace sof {
-	namespace framework {
+namespace sof { namespace framework {
 
 using namespace std;
+
 using namespace sof::framework;
 
 /**
@@ -74,7 +74,7 @@ class ServiceReference
 		 * @return
 		 *		The constant pointer to the service object.
 		 */
-		IService::ConstPtr getService() const;
+		IService* getService() const;
 
 };
 

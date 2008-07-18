@@ -2,6 +2,7 @@
 #define IBUNDLE_CONTEXT_IMPL_H
 
 #include <string>
+
 #include "IService.h"
 #include "IBundleContext.h"
 #include "Properties.h"
@@ -13,6 +14,7 @@
 namespace sof { namespace framework {
 
 using namespace std;
+
 using namespace sof::framework;
 using namespace sof::util::logging;
 
@@ -65,7 +67,7 @@ class IBundleContextImpl : public IBundleContext
 		 *
 		 * @see sof::framework::IBundleContext::registerService
 		 */
-		virtual IServiceRegistration::ConstPtr registerService( const string &className, IService::ConstPtr service, const Properties &dict );
+		virtual IServiceRegistration* registerService( const string &className, IService::ConstPtr service, const Properties &dict );
 
 		/**
 		 * Registers a service listener object.

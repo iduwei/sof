@@ -9,6 +9,7 @@
 #include "../ObjectCreationException.h"
 
 using namespace std;
+
 using namespace sof::instantiation;
 using namespace sof::util::logging;
 
