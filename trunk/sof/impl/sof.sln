@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual C++ Express 2008
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual C++ Express 2005
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof", "sof.vcproj", "{13262EFC-93BD-4D96-8698-EABCAE205144}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_test", "..\test\sof_test.vcproj", "{3E6E4359-71BE-4984-A388-4C7F371028AC}"
@@ -40,6 +40,21 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_examples_bundle1", "..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_examples_bundle2", "..\examples\bundle2\sof_examples_bundle2.vcproj", "{FD723042-494D-44A8-AD92-80B2D8E504FB}"
 	ProjectSection(ProjectDependencies) = postProject
+		{13262EFC-93BD-4D96-8698-EABCAE205144} = {13262EFC-93BD-4D96-8698-EABCAE205144}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_remote_server", "..\remote\server\sof_remote_server.vcproj", "{FCF0C024-98E2-4491-B27A-B7EDB332058E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_remote_client", "..\remote\client\sof_remote_client.vcproj", "{A26490E9-DB2F-4D0B-8F79-627E0249EE06}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_remote_common", "..\remote\common\sof_remote_common.vcproj", "{34FF4B7E-8765-4937-B892-DEF14710680D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{13262EFC-93BD-4D96-8698-EABCAE205144} = {13262EFC-93BD-4D96-8698-EABCAE205144}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_remote_registry", "..\remote\registry\sof_remote_registry.vcproj", "{F1E986DB-8076-42C4-8CA7-9C53986BB78E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{34FF4B7E-8765-4937-B892-DEF14710680D} = {34FF4B7E-8765-4937-B892-DEF14710680D}
 		{13262EFC-93BD-4D96-8698-EABCAE205144} = {13262EFC-93BD-4D96-8698-EABCAE205144}
 	EndProjectSection
 EndProject
@@ -85,6 +100,22 @@ Global
 		{FD723042-494D-44A8-AD92-80B2D8E504FB}.Debug|Win32.Build.0 = Debug|Win32
 		{FD723042-494D-44A8-AD92-80B2D8E504FB}.Release|Win32.ActiveCfg = Release|Win32
 		{FD723042-494D-44A8-AD92-80B2D8E504FB}.Release|Win32.Build.0 = Release|Win32
+		{FCF0C024-98E2-4491-B27A-B7EDB332058E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FCF0C024-98E2-4491-B27A-B7EDB332058E}.Debug|Win32.Build.0 = Debug|Win32
+		{FCF0C024-98E2-4491-B27A-B7EDB332058E}.Release|Win32.ActiveCfg = Release|Win32
+		{FCF0C024-98E2-4491-B27A-B7EDB332058E}.Release|Win32.Build.0 = Release|Win32
+		{A26490E9-DB2F-4D0B-8F79-627E0249EE06}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A26490E9-DB2F-4D0B-8F79-627E0249EE06}.Debug|Win32.Build.0 = Debug|Win32
+		{A26490E9-DB2F-4D0B-8F79-627E0249EE06}.Release|Win32.ActiveCfg = Release|Win32
+		{A26490E9-DB2F-4D0B-8F79-627E0249EE06}.Release|Win32.Build.0 = Release|Win32
+		{34FF4B7E-8765-4937-B892-DEF14710680D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{34FF4B7E-8765-4937-B892-DEF14710680D}.Debug|Win32.Build.0 = Debug|Win32
+		{34FF4B7E-8765-4937-B892-DEF14710680D}.Release|Win32.ActiveCfg = Release|Win32
+		{34FF4B7E-8765-4937-B892-DEF14710680D}.Release|Win32.Build.0 = Release|Win32
+		{F1E986DB-8076-42C4-8CA7-9C53986BB78E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F1E986DB-8076-42C4-8CA7-9C53986BB78E}.Debug|Win32.Build.0 = Debug|Win32
+		{F1E986DB-8076-42C4-8CA7-9C53986BB78E}.Release|Win32.ActiveCfg = Release|Win32
+		{F1E986DB-8076-42C4-8CA7-9C53986BB78E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

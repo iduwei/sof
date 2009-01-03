@@ -12,6 +12,10 @@
 #include "ServiceEvent.h"
 #include "ServiceReference.h"
 #include "IRegistry.h"
+#include "IService.h"
+#include "Properties.h"
+#include "IServiceRegistration.h"
+#include "IServiceRegistrationImpl.h"
 
 #include "../util/logging/Logger.h"
 #include "../util/logging/LoggerFactory.h"
@@ -43,7 +47,7 @@ namespace sof { namespace framework {
 template<class ThreadingModel=SingleThreaded>
 class IRegistryImpl : public IRegistry
 {
-	private:
+	protected:
 
 		/**
 		 * The logger instance.
@@ -93,7 +97,7 @@ class IRegistryImpl : public IRegistry
 		 * @param serviceName
 		 *				The name of the service which is registered.
 		 */
-		void notifyListenersAboutRegisteredService( const string& bundleName, vector<ServiceInfo*>* serviceInfoVec, vector<ServiceListenerInfo*>* serviceListenerInfoVec, const string& serviceName );
+		virtual void notifyListenersAboutRegisteredService( const string& bundleName, vector<ServiceInfo*>* serviceInfoVec, vector<ServiceListenerInfo*>* serviceListenerInfoVec, const string& serviceName );
 
 		/**
 		 * Notifies service listener objects about a specific service which was
@@ -114,7 +118,7 @@ class IRegistryImpl : public IRegistry
 		 * @param serviceName
 		 *				The name of the service which is registered.
 		 */
-		void notifyListenerAboutRegisteredService( const string& bundleName, vector<ServiceInfo*>* serviceInfoVec, ServiceListenerInfo* serviceListenerInfo, const string& serviceName );
+		virtual void notifyListenerAboutRegisteredService( const string& bundleName, vector<ServiceInfo*>* serviceInfoVec, ServiceListenerInfo* serviceListenerInfo, const string& serviceName );
 
 		/**
 		 * Notifies service listener objects about a specific service which was
@@ -134,7 +138,7 @@ class IRegistryImpl : public IRegistry
 		 * @param serviceName
 		 *				The name of the service which is registered.
 		 */
-		void notifyListenersAboutRegisteredService( const string& bundleName, ServiceInfo* serviceInfo, vector<ServiceListenerInfo*>* serviceListenerInfoVec, const string& serviceName );
+		virtual void notifyListenersAboutRegisteredService( const string& bundleName, ServiceInfo* serviceInfo, vector<ServiceListenerInfo*>* serviceListenerInfoVec, const string& serviceName );
 
 		/**
 		 * Notifies service listener objects about a specific service which is
@@ -151,7 +155,7 @@ class IRegistryImpl : public IRegistry
 		 *				A vector of <code>ServiceListenerInfo</code> objects containing the
 		 *				service listener objects which must be notified.
 		 */
-		void notifyListenersAboutDeregisteredService( const string& bundleName, ServiceInfo* serviceInfo, vector<ServiceListenerInfo*>* serviceListenerInfoVec );
+		virtual void notifyListenersAboutDeregisteredService( const string& bundleName, ServiceInfo* serviceInfo, vector<ServiceListenerInfo*>* serviceListenerInfoVec );
 
 		/**
 		 * All registered service are cached by using <code>ServiceInfo</code> objects. This method
@@ -163,7 +167,7 @@ class IRegistryImpl : public IRegistry
 		 * @param serviceInfo
 		 *				The object of type <code>ServiceInfo</code>.
 		 */
-		vector<ServiceInfo*>* addToServiceInfoVector( const string& serviceName, ServiceInfo* serviceInfo ) ;
+		virtual vector<ServiceInfo*>* addToServiceInfoVector( const string& serviceName, ServiceInfo* serviceInfo ) ;
 
 		/**
 		 * Removes a <code>ServiceInfo</code> object from the internal storage.
@@ -171,7 +175,7 @@ class IRegistryImpl : public IRegistry
 		 * @param serviceInfo
 		 *				The service info object which is removed.
 		 */
-		void removeFromServiceInfoVector( ServiceInfo* serviceInfo ) ;
+		virtual void removeFromServiceInfoVector( ServiceInfo* serviceInfo ) ;
 
 		/**
 		 * Helper method which returns the vector of <code>ServiceListenerInfo</code>
@@ -180,7 +184,7 @@ class IRegistryImpl : public IRegistry
 		 * @param serviceName
 		 *				The service name the <code>ServiceListenerInfo</code> objects are mapped to.
 		 */
-		vector<ServiceListenerInfo*>* getServiceListenerInfoVector( const string& serviceName ) ;
+		virtual vector<ServiceListenerInfo*>* getServiceListenerInfoVector( const string& serviceName ) ;
 
 		/**
 		 * Removes a service listener info object from the internal storage.
@@ -191,7 +195,7 @@ class IRegistryImpl : public IRegistry
 		 * @param serviceListener
 		 *				The service listener object.
 		 */
-		void removeFromServiceListenerInfoVector( const string& bundleName, IServiceListener::ConstPtr serviceListener );
+		virtual void removeFromServiceListenerInfoVector( const string& bundleName, const ServiceListenerInfo& info );
 
 		/**
 		 * Adds a <code>ServiceInfo</code> object to the bundle info storage.<br>
@@ -204,7 +208,7 @@ class IRegistryImpl : public IRegistry
 		 * @param serviceInfo
 		 *				The service info object which is stored.
 		 */
-		void addRegisteredServiceToBundleInfo( const string& bundleName, ServiceInfo* serviceInfo ) ;
+		virtual void addRegisteredServiceToBundleInfo( const string& bundleName, ServiceInfo* serviceInfo ) ;
 
 		/**
 		 * Removes a <code>ServiceInfo</code> object from the bundle info storage.<br>
@@ -217,7 +221,7 @@ class IRegistryImpl : public IRegistry
 		 * @param serviceInfo
 		 *				The service info object which is removed.
 		 */
-		void removeDeregisteredServiceFromBundleInfo( const string& bundleName, ServiceInfo* serviceInfo ) ;
+		virtual void removeDeregisteredServiceFromBundleInfo( const string& bundleName, ServiceInfo* serviceInfo ) ;
 
 		/**
 		 * Adds a <code>ServiceInfo</code> object representing a used service to the bundle
@@ -230,7 +234,7 @@ class IRegistryImpl : public IRegistry
 		 *				The <code>ServiceInfo</code> object representing a service
 		 *				which is used by the specified bundle.
 		 */
-		void addUsedServiceToBundleInfo( const string& bundleName, ServiceInfo* serviceInfo );
+		virtual void addUsedServiceToBundleInfo( const string& bundleName, ServiceInfo* serviceInfo );
 		
 		/**
 		 * Removes a <code>ServiceInfo</code> object representing a used service from the bundle
@@ -243,9 +247,46 @@ class IRegistryImpl : public IRegistry
 		 *				The <code>ServiceInfo</code> object representing a service
 		 *				which was used by the specified bundle.
 		 */
-		void removeUsedServiceFromBundleInfo( const string& bundleName, ServiceInfo* serviceInfo );
+		virtual void removeUsedServiceFromBundleInfo( const string& bundleName, ServiceInfo* serviceInfo );
+
+		/**
+		 * Returns true if the listener objects of the passed <code>ServiceListenerInfo</code> objects are equal.
+		 *
+		 * @param info1
+		 *				The first <code>ServiceListenerInfo</code> object.
+		 *
+		 * @param info2
+		 *				The second <code>ServiceListenerInfo</code> object.
+		 *
+		 * @return True, if objects are equal, otherwise false.
+		 */
+		virtual bool areServiceListenerObjectsEqual( const ServiceListenerInfo& info1, const ServiceListenerInfo& info2 );
+
+		/**
+		 * Sends an event to a service listener.
+		 * 
+		 * @param listenerInfo 
+		 *					The <code>ServiceListenerInfo</code> object describing the service listener which
+		 *					is notified.
+		 *
+		 * @param event
+		 *					The service event which is sent.
+		 */
+		virtual bool callServiceListenerObject( const ServiceListenerInfo& listenerInfo, const ServiceEvent& event );
+
+		/**
+		 * Creates a <code>ServiceReference</code> object.
+		 *
+		 * @param serviceInfo
+		 *				The <code>ServiceInfo</code> instance.
+		 * @return 
+		 *				The created <code>ServiceReference</code>.
+         */		
+		virtual ServiceReference createServiceReference( const ServiceInfo& serviceInfo );
 
 	public:
+
+		virtual ~IRegistryImpl();
 
 		/**
 		 * Adds a <code>BundleInfo</code> object to the registry.
@@ -253,7 +294,7 @@ class IRegistryImpl : public IRegistry
 		 * @param bundleInfo
 		 *			The <code>BundleInfo</code> object which describes a bundle.
 		 */
-		void addBundleInfo( BundleInfo* bundleInfo );
+		virtual void addBundleInfo( BundleInfo* bundleInfo );
 
 		/**
 		 * Returns the <code>BundleInfo</code> object of a specific bundle.
@@ -263,7 +304,7 @@ class IRegistryImpl : public IRegistry
 		 *
 		 * @return	The <code>BundleInfo</code> object.
 		 */
-		BundleInfo* getBundleInfo( const string& bundleName );
+		virtual BundleInfo* getBundleInfo( const string& bundleName );
 
 		/**
 		 * Returns all <code>BundleInfo</code> objects which are currently
@@ -272,7 +313,7 @@ class IRegistryImpl : public IRegistry
 		 * @return	A vector of <code>BundleInfo</code> objects.
 		 *
 		 */
-		vector<BundleInfo*> getBundleInfos();
+		virtual vector<BundleInfo*> getBundleInfos();
 
 		/**
 		 * Removes the <code>BundleInfo</code> object of a specific bundle.
@@ -280,13 +321,13 @@ class IRegistryImpl : public IRegistry
 		 * @param bundleName
 		 *				The name of the bundle whose bundle info object is removed.
 		 */
-		void removeBundleInfo( const string& bundleName );
+		virtual void removeBundleInfo( const string& bundleName );
 
 		/**
 		 * Removes all <code>BundleInfo</code> objects which are currently
 		 * stored in registry.		 
 		 */
-		void removeAllBundleInfos();
+		virtual void removeAllBundleInfos();
 
 		/**
 		 * Adds a <code>ServiceInfo</code> object to the registry.
@@ -300,7 +341,7 @@ class IRegistryImpl : public IRegistry
 		 * @param serviceInfo
 		 *				The <code>ServiceInfo</code> object describing the service.
 		 */
-		void addServiceInfo( const string& bundleName, const string& serviceName, ServiceInfo* serviceInfo ) ;
+		virtual IServiceRegistration::ConstPtr addServiceInfo( const string& bundleName, ServiceInfo* serviceInfo ) ;
 		
 		/**
 		 * Removes a <code>ServiceInfo</code> object from the registry.
@@ -311,7 +352,7 @@ class IRegistryImpl : public IRegistry
 		 * @param serviceInfo
 		 *				The <code>ServiceInfo</code> object describing the service.
 		 */
-		void removeServiceInfo( const string& bundleName, ServiceInfo* serviceInfo ) ;
+		virtual void removeServiceInfo( const string& bundleName, ServiceInfo* serviceInfo ) ;
 
 		/**
 		 * Returns the <code>ServiceInfo</code> object for a specific service.
@@ -321,7 +362,7 @@ class IRegistryImpl : public IRegistry
 		 *
 		 * @return A pointer to a vector of pointers to <code>ServiceInfo</code> objects.
 		 */
-		vector<ServiceInfo*>* getServiceInfo( const string &serviceName ) ;
+		virtual vector<ServiceInfo*>* getServiceInfo( const string &serviceName ) ;
 
 		/**
 		 * Adds a service listener object to the registry.
@@ -335,7 +376,7 @@ class IRegistryImpl : public IRegistry
 		 * @param serviceName
 		 *				The name of the service.
 		 */
-		void addServiceListener( const string& bundleName, IServiceListener::ConstPtr serviceListener, const string& serviceName ) ;
+		virtual void addServiceListener( const string& bundleName, ServiceListenerInfo* serviceListenerInfo ) ;
 		
 		/**
 		 * Removes a service listener object from the registry.
@@ -346,8 +387,8 @@ class IRegistryImpl : public IRegistry
 		 * @param serviceListener
 		 *				The pointer to the service listener object.
 		 */
-		void removeServiceListener( const string& bundleName, IServiceListener::ConstPtr serviceListener ) ;
-
+		virtual void removeServiceListener( const string& bundleName, const ServiceListenerInfo& info ) ;
+		
 };
 
 #include "IRegistryImpl.cpp"

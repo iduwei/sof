@@ -7,6 +7,9 @@
 #include "BundleInfo.h"
 #include "ServiceInfo.h"
 #include "ServiceListenerInfo.h"
+#include "IService.h"
+#include "Properties.h"
+#include "IServiceRegistration.h"
 
 using namespace std;
 
@@ -78,7 +81,7 @@ class IRegistry
 		 * @param serviceInfo
 		 *				The <code>ServiceInfo</code> object describing the service.
 		 */
-		virtual void addServiceInfo( const string& bundleName, const string& serviceName, ServiceInfo* serviceInfo ) = 0;
+		virtual IServiceRegistration::ConstPtr addServiceInfo( const string& bundleName, ServiceInfo* serviceInfo ) = 0;
 		
 		/**
 		 * Removes a <code>ServiceInfo</code> object from the registry.
@@ -113,7 +116,7 @@ class IRegistry
 		 * @param serviceName
 		 *				The name of the service.
 		 */
-		virtual void addServiceListener( const string& bundleName, IServiceListener::ConstPtr serviceListener, const string& serviceName ) = 0;
+		virtual void addServiceListener( const string& bundleName, ServiceListenerInfo* listenerInfo ) = 0;
 		
 		/**
 		 * Removes a service listener object from the registry.
@@ -124,8 +127,8 @@ class IRegistry
 		 * @param serviceListener
 		 *				The pointer to the service listener object.
 		 */
-		virtual void removeServiceListener( const string& bundleName, IServiceListener::ConstPtr serviceListener ) = 0;
-
+		virtual void removeServiceListener( const string& bundleName, const ServiceListenerInfo& info ) = 0;
+		
 };
 
 }}

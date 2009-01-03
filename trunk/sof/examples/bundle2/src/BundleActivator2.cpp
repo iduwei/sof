@@ -4,7 +4,7 @@
 
 #include "sof/instantiation/ObjectCreator.h"
 
-#include "IServiceA.h"
+#include "IMultiplier.h"
 
 using namespace std;
 using namespace sof::instantiation;
@@ -16,7 +16,7 @@ BundleActivator2::~BundleActivator2()
 
 void BundleActivator2::start(IBundleContext::ConstPtr context) 
 {
-	this->tracker = new ServiceTracker( context, "IServiceA", this );
+	this->tracker = new ServiceTracker( context, "IMultiplier", this );
 	this->tracker->startTracking();
 }
 
@@ -28,15 +28,15 @@ void BundleActivator2::stop(IBundleContext::ConstPtr context)
 
 bool BundleActivator2::addingService( const ServiceReference& ref )
 {
-	if ( ref.getServiceName() == "IServiceA" )
+	if ( ref.getServiceName() == "IMultiplier" )
 	{
 		Properties props = ref.getServiceProperties();
 		if ( props.get( "instance" ) == "1" )
 		{
-			this->service = static_cast<IServiceA*> ( ref.getService() );
-			cout << "[BundleActivator2#addingService] Calling IServiceA..." << endl;
-			int value = this->service->getValue();
-			cout << "[BundleActivator2#addingService] Returned value of IServiceA: " << value << endl;
+			this->service = static_cast<IMultiplier*> ( ref.getService() );
+			cout << "[BundleActivator2#addingService] Calling IMultiplier..." << endl;
+			int value = this->service->multiply( 47, 11 );
+			cout << "[BundleActivator2#addingService] Returned value of IMultiplier: " << value << endl;
 			return true;
 		}
 		else

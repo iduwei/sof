@@ -2,6 +2,7 @@
 #define SERVICE_REFERENCE_H
 
 #include <string>
+#include <sstream>
 
 #include "Properties.h"
 #include "IService.h"
@@ -19,7 +20,7 @@ using namespace sof::framework;
  */
 class ServiceReference 
 {
-	private:		
+	protected:		
 
 		/**
 		 * The name of the service.
@@ -53,12 +54,17 @@ class ServiceReference
 		ServiceReference( const string &name, const Properties &properties, const IService::ConstPtr serv );
 
 		/**
+		 * Destroys the <code>ServiceReference</code> object.
+		 */
+		virtual ~ServiceReference();
+
+		/**
 		 * Returns the service name.
 		 *
 		 * @return
 		 *		The name of the service.
 		 */
-		string getServiceName() const;
+		virtual string getServiceName() const;
 
 		/**
 		 * Returns the properties object.
@@ -66,7 +72,7 @@ class ServiceReference
 		 * @return
 		 *		The properties describing the service object.
 		 */
-		Properties getServiceProperties() const;
+		virtual Properties getServiceProperties() const;
 
 		/**
 		 * Returns a constant pointer to the service object.
@@ -74,7 +80,15 @@ class ServiceReference
 		 * @return
 		 *		The constant pointer to the service object.
 		 */
-		IService* getService() const;
+		virtual IService::ConstPtr getService() const;
+
+		/**
+		 * Returns the string representation of the <code>ServiceReference</code> object.
+		 *
+		 * @return 
+		 *		The string representation.
+		 */
+		virtual string toString() const;
 
 };
 

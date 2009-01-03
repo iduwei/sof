@@ -17,6 +17,7 @@
 #include "../instantiation/ObjectCreator.h"
 #include "../util/logging/Logger.h"
 #include "../util/logging/LoggerFactory.h"
+#include "../util/threading/SingleThreaded.h"
 
 using namespace std;
 
@@ -24,6 +25,7 @@ using namespace sof::config;
 using namespace sof::framework;
 using namespace sof::instantiation;
 using namespace sof::util::logging;
+using namespace sof::util::threading;
 using namespace sof::services::admin;
 
 namespace sof { namespace framework {
@@ -35,11 +37,11 @@ namespace sof { namespace framework {
  * for starting and stopping bundles.
  */
 template<
-	class ThreadingModel,
+	class ThreadingModel = SingleThreaded,
 	template <class> class CreationPolicy = NullCreator>
 class Launcher : public IAdministrationProvider
 {
-	private:
+	protected:
 
 		/**
 		 * The <code>ObjectCreator</code> instance which is used
@@ -52,12 +54,32 @@ class Launcher : public IAdministrationProvider
 		 * The registry object which holds all relevant data of
 		 * all bundles. It is the central administration object.
 		 */
-		IRegistryImpl<ThreadingModel> registry;
+		IRegistryImpl<ThreadingModel>* registry;		
 
 		/**
 		 * The logger instance.
 		 */
 		static Logger& logger;
+
+		/**
+		 * Creates the registry instance.
+		 *
+		 * @return
+		 *		The registry instance.
+		 */
+		virtual IRegistryImpl<ThreadingModel>* createRegistry();
+
+		/**
+		 * Creates the bundle context instances.
+		 *
+		 * @param bundleName
+		 *				The name of the bundle the bundle context object is
+	     *				created for.
+		 *
+		 * @return
+		 *				The bundle context instance.
+		 */
+		virtual IBundleContext* createBundleContext( const string& bundleName );
 
 	public:
 
@@ -67,6 +89,11 @@ class Launcher : public IAdministrationProvider
 		Launcher();
 
 		/**
+		 * Destroys the <code>Launcher</code> instance.
+		 */
+		virtual ~Launcher();
+
+		/**
 		 * Sets the log level of the framework. Defines
 		 * for example whether only error messages or
 		 * also debug messages shall be logged.		 
@@ -74,7 +101,7 @@ class Launcher : public IAdministrationProvider
 		 * @param level
 		 *			The log level (trace, debug, error).
 		 */
-		void setLogLevel( Logger::LogLevel level );
+		virtual void setLogLevel( Logger::LogLevel level );
 
 		/**
 		 * Starts bundles. The bundles which are started are
@@ -86,12 +113,12 @@ class Launcher : public IAdministrationProvider
 		 *				objects whereas each object describes what
 		 *				bundle shall be started.
 		 */
-		void start( vector<BundleConfiguration> &configuration );
+		virtual void start( vector<BundleConfiguration> &configuration );
 
 		/**
 		 * Stops all bundles which were started.
 		 */
-		void stop();
+		virtual void stop();
 
 		/**
 		 * Starts a specific bundle. Can be also called after
@@ -101,7 +128,7 @@ class Launcher : public IAdministrationProvider
 		 *				The object containing information which
 		 *				bundle must be started.
 		 */
-		void startBundle( BundleConfiguration bundleConfig );
+		virtual void startBundle( BundleConfiguration bundleConfig );
 
 		/**
 		 * Stops a bundle.
@@ -109,13 +136,13 @@ class Launcher : public IAdministrationProvider
 		 * @param bundleName
 		 *				The name of the bundle which is stopped.
 		 */
-		void stopBundle( const string& bundleName );
+		virtual void stopBundle( const string& bundleName );
 
 		/**
 		 * Starts the administration bundle (which
 		 * provides a console for user inputs).
 		 */
-		void startAdministrationBundle();
+		virtual void startAdministrationBundle();
 
 		/**
 		 * Returns the names of all started bundles.
@@ -123,7 +150,7 @@ class Launcher : public IAdministrationProvider
 		 * @return
 		 *		A vector containing all bundle names.
 		 */
-		vector<string> getBundleNames();			
+		virtual vector<string> getBundleNames();			
 
 		/**
 		 * Dumps all information (registered services,
@@ -137,7 +164,7 @@ class Launcher : public IAdministrationProvider
 		 *				A string containing all information
 		 *				about a bundle.
 		 */
-		string dumpBundleInfo( const string& bundleName );
+		virtual string dumpBundleInfo( const string& bundleName );
 
 		/**
 		 * Dumps the name of all started bundles.
@@ -145,7 +172,7 @@ class Launcher : public IAdministrationProvider
 		 * @return
 		 *			A string containing all bundle names.
 		 */
-		string dumpAllBundleNames();
+		virtual string dumpAllBundleNames();
 
 		/**
 		 * Returns the registry object.
@@ -153,7 +180,7 @@ class Launcher : public IAdministrationProvider
 		 * @return
 		 *			The registry object.
 		 */
-		IRegistry& getRegistry();
+		virtual IRegistry& getRegistry();
 };
 
 #include "Launcher.cpp"

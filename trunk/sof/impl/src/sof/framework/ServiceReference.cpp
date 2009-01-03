@@ -9,6 +9,10 @@ ServiceReference::ServiceReference( const string &name, const Properties &proper
 {
 }
 
+ServiceReference::~ServiceReference()
+{
+}
+
 string ServiceReference::getServiceName() const
 {
 	return this->serviceName;
@@ -19,7 +23,17 @@ Properties ServiceReference::getServiceProperties() const
 	return this->props;
 }
 
-IService* ServiceReference::getService() const
+IService::ConstPtr ServiceReference::getService() const
 {
 	return this->service;
+}
+
+string ServiceReference::toString() const
+{	
+	ostringstream refStream;
+	refStream << "ServiceReference={";
+	refStream << "serviceName=" << this->serviceName << ", ";
+	refStream << this->props.toString();
+	refStream << "}";
+	return refStream.str();
 }
