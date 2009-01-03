@@ -16,3 +16,14 @@ ServiceReference ServiceEvent::getReference() const
 {
 	return this->reference;
 }
+
+
+string ServiceEvent::toString() const
+{	
+	ostringstream eventStream;
+	eventStream << "ServiceEvent={";
+	eventStream << "type=" << this->type << ", ";
+	eventStream << this->reference.toString();
+	eventStream << "}";
+	return eventStream.str();
+}

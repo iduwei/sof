@@ -23,19 +23,20 @@ IBundleContextImpl::~IBundleContextImpl()
 IServiceRegistration* IBundleContextImpl::registerService( const string& className, IService::ConstPtr service, const Properties &dict )
 {
 	logger.log( Logger::DEBUG, "[IBundleContextImpl#registerService] Called, bundle name: %1, service name: %2", this->bundleName, className );
-	ServiceInfo *serviceInfo = new ServiceInfo( className, service, dict );
-	this->registry->addServiceInfo( this->bundleName, className, serviceInfo );
-	return new IServiceRegistrationImpl( bundleName, registry, serviceInfo );
+	ServiceInfo* serviceInfo = new ServiceInfo( className, service, dict );
+	return this->registry->addServiceInfo( this->bundleName, serviceInfo );
 }
 
 void IBundleContextImpl::addServiceListener( IServiceListener::ConstPtr serviceListener, const string &serviceName )
 {
-	logger.log( Logger::DEBUG, "[IBundleContextImpl#addServiceListener] Called, bundle name: %1, service name: %2", this->bundleName, serviceName );
-	this->registry->addServiceListener( this->bundleName, serviceListener, serviceName );
+	logger.log( Logger::DEBUG, "[IBundleContextImpl#addServiceListener] Called, bundle name: %1, service name: %2", this->bundleName, serviceName );	
+	ServiceListenerInfo* listenerInfo = new ServiceListenerInfo( bundleName, serviceName, serviceListener );	
+	this->registry->addServiceListener( this->bundleName, listenerInfo );
 }
 
 void IBundleContextImpl::removeServiceListener( IServiceListener::ConstPtr serviceListener )
 {
 	logger.log( Logger::DEBUG, "[IBundleContextImpl#removeServiceListener] Called, bundle name: %1", this->bundleName );	
-	this->registry->removeServiceListener( this->bundleName, serviceListener );
+	ServiceListenerInfo info( bundleName, "", serviceListener );
+	this->registry->removeServiceListener( this->bundleName, info );
 }

@@ -5,14 +5,14 @@
 #include "sof/framework/IBundleContext.h"
 #include "sof/framework/IServiceRegistration.h"
 
-#include "IServiceA.h"
+#include "IMultiplier.h"
 
 using namespace sof::framework;
 
 class BundleActivator1 : public IBundleActivator
 {
 	private:
-		IServiceA* service;
+		IMultiplier* service;
 		IServiceRegistration* serviceReg;
 
 	public:

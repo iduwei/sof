@@ -42,7 +42,17 @@ bool Properties::operator==( const Properties& props )
 	}
 }
 
-int Properties::getSize()
+int Properties::getSize() const
 {
 	return this->mapper.size();
+}
+
+map<string,string>::const_iterator Properties::begin() const
+{
+	return this->mapper.begin();
+}
+
+map<string,string>::const_iterator Properties::end() const
+{
+	return this->mapper.end();
 }

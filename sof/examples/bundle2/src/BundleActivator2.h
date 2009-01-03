@@ -6,7 +6,7 @@
 #include "sof/framework/IServiceTrackerCustomizer.h"
 #include "sof/framework/ServiceTracker.h"
 
-#include "IServiceA.h"
+#include "IMultiplier.h"
 
 using namespace sof::framework;
 
@@ -14,7 +14,7 @@ class BundleActivator2 : public IBundleActivator, public IServiceTrackerCustomiz
 {
 	private:
 		ServiceTracker* tracker;
-		IServiceA* service;
+		IMultiplier* service;
 
 	public:
 		virtual ~BundleActivator2();

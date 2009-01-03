@@ -22,7 +22,7 @@ using namespace sof::framework;
  */
 class ServiceListenerInfo
 {
-	private:
+	protected:
 
 		/**
 		 * The name of the bundle the service listener belongs to.
@@ -63,7 +63,7 @@ class ServiceListenerInfo
 		/**
 		 * Destroys the object.
 		 */
-		~ServiceListenerInfo();
+		virtual ~ServiceListenerInfo();
 
 		/**
 		 * Returns the bundle name.
@@ -71,7 +71,7 @@ class ServiceListenerInfo
 		 * @return 
 		 *			The name of the bundle.
 		 */
-		string getBundleName() const;
+		virtual string getBundleName() const;
 		
 		/**
 		 * Returns the service name.
@@ -79,7 +79,7 @@ class ServiceListenerInfo
 		 * @return 
 		 *		The name of the service.
 		 */
-		string getServiceName() const;
+		virtual string getServiceName() const;
 		
 		/**
 		 * Returns the service listener object.
@@ -87,7 +87,7 @@ class ServiceListenerInfo
 		 * @return 
 		 *		A constant pointer to the service listener object.
 		 */
-		IServiceListener::ConstPtr getServiceListenerObj() const;
+		virtual IServiceListener::ConstPtr getServiceListenerObj() const;
 		
 		/**
 		 * Compares to instances of <code>ServiceListenerInfo</code>
@@ -97,7 +97,7 @@ class ServiceListenerInfo
 		 *			True if the <code>ServiceListenerInfo</code> objects
 		 *			are equal, otherwise false.
 		 */
-		bool operator==( const ServiceListenerInfo& info1 );
+		virtual bool operator==( const ServiceListenerInfo& info1 );
 		
 		/**
 		 * Returns a string representation of the 
@@ -107,7 +107,7 @@ class ServiceListenerInfo
 		 *		A string containing all data of the
 		 *		<code>ServiceListenerInfo</code>.
 		 */
-		string toString() const;
+		virtual string toString() const;
 };
 
 }}

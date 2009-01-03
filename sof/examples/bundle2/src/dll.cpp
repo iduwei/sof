@@ -23,7 +23,7 @@ BOOL APIENTRY DllMain( HANDLE hModule,
                        DWORD  ul_reason_for_call, 
                        LPVOID lpReserved
 					 )
-{				
+{		
 	if(ul_reason_for_call==DLL_THREAD_ATTACH)
 	{
 	  LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[bundle2_dll#DllMain] Called, dll thread attach." );

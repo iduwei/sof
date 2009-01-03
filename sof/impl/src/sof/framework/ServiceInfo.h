@@ -25,7 +25,7 @@ using namespace sof::framework;
  */
 class ServiceInfo
 {
-	private:
+	protected:
 
 		/**
 		 * Defines a constant pointer to the service object.
@@ -66,7 +66,7 @@ class ServiceInfo
 		/**
 		 * Destroys the <code>ServiceInfo</code> object.
 		 */
-		~ServiceInfo();
+		virtual ~ServiceInfo();
 
 		/**
 		 * Returns the service name.
@@ -74,7 +74,7 @@ class ServiceInfo
 		 * @return
 		 *		The name of the service.
 		 */
-		string getServiceName() const;
+		virtual string getServiceName() const;
 
 		/**
 		 * Returns the properties of the service.
@@ -82,7 +82,7 @@ class ServiceInfo
 		 * @return
 		 *			The properties object.
 		 */
-		Properties getProperties() const;
+		virtual Properties getProperties() const;
 
 		/**
 		 * Returns a constant pointer to the service object.
@@ -90,7 +90,7 @@ class ServiceInfo
 		 * @return
 		 *			The service object.
 		 */
-		IService::ConstPtr getService() const;
+		virtual IService::ConstPtr getService() const;
 
 		/**
 		 * Returns a string representation of the
@@ -100,7 +100,7 @@ class ServiceInfo
 		 *		A string containing all data of the 
 		 *		<code>ServiceInfo</code> object.
 		 */
-		string toString() const;
+		virtual string toString() const;
 
 		/**
 		 * Compares two <code>ServiceInfo</code> objects.
@@ -109,7 +109,7 @@ class ServiceInfo
 		 *		True, if the passed service info object 
 		 *		is equal to this object, otherwise false.
 		 */
-		bool operator==( const ServiceInfo& serviceInfo1 );
+		virtual bool operator==( const ServiceInfo& serviceInfo1 );
 };
 
 }}

@@ -74,7 +74,23 @@ class Properties
 		 * Returns the number of entries in the 
 		 * <code>Properties</code> object.
 		 */
-		int getSize();
+		int getSize() const;
+
+		/**
+		 * Returns an iterator for the internal map structure.
+		 *
+		 * @return
+		 *		The iterator instance.
+		 */
+		map<string,string>::const_iterator begin() const;
+
+		/**
+		 * Returns an iterator for the internal map structure.
+		 *
+		 * @return
+		 *		The iterator instance.
+		 */
+		map<string,string>::const_iterator end() const;
 
 };
 

@@ -4,23 +4,21 @@
 #include <stdexcept>
 #include <string>
 
+#include "../framework/SOFException.h"
+
 namespace sof { namespace config {
 
 using namespace std;
+
+using namespace sof::framework;
 
 /**
  * The <code>ConfigurationException</code> indicates that
  * something went wrong during reading configuration file.<br>
  * See class {@link sof::config::ConfigFileReader}.
  */
-class ConfigurationException : public exception
+class ConfigurationException : public SOFException
 {
-	private:
-
-		/**
-		 * The message which describes the occured exception.
-		 */
-		string message;
 
 	public:
 
@@ -32,10 +30,7 @@ class ConfigurationException : public exception
 		 */
 		ConfigurationException( const string &msg );
 
-		/**
-		 * Returns the message text.
-		 */
-		const char* what() const;
+
 };
 
 }}

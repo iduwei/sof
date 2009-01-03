@@ -3,8 +3,8 @@
 #include "sof/instantiation/ObjectCreator.h"
 #include "sof/framework/Properties.h"
 
-#include "IServiceA.h"
-#include "IServiceAImpl.h"
+#include "IMultiplier.h"
+#include "IMultiplierImpl.h"
 
 using namespace sof::instantiation;
 using namespace sof::framework;
@@ -19,8 +19,8 @@ void BundleActivator1::start(IBundleContext::ConstPtr context)
 	Properties props;
 	props.put( "instance", "1" );
 
-	this->service = new IServiceAImpl();
-	this->serviceReg = context->registerService( "IServiceA", this->service, props ); 
+	this->service = new IMultiplierImpl();	
+	this->serviceReg = context->registerService( "IMultiplier", this->service, props ); 
 }
 
 void BundleActivator1::stop(IBundleContext::ConstPtr context) 

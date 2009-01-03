@@ -1,11 +1,15 @@
 #ifndef SERVICE_EVENT_H
 #define SERVICE_EVENT_H
 
+#include <string>
+#include <sstream>
+
 #include "ServiceReference.h"
 
 namespace sof { namespace framework {
 
 using namespace sof::framework;
+using namespace std;
 
 /**
  * The <code>ServiceEvent</code> class describes
@@ -68,6 +72,14 @@ class ServiceEvent
 		 *			The <code>ServiceReference</code> object.
 		 */
 		ServiceReference getReference() const;
+
+		/**
+		 * Returns a string representation of the <code>ServiceEvent</code> object.
+		 *
+		 * @return
+		 *			The string representation.
+		 */
+		string toString() const;
 
 };
 

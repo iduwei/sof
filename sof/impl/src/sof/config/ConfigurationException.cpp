@@ -1,12 +1,9 @@
 #include "ConfigurationException.h"
 
 using namespace sof::config;
+using namespace sof::framework;
 
-ConfigurationException::ConfigurationException( const string &msg ) : message( msg )
+ConfigurationException::ConfigurationException( const string &msg ) : SOFException( msg )
 {
 
-}
-const char* ConfigurationException::what() const
-{
-	return this->message.c_str();
 }
