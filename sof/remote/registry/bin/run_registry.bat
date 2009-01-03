@@ -1,0 +1,1 @@
+.\registry.exe -ORBNamingAddr inet:localhost:5000 &
