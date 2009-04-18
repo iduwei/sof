@@ -1,9 +1,9 @@
-idl.exe --c++-suffix=cpp RemoteRegistry.idl
+idl.exe --c++-suffix=cpp CORBAObjects.idl
 
-copy RemoteRegistry.cpp ..\common\src\sof\framework\remote\corba\registry\generated
-copy RemoteRegistry.h ..\common\src\sof\framework\remote\corba\registry\generated
+copy CORBAObjects.cpp ..\common\src\sof\framework\remote\corba\generated
+copy CORBAObjects.h ..\common\src\sof\framework\remote\corba\generated
 
 
-del RemoteRegistry.cpp
-del RemoteRegistry.h
+del CORBAObjects.cpp
+del CORBAObjects.h
 
