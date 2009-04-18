@@ -1,8 +1,8 @@
 #include <CORBA.h>
 #include <coss/CosNaming.h>
 #include "sof/framework/remote/corba/CORBAHelper.h"
-#include "sof/framework/remote/corba/namingservice/NamingService.h"
-#include "sof/framework/remote/corba/registry/RemoteRegistryImpl.h"
+#include "sof/framework/remote/corba/namingservice/CORBANamingService.h"
+#include "sof/framework/remote/corba/registry/CORBARegistryImpl.h"
 #include "sof/framework/remote/corba/RemoteSOFLauncher.h"
 
 #include <list>
@@ -16,8 +16,6 @@ using namespace sof::framework::remote::corba::registry;
 
 int main( int argc, char **argv)
 {
-	RemoteSOFLauncher<> launcher;
-
 	vector<string> args;
 
 	for ( int i=0; i<argc; i++ )
@@ -26,7 +24,7 @@ int main( int argc, char **argv)
 	}
 
 	CORBAHelper corbaHelper( args );
-	RemoteRegistryImpl registry;
+	CORBARegistryImpl registry;
 	CORBA::Object_var obj = corbaHelper.activateObject( &registry );
 	corbaHelper.registerObject( obj, CORBAHelper::REMOTE_REGISTRY_PATH, CORBAHelper::REMOTE_REGISTRY_NAME );
 	cout << "Registry service started!" << endl;

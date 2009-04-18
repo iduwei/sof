@@ -38,15 +38,24 @@ module sof {
 
 	interface RemoteRegistryObserver 
 	{		
+		void ping();
 		void registerService( in string bundleName, in string serviceName, in RemoteService service, in RemoteServiceProps props );
 		void registerServiceListener( in string bundleName, in string serviceName, in RemoteServiceListener listener );
+		
+		void unregisterService( in string bundleName, in string serviceName, in RemoteService service, in RemoteServiceProps props );
+		void unregisterServiceListener( in string bundleName, in string serviceName, in RemoteServiceListener listener );
+		
 	};
 
 	interface RemoteRegistry 
 	{
 		void addRegistryObserver( in RemoteRegistryObserver observer );		
+		
 		void registerService( in string bundleName, in string serviceName, in RemoteService service, in RemoteServiceProps props );
 		void registerServiceListener( in string bundleName, in string serviceName, in RemoteServiceListener listener );
+		
+		void unregisterService( in string bundleName, in string serviceName, in RemoteService service, in RemoteServiceProps props );
+		void unregisterServiceListener( in string bundleName, in string serviceName, in RemoteServiceListener listener );
 	};
 
 
