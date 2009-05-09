@@ -10,7 +10,7 @@
 
 #ifdef WIN
 #include "sof/framework/Launcher.h"
-#include "sof/framework/BundleInfo.h"
+#include "sof/framework/BundleInfoBase.h"
 #include "sof/framework/IRegistry.h"
 #include "sof/config/BundleConfiguration.h"
 #include "sof/util/logging/Logger.h"
@@ -41,7 +41,7 @@ class TestHelper
 
 int TestHelper::isServiceListenerRegisteredByBundle( IRegistry& reg, const string& bundleName, const string& serviceName )
 {
-	BundleInfo* bi = reg.getBundleInfo( bundleName );	
+	BundleInfoBase* bi = reg.getBundleInfo( bundleName );	
 	vector<ServiceListenerInfo*> serviceListenerInfos = bi->getRegisteredListeners();
 	vector<ServiceListenerInfo*>::iterator iter;
 	int counter = 0;
@@ -58,7 +58,7 @@ int TestHelper::isServiceListenerRegisteredByBundle( IRegistry& reg, const strin
 
 int TestHelper::isServiceRegisteredByBundle( IRegistry& registry, const string& bundleName, const string& serviceName, int propsSize )
 {
-	BundleInfo* bi = registry.getBundleInfo( bundleName );	
+	BundleInfoBase* bi = registry.getBundleInfo( bundleName );	
 	vector<ServiceInfo*> serviceInfos = bi->getRegisteredServices();
 	vector<ServiceInfo*>::iterator iter;
 	int foundCounter = 0;
@@ -75,7 +75,7 @@ int TestHelper::isServiceRegisteredByBundle( IRegistry& registry, const string& 
 
 int TestHelper::isServiceUsedByBundle( IRegistry& registry, const string& bundleName, const string& serviceName, int propsSize )
 {
-	BundleInfo* bi = registry.getBundleInfo( bundleName );	
+	BundleInfoBase* bi = registry.getBundleInfo( bundleName );	
 	vector<ServiceInfo*> serviceInfos = bi->getUsedServices();
 	vector<ServiceInfo*>::iterator iter;
 	int foundCounter = 0;
@@ -92,14 +92,14 @@ int TestHelper::isServiceUsedByBundle( IRegistry& registry, const string& bundle
 
 int TestHelper::isServiceListenerRegisteredByBundle( IRegistry& reg, const string& bundleName )
 {
-	BundleInfo* bi = reg.getBundleInfo( bundleName );	
+	BundleInfoBase* bi = reg.getBundleInfo( bundleName );	
 	vector<ServiceListenerInfo*> serviceListenerInfos = bi->getRegisteredListeners();
 	return serviceListenerInfos.size();
 }
 
 bool TestHelper::isBundleStarted( IRegistry& reg, const string& bundleName )
 {
-	BundleInfo* bi = reg.getBundleInfo( bundleName );	
+	BundleInfoBase* bi = reg.getBundleInfo( bundleName );	
 	if ( bi == 0 )
 	{
 		return false;
@@ -112,14 +112,14 @@ bool TestHelper::isBundleStarted( IRegistry& reg, const string& bundleName )
 
 int TestHelper::isServiceRegisteredByBundle( IRegistry& registry, const string& bundleName )
 {
-	BundleInfo* bi = registry.getBundleInfo( bundleName );	
+	BundleInfoBase* bi = registry.getBundleInfo( bundleName );	
 	vector<ServiceInfo*> serviceInfos = bi->getRegisteredServices();
 	return serviceInfos.size();
 }
 
 int TestHelper::isServiceUsedByBundle( IRegistry& registry, const string& bundleName )
 {
-	BundleInfo* bi = registry.getBundleInfo( bundleName );	
+	BundleInfoBase* bi = registry.getBundleInfo( bundleName );	
 	vector<ServiceInfo*> serviceInfos = bi->getUsedServices();
 	return serviceInfos.size();
 }

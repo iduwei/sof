@@ -295,6 +295,7 @@ BaseT* ObjectCreator<BaseT,CreationPolicy>::createObjectFromDll( const string &p
 }
 
 #define REGISTER_BUNDLE_ACTIVATOR_CLASS(key,subType) REGISTER_CLASS(key,IBundleActivator,subType)
+#define REGISTER_REMOTE_BUNDLE_ACTIVATOR_CLASS(key,subType) REGISTER_CLASS(key,IRemoteBundleActivator,subType)
 
 #define REGISTER_CLASS(key,baseType,subType) \
 class Register##baseType##with##subType \

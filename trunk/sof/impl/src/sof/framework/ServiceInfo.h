@@ -46,8 +46,10 @@ class ServiceInfo
 		 * The logger instance.
 		 */
 		static Logger& logger;
-
+		
 	public:
+
+		virtual bool equals( const ServiceInfo& info1, const ServiceInfo& info2 );
 
 		/**
 		 * Creates instances of class <code>ServiceInfo</code>.

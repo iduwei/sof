@@ -21,7 +21,7 @@ typedef ObjVar< Speaker > Speaker_var;
 typedef ObjOut< Speaker > Speaker_out;
 
 
-#include "../../../common/src/sof/framework/remote/corba/generated/CORBAObjects.h"
+#include "sof/framework/remote/corba/generated/CORBAObjects.h"
 
 
 /*

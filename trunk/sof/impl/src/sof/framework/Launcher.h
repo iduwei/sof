@@ -54,7 +54,7 @@ class Launcher : public IAdministrationProvider
 		 * The registry object which holds all relevant data of
 		 * all bundles. It is the central administration object.
 		 */
-		IRegistryImpl<ThreadingModel>* registry;		
+		IRegistry* registry;		
 
 		/**
 		 * The logger instance.
@@ -67,7 +67,7 @@ class Launcher : public IAdministrationProvider
 		 * @return
 		 *		The registry instance.
 		 */
-		virtual IRegistryImpl<ThreadingModel>* createRegistry();
+		virtual IRegistry* createRegistry();
 
 		/**
 		 * Creates the bundle context instances.

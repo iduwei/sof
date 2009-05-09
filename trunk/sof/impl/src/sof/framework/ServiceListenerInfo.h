@@ -99,6 +99,8 @@ class ServiceListenerInfo
 		 */
 		virtual bool operator==( const ServiceListenerInfo& info1 );
 		
+		virtual bool equals( const ServiceListenerInfo& info1, const ServiceListenerInfo& info2 );
+
 		/**
 		 * Returns a string representation of the 
 		 * <code>ServiceListenerInfo</code> object.

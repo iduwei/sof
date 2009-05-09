@@ -41,9 +41,15 @@ string ServiceInfo::toString() const
 
 bool ServiceInfo::operator==( const ServiceInfo& serviceInfo1 )
 {
-	if ( this->serviceName == serviceInfo1.getServiceName() &&
-		this->props == serviceInfo1.getProperties() &&
-		this->service == serviceInfo1.getService() )
+	return this->equals( (*this), serviceInfo1 );
+}
+
+bool ServiceInfo::equals( const ServiceInfo& info1, const ServiceInfo& info2 )
+{
+	logger.log( Logger::DEBUG, "[ServiceInfo#equals] Called." );	
+	if ( info1.getServiceName() == info2.getServiceName() &&
+		info1.getProperties() == info2.getProperties() &&
+		info1.getService() == info2.getService() )
 	{
 		return true;
 	}

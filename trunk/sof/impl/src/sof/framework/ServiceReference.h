@@ -35,7 +35,7 @@ class ServiceReference
 		/**
 		 * The constant pointer to the service object.
 		 */
-		IService::ConstPtr service;
+		IService* service;
 
 	public:
 
@@ -52,6 +52,10 @@ class ServiceReference
 		 *			The service object.
 		 */
 		ServiceReference( const string &name, const Properties &properties, const IService::ConstPtr serv );
+
+		ServiceReference( const ServiceReference& serviceRef );
+
+		virtual ServiceReference &operator=( const ServiceReference &serviceRef );
 
 		/**
 		 * Destroys the <code>ServiceReference</code> object.
