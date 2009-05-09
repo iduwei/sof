@@ -1,0 +1,1 @@
+.\Main.exe -nolog -ORBNamingAddr inet:localhost:5000 &

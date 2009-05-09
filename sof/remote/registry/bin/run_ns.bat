@@ -1,0 +1,1 @@
+..\..\corba\bin\nsd -ORBIIOPAddr inet:localhost:5000 &
