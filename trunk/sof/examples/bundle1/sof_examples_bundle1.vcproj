@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="8,00"
+	Version="9,00"
 	Name="sof_examples_bundle1"
 	ProjectGUID="{98E0C29C-B4D8-4255-888D-A33D291BBFAC}"
 	RootNamespace="sof_examples_bundle1"
 	Keyword="Win32Proj"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -63,6 +64,8 @@
 				Name="VCLinkerTool"
 				AdditionalDependencies="kernel32.lib sof.lib $(NOINHERIT)"
 				AdditionalLibraryDirectories="..\..\impl\bin"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -81,9 +84,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"

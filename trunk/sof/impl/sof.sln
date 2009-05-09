@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual C++ Express 2005
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual C++ Express 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof", "sof.vcproj", "{13262EFC-93BD-4D96-8698-EABCAE205144}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_test", "..\test\sof_test.vcproj", "{3E6E4359-71BE-4984-A388-4C7F371028AC}"
