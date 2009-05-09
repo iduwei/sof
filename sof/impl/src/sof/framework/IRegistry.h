@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "BundleInfo.h"
+#include "BundleInfoBase.h"
 #include "ServiceInfo.h"
 #include "ServiceListenerInfo.h"
 #include "IService.h"
@@ -34,7 +34,7 @@ class IRegistry
 		 * @param bundleInfo
 		 *			The <code>BundleInfo</code> object which describes a bundle.
 		 */
-		virtual void addBundleInfo( BundleInfo* bundleInfo ) = 0;
+		virtual void addBundleInfo( BundleInfoBase* bundleInfo ) = 0;
 
 		/**
 		 * Returns the <code>BundleInfo</code> object of a specific bundle.
@@ -44,7 +44,7 @@ class IRegistry
 		 *
 		 * @return	The <code>BundleInfo</code> object.
 		 */
-		virtual BundleInfo* getBundleInfo( const string& bundleName ) = 0;
+		virtual BundleInfoBase* getBundleInfo( const string& bundleName ) = 0;
 
 		/**
 		 * Returns all <code>BundleInfo</code> objects which are currently
@@ -53,7 +53,7 @@ class IRegistry
 		 * @return	A vector of <code>BundleInfo</code> objects.
 		 *
 		 */
-		virtual vector<BundleInfo*> getBundleInfos() = 0;
+		virtual vector<BundleInfoBase*> getBundleInfos() = 0;
 
 		/**
 		 * Removes the <code>BundleInfo</code> object of a specific bundle.

@@ -1,0 +1,67 @@
+// -*- c++ -*-
+
+module sof { 
+	module framework {
+		module remote {
+			module corba {
+				module generated {
+
+	interface CORBAService
+	{
+	};
+
+	struct CORBAServiceProps
+	{
+		sequence<string> keys;
+		sequence<string> values;
+	};	
+
+	struct CORBAServiceReference
+	{
+		string serviceName;
+		CORBAServiceProps props;
+		CORBAService service;
+	};
+
+	struct CORBAServiceEvent
+	{
+		short serviceType;
+		CORBAServiceReference serviceRef;
+	};	
+	
+	
+	interface CORBAServiceListener
+	{	
+		boolean serviceChanged( in CORBAServiceEvent serviceEvent );
+	};
+
+	interface CORBARegistryObserver 
+	{		
+		void ping();
+		void registerService( in string bundleName, in string serviceName, in CORBAService service, in CORBAServiceProps props );
+		void registerServiceListener( in string bundleName, in string serviceName, in CORBAServiceListener listener );
+		
+		void unregisterService( in string bundleName, in string serviceName, in CORBAService service, in CORBAServiceProps props );
+		void unregisterServiceListener( in string bundleName, in string serviceName, in CORBAServiceListener listener );
+		
+	};
+
+	interface CORBARegistry 
+	{
+		void addRegistryObserver( in CORBARegistryObserver observer );		
+		
+		void registerService( in string bundleName, in string serviceName, in CORBAService service, in CORBAServiceProps props );
+		void registerServiceListener( in string bundleName, in string serviceName, in CORBAServiceListener listener );
+		
+		void unregisterService( in string bundleName, in string serviceName, in CORBAService service, in CORBAServiceProps props );
+		void unregisterServiceListener( in string bundleName, in string serviceName, in CORBAServiceListener listener );
+	};
+
+
+};
+};
+};
+};
+};
+
+

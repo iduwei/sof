@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\impl\src;..\corba_include\pthreads;..\common\src;..\corba_include;..\corba_include\windows"
+				AdditionalIncludeDirectories="..\..\impl\src;..\corba\include\pthreads;..\impl\src;..\corba\include;..\corba\include\windows"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -64,7 +64,7 @@
 				AdditionalDependencies="kernel32.lib idl2312.lib mico2312.lib micocoss2312.lib pthreadVC2.lib sof_remote.lib $(NOINHERIT)"
 				OutputFile=".\bin\registry.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\common\bin;..\corba_libs"
+				AdditionalLibraryDirectories="..\impl\bin;..\corba\libs"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"

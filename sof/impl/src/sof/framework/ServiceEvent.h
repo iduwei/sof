@@ -35,7 +35,7 @@ class ServiceEvent
 		 * The service reference which represents
 		 * the service whose lifecycle changed.
 		 */
-		ServiceReference reference;
+		ServiceReference &reference;
 
 	public:
 
@@ -55,7 +55,7 @@ class ServiceEvent
 		 * @param reference
 		 *				Describes the service.
 		 */
-		ServiceEvent( const int &type, const ServiceReference &reference );
+		ServiceEvent( const int &type, ServiceReference &reference );
 
 		/**
 		 * Returns the type of the event.
@@ -71,7 +71,7 @@ class ServiceEvent
 		 * @return
 		 *			The <code>ServiceReference</code> object.
 		 */
-		ServiceReference getReference() const;
+		ServiceReference& getReference() const;
 
 		/**
 		 * Returns a string representation of the <code>ServiceEvent</code> object.

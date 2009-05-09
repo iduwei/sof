@@ -35,9 +35,14 @@ IServiceListener::ConstPtr ServiceListenerInfo::getServiceListenerObj() const
 
 bool ServiceListenerInfo::operator==( const ServiceListenerInfo& info1 ) 
 {
-	if ( this->bundleName == info1.getBundleName() &&
-		this->serviceListenerObj == info1.getServiceListenerObj() &&
-		this->serviceName == info1.getServiceName() )
+	return this->equals( info1, (*this) );
+}
+
+bool ServiceListenerInfo::equals( const ServiceListenerInfo& info1, const ServiceListenerInfo& info2 ) 
+{
+	if ( info2.getBundleName() == info1.getBundleName() &&
+		info2.getServiceListenerObj() == info1.getServiceListenerObj() &&
+		info2.getServiceName() == info1.getServiceName() )
 	{
 		return true;
 	}

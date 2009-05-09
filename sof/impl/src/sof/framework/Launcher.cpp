@@ -43,7 +43,7 @@ void Launcher<ThreadingModel, CreationPolicy>::setLogLevel( Logger::LogLevel lev
 template<
 	class ThreadingModel,
 	template <class> class CreationPolicy>
-IRegistryImpl<ThreadingModel>* Launcher<ThreadingModel, CreationPolicy>::createRegistry()
+IRegistry* Launcher<ThreadingModel, CreationPolicy>::createRegistry()
 {
 	logger.log( Logger::DEBUG, "[Launcher#createRegistry] Called." );
 	return new IRegistryImpl<ThreadingModel>;
@@ -93,7 +93,7 @@ void Launcher<ThreadingModel, CreationPolicy>::start( vector<BundleConfiguration
 
 		IBundleContext* bundleCtxt = this->createBundleContext( bundleConfig.getBundleName() );
 		
-		BundleInfo* bundleInfo = new BundleInfo( bundleConfig.getBundleName(), bundleActivator, bundleCtxt );		
+		BundleInfoBase* bundleInfo = new BundleInfo( bundleConfig.getBundleName(), bundleActivator, bundleCtxt );		
 		this->registry->addBundleInfo( bundleInfo );
 
 		logger.log( Logger::DEBUG, "[Launcher#start] Start bundle." );
@@ -111,7 +111,7 @@ void Launcher<ThreadingModel, CreationPolicy>::startAdministrationBundle()
 	IBundleActivator* adminBundleActivator = this->objectCreator.createObject( "sof::services::admin::AdministrationActivator" );
 	IBundleContext* bundleCtxt = this->createBundleContext( "AdministrationBundle" );
 		
-	BundleInfo* bundleInfo = new BundleInfo( "AdministrationBundle", adminBundleActivator, bundleCtxt );		
+	BundleInfoBase* bundleInfo = new BundleInfo( "AdministrationBundle", adminBundleActivator, bundleCtxt );		
 	this->registry->addBundleInfo( bundleInfo );
 
 	logger.log( Logger::DEBUG, "[Launcher#start] Start bundle." );
@@ -156,8 +156,8 @@ template<
 vector<string> Launcher<ThreadingModel, CreationPolicy>::getBundleNames()
 {
 	vector<string> bundleNameVec;
-	vector<BundleInfo*> vec = this->registry->getBundleInfos();
-	vector<BundleInfo*>::iterator iter;
+	vector<BundleInfoBase*> vec = this->registry->getBundleInfos();
+	vector<BundleInfoBase*>::iterator iter;
 	for ( iter = vec.begin(); iter != vec.end(); iter++ )
 	{
 		bundleNameVec.push_back( (*iter)->getBundleName() );
@@ -170,7 +170,7 @@ template<
 	template <class> class CreationPolicy>
 string Launcher<ThreadingModel, CreationPolicy>::dumpBundleInfo( const string& bundleName )
 {
-	BundleInfo* bi = this->registry->getBundleInfo( bundleName );
+	BundleInfoBase* bi = this->registry->getBundleInfo( bundleName );
 	if ( bi == 0 )
 	{
 		return "Bundle not available!";
@@ -186,8 +186,8 @@ template<
 	template <class> class CreationPolicy>
 string Launcher<ThreadingModel, CreationPolicy>::dumpAllBundleNames()
 {
-	vector<BundleInfo*> vec = this->registry->getBundleInfos();
-	vector<BundleInfo*>::iterator it;
+	vector<BundleInfoBase*> vec = this->registry->getBundleInfos();
+	vector<BundleInfoBase*>::iterator it;
 	
 	ostringstream stream;
 	stream << "*** Started Bundles *** " << endl;

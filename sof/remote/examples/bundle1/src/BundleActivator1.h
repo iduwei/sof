@@ -13,8 +13,11 @@ using namespace sof::framework::remote::corba;
 class BundleActivator1 : public IRemoteBundleActivator
 {
 	private:
-		IServiceRegistration* serviceReg;
-		SpeakerImpl* service;
+		IServiceRegistration* serviceReg1;
+		SpeakerImpl* service1;
+
+		IServiceRegistration* serviceReg2;
+		SpeakerImpl* service2;
 
 	public:
 		virtual ~BundleActivator1();

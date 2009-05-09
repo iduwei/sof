@@ -1,0 +1,8 @@
+// -*- c++ -*-
+
+#include "CORBAObjects.idl"
+
+interface Speaker : sof::framework::remote::corba::generated::CORBAService
+{
+	void sayHello( in string text );
+};

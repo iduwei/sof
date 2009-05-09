@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "BundleInfo.h"
+#include "BundleInfoBase.h"
 #include "ServiceInfo.h"
 #include "ServiceListenerInfo.h"
 #include "IServiceListener.h"
@@ -58,7 +58,7 @@ class IRegistryImpl : public IRegistry
 		 * The vector storing <code>BundleInfo</code> objects
 		 * which hold all bundle relevant data.
 		 */
-		vector<BundleInfo*> bundleInfoVec;
+		vector<BundleInfoBase*> bundleInfoVec;
 
 		/**
 		 * Stores vectors of <code>ServiceInfo</code> objects 
@@ -77,6 +77,10 @@ class IRegistryImpl : public IRegistry
 		 * the service name they are listen for.
 		 */
 		map<string, vector<ServiceListenerInfo*>* > serviceListenerMap;		
+
+		virtual void stopActivator( BundleInfoBase* bi ) ;
+
+		virtual void deleteActivator( BundleInfoBase* bi );
 
 		/**
 		 * Notifies service listener objects about a specific service which was
@@ -282,7 +286,7 @@ class IRegistryImpl : public IRegistry
 		 * @return 
 		 *				The created <code>ServiceReference</code>.
          */		
-		virtual ServiceReference createServiceReference( const ServiceInfo& serviceInfo );
+		virtual ServiceReference* createServiceReference( const ServiceInfo& serviceInfo );
 
 	public:
 
@@ -294,7 +298,7 @@ class IRegistryImpl : public IRegistry
 		 * @param bundleInfo
 		 *			The <code>BundleInfo</code> object which describes a bundle.
 		 */
-		virtual void addBundleInfo( BundleInfo* bundleInfo );
+		virtual void addBundleInfo( BundleInfoBase* bundleInfo );
 
 		/**
 		 * Returns the <code>BundleInfo</code> object of a specific bundle.
@@ -304,7 +308,7 @@ class IRegistryImpl : public IRegistry
 		 *
 		 * @return	The <code>BundleInfo</code> object.
 		 */
-		virtual BundleInfo* getBundleInfo( const string& bundleName );
+		virtual BundleInfoBase* getBundleInfo( const string& bundleName );
 
 		/**
 		 * Returns all <code>BundleInfo</code> objects which are currently
@@ -313,7 +317,7 @@ class IRegistryImpl : public IRegistry
 		 * @return	A vector of <code>BundleInfo</code> objects.
 		 *
 		 */
-		virtual vector<BundleInfo*> getBundleInfos();
+		virtual vector<BundleInfoBase*> getBundleInfos();
 
 		/**
 		 * Removes the <code>BundleInfo</code> object of a specific bundle.

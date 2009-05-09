@@ -5,9 +5,7 @@
 #include <string>
 
 #include "IBundleActivator.h"
-#include "IBundleContext.h"
-#include "ServiceInfo.h"
-#include "ServiceListenerInfo.h"
+#include "BundleInfoBase.h"
 
 #include "../util/logging/LoggerFactory.h"
 #include "../util/logging/Logger.h"
@@ -31,45 +29,16 @@ using namespace sof::util::logging;
  *		<li>The list of service listeners.<br>
  * </ul>
  */
-class BundleInfo
+class BundleInfo : public BundleInfoBase
 {
-	private:
-
-		/**
-		 * The name of the bundle.
-		 */
-		string bundleName;
+	private:		
 
 		/**
 		 * The bundle activator instance.
 		 */
 		IBundleActivator* activator;
 
-		/**
-		 * The bundle context.
-		 */
-		IBundleContext::ConstPtr bundleContext;
-
-		/**
-		 * Contains <code>ServiceInfo</code> objects of all registered services.
-		 */
-		vector<ServiceInfo*> registeredServices;
-
-		/**
-		 * Contains <code>ServiceInfo</code> objects of all used services.
-		 */
-		vector<ServiceInfo*> usedServices;
 		
-		/**
-		 * Contains the registered service listeners.
-		 */
-		vector<ServiceListenerInfo*> registeredListeners;
-
-		/**
-		 * The logger instance.
-		 */
-		static Logger& logger;
-
 	public:
 
 		/**
@@ -87,7 +56,7 @@ class BundleInfo
 		/**
 		 * The destructor for cleaning resources.
 		 */
-		~BundleInfo();
+		virtual ~BundleInfo();
 
 		/**
 		 * Returns the pointer to the bundle activator instance.
@@ -95,124 +64,8 @@ class BundleInfo
 		 * @return
 		 *		The pointer to bundle activator instance.
 		 */
-		IBundleActivator* getBundleActivator();
-
-		/**
-		 * Returns the pointer to the bundle context object. The bundle context
-		 * provides functionality for registering services, adding service listeners etc.
-		 *
-		 * @return
-		 *		The bundle context object.
-		 */
-		IBundleContext::ConstPtr getBundleContext();
+		virtual IBundleActivator* getBundleActivator();
 		
-		/**
-		 * Adds information about a service which was registered by the bundle.
-		 *
-		 * @param serviceInfo
-		 *				The service information object.
-		 */
-		void addRegisteredService( ServiceInfo* serviceInfo );
-
-		/**
-		 * Removes information about the specified service.
-		 * 
-		 * @param serviceInfo
-		 *				The service information object.
-		 */
-		void removeDeregisteredService( ServiceInfo* serviceInfo );
-
-		/**
-		 * Adds information about the specified service which is used by the
-		 * bundle.
-		 *
-		 * @param serviceInfo
-		 *				The service information object.
-		 */
-		void addUsedService( ServiceInfo* serviceInfo );
-
-		/**
-		 * Removes the information about the specified service which was used by the
-		 * bundle.
-		 *
-		 * @param serviceInfo
-		 *				The service information object.
-		 */
-		void removeUsedService( ServiceInfo* serviceInfo );
-
-		/**
-		 * Removes the information about the specified service which was used by the
-		 * bundle.
-		 *
-		 * @param serviceName
-		 *				The name of the service.
-		 */
-		void removeUsedService( const string& serviceName );
-
-		/**
-		 * Removes the service information about all used services.
-		 */
-		void removeAllUsedServices();
-		
-		/**
-		 * Adds the information about a registered service listener.
-		 *
-		 * @param listenerInfo
-		 *				The service listener information object.
-		 */
-		void addRegisteredListener( ServiceListenerInfo* listenerInfo );
-
-		/**
-		 * Removes the information about a registered service listener.
-		 *
-		 * @param listenerInfo
-		 *				The service listener information object.
-		 */
-		void removeRegisteredListener( ServiceListenerInfo* listenerInfo );
-
-		/**
-		 * Returns the name of the bundle.
-		 *
-		 * @return
-		 *			The name of the bundle.
-		 */
-		string getBundleName();
-
-		/**
-		 * Returns a vector which contains all service information objects
-		 * of registered services.
-		 *
-		 * @return 
-		 *		Vector of <code>ServiceInfo</code> instances.
-		 */
-		vector<ServiceInfo*> getRegisteredServices();
-
-		/**
-		 * Returns a vector which contains all service information objects
-		 * of used services.
-		 *
-		 * @return 
-		 *		Vector of <code>ServiceInfo</code> instances.
-		 */
-		vector<ServiceInfo*> getUsedServices();
-
-		/**
-		 * Returns a vector which contains all service information objects
-		 * of registered service listeners.
-		 *
-		 * @return 
-		 *		Vector of <code>ServiceListenerInfo</code> instances.
-		 */
-		vector<ServiceListenerInfo*> getRegisteredListeners();
-		
-		/**
-		 * Returns the string representation of all information stored
-		 * in the <code>BundleInfo</code> object.
-		 *
-		 * @return 
-		 *		The string representation of the bundle info object.
-		 */
-		string toString();
 };
 
 }}

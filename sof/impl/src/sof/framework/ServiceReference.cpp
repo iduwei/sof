@@ -9,6 +9,24 @@ ServiceReference::ServiceReference( const string &name, const Properties &proper
 {
 }
 
+ServiceReference::ServiceReference( const ServiceReference& serviceRef ) 
+{
+	this->serviceName = serviceRef.serviceName;
+	this->props = serviceRef.props;	
+	this->service = serviceRef.service;
+}
+
+ServiceReference& ServiceReference::operator=( const ServiceReference &serviceRef ) 
+{
+	if (this != &serviceRef) 
+    {
+		this->serviceName = serviceRef.serviceName;
+		this->props = serviceRef.props;
+		this->service = serviceRef.service;
+    }
+    return *this; 
+}
+
 ServiceReference::~ServiceReference()
 {
 }

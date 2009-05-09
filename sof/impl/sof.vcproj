@@ -175,6 +175,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\src\sof\framework\BundleInfoBase.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\src\sof\framework\IBundleContextImpl.cpp"
 						>
 					</File>
@@ -342,6 +346,10 @@
 					>
 					<File
 						RelativePath=".\src\sof\framework\BundleInfo.h"
+						>
+					</File>
+					<File
+						RelativePath=".\src\sof\framework\BundleInfoBase.h"
 						>
 					</File>
 					<File
