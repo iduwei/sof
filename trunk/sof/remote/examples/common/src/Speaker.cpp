@@ -5,7 +5,7 @@
  *  This file was automatically generated. DO NOT EDIT!
  */
 
-#include <Speaker.h>
+#include "Speaker.h"
 
 
 using namespace std;
