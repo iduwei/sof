@@ -62,11 +62,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="kernel32.lib idl2312.lib mico2312.lib micocoss2312.lib pthreadVC2.lib sof_remote.lib $(NOINHERIT)"
+				AdditionalDependencies="kernel32.lib idl2313.lib mico2313.lib micocoss2313.lib pthreadVC2.lib sof_remote.lib $(NOINHERIT)"
 				OutputFile=".\bin\registry.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\impl\bin;..\corba\libs"
-				GenerateDebugInformation="true"
+				ManifestFile=".\bin\$(TargetFileName).intermediate.manifest"
+				GenerateDebugInformation="false"
 				SubSystem="1"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
@@ -77,6 +78,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -96,8 +98,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory=".\bin"
+			IntermediateDirectory=".\build"
 			ConfigurationType="1"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -119,6 +121,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="..\..\impl\src;..\corba\include\pthreads;..\impl\src;..\corba\include;..\corba\include\windows"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -137,9 +140,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="kernel32.lib $(NoInherit)"
+				AdditionalDependencies="kernel32.lib mico2313.lib sof_remote.lib pthreadVC2.lib micocoss2313.lib $(NOINHERIT)"
+				OutputFile="$(OutDir)\registry.exe"
 				LinkIncremental="1"
-				GenerateDebugInformation="true"
+				AdditionalLibraryDirectories="..\impl\bin;..\corba\libs"
+				ManifestFile="$(IntDir)\$(TargetFileName).intermediate.manifest"
+				GenerateDebugInformation="false"
 				SubSystem="1"
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
@@ -152,6 +158,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				EmbedManifest="true"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"

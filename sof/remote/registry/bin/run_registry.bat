@@ -1,4 +1,4 @@
-start .\run_ns.bat
+REM start .\run_ns.bat
 
 sleep 3
 

@@ -62,9 +62,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
-				AdditionalDependencies="sof.lib"
 				OutputFile=".\bin\sof_remote.lib"
-				AdditionalLibraryDirectories="..\..\impl\bin;..\corba\libs"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -84,8 +82,8 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
-			IntermediateDirectory="$(ConfigurationName)"
+			OutputDirectory=".\bin"
+			IntermediateDirectory=".\build"
 			ConfigurationType="4"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
@@ -107,6 +105,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="..\..\impl\src;..\corba\include\pthreads;..\corba\include;..\corba\include\windows"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -125,6 +124,7 @@
 			/>
 			<Tool
 				Name="VCLibrarianTool"
+				AdditionalLibraryDirectories=""
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -202,6 +202,14 @@
 										Name="VCCLCompilerTool"
 									/>
 								</FileConfiguration>
+								<FileConfiguration
+									Name="Release|Win32"
+									ExcludedFromBuild="true"
+									>
+									<Tool
+										Name="VCCLCompilerTool"
+									/>
+								</FileConfiguration>
 							</File>
 							<Filter
 								Name="namingservice"
@@ -235,6 +243,14 @@
 									>
 									<FileConfiguration
 										Name="Debug|Win32"
+										ExcludedFromBuild="true"
+										>
+										<Tool
+											Name="VCCLCompilerTool"
+										/>
+									</FileConfiguration>
+									<FileConfiguration
+										Name="Release|Win32"
 										ExcludedFromBuild="true"
 										>
 										<Tool
