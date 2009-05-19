@@ -43,29 +43,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_examples_bundle2", "..\
 		{13262EFC-93BD-4D96-8698-EABCAE205144} = {13262EFC-93BD-4D96-8698-EABCAE205144}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_remote_registry", "..\remote\registry\sof_remote_registry.vcproj", "{F1E986DB-8076-42C4-8CA7-9C53986BB78E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{34FF4B7E-8765-4937-B892-DEF14710680D} = {34FF4B7E-8765-4937-B892-DEF14710680D}
-		{13262EFC-93BD-4D96-8698-EABCAE205144} = {13262EFC-93BD-4D96-8698-EABCAE205144}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_remote_examples_bundle1", "..\remote\examples\bundle1\sof_remote_examples_bundle1.vcproj", "{77FA230B-529D-4043-9908-5FC642634860}"
-	ProjectSection(ProjectDependencies) = postProject
-		{34FF4B7E-8765-4937-B892-DEF14710680D} = {34FF4B7E-8765-4937-B892-DEF14710680D}
-		{13262EFC-93BD-4D96-8698-EABCAE205144} = {13262EFC-93BD-4D96-8698-EABCAE205144}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_remote_examples_bundle2", "..\remote\examples\bundle2\sof_remote_examples_bundle2.vcproj", "{FA2F54CC-EE5A-4CEB-A896-8087ECB73E47}"
-	ProjectSection(ProjectDependencies) = postProject
-		{34FF4B7E-8765-4937-B892-DEF14710680D} = {34FF4B7E-8765-4937-B892-DEF14710680D}
-		{13262EFC-93BD-4D96-8698-EABCAE205144} = {13262EFC-93BD-4D96-8698-EABCAE205144}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_remote", "..\remote\impl\sof_remote.vcproj", "{34FF4B7E-8765-4937-B892-DEF14710680D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{13262EFC-93BD-4D96-8698-EABCAE205144} = {13262EFC-93BD-4D96-8698-EABCAE205144}
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -108,22 +85,6 @@ Global
 		{FD723042-494D-44A8-AD92-80B2D8E504FB}.Debug|Win32.Build.0 = Debug|Win32
 		{FD723042-494D-44A8-AD92-80B2D8E504FB}.Release|Win32.ActiveCfg = Release|Win32
 		{FD723042-494D-44A8-AD92-80B2D8E504FB}.Release|Win32.Build.0 = Release|Win32
-		{F1E986DB-8076-42C4-8CA7-9C53986BB78E}.Debug|Win32.ActiveCfg = Debug|Win32
-		{F1E986DB-8076-42C4-8CA7-9C53986BB78E}.Debug|Win32.Build.0 = Debug|Win32
-		{F1E986DB-8076-42C4-8CA7-9C53986BB78E}.Release|Win32.ActiveCfg = Release|Win32
-		{F1E986DB-8076-42C4-8CA7-9C53986BB78E}.Release|Win32.Build.0 = Release|Win32
-		{77FA230B-529D-4043-9908-5FC642634860}.Debug|Win32.ActiveCfg = Debug|Win32
-		{77FA230B-529D-4043-9908-5FC642634860}.Debug|Win32.Build.0 = Debug|Win32
-		{77FA230B-529D-4043-9908-5FC642634860}.Release|Win32.ActiveCfg = Release|Win32
-		{77FA230B-529D-4043-9908-5FC642634860}.Release|Win32.Build.0 = Release|Win32
-		{FA2F54CC-EE5A-4CEB-A896-8087ECB73E47}.Debug|Win32.ActiveCfg = Debug|Win32
-		{FA2F54CC-EE5A-4CEB-A896-8087ECB73E47}.Debug|Win32.Build.0 = Debug|Win32
-		{FA2F54CC-EE5A-4CEB-A896-8087ECB73E47}.Release|Win32.ActiveCfg = Release|Win32
-		{FA2F54CC-EE5A-4CEB-A896-8087ECB73E47}.Release|Win32.Build.0 = Release|Win32
-		{34FF4B7E-8765-4937-B892-DEF14710680D}.Debug|Win32.ActiveCfg = Debug|Win32
-		{34FF4B7E-8765-4937-B892-DEF14710680D}.Debug|Win32.Build.0 = Debug|Win32
-		{34FF4B7E-8765-4937-B892-DEF14710680D}.Release|Win32.ActiveCfg = Release|Win32
-		{34FF4B7E-8765-4937-B892-DEF14710680D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
