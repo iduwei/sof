@@ -5,7 +5,7 @@
  *  This file was automatically generated. DO NOT EDIT!
  */
 
-#include <CORBAObjects.h>
+#include "CORBAObjects.h"
 
 
 using namespace std;
