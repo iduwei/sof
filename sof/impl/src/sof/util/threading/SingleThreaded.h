@@ -13,6 +13,8 @@ namespace sof { namespace util { namespace threading {
  * {@link sof::framework::Launcher} object is created.<br>
  * When the <code>SingleThreaded</code> class is used the calls made to
  * the registry class for example are not thread safe.
+ *
+ * @author magr74
  */
 class SingleThreaded
 {

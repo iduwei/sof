@@ -27,6 +27,8 @@ namespace sof { namespace framework { namespace remote { namespace corba {
  * registered and unregistered services.<br>
  * The service tracker class simplifies the work of application
  * developers for tracking services.
+ *
+ * @author magr74
  */
 class RemoteServiceTracker : public POA_sof::framework::remote::corba::generated::CORBAServiceListener
 {

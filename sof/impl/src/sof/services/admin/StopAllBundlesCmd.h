@@ -17,6 +17,8 @@ using namespace sof::services::admin;
  * which stops all bundles.<br>
  * Example:<br>
  * <code>spab</code>
+ *
+ * @author magr74
  */
 class StopAllBundlesCmd : public ConsoleCommand
 {

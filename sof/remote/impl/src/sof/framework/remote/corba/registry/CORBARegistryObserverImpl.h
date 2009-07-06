@@ -21,6 +21,8 @@ using namespace sof::framework::remote::corba;
 /**
  * Each SOF process activates a CORBA object of implementation type <code>CORBARegistryObserverImpl</code> in order
  * to be informed by the registry process about registered and unregistered services and service listeners.
+ *
+ * @author magr74
  */
 class CORBARegistryObserverImpl : virtual public POA_sof::framework::remote::corba::generated::CORBARegistryObserver
 {

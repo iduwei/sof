@@ -21,6 +21,8 @@ using namespace sof::framework;
  * services, service listeners etc.<br>
  * It represents a means for the software bundle developer in order to communicate with
  * the framework.
+ *
+ * @author magr74
  */
 class IBundleContext
 {

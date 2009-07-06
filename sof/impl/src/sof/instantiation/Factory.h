@@ -10,6 +10,8 @@ namespace sof { namespace instantiation {
  * has to be an inherited type of type <code>BaseT</code>.
  *
  * See {@link sof::classloading::BaseFactory}
+ *
+ * @author magr74
  */
 template<typename BaseT, typename SubT=BaseT>
 class Factory : public BaseFactory<BaseT>

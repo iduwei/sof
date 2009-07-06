@@ -98,8 +98,8 @@
 			Name="Release|Win32"
 			OutputDirectory=".\bin"
 			IntermediateDirectory=".\build"
-			ConfigurationType="1"
-			CharacterSet="1"
+			ConfigurationType="2"
+			CharacterSet="2"
 			WholeProgramOptimization="1"
 			>
 			<Tool
@@ -139,7 +139,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalDependencies="kernel32.lib mico2313.lib sof_remote.lib pthreadVC2.lib micocoss2313.lib $(NOINHERIT)"
-				OutputFile="$(OutDir)\Main.exe"
+				OutputFile="$(OutDir)\remote_bundle1.dll"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="..\..\impl\bin;..\..\corba\libs"
 				GenerateDebugInformation="true"
@@ -187,15 +187,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\Main.cpp"
+				RelativePath=".\src\dll.cpp"
 				>
 			</File>
 			<File
-				RelativePath="..\common\src\Speaker.cpp"
+				RelativePath="..\common\src\Multiplier.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\src\SpeakerImpl.cpp"
+				RelativePath=".\src\MultiplierImpl.cpp"
 				>
 			</File>
 		</Filter>
@@ -209,11 +209,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\common\src\Speaker.h"
+				RelativePath="..\common\src\Multiplier.h"
 				>
 			</File>
 			<File
-				RelativePath=".\src\SpeakerImpl.h"
+				RelativePath=".\src\MultiplierImpl.h"
 				>
 			</File>
 		</Filter>

@@ -13,6 +13,8 @@ using namespace sof::framework;
  * for starting and stopping the software bundle.<br>
  * The framework not the application developer is responsible creating,
  * starting and stopping the bundle activator instance.
+ *
+ * @author magr74
  */
 class IBundleActivator
 {

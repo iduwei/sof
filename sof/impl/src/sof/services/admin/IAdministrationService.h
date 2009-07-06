@@ -20,6 +20,8 @@ namespace sof { namespace services { namespace admin {
  * console has access to this interface.<br>
  * The administration service is not registered with
  * the framework and can not be used by other bundles.
+ *
+ * @author magr74
  */
 class IAdministrationService : public IService
 {

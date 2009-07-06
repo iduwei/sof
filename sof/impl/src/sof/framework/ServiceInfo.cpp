@@ -18,7 +18,7 @@ string ServiceInfo::getServiceName() const
 {
 	return this->serviceName;
 }
-
+ 
 Properties ServiceInfo::getProperties() const
 {
 	return this->props;

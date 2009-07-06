@@ -10,6 +10,8 @@ using namespace std;
 /**
  * The <code>BundleConfiguration</code> describes all relevant data 
  * which are necessary for the framework for starting a bundle.<br>
+ *
+ * @author magr74
  */
 class BundleConfiguration
 {

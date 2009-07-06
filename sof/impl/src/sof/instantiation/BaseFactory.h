@@ -6,6 +6,8 @@ namespace sof { namespace instantiation {
 /**
  * This template based class provides an interface
  * for creating instances of type <code>BaseT</code>.
+ *
+ * @author magr74
  */
 template<typename BaseT>
 class BaseFactory

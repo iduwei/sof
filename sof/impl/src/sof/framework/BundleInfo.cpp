@@ -22,4 +22,4 @@ IBundleActivator* BundleInfo::getBundleActivator()
 {
 	return this->activator;
 }
-
+ 

@@ -13,6 +13,8 @@ using namespace std;
  * is thrown when the <code>ObjectCreator</code> instance tries to create
  * an object (e.g. a bundle activator object) but it can not be created
  * (e.g. the bundle library or bundle activator class is unknown).
+ *
+ * @author magr74
  */
 class ObjectCreationException : public exception
 {

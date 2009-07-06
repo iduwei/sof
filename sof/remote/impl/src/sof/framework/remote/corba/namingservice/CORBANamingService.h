@@ -13,6 +13,8 @@ namespace sof { namespace framework { namespace remote { namespace corba { names
 /**
  * The <code>CORBANamingService</code> interface provides convenient methods for accessing the
  * CORBA naming service.
+ *
+ * @author magr74
  */
 class CORBANamingService {
 

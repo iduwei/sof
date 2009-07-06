@@ -17,6 +17,8 @@ using namespace sof::services::admin;
  * which starts a 'local' bundle.<br>
  * Example:<br>
  * <code>stb <bundle_name> <class_name></code>
+ *
+ * @author magr74
  */
 class StartBundleCmd : public ConsoleCommand
 {

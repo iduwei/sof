@@ -1,24 +1,22 @@
-#include <CORBA.h>
-#include <coss/CosNaming.h>
-#include <iostream>
-#include <string>
-#include <pthread.h>
-
-
-#include "sof/framework/remote/corba/namingservice/CORBANamingServiceImpl.h"
-#include "sof/framework/remote/corba/registry/CORBARegistryImpl.h"
-#include "sof/framework/remote/corba/generated/CORBAObjects.h"
-#include "sof/framework/remote/corba/registry/IRemoteRegistryImpl.h"
+#include "sof/framework/Global.h"
 #include "sof/framework/remote/corba/CORBAHelper.h"
 #include "sof/framework/remote/corba/RemoteSOFLauncher.h"
 
-using namespace std;
+#ifdef WIN
+#include "sof/instantiation/win/WinDllCreator.h"
+#endif
 
+#include "sof/instantiation/NullCreator.h"
+#include "sof/util/threading/SingleThreaded.h"
+
+using namespace std;
+using namespace sof::framework;
 using namespace sof::framework::remote;
 using namespace sof::framework::remote::corba;
-using namespace sof::framework::remote::corba::namingservice;
-using namespace sof::framework::remote::corba::registry;
-using namespace sof::framework::remote::corba::registry::generated;
+
+#ifdef WIN
+using namespace sof::instantiation::win;
+#endif
 
 
 int main( int argc, char **argv)
@@ -44,8 +42,6 @@ int main( int argc, char **argv)
 			logLevel = Logger::LogLevel::DEBUG;
 		}		
 	}
-	args.push_back( "-ORBNamingAddr" );
-	args.push_back( "inet:localhost:5000" );
 
 	CORBAHelper corbaHelper( args );
 	corbaHelper.start();
@@ -68,5 +64,8 @@ int main( int argc, char **argv)
 	
 	return 0;    
 }
+
+
+
 
 

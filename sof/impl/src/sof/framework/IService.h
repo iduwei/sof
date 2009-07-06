@@ -10,6 +10,8 @@ namespace sof { namespace framework {
  * Each service which wants to be registered with the framework
  * has to implement this interface in order to be identified as
  * service object.
+ *
+ * @author magr74
  */
 class IService
 {

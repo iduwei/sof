@@ -17,6 +17,8 @@ using namespace sof::services::admin;
  * which starts a bundle from DLL.<br>
  * Example:<br>
  * <code>stbdll <bundle name> <class name> <lib path> <lib name></code>
+ *
+ * @author magr74
  */
 class StartBundleFromDLLCmd : public ConsoleCommand
 {

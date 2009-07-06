@@ -11,6 +11,8 @@ using namespace std;
 /**
  * The <code>StringTokenizer</code> class is a helper class
  * for dividing a string into several strings.
+ *
+ * @author magr74
  */
 class StringTokenizer
 {

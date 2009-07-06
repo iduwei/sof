@@ -16,13 +16,13 @@ void BundleActivator1::start(IRemoteBundleContext::ConstPtr context)
 	Properties props;
 	props.put( "instance", "1" );
 
-	this->service1 = new SpeakerImpl();
-	this->serviceReg1 = context->registerRemoteService( "Speaker", this->service1, props );
+	this->service1 = new MultiplierImpl();
+	this->serviceReg1 = context->registerRemoteService( "Multiplier", this->service1, props );
 
 	props.put( "instance", "2" );
 
-	this->service2 = new SpeakerImpl();
-	this->serviceReg2 = context->registerRemoteService( "Speaker", this->service2, props );
+	this->service2 = new MultiplierImpl();
+	this->serviceReg2 = context->registerRemoteService( "Multiplier", this->service2, props );
 }
 
 void BundleActivator1::stop(IRemoteBundleContext::ConstPtr context) 

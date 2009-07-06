@@ -15,6 +15,8 @@ using namespace sof::services::admin;
 /**
  * The <code>ConsoleCommand</code> is the base class for all
  * commands which are executed within the administration console.
+ *
+ * @author magr74
  */
 class ConsoleCommand
 {

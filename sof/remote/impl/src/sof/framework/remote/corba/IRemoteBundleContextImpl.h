@@ -18,19 +18,37 @@ using namespace sof::framework;
 using namespace sof::util::logging;
 using namespace sof::framework::remote::corba;
 
+/**
+ * When the framework starts or stops a bundle (calling <code>start</code> or
+ * <code>stop</code> of the <code>IRemoteBundleActivator</code>) a bundle context object
+ * is passed. This <code>IRemoteBundleContext</code> object provides methods for registering
+ * distributed services, service listeners etc.<br>
+ * It represents a means for the software bundle developer in order to communicate with
+ * the framework.
+ *
+ * @author magr74
+ */
 class IRemoteBundleContextImpl : public IRemoteBundleContext
 {
 	private:
 
+		/**
+		 * Map object which maps <code>CORBAServiceListener</code> objects to
+		 * their CORBA objects.
+		 */
 		map<POA_sof::framework::remote::corba::generated::CORBAServiceListener*,
 			CORBA::Object_var> listenerMap;
 
 		/**
-		 * The registry which stores all relevant information
+		 * The registry object which stores all relevant information
 		 * about the bundles (registered services, registered listeners etc.)
 		 */
 		IRegistry& registry;
 
+		/**
+		 * Helper class which provides CORBA related methods (e.g. for creating,
+		 * activating and deactivating CORBA objects).		 
+		 */
 		CORBAHelper& corbaHelper;
 
 		/**
@@ -100,6 +118,21 @@ class IRemoteBundleContextImpl : public IRemoteBundleContext
 		 */
 		virtual void removeRemoteServiceListener( POA_sof::framework::remote::corba::generated::CORBAServiceListener* remoteServiceListener );
 
+		/**
+		 * Registers a service object.
+		 * 
+		 * @param className
+		 *				The name of the service (e.g. class name)
+		 *
+		 * @param service
+		 *				The service object.
+		 *
+		 * @param dict
+		 *				Describes the properties of the service object.
+		 *
+		 * @return
+		 *				Handle to the registered service.
+		 */
 		virtual IServiceRegistration* registerService( const string &className, IService::ConstPtr service, const Properties &dict );
 
 		/**
@@ -121,6 +154,13 @@ class IRemoteBundleContextImpl : public IRemoteBundleContext
 		 */
 		virtual void removeServiceListener( IServiceListener::ConstPtr serviceListener );
 
+		/**
+		 * Returns the CORBA helper object which provides CORBA related
+		 * functions.
+		 *
+		 * @return 
+		 *			The CORBA helper object.
+		 */
 		virtual CORBAHelper& getCORBAHelper();
 };
 }}}}

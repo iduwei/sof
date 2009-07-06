@@ -1,5 +1,4 @@
-REM start .\run_ns.bat
 
-sleep 3
+PATH=%PATH%;..\..\corba\libs
 
 .\registry.exe -ORBNamingAddr inet:localhost:5000 

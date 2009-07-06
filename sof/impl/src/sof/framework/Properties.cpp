@@ -15,7 +15,7 @@ string Properties::get( const string &key )
 {
 	return this->mapper[key];
 }
-
+ 
 string Properties::toString() const
 {
 	map<string,string>::const_iterator iter;

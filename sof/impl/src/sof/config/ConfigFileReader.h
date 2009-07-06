@@ -30,6 +30,8 @@ using namespace sof::util::logging;
  * test_bundle1,TestBundleActivator1,c:/temp/libraries,test.dll<br>
  * test_bundle2,TestBundleActivator2<br>
  * ...
+ *
+ * @author magr74
  */
 class ConfigFileReader
 {

@@ -24,6 +24,8 @@ using namespace POA_sof::framework::remote::corba::generated;
  * services, service listeners etc.<br>
  * It represents a means for the software bundle developer in order to communicate with
  * the framework.
+ *
+ * @author magr74
  */
 class IRemoteBundleContext : public IBundleContext
 {
@@ -77,6 +79,13 @@ class IRemoteBundleContext : public IBundleContext
 		 */
 		virtual void removeRemoteServiceListener( POA_sof::framework::remote::corba::generated::CORBAServiceListener* remoteServiceListener ) = 0;
 
+		/**
+		 * Returns the CORBA helper object which provides CORBA related
+		 * functions.
+		 *
+		 * @return 
+		 *			The CORBA helper object.
+		 */
 		virtual CORBAHelper& getCORBAHelper() = 0;
 };
 

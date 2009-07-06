@@ -13,6 +13,8 @@ namespace sof { namespace util { namespace logging {
 /**
  * The <code>LoggerFactory</code> class creates objects
  * implementing the <code>Logger</code> interface.
+ *
+ * @author magr74
  */
 class LoggerFactory
 {

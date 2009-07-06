@@ -501,6 +501,10 @@ Also see AdvancedOptions</pre>
 * [[sof_8070|http://sof.sourceforge.net/api_8070/html/]]
 * [[sof_8050|http://sof.sourceforge.net/api_8050/html/]]</pre>
 </div>
+<div title="API Remote SOF" modifier="magro74" modified="200906162112" created="200906162111" changecount="3">
+<pre>The API documentation of following versions are available:
+* [[sof_remote_9060|http://sof.sourceforge.net/api_9060/html/]]</pre>
+</div>
 <div title="About" modifier="magr74" modified="200806151521" created="200802091422" changecount="24">
 <pre>//SOF// (Service Oriented Framework) wants to help software developers to avoid developing monolithic software. The //SOF// framework allows to separate a software system in several small components which are communicating via clearly defined interfaces. Components can be started and stopped at runtime and the components are notified about the lifecycle of other components if necessary. //SOF// is implemented in standard C++ and provides an OS independent framework for developing component based software. The //SOF// API is very similar to the OSGI API (see [[OSGI|http://www.osgi.org]]).
 
@@ -515,7 +519,13 @@ Also see AdvancedOptions</pre>
 [img[http://farm4.static.flickr.com/3271/2477292881_b67f8ff660_o.png]]
 </pre>
 </div>
-<div title="Building" modifier="magr74" modified="200807180819" created="200802181627" changecount="14">
+<div title="About Remote SOF" modifier="magro74" modified="200905311117" created="200905151035" changecount="10">
+<pre>//SOF// provides a framework for supporting software modularization. Software components called bundles can communicate via defined service interfaces with other bundles. For getting the reference of a service each bundle can register service listeners which observe the lifecyle of services. 
+//Remote SOF// represents an extension for //SOF//. That means services can not only be tracked and registered within the same //SOF// container (=process) but across several processes whereas CORBA is used as communication layer.
+[img[http://farm3.static.flickr.com/2481/3566511834_427819b320_o.png]]
+The diagram above shows the simplified architecture of //Remote SOF//. There exist several //SOF// processes (here two) and every //SOF// process hosts several bundles. Bundles are able to register services and service listeners (just as with //SOF//) at the registry component of each //SOF// container. So far there is no big difference to the //SOF// framework. But for notifying other //SOF// processes about (de)registered services and service listeners all calls to the local registry component are delegated to the remote registry component which is implemented as CORBA object and reachable via the CORBA naming service. All calls which are received by the remote registry component are forwarded to all running //SOF// processes.</pre>
+</div>
+<div title="Building" modifier="magro74" modified="200905151040" created="200802181627" changecount="15">
 <pre>!!!Supported Platforms
 Basically //SOF// is implemented platform independent and can be compiled and run for all possible platforms where a standard C++ compiler is available. But at the moment there is no build environment which allows building //SOF// for different platforms. Since //SOF// was implemented on a Windows PC with Visual Studio only Visual Studio project files are available for building the framework. But the use of platform independent build tools (e.g. ~CMake) are planned.
 !!!Building SOF
@@ -524,6 +534,34 @@ Start the Visual Studio, go to the //sof/impl// directory and load the //sof.sln
 !!!Using SOF
 After building SOF the //bin// directory of the //impl// directory contains a library called //sof.lib// which can be linked.
 </pre>
+</div>
+<div title="Building Remote SOF" modifier="magr74" modified="200906191301" created="200905151039" changecount="47">
+<pre>!!Windows
+!!!Building CORBA 
+//Remote SOF// uses MICO (=CORBA implementation) as third party library for implementing remote accessible services and service listeners. Before //Remote SOF// can be build, the MICO libraries must be build.
+Execute following steps for building MICO version 2.3.13 on Windows with Visual Studio 2008 Express. For building other MICO versions or building on different platforms please read the MICO documentation.
+* Download the MICO distribution (http://www.mico.org/mico-2.3.13.zip)
+* Extract the zip file
+* Start the Visual Studio command shell
+* Change into MICO main directory 
+* Enter 'nmake /f Makefile.win32'
+Afterwards MICO is build as a ''dynamic'' library. Binaries (executables, ~DLLs, ~LIBs) are placed into 'mico\win32-bin' and 'mico\win32-bin\lib' directory. 
+
+!!!Building //Remote SOF//
+* Extract the zip file of the //SOF// distribution into a directory
+* Copy the CORBA binaries of the MICO distribution into the //Remote SOF// directory
+** 'idl.exe' and 'nsd.exe' to 'sof\remote\corba\bin'
+** The content of the MICO 'include' directory into 'sof\remote\corba\include'
+** The libraries 'idl2313.lib', 'mico2313.lib', 'micocoss2313.lib', 'pthreadVC2.lib', 'idl2313.dll', 'mico2313.dll', 'micocoss2313.dll', 'pthreadVC2.dll' into 'sof\remote\corba\libs'
+* Load file called 'sof_remote.sln' in directory 'sof\remote\impl' with Visual Studio
+* Build all projects
+
+!!!Using //Remote SOF//
+After building //Remote SOF// the bin directory of the impl directory contains a library called sof_remote.lib which can be linked.
+
+''Note:'' Due to the fact that MICO is build dynamically (no static MICO libraries) the PATH variable of the Windows console has to be extended before the executables using the //Remote SOF// library can be executed:
+PATH=%PATH%;%SOFHOME%\remote\corba\libs\win32-bin
+This makes sure that the necessary MICO ~DLLs are found during runtime.</pre>
 </div>
 <div title="Bundle Lifecycle" modifier="magr74" modified="200805071917" created="200803110608" changecount="17">
 <pre>This chapter describes how bundles are created, started and stopped by the framework.
@@ -583,7 +621,7 @@ If you enter 'help' the console prints out all possible commands which can be ex
 <div title="DefaultTiddlers" modifier="magro74" created="200802110608" changecount="1">
 <pre>[[About]]</pre>
 </div>
-<div title="Documentation" modifier="magr74" modified="200804281822" created="200802161605" changecount="29">
+<div title="Documentation" modifier="magro74" modified="200905151040" created="200802161605" changecount="32">
 <pre>!The ''S''ervice ''O''riented ''F''ramework (SOF)
 The SOF supports developing modular software which consists of components (bundles). Each component can register services which can be used by other bundles. 
 !![[Building]]
@@ -593,8 +631,13 @@ The SOF supports developing modular software which consists of components (bundl
 !![[Registering services]]
 !![[Tracking services]]</pre>
 </div>
-<div title="Download" modifier="magr74" modified="200807180957" created="200805101452" changecount="17">
+<div title="Documentation - Remote SOF" modifier="magro74" created="200905151038" changecount="1">
+<pre>!![[Building|Building Remote SOF]]</pre>
+</div>
+<div title="Download" modifier="magro74" modified="200906021920" created="200805101452" changecount="20">
 <pre>Following stable builds are available:
+* ''sof_XXXX''
+** Release notes: To be done.
 * ''sof_8070''
 ** Release notes:
 *** New features:
@@ -615,6 +658,9 @@ The SOF supports developing modular software which consists of components (bundl
 **** Only single threaded solution available
 **** Hard coded windows solution for starting bundles from ~DLLs.
 For downloading the software please click [[here|http://sourceforge.net/project/showfiles.php?group_id=217435]]</pre>
+</div>
+<div title="Download Remote SOF" modifier="magro74" modified="200906021918" created="200906021917" changecount="3">
+<pre>Please look at SOF's [[download|Download]] section where you can find further information. There is no extra download package for the //Remote SOF// software. //SOF// and //Remote SOF// are packed together in one zip file.</pre>
 </div>
 <div title="Implementing a bundle" modifier="magr74" modified="200806151507" created="200802181643" changecount="45">
 <pre>For implementing a bundle the {{{sof::framework::IBundleActivator}}} interface has to be implemented:
@@ -852,7 +898,7 @@ loadRemoteFile = function(url,callback,params)
 //}}}
 </pre>
 </div>
-<div title="MainMenu" modifier="magr74" modified="200805101450" created="200802080839" changecount="23">
+<div title="MainMenu" modifier="YourName" modified="200904291855" created="200802080839" changecount="24">
 <pre>[img[netzwerk|http://farm3.static.flickr.com/2271/2249573201_120174d813_o.png]]
 [[About]]
 [[Project Structure]]
@@ -861,6 +907,7 @@ loadRemoteFile = function(url,callback,params)
 [[Download|Download]]
 [[SOF Console|Console]]
 [[Open Issues|Open Issues]]
+[[Remote SOF]]
 </pre>
 </div>
 <div title="Open Issues" modifier="magr74" modified="200807180928" created="200802150652" changecount="6">
@@ -872,7 +919,7 @@ loadRemoteFile = function(url,callback,params)
 * Introducing a platform independent build tool
 </pre>
 </div>
-<div title="Project Structure" modifier="magr74" modified="200807180922" created="200802181620" changecount="6">
+<div title="Project Structure" modifier="magro74" modified="200905211946" created="200802181620" changecount="7">
 <pre>[&lt;img[netzwerk|http://farm4.static.flickr.com/3202/2679653624_fc6aed3ace_o.gif]]
 ''The SOF software consists of the four projects:''
 * //impl//: The SOF kernel
@@ -888,6 +935,25 @@ loadRemoteFile = function(url,callback,params)
 The 'doc' directory contains the SOF documentation including the API documentation and the website content as local file. For implemented unit tests an extern unit test library is necessary called '~CppUniteLite' which is located in the 'extern directory'.
 
 
+
+</pre>
+</div>
+<div title="Project Structure - Remote SOF" modifier="magro74" modified="200905211950" created="200905211946" changecount="4">
+<pre>[&lt;img[remote_sof_project_structure|http://farm4.static.flickr.com/3573/3551576055_569cbd97ca_o.gif]]
+''The //Remote SOF// software consists of the three projects:''
+* //impl//: The //Remote SOF kernel// which extends the //SOF// kernel
+* //examples//: Examples of implemented bundles (which register/track services)
+* //registry//: The registry which delegates the registering/deregistering of services and service listeners to all //SOF// processes.
+
+''Each project can consist of following sub directories:''
+* //src//: Contains header and source files
+* //build//: Used for building the project
+* //bin//: Contains the output of the build process, e.g. an '.exe' of '.dll' file
+
+The 'corba' directory contains following sub directories:
+* //bin//: Contains executable CORBA MICO files (e.g. for running the CORBA naming service, running the IDL compiler etc.).
+* //include//: Contains the CORBA MICO header files.
+* //libs//: Contains the CORBA MICO libraries.
 
 </pre>
 </div>
@@ -935,6 +1001,16 @@ The {{{registerService}}} method returns a pointer to a {{{IServiceRegistration}
 The following diagram shows an use case where one bundle registers a service object and the other bundles (which track this service) are notified via the service listeners. This diagram shows the case when the service listeners are registered after the service object was registered. It could also happen that the service object is registered after the service listener objects were registered. In this case the service listeners would be notified after the registration of the service object.
 
 [img[http://farm3.static.flickr.com/2362/2437534147_4e84b3db6b_o.jpg]]</pre>
+</div>
+<div title="Remote SOF" modifier="magro74" modified="200906162113" created="200905151030" changecount="4">
+<pre>[[About|About Remote SOF]]
+[[Project Structure|Project Structure - Remote SOF]]
+[[Documentation|Documentation - Remote SOF]]
+[[API|API Remote SOF]]
+[[Download|Download Remote SOF]]
+[[SOF Console|Remote SOF console]]
+
+</pre>
 </div>
 <div title="SiteSubtitle" modifier="magro74" created="200802080850" changecount="1">
 <pre>Service Oriented Framework</pre>
@@ -1233,18 +1309,18 @@ merge(config.shadowTiddlers,{
 //}}}
 </pre>
 </div>
-<div title="UploadLog" modifier="magr74" modified="200807181001" created="200802080629">
+<div title="UploadLog" modifier="magr74" modified="200906191301" created="200802080629">
 <pre>| !date | !user | !location | !storeUrl | !uploadDir | !toFilename | !backupdir | !origin |
-| 18/07/2008 10:18:05 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 18/07/2008 10:21:27 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 18/07/2008 10:23:28 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 18/07/2008 10:56:57 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 18/07/2008 11:24:32 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 18/07/2008 11:28:21 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 18/07/2008 11:42:20 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 18/07/2008 11:57:46 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 18/07/2008 11:59:46 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 18/07/2008 12:01:14 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
+| 26/05/2009 12:23:37 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 31/05/2009 13:03:42 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 31/05/2009 13:18:14 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 31/05/2009 13:23:07 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 02/06/2009 21:18:51 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 02/06/2009 21:20:41 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 16/06/2009 23:13:56 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 18/06/2009 18:35:30 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 19/06/2009 15:00:11 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 19/06/2009 15:01:31 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
 </div>
 <div title="UploadPlugin" modifier="YourName" modified="200802080624" created="200706061221" tags="systemConfig">
 <pre>/***

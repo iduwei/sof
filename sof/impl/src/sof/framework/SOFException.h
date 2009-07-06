@@ -11,6 +11,8 @@ using namespace std;
 /**
  * The <code>SOFException</code> represents the base class of
  * all SOF related exceptions.
+ *
+ * @author magr74
  */
 class SOFException : public exception
 {

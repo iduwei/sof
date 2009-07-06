@@ -21,6 +21,8 @@ using namespace std;
  *		<li>UNREGISTER: Service is unregistered with the 
  *						framework.
  * </ul>
+ *
+ * @author magr74
  */
 class ServiceEvent
 {

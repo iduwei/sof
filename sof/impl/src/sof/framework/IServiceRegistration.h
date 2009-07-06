@@ -13,6 +13,8 @@ namespace sof { namespace framework {
  * within the bundle implementation. For deregistration
  * of the service object this registration object can be used
  * by calling the <code>unregister</code> method.
+ *
+ * @author magr74
  */
 class IServiceRegistration
 {

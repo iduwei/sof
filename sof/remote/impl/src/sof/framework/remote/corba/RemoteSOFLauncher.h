@@ -6,6 +6,7 @@
 
 #include "./registry/IRegistryFacadeImpl.h"
 #include "./registry/IRemoteRegistryImpl.h"
+#include "../../../services/admin/RemoteAdministrationActivator.h"
 #include "IRemoteBundleActivator.h"
 #include "IRemoteBundleContextImpl.h"
 #include "RemoteBundleInfo.h"
@@ -24,6 +25,8 @@ namespace sof { namespace framework { namespace remote { namespace corba {
  * running the SOF framework.<br>
  * The main task of this class is to provide methods
  * for starting and stopping bundles.
+ *
+ * @author magr74
  */
 template<
 	class ThreadingModel = SingleThreaded,

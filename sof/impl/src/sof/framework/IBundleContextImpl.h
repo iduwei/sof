@@ -9,6 +9,7 @@
 #include "IServiceListener.h"
 #include "IServiceRegistration.h"
 #include "IRegistry.h"
+
 #include "../util/logging/Logger.h"
 
 namespace sof { namespace framework {
@@ -21,6 +22,8 @@ using namespace sof::util::logging;
 /**
  * The <code>IBundleContextImpl</code> class represents the implementation
  * of the <code>IBundleContext</code> interface.
+ *
+ * @author magr74
  */
 class IBundleContextImpl : public IBundleContext
 {
