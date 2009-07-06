@@ -1,7 +1,9 @@
-idl.exe --c++-suffix=cpp CORBAObjects.idl
+PATH=%PATH%;..\corba\libs
 
-copy CORBAObjects.cpp ..\common\src\sof\framework\remote\corba\generated
-copy CORBAObjects.h ..\common\src\sof\framework\remote\corba\generated
+..\corba\bin\idl.exe --c++-suffix=cpp CORBAObjects.idl
+
+copy CORBAObjects.cpp ..\impl\src\sof\framework\remote\corba\generated
+copy CORBAObjects.h ..\impl\src\sof\framework\remote\corba\generated
 
 
 del CORBAObjects.cpp
