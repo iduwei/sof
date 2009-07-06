@@ -61,6 +61,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_remote_registry", "..\r
 		{34FF4B7E-8765-4937-B892-DEF14710680D} = {34FF4B7E-8765-4937-B892-DEF14710680D}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sof_remote_console", "..\console\sof_remote_console.vcproj", "{1912C056-10C3-4F45-980E-9170728D97BF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{34FF4B7E-8765-4937-B892-DEF14710680D} = {34FF4B7E-8765-4937-B892-DEF14710680D}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -119,6 +124,10 @@ Global
 		{F1E986DB-8076-42C4-8CA7-9C53986BB78E}.Debug|Win32.Build.0 = Debug|Win32
 		{F1E986DB-8076-42C4-8CA7-9C53986BB78E}.Release|Win32.ActiveCfg = Release|Win32
 		{F1E986DB-8076-42C4-8CA7-9C53986BB78E}.Release|Win32.Build.0 = Release|Win32
+		{1912C056-10C3-4F45-980E-9170728D97BF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1912C056-10C3-4F45-980E-9170728D97BF}.Debug|Win32.Build.0 = Debug|Win32
+		{1912C056-10C3-4F45-980E-9170728D97BF}.Release|Win32.ActiveCfg = Release|Win32
+		{1912C056-10C3-4F45-980E-9170728D97BF}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,6 +13,8 @@ using namespace sof::framework::remote::corba;
  * for starting and stopping the software bundle.<br>
  * The framework not the application developer is responsible creating,
  * starting and stopping the bundle activator instance.
+ *
+ * @author magr74
  */
 class IRemoteBundleActivator 
 {
@@ -38,8 +40,7 @@ class IRemoteBundleActivator
 		 *
 		 * @param context
 		 *			The bundle context.
-		 */
-		
+		 */		
 		virtual void stop( IRemoteBundleContext::ConstPtr context ) = 0;
 };
 

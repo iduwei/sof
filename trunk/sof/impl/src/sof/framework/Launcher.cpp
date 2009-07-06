@@ -13,7 +13,7 @@ Launcher<ThreadingModel, CreationPolicy>::Launcher()
 	logger.log( Logger::DEBUG, "[Launcher#ctor] Called." );
 	this->registry = this->createRegistry();
 }
-
+ 
 template<
 	class ThreadingModel,
 	template <class> class CreationPolicy>

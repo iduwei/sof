@@ -17,6 +17,8 @@ using namespace sof::framework;
  * The <code>ServiceReference</code> represents a 
  * service and holds all important information regarding
  * a service object.
+ *
+ * @author magr74
  */
 class ServiceReference 
 {
@@ -53,8 +55,21 @@ class ServiceReference
 		 */
 		ServiceReference( const string &name, const Properties &properties, const IService::ConstPtr serv );
 
+		/**
+		 * Copy constructor.
+		 *
+		 * @param serviceRef
+		 *				The <code>ServiceReference</code> object which is copied.
+		 */
 		ServiceReference( const ServiceReference& serviceRef );
 
+		/**
+		 * The assignment operator.
+		 *
+		 * @param serviceRef
+		 *				The <code>ServiceReference</code> object which is assignd to this
+		 *				object.
+		 */
 		virtual ServiceReference &operator=( const ServiceReference &serviceRef );
 
 		/**

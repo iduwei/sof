@@ -22,6 +22,8 @@ using namespace sof::framework;
  * for internal use of the framework.<br>
  * A <code>ServiceInfo</code> object holds all important
  * information about a service object.
+ *
+ * @author magr74
  */
 class ServiceInfo
 {

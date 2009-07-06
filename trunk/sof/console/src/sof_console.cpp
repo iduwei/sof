@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "sof/framework/Launcher.h"
 #include "sof/framework/Global.h"
+#include "sof/framework/Launcher.h"
 
 #ifdef WIN
 #include "sof/instantiation/win/WinDllCreator.h"

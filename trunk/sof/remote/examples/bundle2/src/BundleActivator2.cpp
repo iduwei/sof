@@ -15,7 +15,7 @@ BundleActivator2::~BundleActivator2()
 
 void BundleActivator2::start(IRemoteBundleContext::ConstPtr context) 
 {
-	this->tracker = new RemoteServiceTracker( context, "Speaker", this );
+	this->tracker = new RemoteServiceTracker( context, "Multiplier", this );
 	this->tracker->startTracking();
 }
 
@@ -28,13 +28,15 @@ void BundleActivator2::stop(IRemoteBundleContext::ConstPtr context)
 bool BundleActivator2::addingService( const RemoteServiceReference& ref )
 {
 	cout << "[BundleActivator2#addingService] Called." << endl;	
-	if ( ref.getServiceName() == "Speaker" )
+	if ( ref.getServiceName() == "Multiplier" )
 	{
 		Properties props = ref.getServiceProperties();
-		cout << "[BundleActivator2#addingService] Speaker instance found." << endl;	
+		cout << "[BundleActivator2#addingService] Multiplier instance found." << endl;	
+		cout << "[BundleActivator2#addingService] Properties: " << props.toString() << endl;	
 		cout << "[BundleActivator2#addingService] Service reference: " << ref.toString() << endl;	
-		Speaker_var speaker = Speaker::_narrow( ref.getRemoteService() );
-		speaker->sayHello( "hallo ich bins" );
+		Multiplier_var multiplier = Multiplier::_narrow( ref.getRemoteService() );
+		CORBA::Long result = multiplier->multiply( 8, 15 );
+		cout << "Result: " << result << endl; 
 		return true;
 	}
 	else

@@ -11,6 +11,8 @@ namespace sof { namespace framework { namespace remote { namespace corba { names
  * The <code>CORBANamingServiceImpl</code> class implements the
  * <code>CORBANamingService</code> interface and provides methods for
  * accessing the CORBA naming service.
+ *
+ * @author magr74
  */
 class CORBANamingServiceImpl : public CORBANamingService {
 

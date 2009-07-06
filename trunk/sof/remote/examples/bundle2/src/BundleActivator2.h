@@ -7,7 +7,7 @@
 #include "sof/framework/IServiceTrackerCustomizer.h"
 #include "sof/framework/remote/corba/RemoteServiceTracker.h"
 
-#include "Speaker.h"
+#include "Multiplier.h"
 
 using namespace sof::framework::remote::corba;
 using namespace sof::framework;
@@ -16,7 +16,7 @@ class BundleActivator2 : public IRemoteBundleActivator, public IRemoteServiceTra
 {
 	private:
 		RemoteServiceTracker* tracker;
-		Speaker_var service;
+		Multiplier_var service;
 
 	public:
 		virtual ~BundleActivator2();

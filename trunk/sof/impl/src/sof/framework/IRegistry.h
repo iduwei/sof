@@ -23,6 +23,8 @@ namespace sof { namespace framework {
  * all relevant bundle data.<br>
  * This interface was introduced in order to avoid template dependency for classes which use
  * the registry. Other classes use the registry only via the interface.
+ *
+ * @author magr74
  */
 class IRegistry
 {
@@ -42,7 +44,8 @@ class IRegistry
 		 * @param  bundleName
 		 *				The name of the bundle whose bundle info object is returned.
 		 *
-		 * @return	The <code>BundleInfo</code> object.
+		 * @return	
+		 *				The <code>BundleInfo</code> object.
 		 */
 		virtual BundleInfoBase* getBundleInfo( const string& bundleName ) = 0;
 
@@ -50,7 +53,8 @@ class IRegistry
 		 * Returns all <code>BundleInfo</code> objects which are currently
 		 * stored in registry.
 		 *
-		 * @return	A vector of <code>BundleInfo</code> objects.
+		 * @return	
+		 *				A vector of <code>BundleInfo</code> objects.
 		 *
 		 */
 		virtual vector<BundleInfoBase*> getBundleInfos() = 0;
@@ -100,7 +104,8 @@ class IRegistry
 		 * @param serviceName
 		 *				The name of the service.
 		 *
-		 * @return A pointer to a vector of pointers to <code>ServiceInfo</code> objects.
+		 * @return 
+		 *				A pointer to a vector of pointers to <code>ServiceInfo</code> objects.
 		 */
 		virtual vector<ServiceInfo*>* getServiceInfo( const string &serviceName ) = 0;
 

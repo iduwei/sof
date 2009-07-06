@@ -7,7 +7,7 @@
 using namespace std;
 using namespace sof::framework;
 using namespace sof::util::logging;
-
+ 
 Logger& IBundleContextImpl::logger = LoggerFactory::getLogger( "Framework" );
 
 IBundleContextImpl::IBundleContextImpl( const string& bdleName, IRegistry* const reg ) : bundleName( bdleName ), registry( reg )

@@ -18,6 +18,8 @@ namespace sof { namespace instantiation {
  * When the <code>NullCreator</code> class is used it is not possible
  * to create objects from DLL, because the <code>NullCreator</code> object
  * returns a null pointer for the <code>createObjectFromDll</code>.
+ *
+ * @author magr74
  */
 template <typename BaseT>
 class NullCreator

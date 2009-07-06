@@ -6,7 +6,7 @@
 
 #include "sof/framework/IServiceRegistration.h"
 
-#include "SpeakerImpl.h"
+#include "MultiplierImpl.h"
 
 using namespace sof::framework::remote::corba;
 
@@ -14,10 +14,10 @@ class BundleActivator1 : public IRemoteBundleActivator
 {
 	private:
 		IServiceRegistration* serviceReg1;
-		SpeakerImpl* service1;
+		MultiplierImpl* service1;
 
 		IServiceRegistration* serviceReg2;
-		SpeakerImpl* service2;
+		MultiplierImpl* service2;
 
 	public:
 		virtual ~BundleActivator1();

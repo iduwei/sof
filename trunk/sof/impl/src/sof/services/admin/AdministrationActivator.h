@@ -23,6 +23,8 @@ using namespace sof::services::admin;
  * of the <code>Launcher</code> class is called.<br>
  * Note: After the <code>startAdministrationBundle</code> method is called the
  * executing thread blocks and waits for user inputs on the console.
+ *
+ * @author magr74
  */
 class AdministrationActivator : public IBundleActivator
 {

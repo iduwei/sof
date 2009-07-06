@@ -9,7 +9,7 @@ IServiceRegistrationImpl::IServiceRegistrationImpl( const string& bName, IRegist
 {
 	logger.log( Logger::DEBUG, "[IServiceRegistrationImpl#ctor] Called." );
 }
-
+ 
 IServiceRegistrationImpl::~IServiceRegistrationImpl()
 {
 	logger.log( Logger::DEBUG, "[IServiceRegistrationImpl#destructor] Called." );

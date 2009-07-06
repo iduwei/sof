@@ -27,11 +27,13 @@ void CORBAHelper::initORB( const vector<string>& args )
 	for ( iter = args.begin(); iter != args.end(); iter++ )
 	{
 		argv[counter] = const_cast<char*> ( (*iter).c_str() );
+		this->logger.log( Logger::DEBUG, "[CORBAHelper#initORB] Argument: %1", (*iter) );
 		counter++;
 	}
 	
 	this->logger.log( Logger::DEBUG, "[CORBAHelper#initORB] Initialize the ORB." );
 	this->orb = CORBA::ORB_init( argc, argv);
+	this->logger.log( Logger::DEBUG, "[CORBAHelper#initORB] ORB initialized." );
 
 	free( argv );
 

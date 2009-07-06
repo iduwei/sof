@@ -22,6 +22,8 @@ using namespace sof::framework::remote::corba::generated;
  * Each service and each service listener which is registered by a bundle of a SOF process is
  * forwarded to this registry component. Afterwards the registry notifies all SOF process which
  * are registered as observers at the registry component.
+ *
+ * @author magr74
  */
 class CORBARegistryImpl : virtual public POA_sof::framework::remote::corba::generated::CORBARegistry
 {

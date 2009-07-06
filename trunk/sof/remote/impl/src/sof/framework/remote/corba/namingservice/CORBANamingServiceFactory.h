@@ -10,6 +10,8 @@ namespace sof { namespace framework { namespace remote { namespace corba { names
 /**
  * The <code>CORBANamingServiceFactory</code> represents a factory class for creating objects of
  * type <code>CORBANamingService</code>.
+ *
+ * @author magr74
  */
 class CORBANamingServiceFactory
 {

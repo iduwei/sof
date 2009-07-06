@@ -19,9 +19,12 @@
 
 
 
+
   
 
 
+  
+  
   
   
   
@@ -79,11 +82,13 @@ CODE { COLOR: #990000; FONT-FAMILY: "Courier New", Courier, mono; }
   
   
   
+  
   <link rel="stylesheet" type="text/css" href="global.css">
 </head>
 
 
 <body color="#000000" style="background-color: rgb(255, 255, 255);">
+
 
 
 
@@ -121,9 +126,11 @@ CODE { COLOR: #990000; FONT-FAMILY: "Courier New", Courier, mono; }
 
 
 
+
 <!------------------------------- STEP 2 --------------------------->
 <!-- Include download and sample image information. -->
 <ul class="download">
+
 
 
 
@@ -160,7 +167,9 @@ CODE { COLOR: #990000; FONT-FAMILY: "Courier New", Courier, mono; }
 
 
 
+
 </ul>
+
 
 
 
@@ -196,9 +205,11 @@ CODE { COLOR: #990000; FONT-FAMILY: "Courier New", Courier, mono; }
 
 
 
+
 <!------------------------------- STEP 3 --------------------------->
 <!-- Add the article text. Please use simple formatting (<h2>, <p> etc) -->
 <h2>Introduction</h2>
+
 
 
 
@@ -249,6 +260,7 @@ API is very similar to the OSGI API (see <a target="_blank" title="External link
 
 
 
+
 <h2>Using the Code</h2>
 
 
@@ -267,7 +279,9 @@ API is very similar to the OSGI API (see <a target="_blank" title="External link
 
 
 
+
 <h3>What does a module consist of?</h3>
+
 
 
 
@@ -304,6 +318,7 @@ parts:</p>
 
 
 
+
 <ul>
 
 
@@ -322,7 +337,9 @@ parts:</p>
 
 
 
+
   <li>A class which implements the&nbsp;<code>sof::framework::IBundleActivator&nbsp;</code>interface.&nbsp;</li>
+
 
 
 
@@ -359,8 +376,10 @@ other bundles.</li>
 
 
 
+
   <li>Optionally: A class providing an interface for loading a dynamic link
 library or shared library&nbsp;</li>
+
 
 
 
@@ -396,7 +415,9 @@ library or shared library&nbsp;</li>
 
 
 
+
 </ul>
+
 
 
 
@@ -442,6 +463,7 @@ object.
 
 
 
+
 <div>The <code>IBundleActivator</code> interface
 provides three methods (destructor, <code>start</code>, <code>stop</code>),
 which have to be
@@ -450,6 +472,7 @@ below shows the implementation of the&nbsp;<code>IBundleActivator</code>
 interface for 'bundle1' whereas the destructor, <code>start</code>
 and <code>stop</code> method
 are not filled with code yet.<br>
+
 
 
 
@@ -485,7 +508,9 @@ are not filled with code yet.<br>
 
 
 
+
 <span style="font-weight: bold;">Header file:</span><br>
+
 
 
 
@@ -521,7 +546,9 @@ are not filled with code yet.<br>
 
 
 
+
 <span style="font-weight: bold;">Implementation:</span><br>
+
 
 
 
@@ -557,7 +584,9 @@ are not filled with code yet.<br>
 
 
 
-<pre>#include "BundleActivator1.h"<br><br>#include "sof/instantiation/ObjectCreator.h"btAllFoundDevicesProfilesList<br><br>using namespace sof::instantiation;<br>using namespace sof::framework;<br><br>BundleActivator1::~BundleActivator1() <br>{<br>	// Deallocate memory<br>}<br><br>void BundleActivator1::start(IBundleContext::ConstPtr context) <br>{<br>	// Add code for registering services and service listeners<br>}<br><br>void BundleActivator1::stop(IBundleContext::ConstPtr context) <br>{<br>	// Add code for deregistering services and service listeners<br>}<br><br>REGISTER_BUNDLE_ACTIVATOR_CLASS( "BundleActivator1", BundleActivator1 )<br><br><br></pre>
+
+<pre>#include "BundleActivator1.h"<br><br>#include "sof/instantiation/ObjectCreator.h"<br><br>using namespace sof::instantiation;<br>using namespace sof::framework;<br><br>BundleActivator1::~BundleActivator1() <br>{<br>	// Deallocate memory<br>}<br><br>void BundleActivator1::start(IBundleContext::ConstPtr context) <br>{<br>	// Add code for registering services and service listeners<br>}<br><br>void BundleActivator1::stop(IBundleContext::ConstPtr context) <br>{<br>	// Add code for deregistering services and service listeners<br>}<br><br>REGISTER_BUNDLE_ACTIVATOR_CLASS( "BundleActivator1", BundleActivator1 )<br><br><br></pre>
+
 
 
 
@@ -605,7 +634,9 @@ to be registered at the framework by using the
 
 
 
+
 <span style="font-weight: bold;"><br>
+
 
 
 
@@ -625,6 +656,7 @@ to be registered at the framework by using the
 
 </span>
 <h3>Services</h3>
+
 
 
 
@@ -667,7 +699,9 @@ the multiplication.&nbsp;<br>
 
 
 
+
 <br>
+
 
 
 
@@ -703,7 +737,9 @@ the multiplication.&nbsp;<br>
 
 
 
+
 <pre>#ifndef IMULTIPLIER_H<br>#define IMULTIPLIER_H<br><br>#include "sof/framework/IService.h"<br><br>using namespace sof::framework;<br><br>class IMultiplier : public IService<br>{<br>	public:<br>		virtual int multiply( int x, int y ) = 0;<br>};<br><br>#endif</pre>
+
 
 
 
@@ -735,6 +771,7 @@ The implementation of the service interface is done in the 'IMultiplierImpl.h' f
 
 
 
+
 <br>
 
 
@@ -753,7 +790,9 @@ The implementation of the service interface is done in the 'IMultiplierImpl.h' f
 
 
 
+
 <h3>Registering and Deregistering Services</h3>
+
 
 
 
@@ -791,7 +830,9 @@ used. The <code>start</code> method of&nbsp;'bundle1' creates an instance of the
 
 
 
+
 <ul>
+
 
 
 
@@ -821,7 +862,9 @@ used. The <code>start</code> method of&nbsp;'bundle1' creates an instance of the
 
 
 
+
   <li>The service object itself</li>
+
 
 
 
@@ -851,6 +894,7 @@ used. The <code>start</code> method of&nbsp;'bundle1' creates an instance of the
 
 
 
+
 </ul>
 
 
@@ -866,7 +910,9 @@ used. The <code>start</code> method of&nbsp;'bundle1' creates an instance of the
 
 
 
+
 After the registration process of the service object, the multiplier can be used by other bundles.<br>
+
 
 
 
@@ -899,7 +945,9 @@ the <code>stop</code> method.<br>
 
 
 
+
 <br>
+
 
 
 
@@ -935,6 +983,7 @@ the <code>stop</code> method.<br>
 
 
 
+
 <pre>#include "BundleActivator1.h"<br><br>#include "sof/instantiation/ObjectCreator.h"<br>#include "sof/framework/Properties.h"<br><br>#include "IMultiplier.h"<br>#include "IMultiplierImpl.h"<br><br>using namespace sof::instantiation;<br>using namespace sof::framework;<br><br>BundleActivator1::~BundleActivator1() <br>{<br>	// Deallocate memory<br>}<br><br>void BundleActivator1::start(IBundleContext::ConstPtr context) <br>{	<br>	this-&gt;service = new IMultiplierImpl();	<br><br>	Properties props;<br>	props.put( "instance", "1" );<br><br>	this-&gt;serviceReg = context-&gt;registerService( "IMultiplier", this-&gt;service, props ); <br>}<br><br>void BundleActivator1::stop(IBundleContext::ConstPtr context) <br>{<br>	this-&gt;serviceReg-&gt;unregister();<br>	delete this-&gt;serviceReg;<br>	delete this-&gt;service;<br>}<br><br>REGISTER_BUNDLE_ACTIVATOR_CLASS( "BundleActivator1", BundleActivator1 )<br><br><br></pre>
 
 
@@ -951,7 +1000,9 @@ the <code>stop</code> method.<br>
 
 
 
+
 <br>
+
 
 
 
@@ -987,9 +1038,11 @@ the <code>stop</code> method.<br>
 
 
 
+
 The previous chapter described how to register a service object. Now we
 talk about how registered services can be used by other bundles. For
 this you have to create a&nbsp;<code>ServiceTracker</code> object which expects three parameters in the constructor:<br>
+
 
 
 
@@ -1019,7 +1072,9 @@ this you have to create a&nbsp;<code>ServiceTracker</code> object which expects 
 
 
 
+
   <li>The&nbsp;<code>IBundleContext</code> object</li>
+
 
 
 
@@ -1049,6 +1104,7 @@ this you have to create a&nbsp;<code>ServiceTracker</code> object which expects 
 
 
 
+
   <li>An object implementing the <code>IServiceTrackerCustomizer</code> interface (in the following example it is implemented by the bundle activator class)</li>
 
 
@@ -1064,7 +1120,9 @@ this you have to create a&nbsp;<code>ServiceTracker</code> object which expects 
 
 
 
+
 </ul>
+
 
 
 
@@ -1105,7 +1163,9 @@ interested in using the found service, otherwise false.<br>
 
 
 
+
 For the case that the&nbsp;<code>IMultiplier</code> service is deregistered by the other bundle the relating service trackers are notified by a&nbsp;<code>removedService</code> method call.<br>
+
 
 
 
@@ -1133,7 +1193,9 @@ In order to stop listening for service objects the&nbsp;<code>stopTracking</code
 
 
 
+
 <br>
+
 
 
 
@@ -1172,7 +1234,9 @@ In order to stop listening for service objects the&nbsp;<code>stopTracking</code
 
 
 
+
 <span style="font-weight: bold;"></span><br>
+
 
 
 
@@ -1200,7 +1264,9 @@ In order to stop listening for service objects the&nbsp;<code>stopTracking</code
 
 
 
+
 <h3>Creating Bundle Libraries</h3>
+
 
 
 
@@ -1231,6 +1297,7 @@ platform we have to implement a Windows DLL:<br>
 
 
 
+
 <br>
 
 
@@ -1242,7 +1309,9 @@ platform we have to implement a Windows DLL:<br>
 
 
 
+
 <span style="font-weight: bold;">Implementation (dll.cpp):</span><br>
+
 
 
 
@@ -1268,6 +1337,7 @@ platform we have to implement a Windows DLL:<br>
 
 
 
+
 The <code>dllMain</code> method represents the entry point for the DLL where initialization calls (not necessary) can be done. The&nbsp;<code>dllMain</code>
 method is defined by the Windows platform and is called when the DLL is
 loaded. <span style="font-style: italic;">SOF</span> itself requires an implementation of the&nbsp;<code>createObject</code> method which provides the functionality for creating <code>IBundleActivator</code> instances. This 'dll.cpp' file does not have to be changed for the implementation of other bundles. It can be always reused.<br>
@@ -1279,7 +1349,9 @@ loaded. <span style="font-style: italic;">SOF</span> itself requires an implemen
 
 
 
+
 <br>
+
 
 
 
@@ -1302,6 +1374,7 @@ contains following files:<br>
 
 
 
+
 <ul style="margin-left: 160px;">
 
 
@@ -1311,6 +1384,8 @@ contains following files:<br>
 
 
 
+
+  
   
   
   
@@ -1320,6 +1395,7 @@ contains following files:<br>
   
   
   <ul>
+
 
 
 
@@ -1337,6 +1413,8 @@ contains following files:<br>
 
 
 
+
+  
   
   
   
@@ -1354,6 +1432,8 @@ contains following files:<br>
 
 
 
+
+  
   
   
   
@@ -1363,6 +1443,7 @@ contains following files:<br>
   
   
   <ul>
+
 
 
 
@@ -1380,6 +1461,8 @@ contains following files:<br>
 
 
 
+
+  
   
   
   
@@ -1397,6 +1480,8 @@ contains following files:<br>
 
 
 
+
+  
   
   
   
@@ -1414,6 +1499,7 @@ contains following files:<br>
 
 
 
+
     <li>The definition of the DLL interface ('dll.cpp')</li>
 
 
@@ -1423,6 +1509,8 @@ contains following files:<br>
 
 
 
+
+  
   
   
   
@@ -1440,7 +1528,9 @@ contains following files:<br>
 
 
 
+
 </ul>
+
 
 
 
@@ -1459,6 +1549,8 @@ The project view of the second bundle (project 'sof_examples_bundle2') contains:
 
 
 
+
+  
   
   
   
@@ -1468,6 +1560,7 @@ The project view of the second bundle (project 'sof_examples_bundle2') contains:
   
   
   <ul>
+
 
 
 
@@ -1485,6 +1578,8 @@ The project view of the second bundle (project 'sof_examples_bundle2') contains:
 
 
 
+
+  
   
   
   
@@ -1502,6 +1597,8 @@ The project view of the second bundle (project 'sof_examples_bundle2') contains:
 
 
 
+
+  
   
   
   
@@ -1511,6 +1608,7 @@ The project view of the second bundle (project 'sof_examples_bundle2') contains:
   
   
   <ul>
+
 
 
 
@@ -1528,6 +1626,8 @@ The project view of the second bundle (project 'sof_examples_bundle2') contains:
 
 
 
+
+  
   
   
   
@@ -1545,6 +1645,8 @@ The project view of the second bundle (project 'sof_examples_bundle2') contains:
 
 
 
+
+  
   
   
   
@@ -1562,6 +1664,7 @@ The project view of the second bundle (project 'sof_examples_bundle2') contains:
 
 
 
+
     <li>The definition of the DLL interface</li>
 
 
@@ -1571,6 +1674,8 @@ The project view of the second bundle (project 'sof_examples_bundle2') contains:
 
 
 
+
+  
   
   
   
@@ -1588,6 +1693,7 @@ The project view of the second bundle (project 'sof_examples_bundle2') contains:
 
 
 
+
 </ul>
 
 
@@ -1597,7 +1703,9 @@ The project view of the second bundle (project 'sof_examples_bundle2') contains:
 
 
 
+
 Each project can now be build as Windows DLL and then there will be two bundle libraries: 'bundle1.dll' and 'bundle2.dll'.<br>
+
 
 
 
@@ -1612,14 +1720,6 @@ project.<br>
 
 
 
-<br>
-
-
-
-
-
-
-
 
 <br>
 
@@ -1630,7 +1730,19 @@ project.<br>
 
 
 
+
 <br>
+
+
+
+
+
+
+
+
+
+<br>
+
 
 
 
@@ -1644,28 +1756,34 @@ project.<br>
 
 
 
+
 </h3>
 
 
 
 
-<br>
-
-
-
 
 <br>
 
 
 
 
+
 <br>
+
+
+
+
+
+<br>
+
 
 
 
 
 
 <h3>Starting the Framework</h3>
+
 
 
 
@@ -1692,7 +1810,9 @@ For starting the framework an instance of class&nbsp;<code>Launcher</code> has t
 
 
 
+
 <ul>
+
 
 
 
@@ -1716,6 +1836,8 @@ For starting the framework an instance of class&nbsp;<code>Launcher</code> has t
 
 
 
+
+  
   
   
   
@@ -1728,6 +1850,7 @@ For starting the framework an instance of class&nbsp;<code>Launcher</code> has t
   
   
   <ul>
+
 
 
 
@@ -1751,6 +1874,8 @@ For starting the framework an instance of class&nbsp;<code>Launcher</code> has t
 
 
 
+
+  
   
   
   
@@ -1763,6 +1888,7 @@ For starting the framework an instance of class&nbsp;<code>Launcher</code> has t
   
   
   </ul>
+
 
 
 
@@ -1786,6 +1912,8 @@ For starting the framework an instance of class&nbsp;<code>Launcher</code> has t
 
 
 
+
+  
   
   
   
@@ -1809,6 +1937,7 @@ For starting the framework an instance of class&nbsp;<code>Launcher</code> has t
 
 
 
+
     <li>Defines the way a bundle is loaded from a library (e.g. Windows DLL, Unix shared library etc.).</li>
 
 
@@ -1821,6 +1950,8 @@ For starting the framework an instance of class&nbsp;<code>Launcher</code> has t
 
 
 
+
+  
   
   
   
@@ -1844,7 +1975,9 @@ For starting the framework an instance of class&nbsp;<code>Launcher</code> has t
 
 
 
+
 </ul>
+
 
 
 
@@ -1867,9 +2000,11 @@ system by using this template solution. The framework only provides the <code>Si
 
 
 
+
 The&nbsp;<code>SingleThreaded</code> class requires that framework
 calls (e.g. registering/deregistering services and service listeners)
 are done in a single thread, otherwise race conditions can occur.<br>
+
 
 
 
@@ -1887,7 +2022,9 @@ The&nbsp;<code>WinDllCreator</code> class can be only used for the Windows platf
 
 
 
+
 <br>
+
 
 
 
@@ -1903,7 +2040,9 @@ Afterwards the&nbsp;<code>Launcher</code> class is created, the bundle configura
 
 
 
+
 <ul>
+
 
 
 
@@ -1919,7 +2058,9 @@ Afterwards the&nbsp;<code>Launcher</code> class is created, the bundle configura
 
 
 
+
   <li>The name of the bundle activator class</li>
+
 
 
 
@@ -1935,7 +2076,9 @@ Afterwards the&nbsp;<code>Launcher</code> class is created, the bundle configura
 
 
 
+
   <li>The name of the bundle library</li>
+
 
 
 
@@ -1951,13 +2094,16 @@ Afterwards the&nbsp;<code>Launcher</code> class is created, the bundle configura
 
 
 
+
 Now the bundle configuration can be passed to the&nbsp;<code>Launcher</code> instance by calling the <code>start</code> method. This is the trigger for starting the framework, creating and starting the bundle activators.<br>
 
 
 
 
 
+
 <br>
+
 
 
 
@@ -1986,6 +2132,7 @@ Now the bundle configuration can be passed to the&nbsp;<code>Launcher</code> ins
 
 
 
+
 The following sequence chart shows the startup procedure in a simplified way.<br>
 
 
@@ -1994,7 +2141,9 @@ The following sequence chart shows the startup procedure in a simplified way.<br
 
 
 
+
 <br>
+
 
 
 
@@ -2006,6 +2155,7 @@ The following sequence chart shows the startup procedure in a simplified way.<br
 
 
 
+
 After the executable file 'sof_examples.exe' is started,
 both bundles are started and we can see that 'bundle2' calls the
 'multiplier' service of&nbsp;'bundle1' (see&nbsp;highlighted lines in
@@ -2013,7 +2163,9 @@ the picture below). <br>
 
 
 
+
 <br>
+
 
 
 
@@ -2021,11 +2173,14 @@ the picture below). <br>
 
 
 
-<br>
-
-
 
 <br>
+
+
+
+
+<br>
+
 
 
 
@@ -2035,47 +2190,61 @@ framework. Please enter 'help' for displaying all available commands. There are 
 
 
 
+
   <li>Showing all relevant information of a bundle (e.g. registered services, service listeners and used services)</li>
+
 
 
 </ul>
 
 
+
 <div style="margin-left: 40px;"><img style="width: 571px; height: 202px;" alt="" src="dump_bundle.gif"></div>
 
 
+
 <ul>
+
 
 
 
   <li>Starting and stopping further bundles</li>
 
 
+
 </ul>
 
 
+
 <ul>
+
 
 
 
   <li>Listing the names of all started bundles</li>
 
 
+
 </ul>
 
 
+
 <div style="margin-left: 40px;"><img style="width: 203px; height: 67px;" alt="" src="dump_all_bundles.gif"></div>
+
 
 
 <ul>
 
 
 
+
 </ul>
 
 
 
+
 <h2>Conclusion</h2>
+
 
 
 
@@ -2102,9 +2271,12 @@ This article gave a small introduction to the <span style="font-style: italic;">
 
 
 
+
 <ul>
 
+
   <li>It can be configured which bundles ought to be started at framework startup.</li>
+
 
   <li>
 
@@ -2112,6 +2284,7 @@ This article gave a small introduction to the <span style="font-style: italic;">
 
 
 Software modules can be started and stopped&nbsp;during runtime (via <span style="font-style: italic;">SOF</span> console), so a bundle implementation can be replaced by an other one.</li>
+
 
 
 
@@ -2132,6 +2305,7 @@ Loose coupling between modules (bundles): Software modules only communicate via 
 
 
 
+
   <li>
 
 
@@ -2144,7 +2318,9 @@ The framework can be easily adapted&nbsp;to specific operating systems by using 
 
 
 
+
 </ul>
+
 
 
 
@@ -2163,6 +2339,7 @@ You'll find more documentation on the project's web site <a href="http://sof.tid
 
 
 <h2>History&nbsp;</h2>
+
 
 
 

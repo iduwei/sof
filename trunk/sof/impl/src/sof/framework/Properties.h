@@ -20,6 +20,8 @@ using namespace std;
  * So the service listeners are able to distinguish between
  * service objects of the same type by using the provided
  * properties.
+ *
+ * @author magr74
  */
 class Properties
 {

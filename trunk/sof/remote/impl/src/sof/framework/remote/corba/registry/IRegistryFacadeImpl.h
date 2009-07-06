@@ -23,6 +23,8 @@ using namespace sof::framework::remote::corba::generated;
  * The <code>IRegistryFacadeImpl</code> implements the <code>IRegistry</code> interface and has
  * access to the remote registry component and to the local registry. It decides which registry 
  * calls have to be forwarded to the remote registry and to the local registry.
+ *
+ * @author magr74
  */
 class IRegistryFacadeImpl : public IRegistry
 {

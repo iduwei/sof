@@ -22,6 +22,8 @@ using namespace sof::framework::remote::corba;
  * Afterwards the service tracker object is started the tracker listens for service object changes
  * (registering, deregistering) and forwards the changes to the service tracker customizer.
  *
+ * @author magr74
+ *
  */
 class IRemoteServiceTrackerCustomizer
 {

@@ -28,7 +28,8 @@ using namespace std;
  * the '%' character. The number behind the "%" character defines which parameter (the first,
  * second etc.) must be placed.
  * 
- * 
+ *
+ * @author magr74
  */
 class Logger
 {	

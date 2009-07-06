@@ -35,6 +35,8 @@ namespace sof { namespace framework {
  * running the SOF framework.<br>
  * The main task of this class is to provide methods
  * for starting and stopping bundles.
+ *
+ * @author magr74
  */
 template<
 	class ThreadingModel = SingleThreaded,

@@ -19,6 +19,8 @@ using namespace sof::framework;
  * The <code>ServiceListenerInfo</code> class is a helper
  * class for framework internal use and holds all important
  * information about a service listener.
+ *
+ * @author magr74
  */
 class ServiceListenerInfo
 {
@@ -99,6 +101,18 @@ class ServiceListenerInfo
 		 */
 		virtual bool operator==( const ServiceListenerInfo& info1 );
 		
+		/**
+		 * Compares two objects of type <code>ServiceListenerInfo</code>.
+		 *
+		 * @param info1
+		 *				The first <code>ServiceListenerInfo</code> object which is compared.
+		 *
+		 * @param info2
+		 *				The second <code>ServiceListenerInfo</code> object which is compared.
+		 *
+		 * @return
+		 *				True, if the objects are equal, otherwise false.
+		 */
 		virtual bool equals( const ServiceListenerInfo& info1, const ServiceListenerInfo& info2 );
 
 		/**

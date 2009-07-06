@@ -184,4 +184,4 @@ vector<ServiceInfo*> BundleInfoBase::getUsedServices()
 vector<ServiceListenerInfo*> BundleInfoBase::getRegisteredListeners()
 {
 	return this->registeredListeners;
-}
+} 

@@ -7,7 +7,7 @@
 #include "Test.h"
 
 #include "sof/framework/Global.h"
-
+ 
 #ifdef WIN
 #include "sof/framework/Launcher.h"
 #include "sof/framework/BundleInfoBase.h"

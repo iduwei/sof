@@ -268,6 +268,18 @@
 						</Filter>
 					</Filter>
 				</Filter>
+				<Filter
+					Name="services"
+					>
+					<Filter
+						Name="admin"
+						>
+						<File
+							RelativePath=".\src\sof\services\admin\RemoteAdministrationActivator.cpp"
+							>
+						</File>
+					</Filter>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -376,6 +388,18 @@
 								</File>
 							</Filter>
 						</Filter>
+					</Filter>
+				</Filter>
+				<Filter
+					Name="services"
+					>
+					<Filter
+						Name="admin"
+						>
+						<File
+							RelativePath=".\src\sof\services\admin\RemoteAdministrationActivator.h"
+							>
+						</File>
 					</Filter>
 				</Filter>
 			</Filter>

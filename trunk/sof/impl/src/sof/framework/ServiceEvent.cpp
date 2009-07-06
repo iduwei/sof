@@ -17,7 +17,7 @@ ServiceReference& ServiceEvent::getReference() const
 	return this->reference;
 }
 
-
+   
 string ServiceEvent::toString() const
 {	
 	ostringstream eventStream;

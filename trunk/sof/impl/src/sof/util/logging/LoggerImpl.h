@@ -14,6 +14,8 @@ using namespace std;
  * The <code>LoggerImpl</code> class implements the
  * <code>Logger</code> interface and is reponsible for
  * printing the log messages to the console.
+ *
+ * @author magr74
  */
 class LoggerImpl : public Logger
 {

@@ -17,6 +17,8 @@ using namespace sof::services::admin;
  * which dumps the name of all started bundles<br>
  * Example:<br>
  * <code>dab <bundle_name></code>
+ *
+ * @author magr74
  */
 class DumpAllBundlesCmd : public ConsoleCommand
 {

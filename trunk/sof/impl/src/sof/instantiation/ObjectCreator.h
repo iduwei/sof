@@ -50,6 +50,8 @@ using namespace std;
  * Furthermore the <code>ObjectCreator</code> is able to create objects from DLLs too:<p>
  *
  * IBundleActivator* activator = OC.createObjectFromDll( "c:/libraries", "test.dll", "TestBundleActivator" );<p>
+ *
+ * @author magr74
  */
 
 template<
@@ -280,6 +282,7 @@ BaseT* ObjectCreator<BaseT,CreationPolicy>::createLocalObject( const string &key
 	BaseFactory<BaseT>* intantiator = (*ObjectCreator<BaseT,NullCreator>::instanceMap)[key];
 	if ( intantiator == 0 )
 	{
+		getLogger().log( Logger::ERROR_, "[ObjectCreator#createLocalObject] No intantiator for class available." );					
 		ObjectCreationException exc( "No intantiator for class available." );
 		throw exc;
 	}

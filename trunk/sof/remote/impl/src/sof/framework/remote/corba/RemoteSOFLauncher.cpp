@@ -116,9 +116,20 @@ template<
 	template <class> class CreationPolicy>
 void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::startAdministrationBundle()
 {
-	logger.log( Logger::DEBUG, "[Launcher#startAdministrationBundle] Called." );
-	IAdministrationServiceImpl* adminServiceImpl = new IAdministrationServiceImpl( this );
-	adminServiceImpl->startConsole();
+	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#startAdministrationBundle] Called." );
+	IRemoteBundleActivator* adminBundleActivator = this->objectCreator.createObject( "sof::services::admin::RemoteAdministrationActivator" );
+	IBundleContext* bundleCtxt = this->createBundleContext( "RemoteAdministrationBundle" );
+	
+	IRemoteBundleContext* bc = dynamic_cast<IRemoteBundleContext*>( bundleCtxt );
+
+	BundleInfoBase* bundleInfo = new RemoteBundleInfo( "RemoteAdministrationBundle", adminBundleActivator, bundleCtxt );		
+	this->registry->addBundleInfo( bundleInfo );
+
+	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#start] Start bundle." );
+		
+	RemoteAdministrationActivator* adminActivator = static_cast<RemoteAdministrationActivator*> (adminBundleActivator);	
+	adminActivator->setAdministrationProvider( this );
+	adminActivator->start( bc );
 }
 
 template<

@@ -29,6 +29,8 @@ using namespace sof::util::logging;
  *		<li>The list of services which are used by the bundle.
  *		<li>The list of service listeners.<br>
  * </ul>
+ *
+ * @author magr74
  */
 class BundleInfoBase
 {

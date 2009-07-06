@@ -43,6 +43,8 @@ namespace sof { namespace framework {
  *			a new service object is registered or a service
  *			object is removed.<br>
  * </ul>
+ *
+ * @author magr74
  */
 template<class ThreadingModel=SingleThreaded>
 class IRegistryImpl : public IRegistry
@@ -78,8 +80,21 @@ class IRegistryImpl : public IRegistry
 		 */
 		map<string, vector<ServiceListenerInfo*>* > serviceListenerMap;		
 
+		/**
+		 * Stops the activator object.
+		 *
+		 * @param bi
+		 *				The bundle information object.
+		 */
 		virtual void stopActivator( BundleInfoBase* bi ) ;
 
+		/**
+		 * Deletes the activator object.
+		 *
+		 * @param bi
+		 *			The bundle information object containing all relevant
+		 *			bundle information.
+		 */
 		virtual void deleteActivator( BundleInfoBase* bi );
 
 		/**

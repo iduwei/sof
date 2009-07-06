@@ -17,7 +17,7 @@ ServiceListenerInfo::~ServiceListenerInfo()
 {
 	logger.log( Logger::DEBUG, "[ServiceListenerInfo#destructor] Called." );
 }
-
+ 
 string ServiceListenerInfo::getBundleName() const
 {
 	return this->bundleName;

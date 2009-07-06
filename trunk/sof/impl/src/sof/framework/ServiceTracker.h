@@ -25,6 +25,8 @@ namespace sof { namespace framework {
  * registered and unregistered services.<br>
  * The service tracker class simplifies the work of application
  * developers for tracking services.
+ *
+ * @author magr74
  */
 class ServiceTracker : public IServiceListener
 {

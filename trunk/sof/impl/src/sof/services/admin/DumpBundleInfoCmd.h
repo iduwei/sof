@@ -17,6 +17,8 @@ using namespace sof::services::admin;
  * which dumps all bundle data of a specific bundle.<br>
  * Example:<br>
  * <code>dbi <bundle_name></code>
+ *
+ * @author magr74
  */
 class DumpBundleInfoCmd : public ConsoleCommand
 {

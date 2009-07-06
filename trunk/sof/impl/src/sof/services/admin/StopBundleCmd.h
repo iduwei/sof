@@ -17,6 +17,8 @@ using namespace sof::services::admin;
  * which stops a bundle.<br>
  * Example:<br>
  * <code>spb <bundle_name></code>
+ *
+ * @author magr74
  */
 class StopBundleCmd : public ConsoleCommand
 {

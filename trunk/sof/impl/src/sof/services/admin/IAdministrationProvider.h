@@ -16,6 +16,8 @@ namespace sof { namespace services { namespace admin {
  * The <code>IAdministrationProvider</code> interface provides methods
  * for administrating the SOF container (starting, stopping bundles, asking
  * for bundle information etc.)
+ *
+ * @author magr74
  */
 class IAdministrationProvider
 {

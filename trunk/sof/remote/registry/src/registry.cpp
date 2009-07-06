@@ -22,13 +22,16 @@ int main( int argc, char **argv)
 	{
 		args.push_back( argv[i] );
 	}
+	
+	args.push_back( "-ORBNamingAddr" );
+	args.push_back( "inet:localhost:5000" );
 
 	CORBAHelper corbaHelper( args );
 	CORBARegistryImpl registry;
 	CORBA::Object_var obj = corbaHelper.activateObject( &registry );
 	corbaHelper.registerObject( obj, CORBAHelper::REMOTE_REGISTRY_PATH, CORBAHelper::REMOTE_REGISTRY_NAME );
 	cout << "Registry service started!" << endl;
-	corbaHelper.startAndWait();	
+	corbaHelper.startAndWait();
     return 0;
 }
 

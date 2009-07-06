@@ -4,8 +4,9 @@
 #include <vector>
 #include <string>
 
-#include "IRemoteBundleActivator.h"
 #include "sof/framework/BundleInfoBase.h"
+
+#include "IRemoteBundleActivator.h"
 
 namespace sof { namespace framework { namespace remote { namespace corba {
 
@@ -26,6 +27,8 @@ using namespace sof::util::logging;
  *		<li>The list of services which are used by the bundle.
  *		<li>The list of service listeners.<br>
  * </ul>
+ *
+ * @author magr74
  */
 class RemoteBundleInfo : public BundleInfoBase
 {

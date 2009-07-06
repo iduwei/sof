@@ -16,6 +16,8 @@ using namespace sof::framework;
  * The <code>ConfigurationException</code> indicates that
  * something went wrong during reading configuration file.<br>
  * See class {@link sof::config::ConfigFileReader}.
+ *
+ * @author magr74
  */
 class ConfigurationException : public SOFException
 {

@@ -6,7 +6,7 @@ IRegistryImpl<ThreadingModel>::~IRegistryImpl()
 {
 	logger.log( Logger::DEBUG, "[IRegistryImpl#destructor] Called." );
 }
-
+ 
 template<class ThreadingModel>
 void IRegistryImpl<ThreadingModel>::addBundleInfo( BundleInfoBase* bundleInfo ) 
 {

@@ -17,6 +17,8 @@ using namespace sof::util::logging;
 /**
  * Represents an implementation of the 
  * sof::framework::IServiceRegistration interface.
+ *
+ * @author magr74
  */
 class IServiceRegistrationImpl : public IServiceRegistration
 {

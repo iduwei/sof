@@ -9,6 +9,8 @@ namespace sof { namespace framework {
  * The <code>IServiceListener</code> class defines the interface
  * for a listener object which is notified about service events 
  * (e.g. service was registered or deregistered).
+ *
+ * @author magr74
  */
 class IServiceListener
 {

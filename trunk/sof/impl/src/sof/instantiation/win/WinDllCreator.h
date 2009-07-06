@@ -22,6 +22,8 @@ namespace sof { namespace instantiation { namespace win {
  * in order to create objects from a DLL.<br>
  * The <code>WinDllCreator</code> is only able to create objects from a Windows
  * DLL.
+ *
+ * @author magr74
  */
 template <typename BaseT>
 class WinDllCreator

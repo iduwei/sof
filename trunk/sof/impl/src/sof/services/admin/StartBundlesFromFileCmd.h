@@ -17,6 +17,8 @@ using namespace sof::services::admin;
  * which starts bundles specified in a configuration file.<br>
  * Example:<br>
  * <code>stbfile <config_file></code>
+ *
+ * @author magr74
  */
 class StartBundlesFromFileCmd : public ConsoleCommand
 {

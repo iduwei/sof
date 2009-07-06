@@ -31,6 +31,8 @@ using namespace sof::framework::remote::corba::generated;
 /**
  * Helper class which provides convenience methods for CORBA related
  * tasks like activating/deactivating CORBA objects.
+ *
+ * @author magr74
  */
 class CORBAHelper
 {

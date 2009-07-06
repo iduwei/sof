@@ -140,6 +140,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				UseLibraryDependencyInputs="false"
 				AdditionalDependencies="kernel32.lib mico2313.lib sof_remote.lib pthreadVC2.lib micocoss2313.lib $(NOINHERIT)"
 				OutputFile="$(OutDir)\registry.exe"
 				LinkIncremental="1"
