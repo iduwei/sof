@@ -1,0 +1,2432 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<!---------------------------------------------------------------------------><!-- INTRODUCTION The Code Project article submission template (HTML version) Using this template will help us post your article sooner. To use, just follow the 3 easy steps below: 1. Fill in the article description details 2. Add links to your images and downloads 3. Include the main article text That's all there is to it! All formatting will be done by our submission scripts and style sheets. --><!---------------------------------------------------------------------------><!-- IGNORE THIS SECTION -->
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <title>The Code Project</title>
+  <style>
+BODY, P, TD { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 10pt }
+H2,H3,H4,H5 { color: #ff9900; font-weight: bold; }
+H2 { font-size: 13pt; }
+H3 { font-size: 12pt; }
+H4 { font-size: 10pt; color: black; }
+PRE { BACKGROUND-COLOR: #FBEDBB; FONT-FAMILY: "Courier New", Courier, mono; WHITE-SPACE: pre; }
+CODE { COLOR: #990000; FONT-FAMILY: "Courier New", Courier, mono; }
+  </style>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <link rel="stylesheet" type="text/css" href="global.css">
+</head>
+
+
+<body color="#000000" style="background-color: rgb(255, 255, 255);">
+
+
+
+
+
+
+
+
+
+
+
+
+<!---------------------------------------------------------------------------><!------------------------------- STEP 1 --------------------------->
+<!-- Fill in the details (CodeProject will reformat this section for you) -->
+<pre>Title: Remote SOF - A modularization framework for C++ supporting distributed software modules.<br>Author: Mattheus <br>Email: mattheus@t-online.de<br>Member ID: 3337502<br>Language: C++<br>Platform: Platform independent<br>Technology: CORBA<br>Level: Intermediate<br>Description: The article describes the usage of a modularization framework called Remote SOF supporting distributed <br>software modules.<br>Section: Platforms, Frameworks &amp; Libraries<br>SubSection: Libraries<br>License: Berkeley Software Distribution (BSD)<br></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+<!------------------------------- STEP 2 --------------------------->
+<!-- Include download and sample image information. -->
+<ul class="download">
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><a href="sof_9070.zip">Download source with
+examples - 1807 Kb</a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<!------------------------------- STEP 3 --------------------------->
+<!-- Add the article text. Please use simple formatting (<h2>, <p> etc) -->
+<h2>Introduction</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+<p>
+<em>Remote SOF&nbsp;</em>(<span style="font-weight: bold;">Remote S</span>ervice
+<span style="font-weight: bold;">O</span>riented <span style="font-weight: bold;">F</span>ramework)
+represents an extension of <span style="font-style: italic;">SOF</span>
+(<span style="font-weight: bold;">S</span>ervice <span style="font-weight: bold;">O</span>riented <span style="font-weight: bold;">F</span>ramework).&nbsp;Before
+reading this article I recommend to read the article about SOF&nbsp;<a href="http://www.codeproject.com/KB/library/SOF_.aspx">here</a>&nbsp;or
+the documentation at the <a href="http://sof.tiddlyspot.com">website</a>
+which
+describes the basic mechanisms of the <span style="font-style: italic;">SOF</span> framework. <em>Remote
+SOF</em> supports like <span style="font-style: italic;">SOF</span>
+the modularization of software by deviding the code into several
+components (called 'bundles') which are able to communicate via clearly
+defined interfaces (called 'services').&nbsp;Using <span style="font-style: italic;">SOF</span>
+the communication between the 'bundles' is limited to one process. That
+means only bundles of the same process can call each other:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><img style="width: 422px; height: 280px;" alt="SOF architecture" title="SOF architecture" src="sof_overview_small.png"></p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p>&nbsp;<span style="font-style: italic;"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+Remote SOF</span> goes a step further and allows the
+communication between bundles running in <span style="font-weight: bold;">different</span> processes:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><img style="height: 499px; width: 666px;" alt="Remote SOF architecture" title="Remote SOF architecture" src="sof_remote_overview_small.png"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+The picture above shows the basic architecture of <span style="font-style: italic;">Remote SOF</span>. There can
+exist several <span style="font-style: italic;">SOF</span> containers (processes) instead of
+only one process when using <span style="font-style: italic;">SOF</span>. The registry component of the <span style="font-style: italic;">SOF</span>
+framework represents the central administration component for holding
+all information about registered services and service listeners. For
+<span style="font-style: italic;">Remote SOF</span> this information is distributed to each 'local' registry
+component of all <span style="font-style: italic;">SOF</span> containers by the remote registry component. For
+example 'bundle 1' knows the services and service listeners which are
+registered by 'bundle 3' and vice versa. If 'bundle 1' registers a
+service which 'bundle 3' is interested in, 'bundle 3' will be notified
+as soon as the service has been registered by 'bundle 1'. <span style="font-style: italic;">Remote SOF</span>
+also allows bundles to call services of bundles within the same process
+of course.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p><a href="http://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture">CORBA</a>
+(especially the CORBA implementation <a href="http://www.mico.org">MICO</a><span style="text-decoration: underline;"></span>)
+acts
+as
+communication layer for the <span style="font-style: italic;">Remote SOF</span> project. That means the remote
+callable service objects, the remote callable service object listeners and the remote registry are implemented as
+CORBA objects. <span style="font-style: italic;">Remote SOF</span> tries to hide the CORBA infrastructure as
+much as possible from you but for some cases (e.g. narrowing CORBA
+objects, using CORBA types etc.) you have to know about the <a href="http://www.omg.org/gettingstarted/corbafaq.htm#VersionNumber">CORBA
+basics</a>. </p>
+
+
+
+
+
+
+
+
+
+
+
+
+<span style="font-weight: bold;">Note:</span> If you
+only want to
+implement 'local' bundles (where all bundles run within the same
+process), use <span style="font-style: italic;">SOF</span>. For implementing distributed software bundles and
+remote callable services you have to use <span style="font-style: italic;">Remote SOF</span>. It is planned for
+next versions of <span style="font-style: italic;">Remote SOF</span> to support a mixture of 'local' and remote
+callable bundles running within one <span style="font-style: italic;">SOF</span> container. <br>
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>Using the Code</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>Building the software</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+The implementation of <span style="font-style: italic;">Remote SOF</span> is OS independent. But currently only
+a
+Visual Studio project file is available for building the software.
+Please look at the <a href="http://sof.tiddlyspot.com/#%5B%5BBuilding%20Remote%20SOF%5D%5D">project's
+web page</a> for further information. There are future plans for
+providing make files for other platforms.
+<h3>What is the difference to <span style="font-style: italic;">SOF</span>?</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<p>As the <span style="font-style: italic;">SOF</span> source code was reused for <span style="font-style: italic;">Remote SOF</span> as far as
+possible
+the <span style="font-style: italic;">Remote SOF</span> API does not differ very much from the <span style="font-style: italic;">SOF</span> API.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+<p>Changes are:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>Service interfaces are not implemented as C++ interfaces
+but as CORBA IDL interfaces.</li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>Use <code>IRemoteBundleActivator</code> for
+implementing a bundle
+instead of&nbsp;<code>IBundleActivator.</code></li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li><code></code>Use&nbsp;<code>IRemoteBundleContext</code>
+instead of&nbsp;<code>IBundleContext </code>for
+registering services.</li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>Use&nbsp;<code>RemoteServiceTracker&nbsp;</code>instead
+of&nbsp;<code>ServiceTracker </code>for creating
+service trackers.</li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>Implement the <code>IRemoteServiceTracker </code>interface
+instead of <code>IServiceTracker </code>for tracking
+services.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+    <br>
+
+
+
+
+
+
+
+
+
+
+
+
+  </li>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+In the following the example of the <a href="http://www.codeproject.com/KB/library/SOF_.aspx">SOF
+article</a> is
+reused for the explanation of <span style="font-style: italic;">Remote SOF</span>. All relevant source code of
+the example can be found under the directory 'sof/remote/examples'.
+There are also two bundles
+called 'bundle1' and 'bundle2' which communicate via one service
+interface of type&nbsp;<code>IMultiplier</code>. Apart
+from the <span style="font-style: italic;">SOF</span> example&nbsp;the two bundles run in different
+processes.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>Implementing the&nbsp;<code>IRemoteBundleActivator</code>
+interface</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+<div>The <code>IRemoteBundleActivator</code>
+interface
+provides the same methods (a destructor for cleaning up used resources,
+the&nbsp;<code>start </code>method for starting the
+bundle, the <code>stop </code>method for stopping the
+bundle) like the&nbsp;<code>IBundleActivator</code>
+interface. In contrast to <span style="font-style: italic;">SOF</span>&nbsp;the parameter of the&nbsp;<code>start</code>
+and&nbsp;<code>stop</code> method which is used for
+registering and deregistering services is not of type&nbsp;<code>IBundleContext</code>
+but&nbsp;<code>IRemoteBundleContext</code>. The
+following example&nbsp;shows the implementation of the&nbsp;<code>IRemoteBundleActivator</code>
+interface for 'bundle1'. The destructor, <code>start</code>
+and <code>stop</code> method are filled with code later.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<span style="font-weight: bold;">Header file:</span><br>
+
+
+
+
+
+
+
+
+
+
+
+
+<pre>#ifndef BUNDLE_ACTIVATOR1_H<br>#define BUNDLE_ACTIVATOR1_H<br><br>#include "sof/framework/remote/corba/IRemoteBundleActivator.h"<br>#include "sof/framework/remote/corba/IRemoteBundleContext.h"<br><br>using namespace sof::framework::remote::corba;<br><br>class BundleActivator1 : public IRemoteBundleActivator<br>{<br>    public:<br>	virtual ~BundleActivator1();<br>	virtual void start( IRemoteBundleContext::ConstPtr context ); <br>	virtual void stop( IRemoteBundleContext::ConstPtr context );<br>};<br><br>#endif<br></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<span style="font-weight: bold;">Implementation:<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+</span>For registering the type and name of the bundle activator
+class the macro&nbsp;<code>REGISTER_REMOTE_BUNDLE_ACTIVATOR_CLASS</code>
+has to be used instead of&nbsp;<code>REGISTER_BUNDLE_ACTIVATOR_CLASS</code>.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<pre>#include "BundleActivator1.h"<br><br>#include "sof/instantiation/ObjectCreator.h"<br>#include "sof/framework/Properties.h"<br><br>using namespace sof::instantiation;<br>using namespace sof::framework;<br><br>BundleActivator1::~BundleActivator1() <br>{<br>	// Deallocate memory<br>}<br><br>void BundleActivator1::start(IRemoteBundleContext::ConstPtr context) <br>{<br>	// Add code for registering services and service listeners}<br>}<br><br>void BundleActivator1::stop(IRemoteBundleContext::ConstPtr context) <br>{<br>	// Add code for deregistering services and service listeners}<br>}<br><br>REGISTER_REMOTE_BUNDLE_ACTIVATOR_CLASS( "BundleActivator1", BundleActivator1 )<br><br></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+<h3>Services</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+The interface of a service which can be called remotely by other bundles
+has to be defined in CORBA <a href="http://www.omg.org/gettingstarted/omg_idl.htm">IDL</a>
+(=&nbsp;<span style="font-weight: bold;">I</span>nterface
+<span style="font-weight: bold;">D</span>efinition <span style="font-weight: bold;">L</span>anguage)
+which is independent from any programming language (C++, Java etc.).
+Our multiplier service used for this example is defined as follows:<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<pre>#include "../../idl/CORBAObjects.idl"<br><br>interface Multiplier : sof::framework::remote::corba::generated::CORBAService<br>{<br>	long multiply( in long x, in long y );<br>};</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+The mechanism is very similar to <span style="font-style: italic;">SOF</span>:<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>You have to define the service interface (with <span style="font-style: italic;">SOF</span> in C++,
+with <span style="font-style: italic;">Remote SOF</span> in IDL)</li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>The service interface must inherit from a basis interface
+(with <span style="font-style: italic;">SOF</span> from&nbsp;<code>IService</code>, with <span style="font-style: italic;">Remote
+SOF</span> from&nbsp;<code>CORBAService</code>)</li>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+The&nbsp;<code>CORBAService</code> type is defined in
+the IDL file
+'CORBAObjects.idl' which is distributed with the <span style="font-style: italic;">Remote SOF</span> software
+and placed in directory 'sof/remote/idl'. In this IDL file you can find
+the interface definitions of all remote callable objects.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+After the definition of the service&nbsp;interface in IDL the
+language
+specific code has to be generated by the IDL compiler. There is a Windows shell script called 'gen_multiplier.bat' in directory
+'sof/remote/examples/idl' which generates the files 'Mutiplier.h' and
+'Multiplier.cpp' and copies them into the
+'sof/remote/examples/common/src'. The generated code contains the C++
+service interface (<code>Multiplier</code>), the stub (<code>Multiplier_stub</code>) and the skeleton (<code>POA_Multiplier</code>) implementation whereas stub and skeleton
+encapsulate the details of&nbsp;communication. The stub substitutes the
+remote object on client side and forwards all calls via network
+connection to the skeleton on server side. Then the skeleton on server
+side calls the remote object.The first bundle ('bundle1') must implement the C++
+service interface by inheriting from the generated type&nbsp;<code>POA_Multiplier</code>:<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<span style="font-weight: bold;">Header file:</span><br>
+
+
+
+
+
+
+
+
+
+
+
+
+<pre>#ifndef MULTIPLIER_IMPL_H<br>#define MULTIPLIER_IMPL_H<br><br>#include "Multiplier.h"<br><br>using namespace std;<br><br>class MultiplierImpl : virtual public POA_Multiplier<br>{<br>   public:<br>	virtual CORBA::Long multiply( CORBA::Long x, CORBA::Long y );<br><br>};<br><br>#endif</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+<span style="font-weight: bold;">Implementation:</span><br>
+
+
+
+
+
+
+
+
+
+
+
+
+<pre>#include &lt;CORBA.h&gt;<br>#include "MultiplierImpl.h"<br><br>#include &lt;iostream&gt;<br><br>using namespace std;<br><br>CORBA::Long MultiplierImpl::multiply( CORBA::Long x, CORBA::Long y )<br>{<br>	cout &lt;&lt; "Multiplier called. " &lt;&lt; endl; <br>	return x*y;<br>}</pre>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>Registering and Deregistering Services</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+Now we are ready for registering the service object. Here the&nbsp;<code>BundleActivator1</code>
+class registers two instances of the multiplier service. Member
+variables for the service object (<code>MultiplierImpl</code>)
+and the registration object&nbsp;(<code>IServiceRegistration</code>)
+are defined for each service instance in the header file.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<span style="font-weight: bold;">Header file:</span><br>
+
+
+
+
+
+
+
+
+
+
+
+
+<pre>#ifndef BUNDLE_ACTIVATOR1_H<br>#define BUNDLE_ACTIVATOR1_H<br><br>#include "sof/framework/remote/corba/IRemoteBundleActivator.h"<br>#include "sof/framework/remote/corba/IRemoteBundleContext.h"<br><br>#include "sof/framework/IServiceRegistration.h"<br><br>#include "MultiplierImpl.h"<br><br>using namespace sof::framework::remote::corba;<br><br>class BundleActivator1 : public IRemoteBundleActivator<br>{<br>   private:<br>	IServiceRegistration* serviceReg1;<br>	MultiplierImpl* service1;<br><br>	IServiceRegistration* serviceReg2;<br>	MultiplierImpl* service2;<br><br>   public:<br>	virtual ~BundleActivator1();<br>	virtual void start( IRemoteBundleContext::ConstPtr context ); <br>	virtual void stop( IRemoteBundleContext::ConstPtr context );<br>};<br><br>#endif<br><br></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+In the following implementation of the <code>BundleActivator1</code>
+class the&nbsp;<code>start</code>
+method sets the properties of the service instances and creates the
+service objects. Afterwards both service instances are registered by
+calling&nbsp;<code>registerRemoteService</code>
+(instead of&nbsp;<code>registerService</code> with <span style="font-style: italic;">SOF</span>).<br>
+
+
+
+
+
+
+
+
+
+
+
+
+From now on the service instances can be tracked and called by other&nbsp;bundles.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<span style="font-weight: bold;">Implementation:</span><br>
+
+
+
+
+
+
+
+
+
+
+
+
+<pre>#include "BundleActivator1.h"<br><br>#include "sof/instantiation/ObjectCreator.h"<br>#include "sof/framework/Properties.h"<br><br>using namespace sof::instantiation;<br>using namespace sof::framework;<br><br>BundleActivator1::~BundleActivator1() <br>{<br>	// Deallocate memory<br>}<br><br>void BundleActivator1::start(IRemoteBundleContext::ConstPtr context) <br>{<br>	Properties props;<br>	props.put( "instance", "1" );<br><br>	this-&gt;service1 = new MultiplierImpl();<br>	this-&gt;serviceReg1 = context-&gt;registerRemoteService( "Multiplier", this-&gt;service1, props );<br><br>	props.put( "instance", "2" );<br><br>	this-&gt;service2 = new MultiplierImpl();<br>	this-&gt;serviceReg2 = context-&gt;registerRemoteService( "Multiplier", this-&gt;service2, props );<br>}<br><br>void BundleActivator1::stop(IRemoteBundleContext::ConstPtr context) <br>{<br>	this-&gt;serviceReg1-&gt;unregister();<br>	delete this-&gt;serviceReg1;<br>	delete this-&gt;service1;<br><br>	this-&gt;serviceReg2-&gt;unregister();<br>	delete this-&gt;serviceReg2;<br>	delete this-&gt;service2;<br>}<br><br>REGISTER_REMOTE_BUNDLE_ACTIVATOR_CLASS( "BundleActivator1", BundleActivator1 )<br><br></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>Registering and Deregistering Service Listeners</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+As learned in the <a href="http://www.codeproject.com/KB/library/SOF_.aspx">SOF
+article</a> services can be found by creating tracker objects.
+For this <span style="font-style: italic;">Remote SOF</span> provides the&nbsp;<code>RemoteServiceTracker</code>
+class. The <code>RemoteServiceTracker</code> class expects
+like the <span style="font-style: italic;">SOF</span> <code>ServiceTracker</code>
+class&nbsp;three parameters at the constructor:<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>The bundle context object of type <code>IRemoteBundleContext</code></li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>The name of the service which has to be found&nbsp;</li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>An object implementing the <code>IRemoteServiceTrackerCustomizer</code>
+interface</li>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+In the following the implementation of class&nbsp;<code>BundleActivator2</code>
+shows how to create and use the service tracker object for finding
+registered services. <br>
+
+
+
+
+
+
+
+
+
+
+
+
+Unlike <span style="font-style: italic;">SOF</span> where a
+<code>ServiceReference</code> object is passed to the <code>addingService</code>
+method here a
+<code>RemoteServiceReference</code> object is passed which
+encapsulates the characteristics (service name, properties, reference
+to the service object) of a remote service. For calling the remote
+service the reference to the remote service object ( of type <code>CORBAService_var</code>)
+has to be narrowed (similar to the casting of C++ objects) to the
+correct service object type (<code>Multiplier_var</code>).
+Afterwards the service can be called.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<span style="font-weight: bold;">Implementation:</span>
+<pre>#include "BundleActivator2.h"<br><br>#include "sof/instantiation/ObjectCreator.h"<br>#include "sof/framework/Properties.h"<br>#include "sof/framework/remote/corba/RemoteServiceReference.h"<br><br>using namespace sof::instantiation;<br>using namespace sof::framework;<br>using namespace sof::framework::remote::corba;<br><br>BundleActivator2::~BundleActivator2() <br>{<br>	// Deallocate memory<br>}<br><br>void BundleActivator2::start(IRemoteBundleContext::ConstPtr context) <br>{<br>	this-&gt;tracker = new RemoteServiceTracker( context, "Multiplier", this );<br>	this-&gt;tracker-&gt;startTracking();<br>}<br><br>void BundleActivator2::stop(IRemoteBundleContext::ConstPtr context) <br>{<br>	this-&gt;tracker-&gt;stopTracking();<br>	delete ( this-&gt;tracker );<br>}<br><br>bool BundleActivator2::addingService( const RemoteServiceReference&amp; ref )<br>{<br>	cout &lt;&lt; "[BundleActivator2#addingService] Called." &lt;&lt; endl; <br>	if ( ref.getServiceName() == "Multiplier" )<br>	{<br>		Properties props = ref.getServiceProperties();<br>		cout &lt;&lt; "[BundleActivator2#addingService] Multiplier instance found." &lt;&lt; endl; <br>		cout &lt;&lt; "[BundleActivator2#addingService] Properties: " &lt;&lt; props.toString() &lt;&lt; endl; <br>		cout &lt;&lt; "[BundleActivator2#addingService] Service reference: " &lt;&lt; ref.toString() &lt;&lt; endl; <br><br>		Multiplier_var multiplier = Multiplier::_narrow( ref.getRemoteService() );<br> 		CORBA::Long result = multiplier-&gt;multiply( 8, 15 );<br><br>		cout &lt;&lt; "Result: " &lt;&lt; result &lt;&lt; endl; <br>		return true;<br>	}<br>	else<br>	{<br>		return false;<br>	}<br>}<br><br>void BundleActivator2::removedService( const RemoteServiceReference&amp; ref )<br>{<br>	cout &lt;&lt; "[BundleActivator2#removedService] Called, ref: " &lt;&lt; ref.toString() &lt;&lt; endl; <br>}<br><br>REGISTER_REMOTE_BUNDLE_ACTIVATOR_CLASS( "BundleActivator2", BundleActivator2 )<br><br></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>Creating bundle libraries</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+Now the two implemented bundles can be tested. For this there are two
+possibilities:<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>The bundles are built as DLLs and can be started via the
+interactive console application of <span style="font-style: italic;">Remote SOF</span> (comparable to the
+example in the <a href="http://www.codeproject.com/KB/library/SOF_.aspx">SOF
+article</a>).</li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>A main method is implemented which starts the&nbsp;<code>RemoteSOFLauncher</code>
+class for loading the bundle at startup.</li>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+Here for this example the first possibility is chosen again und here is the
+code for making the bundles ready for being loaded as Windows DLL:<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<span style="font-weight: bold;">Implementation (dll.cpp):</span><br>
+
+
+
+
+
+
+
+
+
+
+
+
+<pre>#include &lt;windows.h&gt;<br><br>#include "sof/instantiation/ObjectCreator.h"<br>#include "sof/framework/remote/corba/IRemoteBundleActivator.h"<br><br>#define DLL extern "C" __declspec(dllexport)<br><br>using namespace sof::framework;<br>using namespace sof::framework::remote::corba;<br>using namespace sof::instantiation;<br><br>BOOL APIENTRY DllMain( HANDLE hModule, <br> DWORD ul_reason_for_call, <br> LPVOID lpReserved<br>	)<br>{ <br>	return TRUE;<br>}<br><br><br>DLL IRemoteBundleActivator* createObject( const string &amp;className )<br>{ <br>	ObjectCreator&lt;IRemoteBundleActivator&gt; OC_BUNDLE_ACTIVATOR;<br>	return OC_BUNDLE_ACTIVATOR.createObject( className ); <br>}<br><br></pre>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+Like with <span style="font-style: italic;">SOF</span> a&nbsp;<code>createObject</code> method
+has to be
+implemented which returns the bundle activator instance of the loaded
+bundle. Unlike <span style="font-style: italic;">SOF</span> the method returns an instance of&nbsp;<code>IRemoteBundleActivator</code>
+instead of an instance of&nbsp;<code>IBundleActivator</code>.
+The 'dll.cpp' file can be reused for the implementation of other
+bundles which are loaded as Windows DLL.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+The following picture (snapshot of the Visual Studio project files)
+shows all files which belong to the implementation of the two bundles:<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<img style="width: 207px; height: 317px;" alt="SOF Remote examples" src="sof_remote_examples_projects.gif"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+Each bundle contains a bundle activator class (<code>BundleActivato1</code>,&nbsp;<code>BundleActivator2</code>)
+for registering services and service listeners and the multiplier
+interface classes (<span style="font-style: italic;">Multiplier.h,
+Multiplier.cpp</span>).
+The 'dll.cpp' enables the loading of the bundles as Windows DLL.
+Additionally 'bundle1' provides the implementation of the multiplier
+interface (<span style="font-style: italic;">MultiplierImpl.h,
+MultiplierImpl.cpp</span>).<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+After building both bundles as Windows DLL, the bundles can be tested
+which is described in the next section.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<h3>Testing the bundles</h3>
+
+
+
+
+
+
+
+
+
+
+
+
+Generally before <span style="font-style: italic;">Remote SOF</span> containers can be started, the CORBA naming
+service and the remote registry process have to be started (please look
+at the <span style="font-style: italic;">Remote SOF</span> diagram at the beginning)<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>CORBA naming service</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+The CORBA naming service is a service which is specified in CORBA. It
+allows you to associate abstract names with CORBA objects and allows
+clients to find those objects by looking up the corresponding names.
+The used CORBA implementation MICO provides a CORBA naming service
+which can be started as follows:<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>Open a Windows command shell</li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>Change to directory 'sof\remote\registry\bin'</li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>Enter <span style="font-style: italic;">run_ns.bat
+    </span>which executes<span style="font-style: italic;">
+nsd.exe -ORBIIOPAddr inet:localhost:5000&nbsp;</span></li>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<img style="width: 669px; height: 122px;" alt="Running the CORBA naming service" src="run_ns.gif"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+<span style="font-weight: bold;"><br>
+
+
+Note:</span> The
+passed parameters '<span style="font-style: italic;">-ORBIIOPAddr
+inet:localhost:5000' d</span>efines the IP address and port
+number where&nbsp;the naming service shall run. Here 'localhost'
+and port '5000'&nbsp;is chosen<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<h4><span style="font-weight: bold;"></span>Remote
+registry</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+For starting the remote registry process<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>Open a Windows command shell</li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>Change to directory 'sof\remote\registry\bin'</li>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  <li>Type <span style="font-style: italic;">run_registry.bat</span>
+which executes <span style="font-style: italic;">registry.exe
+-ORBNamingAddr inet:localhost:5000 &nbsp;</span></li>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<img style="width: 669px; height: 254px;" alt="Running the remote registry" src="run_registry.gif"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+The&nbsp;registry executable&nbsp;registers a remote registry
+object at the CORBA naming service which was started before.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<h4>Starting the test bundles</h4>
+
+
+
+
+
+
+
+
+
+
+
+
+At first a <span style="font-style: italic;">Remote SOF</span> container has to be started<span style="font-weight: bold;"> </span>for each test
+bundle:<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>Open a Windows command shell</li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>Change to directory 'sof\remote\console\bin'</li>
+
+
+
+
+
+
+
+
+
+
+
+
+  <li>Type <span style="font-style: italic;">run_remote_console.bat
+    </span>which starts the <span style="font-style: italic;">Remote SOF</span> framework and an user
+interface for entering commands (e.g. for starting and stopping bundles)</li>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<img style="width: 642px; height: 217px;" alt="Running the remote console" src="run_remote_console.gif"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+The following diagram clarifys what actions have been executed so far.
+At
+first the CORBA naming service was started. Afterwards the registry was
+started which creates a remote registry object (=CORBA object) and
+registers this object at the CORBA naming service. In a final step the
+<span style="font-style: italic;">Remote SOF</span> containers were created which register an observer object at
+the remote registry.<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<span style="font-family: Courier New;"></span><img style="width: 792px; height: 782px;" alt="Remote registry sequence" src="remote_registry.gif"><br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+Now the test bundles can be loaded. Please enter <br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<span style="font-family: Courier New; font-weight: bold;">&gt;
+stbdll bundle1 BundleActivator1
+&lt;SOF_HOME&gt;/remote/examples/bundle1/bin remote_bundle1.dll</span><br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+at console of first <span style="font-style: italic;">Remote SOF</span> container. After entering this command
+the first bundle is loaded which registers a service object called
+'Multiplier'.<br>
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+<img style="width: 973px; height: 576px;" alt="Loading first test bundle" src="remote_bundle1.gif"><br>
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+
+For starting the second test bundle you have to enter<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<br style="font-weight: bold;">
+
+
+
+
+
+
+
+
+
+
+
+
+<span style="font-family: Courier New;"><span style="font-weight: bold;">&gt; stbdll bundle2
+BundleActivator2 &lt;SOF_HOME&gt;/remote/examples/bundle2/bin
+remote_bundle2.dll</span></span>
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+at second
+<span style="font-style: italic;">Remote SOF</span> console. Of course it is also possible
+to load both bundles in the same container. The second bundle tracks the service of the first
+test bundle and is notified about the available service
+object.&nbsp;'Bundle2' calls the service object of 'bundle1'. In first
+console 'bundle1' prints out the message 'Multiplier called.' which
+signals that the service object was called. 'Bundle2' of the second
+console prints out the result of the multiplication. <br>
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+<img style="width: 1266px; height: 713px;" alt="Loading second test bundle" src="remote_bundle2.gif"><br>
+
+
+
+
+
+
+
+
+
+
+
+<br>
+
+
+
+
+
+
+
+
+
+
+
+<span style="font-weight: bold;">Note:</span> It makes no difference in which order the two bundles are started ('bundle1' before 'bundle2' or vice versa).<br>
+
+
+
+
+
+
+
+
+
+
+
+
+<span style="font-family: Courier New;"></span>
+<ul>
+
+
+
+
+
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>Conclusion</h2>
+
+
+
+
+
+
+
+
+This article shortly described how distributed bundles can be implemented by using <span style="font-style: italic;">Remote SOF</span> whereas the <span style="font-style: italic;">Remote SOF</span> API differs not very much from the <span style="font-style: italic;">SOF</span> API. Please have a look at the <a href="http://sof.tiddlyspot.com/">project's website</a> for further documentation.<br>
+
+
+
+
+
+
+
+&nbsp;<br>
+
+
+
+
+
+
+
+
+For the future the implementation of following issues is considered:<br>
+
+
+
+
+
+
+
+<ul>
+
+
+
+
+
+
+
+  <li>Currently you have to decide for either implementing distributed bundles (using the <span style="font-style: italic;">Remote SOF</span> framework) or 'local' bundles (using the <span style="font-style: italic;">SOF</span> framework). The aim is to enable a mix of distributed and local bundles within one <span style="font-style: italic;">SOF</span> container.</li>
+
+
+
+
+
+
+  <li>Platform independent make files</li>
+
+
+
+
+
+
+
+  <li>GUI for monitoring the <span style="font-style: italic;">Remote SOF</span> processes (<span style="font-style: italic;">Remote SOF</span> containers, remote registry etc.)</li>
+
+
+
+
+
+
+
+  <li>Supporting further communication layers beside CORBA (e.g. ICE)</li>
+
+
+
+
+
+
+
+  <li>Making the CORBA naming service disposable for simplifying the startup</li>
+
+
+
+
+
+
+
+</ul>
+
+
+
+
+
+
+
+
+
+<h2>History&nbsp;</h2>
+
+
+
+
+
+
+
+
+
+
+
+
+<span id="intelliTXT">July 6, 2009 - Created the article.</span>
+
+</body>
+</html>
