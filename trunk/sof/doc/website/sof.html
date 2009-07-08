@@ -501,9 +501,9 @@ Also see AdvancedOptions</pre>
 * [[sof_8070|http://sof.sourceforge.net/api_8070/html/]]
 * [[sof_8050|http://sof.sourceforge.net/api_8050/html/]]</pre>
 </div>
-<div title="API Remote SOF" modifier="magro74" modified="200906162112" created="200906162111" changecount="3">
+<div title="API Remote SOF" modifier="magro74" modified="200907081636" created="200906162111" changecount="4">
 <pre>The API documentation of following versions are available:
-* [[sof_remote_9060|http://sof.sourceforge.net/api_9060/html/]]</pre>
+* [[sof_remote_9070|http://sof.sourceforge.net/api_9070/html/]]</pre>
 </div>
 <div title="About" modifier="magr74" modified="200806151521" created="200802091422" changecount="24">
 <pre>//SOF// (Service Oriented Framework) wants to help software developers to avoid developing monolithic software. The //SOF// framework allows to separate a software system in several small components which are communicating via clearly defined interfaces. Components can be started and stopped at runtime and the components are notified about the lifecycle of other components if necessary. //SOF// is implemented in standard C++ and provides an OS independent framework for developing component based software. The //SOF// API is very similar to the OSGI API (see [[OSGI|http://www.osgi.org]]).
@@ -634,10 +634,12 @@ The SOF supports developing modular software which consists of components (bundl
 <div title="Documentation - Remote SOF" modifier="magro74" created="200905151038" changecount="1">
 <pre>!![[Building|Building Remote SOF]]</pre>
 </div>
-<div title="Download" modifier="magro74" modified="200906021920" created="200805101452" changecount="20">
+<div title="Download" modifier="magro74" modified="200907081642" created="200805101452" changecount="22">
 <pre>Following stable builds are available:
-* ''sof_XXXX''
-** Release notes: To be done.
+* ''sof_9070''
+** Release notes: 
+*** New features:
+**** SOF supports distributed bundles now. That means services and service listeners can be called across several processes.
 * ''sof_8070''
 ** Release notes:
 *** New features:
@@ -1309,10 +1311,8 @@ merge(config.shadowTiddlers,{
 //}}}
 </pre>
 </div>
-<div title="UploadLog" modifier="magr74" modified="200906191301" created="200802080629">
+<div title="UploadLog" modifier="magro74" modified="200907081642" created="200802080629">
 <pre>| !date | !user | !location | !storeUrl | !uploadDir | !toFilename | !backupdir | !origin |
-| 26/05/2009 12:23:37 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 31/05/2009 13:03:42 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
 | 31/05/2009 13:18:14 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
 | 31/05/2009 13:23:07 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
 | 02/06/2009 21:18:51 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
@@ -1320,7 +1320,9 @@ merge(config.shadowTiddlers,{
 | 16/06/2009 23:13:56 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
 | 18/06/2009 18:35:30 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
 | 19/06/2009 15:00:11 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 19/06/2009 15:01:31 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
+| 19/06/2009 15:01:31 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 08/07/2009 18:36:52 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 08/07/2009 18:42:07 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
 </div>
 <div title="UploadPlugin" modifier="YourName" modified="200802080624" created="200706061221" tags="systemConfig">
 <pre>/***
