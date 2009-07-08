@@ -144,7 +144,7 @@ IServiceRegistration::ConstPtr IRegistryImpl<ThreadingModel>::addServiceInfo( co
 	string serviceName = serviceInfo->getServiceName();
 	logger.log( Logger::DEBUG, "[IRegistryImpl#addServiceInfo] Called, bundle name: %1, service name: %2", bundleName, serviceName );		
 
-	this->addToServiceInfoVector( serviceName, serviceInfo );
+	this->addToServiceInfoVector( bundleName, serviceName, serviceInfo );
 
 	// adding ServiceInfo object to BundleInfo object
 	this->addRegisteredServiceToBundleInfo( bundleName, serviceInfo );	
@@ -237,17 +237,22 @@ void IRegistryImpl<ThreadingModel>::removeUsedServiceFromBundleInfo( const strin
 }
 
 template<class ThreadingModel>
-vector<ServiceInfo*>* IRegistryImpl<ThreadingModel>::addToServiceInfoVector( const string& serviceName, ServiceInfo* serviceInfo ) 
+void IRegistryImpl<ThreadingModel>::addToServiceInfoVector( const string& bundleName, const string& serviceName, ServiceInfo* serviceInfo ) 
 {
-	logger.log( Logger::DEBUG, "[IRegistryImpl#addToServiceInfoVector] Called, service name: %1", serviceName );	
+	logger.log( Logger::DEBUG, "[IRegistryImpl#addToServiceInfoVector] Called, bundle name: %1, service name: %2", bundleName, serviceName );	
+	
+	BundleInfoBase* bundleInfo = this->getBundleInfo( bundleName );
+	if ( bundleInfo == 0 )
+	{
+		logger.log( Logger::DEBUG, "[IRegistryImpl#addToServiceInfoVector] No bundle info available, do not add service." ); 	
+		return;
+	}
 
 	vector<ServiceInfo*>* serviceVec = this->getServiceInfo( serviceName );
 
 	serviceVec->push_back( serviceInfo );	
 
 	logger.log( Logger::DEBUG, "[IRegistryImpl#addToServiceInfoVector] Left." );	
-
-	return serviceVec;
 }
 
 template<class ThreadingModel>
@@ -434,20 +439,20 @@ void IRegistryImpl<ThreadingModel>::addServiceListener( const string& bundleName
 	ThreadingModel::Lock lock;
 
 	string serviceName = listenerInfo->getServiceName();
-	logger.log( Logger::DEBUG, "[IRegistryImpl#addServiceListener] Called, bundle name: %1, service name: %2", bundleName, serviceName );			
-	vector<ServiceListenerInfo*>* vec = this->getServiceListenerInfoVector( serviceName );
-
-	logger.log( Logger::DEBUG, "[IRegistryImpl#addServiceListener] Add service listener to vector." );	
-
-	vec->push_back( listenerInfo );
+	logger.log( Logger::DEBUG, "[IRegistryImpl#addServiceListener] Called, bundle name: %1, service name: %2", bundleName, serviceName );	
 
 	BundleInfoBase* bundleInfo = this->getBundleInfo( bundleName );
+	
 	if ( bundleInfo == 0 )
 	{
-		logger.log( Logger::DEBUG, "[IRegistryImpl#addServiceListener] Bundle info is null, can not add service listener to bundle info." );	
+		logger.log( Logger::DEBUG, "[IRegistryImpl#addServiceListener] Bundle info is null, can not add service listener." );	
 	}
 	else
 	{
+		logger.log( Logger::DEBUG, "[IRegistryImpl#addServiceListener] Add service listener to service listener vector." );	
+		vector<ServiceListenerInfo*>* vec = this->getServiceListenerInfoVector( serviceName );
+		vec->push_back( listenerInfo );
+		logger.log( Logger::DEBUG, "[IRegistryImpl#addServiceListener] Add service listener to bundle info." );	
 		bundleInfo->addRegisteredListener( listenerInfo );
 	}
 

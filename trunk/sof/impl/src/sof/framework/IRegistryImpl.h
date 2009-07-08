@@ -186,7 +186,7 @@ class IRegistryImpl : public IRegistry
 		 * @param serviceInfo
 		 *				The object of type <code>ServiceInfo</code>.
 		 */
-		virtual vector<ServiceInfo*>* addToServiceInfoVector( const string& serviceName, ServiceInfo* serviceInfo ) ;
+		virtual void addToServiceInfoVector( const string& bundleName, const string& serviceName, ServiceInfo* serviceInfo ) ;
 
 		/**
 		 * Removes a <code>ServiceInfo</code> object from the internal storage.
