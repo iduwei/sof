@@ -21,7 +21,7 @@ typedef ObjVar< Multiplier > Multiplier_var;
 typedef ObjOut< Multiplier > Multiplier_out;
 
 
-#include "../../impl/src/sof/framework/remote/corba/generated/CORBAObjects.h"
+#include "sof/framework/remote/corba/generated/CORBAObjects.h"
 
 
 /*
