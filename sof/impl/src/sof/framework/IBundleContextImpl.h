@@ -40,6 +40,8 @@ class IBundleContextImpl : public IBundleContext
 		 */
 		static Logger& logger;
 
+	protected:
+
 		/**
 		 * Each bundle gets its own bundle context object. This is the
 		 * name of the bundle the bundle context belongs to.
@@ -64,6 +66,14 @@ class IBundleContextImpl : public IBundleContext
 		 * The destructor of the bundle context.
 		 */
 		virtual ~IBundleContextImpl();
+
+		/**
+		 * Returns the name of the bundle.
+		 *
+		 * @return
+		 *		The name of the bundle.
+		 */
+		virtual string getBundleName();
 
 		/**
 		 * Registers a service.

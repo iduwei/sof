@@ -105,9 +105,28 @@ void BundleInfoBase::removeUsedService( const string& serviceName )
 	}		
 }
 
+
 void BundleInfoBase::addUsedService( ServiceInfo* serviceInfo )
 {
-	logger.log( Logger::DEBUG, "[BundleInfoBase#addUsedService] Called, service info: %1", serviceInfo->toString() );				
+	// Bugfix: [Remote SOF] Services are listed double as used services - ID: 2821783
+	// Note:
+	//	- 'addUsedService' could be call twice (in RemoteServiceTracker and in registry)
+	//		for the same service info object, therefore double entries have to be avoided
+	
+	logger.log( Logger::DEBUG, "[BundleInfoBase#addUsedService] Called, service info: %1", serviceInfo->toString() );
+
+	logger.log( Logger::DEBUG, "[BundleInfoBase#addUsedService] Check whether service info is already cached in vector." );					
+	
+	vector<ServiceInfo*>::iterator iter;
+	for ( iter = this->usedServices.begin(); iter != this->usedServices.end(); iter++ )
+	{
+		if ( (*(*iter)) == (*serviceInfo) )
+		{
+			logger.log( Logger::DEBUG, "[BundleInfoBase#addUsedService] Service already cached, do not put it once again!" );					
+			return;
+		}
+	}	
+	logger.log( Logger::DEBUG, "[BundleInfoBase#addUsedService] Put service info into vector." );								
 	this->usedServices.push_back( serviceInfo );
 }
 

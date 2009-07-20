@@ -110,6 +110,28 @@ class IRegistry
 		virtual vector<ServiceInfo*>* getServiceInfo( const string &serviceName ) = 0;
 
 		/**
+		 * Adds the service information object of an used service to the registry cache.
+		 *
+		 * @param bundleName
+		 *				The name of the bundle which uses the service.
+		 *
+		 * @param serviceInfo
+		 *				The service information object.
+		 */
+		virtual void addUsedService( const string& bundleName, const ServiceInfo& serviceInfo ) = 0;
+		
+		/**
+		 * Removes the service information object of an used service from the registry cache.
+		 *
+		 * @param bundleName
+		 *				The name of the bundle which uses the service.
+		 *
+		 * @param serviceInfo
+		 *				The service information object.
+		 */		
+		virtual void removeUsedService( const string& bundleName, const ServiceInfo& serviceInfo ) = 0;
+
+		/**
 		 * Adds a service listener object to the registry.
 		 *
 		 * @param bundleName

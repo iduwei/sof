@@ -23,6 +23,11 @@ IRemoteBundleContextImpl::~IRemoteBundleContextImpl()
 	logger.log( Logger::DEBUG, "[IRemoteBundleContextImpl#destructor] Called." );
 }
 
+string IRemoteBundleContextImpl::getBundleName()
+{
+	return this->bundleName;
+}
+
 IServiceRegistration* IRemoteBundleContextImpl::registerRemoteService( const string &className, POA_sof::framework::remote::corba::generated::CORBAService* remoteService, 
 																   const Properties &dict )
 {
@@ -92,4 +97,18 @@ void IRemoteBundleContextImpl::removeServiceListener( IServiceListener::ConstPtr
 CORBAHelper& IRemoteBundleContextImpl::getCORBAHelper()
 {
 	return this->corbaHelper;
+}
+
+void IRemoteBundleContextImpl::addUsedService( const string& bundleName, const ServiceInfo& serviceInfo )
+{
+	logger.log( Logger::DEBUG, "[IRemoteBundleContextImpl#addUsedService] Called, bundle name: %1, service info: %2",
+		bundleName, serviceInfo.toString() );	
+	this->registry.addUsedService( bundleName, serviceInfo );	
+}
+
+void IRemoteBundleContextImpl::removeUsedService( const string& bundleName, const ServiceInfo& serviceInfo )
+{
+	logger.log( Logger::DEBUG, "[IRemoteBundleContextImpl#removeUsedService] Called, bundle name: %1, service info: %2",
+		bundleName, serviceInfo.toString() );	
+	this->registry.removeUsedService( bundleName, serviceInfo );	
 }

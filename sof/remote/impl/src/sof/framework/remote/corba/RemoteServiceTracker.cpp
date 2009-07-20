@@ -36,17 +36,44 @@ CORBA::Boolean RemoteServiceTracker::serviceChanged( const CORBAServiceEvent &re
 	bool flag = false;
 
 	ServiceReference* tempRef = const_cast<ServiceReference*>( &serviceEvent.getReference() );
-	RemoteServiceReference* remoteServiceReference = dynamic_cast<RemoteServiceReference*>( tempRef );
-		
+	RemoteServiceReference* remoteServiceReference = dynamic_cast<RemoteServiceReference*>( tempRef );			
+
 	if ( serviceEvent.getType() == ServiceEvent::REGISTER )
 	{
 		logger.log( Logger::DEBUG, "[RemoteServiceTracker#serviceChanged] Service is registered, service name: %1", serviceEvent.getReference().getServiceName() );
+
+		// Creating the remote service info dynamically for storing in vector
+		RemoteServiceInfo* info = new RemoteServiceInfo( remoteServiceReference->getServiceName(), 
+			CORBAService::_duplicate( remoteServiceReference->getRemoteService() ), 
+			remoteServiceReference->getRemoteServiceID(), 
+			remoteServiceReference->getServiceProperties() );	
+
 		flag = this->serviceTracker->addingService( (*remoteServiceReference) );
+		if ( flag )
+		{
+			// Bugfix: [Remote SOF] Services 'in use' are not available - ID: 2818461
+			// only store as service as used service if return flag of 'addingService' call is true
+			logger.log( Logger::DEBUG, "[RemoteServiceTracker#serviceChanged] Service is used, cache used service." );
+			this->bundleCtxt->addUsedService( this->bundleCtxt->getBundleName(), (*info) );
+		}
+		else
+		{
+			logger.log( Logger::DEBUG, "[RemoteServiceTracker#serviceChanged] Service is NOT used." );
+		}
 	}
 	else if ( serviceEvent.getType() == ServiceEvent::UNREGISTER )
 	{
 		logger.log( Logger::DEBUG, "[RemoteServiceTracker#serviceChanged] Service is unregistered, service name: %1", serviceEvent.getReference().getServiceName() );		
+
+		// creating the remote service info on stack 
+		RemoteServiceInfo info( remoteServiceReference->getServiceName(), 
+			CORBAService::_duplicate( remoteServiceReference->getRemoteService() ), 
+			remoteServiceReference->getRemoteServiceID(), 
+			remoteServiceReference->getServiceProperties() );
+		
+		// Bugfix: [Remote SOF] Services 'in use' are not available - ID: 2818461
 		this->serviceTracker->removedService( (*remoteServiceReference) );
+		this->bundleCtxt->removeUsedService( this->bundleCtxt->getBundleName(), info );
 		flag = true;
 	}
 	else
