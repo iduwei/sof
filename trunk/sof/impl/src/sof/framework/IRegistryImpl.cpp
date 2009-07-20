@@ -205,34 +205,36 @@ void IRegistryImpl<ThreadingModel>::removeDeregisteredServiceFromBundleInfo( con
 }
 
 template<class ThreadingModel>
-void IRegistryImpl<ThreadingModel>::addUsedServiceToBundleInfo( const string& bundleName, ServiceInfo* serviceInfo )
+void IRegistryImpl<ThreadingModel>::addUsedService( const string& bundleName, const ServiceInfo& serviceInfo )
 {
-	logger.log( Logger::DEBUG, "[IRegistryImpl#addUsedServiceToBundleInfo] Called, bundle name: %1, service info: %2", 
-		bundleName, serviceInfo->toString() );	
+	logger.log( Logger::DEBUG, "[IRegistryImpl#addUsedService] Called, bundle name: %1, service info: %2", 
+		bundleName, serviceInfo.toString() );	
 	BundleInfoBase* bundleInfo = this->getBundleInfo( bundleName );
 	if ( bundleInfo == 0 )
 	{
-		logger.log( Logger::DEBUG, "[IRegistryImpl#addUsedServiceToBundleInfo] BundleInfo object does not exist (null), do nothing." );	
+		logger.log( Logger::DEBUG, "[IRegistryImpl#addUsedService] BundleInfo object does not exist (null), do nothing." );	
 	}
 	else
 	{
-		bundleInfo->addUsedService( serviceInfo );
+		ServiceInfo* info = const_cast<ServiceInfo*>( &serviceInfo );
+		bundleInfo->addUsedService( info );
 	}	
 }
 
 template<class ThreadingModel>
-void IRegistryImpl<ThreadingModel>::removeUsedServiceFromBundleInfo( const string& bundleName, ServiceInfo* serviceInfo )
+void IRegistryImpl<ThreadingModel>::removeUsedService( const string& bundleName, const ServiceInfo& serviceInfo )
 {
-	logger.log( Logger::DEBUG, "[IRegistryImpl#removeUsedServiceFromBundleInfo] Called, bundle name: %1, service info: %2", 
-		bundleName, serviceInfo->toString() );	
+	logger.log( Logger::DEBUG, "[IRegistryImpl#removeUsedService] Called, bundle name: %1, service info: %2", 
+		bundleName, serviceInfo.toString() );	
 	BundleInfoBase* bundleInfo = this->getBundleInfo( bundleName );
 	if ( bundleInfo != 0 )
 	{
-		bundleInfo->removeUsedService( serviceInfo );
+		ServiceInfo* info = const_cast<ServiceInfo*>( &serviceInfo );
+		bundleInfo->removeUsedService( info );
 	}
 	else
 	{
-		logger.log( Logger::DEBUG, "[IRegistryImpl#removeUsedServiceFromBundleInfo] BundleInfo is null, do nothing." );	
+		logger.log( Logger::DEBUG, "[IRegistryImpl#removeUsedService] BundleInfo is null, do nothing." );	
 	}
 }
 
@@ -301,7 +303,7 @@ void IRegistryImpl<ThreadingModel>::notifyListenersAboutRegisteredService( const
 			{
 				logger.log( Logger::DEBUG, "[IRegistryImpl#notifyListenersAboutRegisteredService] Service listener is interested in registered service '%1'.",
 					(*serviceIter)->getServiceName() );
-				this->addUsedServiceToBundleInfo( bundleName, (*serviceIter) );	
+				this->addUsedService( bundleName, (*(*serviceIter)) );	
 			} else
 			{
 				logger.log( Logger::DEBUG, "[IRegistryImpl#notifyListenersAboutRegisteredService] Service listener is NOT interested in registered service '%1'.",
@@ -330,7 +332,7 @@ void IRegistryImpl<ThreadingModel>::notifyListenersAboutRegisteredService( const
 		{
 			logger.log( Logger::DEBUG, "[IRegistryImpl#notifyListenersAboutRegisteredService] Service listener is interested in registered service '%1'.",
 				serviceInfo->getServiceName() );
-			this->addUsedServiceToBundleInfo( (*listenerIter)->getBundleName(), serviceInfo );		
+			this->addUsedService( (*listenerIter)->getBundleName(), *serviceInfo );		
 		} else
 		{
 			logger.log( Logger::DEBUG, "[IRegistryImpl#notifyListenersAboutRegisteredService] Service listener is NOT interested in registered service '%1'.",
@@ -360,7 +362,7 @@ void IRegistryImpl<ThreadingModel>::notifyListenerAboutRegisteredService( const 
 		{
 			logger.log( Logger::DEBUG, "[IRegistryImpl#notifyListenerAboutRegisteredService] Service listener is interested in registered service '%1'.",
 				(*serviceIter)->getServiceName() );
-			this->addUsedServiceToBundleInfo( bundleName, (*serviceIter) );	
+			this->addUsedService( bundleName, (*(*serviceIter)) );	
 		} else
 		{
 			logger.log( Logger::DEBUG, "[IRegistryImpl#notifyListenerAboutRegisteredService] Service listener is NOT interested in registered service '%1'.",
@@ -388,7 +390,7 @@ void IRegistryImpl<ThreadingModel>::notifyListenersAboutDeregisteredService( con
 		if ( interested )
 		{
 			logger.log( Logger::DEBUG, "[IRegistryImpl#notifyListenersAboutDeregisteredService] Listener is interested in deregistered service '%1'.", serviceInfo->getServiceName() );	
-			this->removeUsedServiceFromBundleInfo( (*listenerIter)->getBundleName(), serviceInfo );		
+			this->removeUsedService( (*listenerIter)->getBundleName(), (*serviceInfo) );		
 		} else
 		{
 			logger.log( Logger::DEBUG, "[IRegistryImpl#notifyListenersAboutDeregisteredService] Listener is NOT interested in deregistered service '%1'.", serviceInfo->getServiceName() );	

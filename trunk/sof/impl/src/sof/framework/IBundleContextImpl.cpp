@@ -20,6 +20,11 @@ IBundleContextImpl::~IBundleContextImpl()
 	logger.log( Logger::DEBUG, "[IBundleContextImpl#destructor] Called." );
 }
 
+string IBundleContextImpl::getBundleName()
+{
+	return this->bundleName;
+}
+
 IServiceRegistration* IBundleContextImpl::registerService( const string& className, IService::ConstPtr service, const Properties &dict )
 {
 	logger.log( Logger::DEBUG, "[IBundleContextImpl#registerService] Called, bundle name: %1, service name: %2", this->bundleName, className );

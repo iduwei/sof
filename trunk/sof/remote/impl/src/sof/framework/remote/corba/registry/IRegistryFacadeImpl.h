@@ -86,6 +86,28 @@ class IRegistryFacadeImpl : public IRegistry
 		virtual ~IRegistryFacadeImpl();		
 
 		/**
+		 * Adds the service information object of an used service to the registry cache.
+		 *
+		 * @param bundleName
+		 *				The name of the bundle which uses the service.
+		 *
+		 * @param serviceInfo
+		 *				The service information object.
+		 */
+		virtual void addUsedService( const string& bundleName, const ServiceInfo& serviceInfo );
+		
+		/**
+		 * Removes the service information object of an used service from the registry cache.
+		 *
+		 * @param bundleName
+		 *				The name of the bundle which uses the service.
+		 *
+		 * @param serviceInfo
+		 *				The service information object.
+		 */		
+		virtual void removeUsedService( const string& bundleName, const ServiceInfo& serviceInfo );
+
+		/**
 		 * Adds a <code>BundleInfo</code> object to the registry.
 		 *
 		 * @param bundleInfo

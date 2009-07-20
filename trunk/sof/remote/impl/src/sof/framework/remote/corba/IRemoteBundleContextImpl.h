@@ -57,10 +57,9 @@ class IRemoteBundleContextImpl : public IRemoteBundleContext
 		static Logger& logger;
 
 		/**
-		 * Each bundle gets its own bundle context object. This is the
-		 * name of the bundle the bundle context belongs to.
+		 * The bundle name. 
 		 */
-		string bundleName;
+		string bundleName; 
 
 	public:
 
@@ -80,6 +79,14 @@ class IRemoteBundleContextImpl : public IRemoteBundleContext
 		 * Desctructor which is called when object is deleted.
 		 */
 		virtual ~IRemoteBundleContextImpl();
+
+		/**
+		 * Returns the name of the bundle.
+		 *
+		 * @return
+		 *		The name of the bundle.
+		 */
+		virtual string getBundleName();
 
 		/**
 		 * Registers a service with the SOF framework. Bundles which track this service
@@ -162,6 +169,28 @@ class IRemoteBundleContextImpl : public IRemoteBundleContext
 		 *			The CORBA helper object.
 		 */
 		virtual CORBAHelper& getCORBAHelper();
+
+		/**
+		 * Adds the service information object of an used service to the bundle context.
+		 *
+		 * @param bundleName
+		 *				The name of the bundle which uses the service.
+		 *
+		 * @param serviceInfo
+		 *				The service information object.
+		 */
+		virtual void addUsedService( const string& bundleName, const ServiceInfo& serviceInfo );
+		
+		/**
+		 * Removes the service information object of an used service from the bundle context.
+		 *
+		 * @param bundleName
+		 *				The name of the bundle which uses the service.
+		 *
+		 * @param serviceInfo
+		 *				The service information object.
+		 */		
+		virtual void removeUsedService( const string& bundleName, const ServiceInfo& serviceInfo );
 };
 }}}}
 #endif

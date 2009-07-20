@@ -241,33 +241,7 @@ class IRegistryImpl : public IRegistry
 		 *				The service info object which is removed.
 		 */
 		virtual void removeDeregisteredServiceFromBundleInfo( const string& bundleName, ServiceInfo* serviceInfo ) ;
-
-		/**
-		 * Adds a <code>ServiceInfo</code> object representing a used service to the bundle
-		 * info object.
-		 *
-		 * @param bundleName
-		 *				The name of the bundle which uses the specified service.
-		 *
-		 * @param serviceInfo
-		 *				The <code>ServiceInfo</code> object representing a service
-		 *				which is used by the specified bundle.
-		 */
-		virtual void addUsedServiceToBundleInfo( const string& bundleName, ServiceInfo* serviceInfo );
 		
-		/**
-		 * Removes a <code>ServiceInfo</code> object representing a used service from the bundle
-		 * info object.
-		 *
-		 * @param bundleName
-		 *				The name of the bundle which used the specified service.
-		 *
-		 * @param serviceInfo
-		 *				The <code>ServiceInfo</code> object representing a service
-		 *				which was used by the specified bundle.
-		 */
-		virtual void removeUsedServiceFromBundleInfo( const string& bundleName, ServiceInfo* serviceInfo );
-
 		/**
 		 * Returns true if the listener objects of the passed <code>ServiceListenerInfo</code> objects are equal.
 		 *
@@ -306,6 +280,29 @@ class IRegistryImpl : public IRegistry
 	public:
 
 		virtual ~IRegistryImpl();
+
+		/**
+		 * Adds the service information object of an used service to the registry cache.
+		 *
+		 * @param bundleName
+		 *				The name of the bundle which uses the service.
+		 *
+		 * @param serviceInfo
+		 *				The service information object.
+		 */
+		virtual void addUsedService( const string& bundleName, const ServiceInfo& serviceInfo );
+		
+		/**
+		 * Removes the service information object of an used service from the registry cache.
+		 *
+		 * @param bundleName
+		 *				The name of the bundle which uses the service.
+		 *
+		 * @param serviceInfo
+		 *				The service information object.
+		 */		
+		virtual void removeUsedService( const string& bundleName, const ServiceInfo& serviceInfo );
+
 
 		/**
 		 * Adds a <code>BundleInfo</code> object to the registry.

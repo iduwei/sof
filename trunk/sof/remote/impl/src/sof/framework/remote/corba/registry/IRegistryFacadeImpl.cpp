@@ -69,6 +69,20 @@ void IRegistryFacadeImpl::removeBundleInfo( const string& bundleName )
 	this->registry.removeBundleInfo( bundleName );
 }
 
+void IRegistryFacadeImpl::addUsedService( const string& bundleName, const ServiceInfo& info )
+{
+	logger.log( Logger::DEBUG, "[IRegistryFacadeImpl#addUsedService] Called, bundle name: %1, service info: %2", 
+		bundleName, info.toString() );	
+	this->registry.addUsedService( bundleName, info );
+}
+
+void IRegistryFacadeImpl::removeUsedService( const string& bundleName, const ServiceInfo& info )
+{
+	logger.log( Logger::DEBUG, "[IRegistryFacadeImpl#removeBundleInfo] Called, bundle name: %1, service info: %2", 
+		bundleName, info.toString() );	
+	this->registry.removeUsedService( bundleName, info );
+}
+
 void IRegistryFacadeImpl::removeAllBundleInfos()
 {
 	logger.log( Logger::DEBUG, "[IRegistryFacadeImpl#removeAllBundleInfos] Called." );	
@@ -93,7 +107,9 @@ IServiceRegistration::ConstPtr IRegistryFacadeImpl::addServiceInfo( const string
 
 	logger.log( Logger::DEBUG, "[IRegistryFacadeImpl#addServiceInfo] Creating service registration object." );
 	
-	return new IServiceRegistrationImpl( bundleName, (&this->registry), serviceInfo );
+	// Bugfix: [Remote SOF] Services and listeners are not deregistered - ID: 2818458
+	// Do pass IRegistryFacadeImpl instead of IRegistryImpl object.
+	return new IServiceRegistrationImpl( bundleName, this, serviceInfo );
 }
 		
 void IRegistryFacadeImpl::removeServiceInfo( const string& bundleName, ServiceInfo* serviceInfo )

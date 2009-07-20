@@ -39,6 +39,14 @@ class IBundleContext
 		virtual ~IBundleContext() {};
 
 		/**
+		 * Returns the name of the bundle.
+		 *
+		 * @return
+		 *		The name of the bundle.
+		 */
+		virtual string getBundleName() = 0;
+
+		/**
 		 * Registers a service with the SOF framework. Bundles which track this service
 		 * are notified as soon as this service is registered.
 		 *

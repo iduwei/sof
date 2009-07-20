@@ -42,6 +42,14 @@ class IRemoteBundleContext : public IBundleContext
 		virtual ~IRemoteBundleContext() {};
 
 		/**
+		 * Returns the name of the bundle.
+		 *
+		 * @return
+		 *		The name of the bundle.
+		 */
+		virtual string getBundleName() = 0;
+
+		/**
 		 * Registers a service with the SOF framework. Bundles which track this service
 		 * are notified as soon as this service is registered.
 		 *
@@ -87,6 +95,28 @@ class IRemoteBundleContext : public IBundleContext
 		 *			The CORBA helper object.
 		 */
 		virtual CORBAHelper& getCORBAHelper() = 0;
+
+		/**
+		 * Adds the service information object of an used service to the bundle context.
+		 *
+		 * @param bundleName
+		 *				The name of the bundle which uses the service.
+		 *
+		 * @param serviceInfo
+		 *				The service information object.
+		 */
+		virtual void addUsedService( const string& bundleName, const ServiceInfo& serviceInfo ) = 0;
+		
+		/**
+		 * Removes the service information object of an used service from the bundle context.
+		 *
+		 * @param bundleName
+		 *				The name of the bundle which uses the service.
+		 *
+		 * @param serviceInfo
+		 *				The service information object.
+		 */		
+		virtual void removeUsedService( const string& bundleName, const ServiceInfo& serviceInfo ) = 0;
 };
 
 }}}}
