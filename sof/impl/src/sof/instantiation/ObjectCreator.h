@@ -68,7 +68,7 @@ class ObjectCreator
 		 * The map which stores factory objects. The factory objects are responsible for
 		 * creating instances of a certain type.
 		 */
-		static map<string,BaseFactory<BaseT>* >* instanceMap;	
+		static map< string,BaseFactory<BaseT>* >* instanceMap;	
 
 		/**
 		 * The flag indicates whether the <code>ObjectCreator</code> instance only tries to
@@ -85,6 +85,17 @@ class ObjectCreator
 		 * The name of the DLL from which a object is created.
 		 */
 		string dllName;
+
+		/**
+		 * Returns the map instance which caches objects of type
+		 * <code>BaseFactory</code>.<br>
+		 * If the map object is not available yet, a new one
+		 * will be created.
+		 *
+		 * @return 
+		 *			The map instance.
+		 */
+		static map< string,BaseFactory<BaseT>* >* getInstanceMap();
 
 	public:		
 
@@ -189,7 +200,6 @@ template<
 	template <class> class CreationPolicy>
 map<string,BaseFactory<BaseT>* >* ObjectCreator<BaseT,CreationPolicy>::instanceMap;	
 
-
 template<
 	typename BaseT,
 	template <class> class CreationPolicy>
@@ -227,15 +237,25 @@ ObjectCreator<BaseT,CreationPolicy>::ObjectCreator( bool doLocalSearch, const st
 template<
 	typename BaseT,
 	template <class> class CreationPolicy>
-void ObjectCreator<BaseT,CreationPolicy>::addFactory( const string &key, BaseFactory<BaseT>* intantiator )
+map<string,BaseFactory<BaseT>* >* ObjectCreator<BaseT,CreationPolicy>::getInstanceMap()
 {
+	getLogger().log( Logger::DEBUG, "[ObjectCreator#getInstanceMap] Called." );
 	if ( instanceMap == 0 )
 	{
-		getLogger().log( Logger::DEBUG, "[ObjectCreator#addFactory] Instance map is null, create it." );
+		getLogger().log( Logger::DEBUG, "[ObjectCreator#getInstanceMap] Instance map is null, create it." );
 		instanceMap = new map<string,BaseFactory<BaseT>* >;
 	}
+	getLogger().log( Logger::DEBUG, "[ObjectCreator#getInstanceMap] Return instance map." );
+	return instanceMap;
+}
+
+template<
+	typename BaseT,
+	template <class> class CreationPolicy>
+void ObjectCreator<BaseT,CreationPolicy>::addFactory( const string &key, BaseFactory<BaseT>* intantiator )
+{
 	getLogger().log( Logger::DEBUG, "[ObjectCreator#addFactory] Called, key: '%1'", key );
-	(*instanceMap)[key] = intantiator;
+	(*getInstanceMap())[key] = intantiator;
 	getLogger().log( Logger::DEBUG, "[ObjectCreator#addFactory] Factory for key '%1' added.", key );		
 }
 
@@ -279,7 +299,8 @@ template<
 	template <class> class CreationPolicy>
 BaseT* ObjectCreator<BaseT,CreationPolicy>::createLocalObject( const string &key )
 {	
-	BaseFactory<BaseT>* intantiator = (*ObjectCreator<BaseT,NullCreator>::instanceMap)[key];
+	getLogger().log( Logger::ERROR_, "[ObjectCreator#createLocalObject] Called, key: %1", key );					
+	BaseFactory<BaseT>* intantiator = ( *(ObjectCreator<BaseT,NullCreator>::getInstanceMap()) )[key];
 	if ( intantiator == 0 )
 	{
 		getLogger().log( Logger::ERROR_, "[ObjectCreator#createLocalObject] No intantiator for class available." );					
@@ -294,6 +315,7 @@ template<
 	template <class> class CreationPolicy>
 BaseT* ObjectCreator<BaseT,CreationPolicy>::createObjectFromDll( const string &path, const string &dllName, const string &className )
 {	
+	getLogger().log( Logger::ERROR_, "[ObjectCreator#createObjectFromDll] Called, DLL name: %1, class name: %2", dllName, className );	
 	return CreationPolicy<BaseT>::createObjectFromDll( path, dllName, className );
 }
 
