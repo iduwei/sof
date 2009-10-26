@@ -24,6 +24,8 @@ int main( int argc, char **argv)
 	Logger::LogLevel logLevel = Logger::LogLevel::DEBUG;
 	vector<string> args;
 
+	string processName;
+
 	for ( int i=0; i<argc; i++ )
 	{
 		string arg(argv[i]);
@@ -41,6 +43,16 @@ int main( int argc, char **argv)
 		{
 			logLevel = Logger::LogLevel::DEBUG;
 		}		
+		else if ( arg.find( "-proc_name:" ) == 0 )
+		{
+			processName = arg.substr( 10, arg.length() );
+		}
+	}
+
+	if ( processName.length() == 0 )
+	{
+		cout << "!error: no process name defined." << endl;
+		return -1;
 	}
 
 	CORBAHelper corbaHelper( args );

@@ -82,6 +82,12 @@ class CORBAHelper
 		static const string REMOTE_REGISTRY_NAME;
 
 		/**
+		 * Constant string value representing the path where
+		 * remote administration objects are registered.
+		 */
+		static const string REMOTE_ADMIN_PATH;
+
+		/**
 		 * Creates instances of class <code>CORBAHelper</code>.
 		 *
 		 * @param args

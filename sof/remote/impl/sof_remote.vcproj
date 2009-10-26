@@ -274,10 +274,34 @@
 					<Filter
 						Name="admin"
 						>
-						<File
-							RelativePath=".\src\sof\services\admin\RemoteAdministrationActivator.cpp"
+						<Filter
+							Name="remote"
 							>
-						</File>
+							<File
+								RelativePath=".\src\sof\services\admin\remote\RemoteAdministrationActivator.cpp"
+								>
+							</File>
+							<Filter
+								Name="corba"
+								>
+								<File
+									RelativePath=".\src\sof\services\admin\remote\corba\CORBAAdminServiceImpl.cpp"
+									>
+								</File>
+								<File
+									RelativePath=".\src\sof\services\admin\remote\corba\DataConverter.cpp"
+									>
+								</File>
+								<Filter
+									Name="generated"
+									>
+									<File
+										RelativePath=".\src\sof\services\admin\remote\corba\generated\CORBAAdminObjects.cpp"
+										>
+									</File>
+								</Filter>
+							</Filter>
+						</Filter>
 					</Filter>
 				</Filter>
 			</Filter>
@@ -396,10 +420,34 @@
 					<Filter
 						Name="admin"
 						>
-						<File
-							RelativePath=".\src\sof\services\admin\RemoteAdministrationActivator.h"
+						<Filter
+							Name="remote"
 							>
-						</File>
+							<File
+								RelativePath=".\src\sof\services\admin\remote\RemoteAdministrationActivator.h"
+								>
+							</File>
+							<Filter
+								Name="corba"
+								>
+								<File
+									RelativePath=".\src\sof\services\admin\remote\corba\CORBAAdminServiceImpl.h"
+									>
+								</File>
+								<File
+									RelativePath=".\src\sof\services\admin\remote\corba\DataConverter.h"
+									>
+								</File>
+								<Filter
+									Name="generated"
+									>
+									<File
+										RelativePath=".\src\sof\services\admin\remote\corba\generated\CORBAAdminObjects.h"
+										>
+									</File>
+								</Filter>
+							</Filter>
+						</Filter>
 					</Filter>
 				</Filter>
 			</Filter>

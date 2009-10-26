@@ -117,7 +117,7 @@ template<
 void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::startAdministrationBundle()
 {
 	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#startAdministrationBundle] Called." );
-	IRemoteBundleActivator* adminBundleActivator = this->objectCreator.createObject( "sof::services::admin::RemoteAdministrationActivator" );
+	IRemoteBundleActivator* adminBundleActivator = this->objectCreator.createObject( "sof::services::admin::remote::RemoteAdministrationActivator" );
 	IBundleContext* bundleCtxt = this->createBundleContext( "RemoteAdministrationBundle" );
 	
 	IRemoteBundleContext* bc = dynamic_cast<IRemoteBundleContext*>( bundleCtxt );
@@ -209,4 +209,22 @@ string RemoteSOFLauncher<ThreadingModel, CreationPolicy>::dumpAllBundleNames()
 	}
 	stream << endl;	
 	return stream.str();
+}
+
+template<
+	class ThreadingModel,
+	template <class> class CreationPolicy>
+BundleInfoBase& RemoteSOFLauncher<ThreadingModel, CreationPolicy>::getBundleInfo( const string& bundleName )
+{
+	return ( * ( this->registry->getBundleInfo( bundleName ) ) );
+}
+
+template<
+	class ThreadingModel,
+	template <class> class CreationPolicy>
+void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::startRemoteAdminService()
+{
+	CORBAAdminServiceImpl* adminService = new CORBAAdminServiceImpl( ( *this ) );
+	CORBA::Object_var obj = this->corbaHelper.activateObject( adminService );
+	this->corbaHelper.registerObject( obj, "", "" );
 }
