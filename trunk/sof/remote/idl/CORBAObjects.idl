@@ -57,7 +57,7 @@ module sof {
 		void unregisterServiceListener( in string bundleName, in string serviceName, in CORBAServiceListener listener );
 	};
 
-
+	
 };
 };
 };

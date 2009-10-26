@@ -7,6 +7,7 @@ using namespace std;
 using namespace sof::framework::remote::corba;
 
 const string CORBAHelper::REMOTE_REGISTRY_PATH = "remote_sof/registry";
+const string CORBAHelper::REMOTE_ADMIN_PATH = "remote_sof/admin";
 const string CORBAHelper::REMOTE_REGISTRY_NAME = "registry_object";
 
 Logger& CORBAHelper::logger = LoggerFactory::getLogger( "Framework" );

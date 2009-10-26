@@ -5,9 +5,11 @@
 #include <vector>
 
 #include "../../config/BundleConfiguration.h"
+#include "../../framework/BundleInfoBase.h"
 
 using namespace std;
 
+using namespace sof::framework;
 using namespace sof::config;
 
 namespace sof { namespace services { namespace admin {
@@ -72,7 +74,17 @@ class IAdministrationProvider
 		 * @param config
 		 *			The bundle configuration.
 		 */ 
-		virtual void start( vector<BundleConfiguration> &config ) = 0;
+		virtual void start( vector<BundleConfiguration>& config ) = 0;
+
+		/**
+		 * Returns the bundle info object for the given bundle name.
+		 *
+		 * @param bundleName
+		 *				The name of the bundle.
+		 * @return
+		 *				The bundle info object containing all relevant bundle data.
+		 */
+		virtual BundleInfoBase& getBundleInfo( const string& bundleName ) = 0;
 
 };
 

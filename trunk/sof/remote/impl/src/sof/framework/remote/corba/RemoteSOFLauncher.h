@@ -6,17 +6,20 @@
 
 #include "./registry/IRegistryFacadeImpl.h"
 #include "./registry/IRemoteRegistryImpl.h"
-#include "../../../services/admin/RemoteAdministrationActivator.h"
+#include "../../../services/admin/remote/RemoteAdministrationActivator.h"
 #include "IRemoteBundleActivator.h"
 #include "IRemoteBundleContextImpl.h"
 #include "RemoteBundleInfo.h"
 #include "CORBAHelper.h"
+#include "../../../services/admin/remote/corba/CORBAAdminServiceImpl.h"
 
 using namespace std;
 
 using namespace sof::framework;
 using namespace sof::framework::remote::corba::registry;
 using namespace sof::framework::remote::corba;
+using namespace sof::services::admin::remote;
+using namespace sof::services::admin::remote::corba;
 
 namespace sof { namespace framework { namespace remote { namespace corba {
 
@@ -74,6 +77,13 @@ class RemoteSOFLauncher : public IAdministrationProvider
 		 *				The bundle context instance.
 		 */
 		virtual IBundleContext* createBundleContext( const string& bundleName );
+
+
+		/**
+		 * Starts the remote admin service which allows external CORBA clients to 
+		 * call administration and diagnosis functions.
+		 */
+		virtual void startRemoteAdminService();
 
 	public:
 
@@ -168,6 +178,17 @@ class RemoteSOFLauncher : public IAdministrationProvider
 		 */
 		virtual string dumpAllBundleNames();
 
+	    /**
+		 * Returns the bundle info object for the given bundle name.
+		 *
+		 * @param bundleName
+		 *				The bundle name.
+		 *
+		 * @return
+		 *				The bundle info object.
+		 */
+		virtual BundleInfoBase& getBundleInfo( const string& bundleName );
+
 		/**
 		 * Returns the registry object.
 		 *
@@ -175,6 +196,7 @@ class RemoteSOFLauncher : public IAdministrationProvider
 		 *			The registry object.
 		 */
 		virtual IRegistry& getRegistry();
+		
 };
 #include "RemoteSOFLauncher.cpp"
 

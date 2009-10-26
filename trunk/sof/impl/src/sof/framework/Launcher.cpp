@@ -199,3 +199,11 @@ string Launcher<ThreadingModel, CreationPolicy>::dumpAllBundleNames()
 	stream << endl;	
 	return stream.str();
 }
+
+template<
+	class ThreadingModel,
+	template <class> class CreationPolicy>
+BundleInfoBase& Launcher<ThreadingModel, CreationPolicy>::getBundleInfo( const string& bundleName )
+{
+	return ( * ( this->registry->getBundleInfo( bundleName ) ) );
+}

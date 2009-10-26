@@ -12,15 +12,9 @@
 
 
 
-
-
   
 
 
-  
-  
-  
-  
   
   
   
@@ -57,15 +51,11 @@ CODE { COLOR: #990000; FONT-FAMILY: "Courier New", Courier, mono; }
   
   
   
-  
-  
   <link rel="stylesheet" type="text/css" href="global.css">
 </head>
 
 
 <body color="#000000" style="background-color: rgb(255, 255, 255);">
-
-
 
 
 
@@ -89,8 +79,6 @@ CODE { COLOR: #990000; FONT-FAMILY: "Courier New", Courier, mono; }
 
 
 
-
-
 <!------------------------------- STEP 2 --------------------------->
 <!-- Include download and sample image information. -->
 <ul class="download">
@@ -104,12 +92,9 @@ CODE { COLOR: #990000; FONT-FAMILY: "Courier New", Courier, mono; }
 
 
 
-
-
-  <li><a href="sof_9070.zip">Download source with
-examples - 1807 Kb</a></li>
-
-
+  <li><a href="sof_8070.zip">Download source with
+examples -
+328 Kb</a></li>
 
 
 
@@ -131,13 +116,9 @@ examples - 1807 Kb</a></li>
 
 
 
-
-
 <!------------------------------- STEP 3 --------------------------->
 <!-- Add the article text. Please use simple formatting (<h2>, <p> etc) -->
 <h2>Introduction</h2>
-
-
 
 
 
@@ -173,8 +154,6 @@ means only bundles of the same process can call each other:</p>
 
 
 
-
-
 <p><img style="width: 422px; height: 280px;" alt="SOF architecture" title="SOF architecture" src="sof_overview_small.png"></p>
 
 
@@ -186,11 +165,7 @@ means only bundles of the same process can call each other:</p>
 
 
 
-
-
 <p>&nbsp;<span style="font-style: italic;"><br>
-
-
 
 
 
@@ -213,11 +188,7 @@ communication between bundles running in <span style="font-weight: bold;">differ
 
 
 
-
-
 <p><img style="height: 499px; width: 666px;" alt="Remote SOF architecture" title="Remote SOF architecture" src="sof_remote_overview_small.png"><br>
-
-
 
 
 
@@ -251,8 +222,6 @@ of course.</p>
 
 
 
-
-
 <p><a href="http://en.wikipedia.org/wiki/Common_Object_Request_Broker_Architecture">CORBA</a>
 (especially the CORBA implementation <a href="http://www.mico.org">MICO</a><span style="text-decoration: underline;"></span>)
 acts
@@ -263,8 +232,6 @@ CORBA objects. <span style="font-style: italic;">Remote SOF</span> tries to hide
 much as possible from you but for some cases (e.g. narrowing CORBA
 objects, using CORBA types etc.) you have to know about the <a href="http://www.omg.org/gettingstarted/corbafaq.htm#VersionNumber">CORBA
 basics</a>. </p>
-
-
 
 
 
@@ -292,8 +259,6 @@ callable bundles running within one <span style="font-style: italic;">SOF</span>
 
 
 
-
-
 <h2>Using the Code</h2>
 
 
@@ -305,11 +270,7 @@ callable bundles running within one <span style="font-style: italic;">SOF</span>
 
 
 
-
-
 <h3>Building the software</h3>
-
-
 
 
 
@@ -337,13 +298,9 @@ providing make files for other platforms.
 
 
 
-
-
 <p>As the <span style="font-style: italic;">SOF</span> source code was reused for <span style="font-style: italic;">Remote SOF</span> as far as
 possible
 the <span style="font-style: italic;">Remote SOF</span> API does not differ very much from the <span style="font-style: italic;">SOF</span> API.</p>
-
-
 
 
 
@@ -365,11 +322,7 @@ the <span style="font-style: italic;">Remote SOF</span> API does not differ very
 
 
 
-
-
 <ul>
-
-
 
 
 
@@ -391,11 +344,7 @@ the <span style="font-style: italic;">Remote SOF</span> API does not differ very
 
 
 
-
-
 <ul>
-
-
 
 
 
@@ -408,8 +357,6 @@ the <span style="font-style: italic;">Remote SOF</span> API does not differ very
 
   <li>Service interfaces are not implemented as C++ interfaces
 but as CORBA IDL interfaces.</li>
-
-
 
 
 
@@ -433,13 +380,9 @@ instead of&nbsp;<code>IBundleActivator.</code></li>
 
 
 
-
-
   <li><code></code>Use&nbsp;<code>IRemoteBundleContext</code>
 instead of&nbsp;<code>IBundleContext </code>for
 registering services.</li>
-
-
 
 
 
@@ -463,13 +406,9 @@ service trackers.</li>
 
 
 
-
-
   <li>Implement the <code>IRemoteServiceTracker </code>interface
 instead of <code>IServiceTracker </code>for tracking
 services.<br>
-
-
 
 
 
@@ -491,8 +430,6 @@ services.<br>
 
 
 
-
-
   </li>
 
 
@@ -504,11 +441,7 @@ services.<br>
 
 
 
-
-
 </ul>
-
-
 
 
 
@@ -538,11 +471,7 @@ processes.<br>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -555,8 +484,6 @@ processes.<br>
 
 <h3>Implementing the&nbsp;<code>IRemoteBundleActivator</code>
 interface</h3>
-
-
 
 
 
@@ -590,11 +517,7 @@ and <code>stop</code> method are filled with code later.<br>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -616,11 +539,7 @@ and <code>stop</code> method are filled with code later.<br>
 
 
 
-
-
-<pre>#ifndef BUNDLE_ACTIVATOR1_H<br>#define BUNDLE_ACTIVATOR1_H<br><br>#include "sof/framework/remote/corba/IRemoteBundleActivator.h"<br>#include "sof/framework/remote/corba/IRemoteBundleContext.h"<br><br>using namespace sof::framework::remote::corba;<br><br>class BundleActivator1 : public IRemoteBundleActivator<br>{<br>    public:<br>	virtual ~BundleActivator1();<br>	virtual void start( IRemoteBundleContext::ConstPtr context ); <br>	virtual void stop( IRemoteBundleContext::ConstPtr context );<br>};<br><br>#endif<br></pre>
-
-
+<pre>#ifndef BUNDLE_ACTIVATOR1_H<br>#define BUNDLE_ACTIVATOR1_H<br><br>#include "sof/framework/remote/corba/IRemoteBundleActivator.h"<br>#include "sof/framework/remote/corba/IRemoteBundleContext.h"<br><br>using namespace sof::framework::remote::corba;<br><br>class BundleActivator1 : public <span style="font-weight: bold;">IRemoteBundleActivator</span><br>{<br>	public:<br>	virtual ~BundleActivator1();<br>	virtual void start( <span style="font-weight: bold;">IRemoteBundleContext::ConstPtr</span> context ); <br>	virtual void stop( <span style="font-weight: bold;">IRemoteBundleContext::ConstPtr</span> context );<br>};<br><br>#endif<br></pre>
 
 
 
@@ -632,8 +551,6 @@ and <code>stop</code> method are filled with code later.<br>
 
 
 <br>
-
-
 
 
 
@@ -655,11 +572,7 @@ and <code>stop</code> method are filled with code later.<br>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -683,8 +596,6 @@ has to be used instead of&nbsp;<code>REGISTER_BUNDLE_ACTIVATOR_CLASS</code>.<br>
 
 
 
-
-
 </div>
 
 
@@ -696,11 +607,7 @@ has to be used instead of&nbsp;<code>REGISTER_BUNDLE_ACTIVATOR_CLASS</code>.<br>
 
 
 
-
-
-<pre>#include "BundleActivator1.h"<br><br>#include "sof/instantiation/ObjectCreator.h"<br>#include "sof/framework/Properties.h"<br><br>using namespace sof::instantiation;<br>using namespace sof::framework;<br><br>BundleActivator1::~BundleActivator1() <br>{<br>	// Deallocate memory<br>}<br><br>void BundleActivator1::start(IRemoteBundleContext::ConstPtr context) <br>{<br>	// Add code for registering services and service listeners}<br>}<br><br>void BundleActivator1::stop(IRemoteBundleContext::ConstPtr context) <br>{<br>	// Add code for deregistering services and service listeners}<br>}<br><br>REGISTER_REMOTE_BUNDLE_ACTIVATOR_CLASS( "BundleActivator1", BundleActivator1 )<br><br></pre>
-
-
+<pre>#include "BundleActivator1.h"<br><br>#include "sof/instantiation/ObjectCreator.h"<br>#include "sof/framework/Properties.h"<br><br>using namespace sof::instantiation;<br>using namespace sof::framework;<br><br>BundleActivator1::~BundleActivator1() <br>{<br>	// Deallocate memory<br>}<br><br>void BundleActivator1::start(<span style="font-weight: bold;">IRemoteBundleContext::ConstPtr</span> context) <br>{<br>	// Add code for registering services and service listeners}<br>}<br><br>void BundleActivator1::stop(<span style="font-weight: bold;">IRemoteBundleContext::ConstPtr</span> context) <br>{<br>	// Add code for deregistering services and service listeners}<br>}<br><br><span style="font-weight: bold;">REGISTER_REMOTE_BUNDLE_ACTIVATOR_CLASS( "BundleActivator1", BundleActivator1 )</span><br><br></pre>
 
 
 
@@ -713,11 +620,7 @@ has to be used instead of&nbsp;<code>REGISTER_BUNDLE_ACTIVATOR_CLASS</code>.<br>
 
 <br>
 
-
-
 <h3>Services</h3>
-
-
 
 
 
@@ -744,11 +647,7 @@ Our multiplier service used for this example is defined as follows:<br>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -770,11 +669,7 @@ Our multiplier service used for this example is defined as follows:<br>
 
 
 
-
-
 The mechanism is very similar to <span style="font-style: italic;">SOF</span>:<br>
-
-
 
 
 
@@ -796,12 +691,8 @@ The mechanism is very similar to <span style="font-style: italic;">SOF</span>:<b
 
 
 
-
-
   <li>You have to define the service interface (with <span style="font-style: italic;">SOF</span> in C++,
 with <span style="font-style: italic;">Remote SOF</span> in IDL)</li>
-
-
 
 
 
@@ -825,11 +716,7 @@ SOF</span> from&nbsp;<code>CORBAService</code>)</li>
 
 
 
-
-
 </ul>
-
-
 
 
 
@@ -855,11 +742,7 @@ the interface definitions of all remote callable objects.<br>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -892,11 +775,7 @@ service interface by inheriting from the generated type&nbsp;<code>POA_Multiplie
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -918,11 +797,7 @@ service interface by inheriting from the generated type&nbsp;<code>POA_Multiplie
 
 
 
-
-
-<pre>#ifndef MULTIPLIER_IMPL_H<br>#define MULTIPLIER_IMPL_H<br><br>#include "Multiplier.h"<br><br>using namespace std;<br><br>class MultiplierImpl : virtual public POA_Multiplier<br>{<br>   public:<br>	virtual CORBA::Long multiply( CORBA::Long x, CORBA::Long y );<br><br>};<br><br>#endif</pre>
-
-
+<pre>#ifndef MULTIPLIER_IMPL_H<br>#define MULTIPLIER_IMPL_H<br><br>#include "Multiplier.h"<br><br>using namespace std;<br><br>class MultiplierImpl : virtual public POA_Multiplier<br>{<br>public:<br>	virtual CORBA::Long multiply( CORBA::Long x, CORBA::Long y );<br><br>};<br><br>#endif</pre>
 
 
 
@@ -944,11 +819,7 @@ service interface by inheriting from the generated type&nbsp;<code>POA_Multiplie
 
 
 
-
-
 <pre>#include &lt;CORBA.h&gt;<br>#include "MultiplierImpl.h"<br><br>#include &lt;iostream&gt;<br><br>using namespace std;<br><br>CORBA::Long MultiplierImpl::multiply( CORBA::Long x, CORBA::Long y )<br>{<br>	cout &lt;&lt; "Multiplier called. " &lt;&lt; endl; <br>	return x*y;<br>}</pre>
-
-
 
 
 
@@ -970,11 +841,7 @@ service interface by inheriting from the generated type&nbsp;<code>POA_Multiplie
 
 
 
-
-
 <h3>Registering and Deregistering Services</h3>
-
-
 
 
 
@@ -1000,11 +867,7 @@ are defined for each service instance in the header file.<br>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -1026,11 +889,7 @@ are defined for each service instance in the header file.<br>
 
 
 
-
-
-<pre>#ifndef BUNDLE_ACTIVATOR1_H<br>#define BUNDLE_ACTIVATOR1_H<br><br>#include "sof/framework/remote/corba/IRemoteBundleActivator.h"<br>#include "sof/framework/remote/corba/IRemoteBundleContext.h"<br><br>#include "sof/framework/IServiceRegistration.h"<br><br>#include "MultiplierImpl.h"<br><br>using namespace sof::framework::remote::corba;<br><br>class BundleActivator1 : public IRemoteBundleActivator<br>{<br>   private:<br>	IServiceRegistration* serviceReg1;<br>	MultiplierImpl* service1;<br><br>	IServiceRegistration* serviceReg2;<br>	MultiplierImpl* service2;<br><br>   public:<br>	virtual ~BundleActivator1();<br>	virtual void start( IRemoteBundleContext::ConstPtr context ); <br>	virtual void stop( IRemoteBundleContext::ConstPtr context );<br>};<br><br>#endif<br><br></pre>
-
-
+<pre>#ifndef BUNDLE_ACTIVATOR1_H<br>#define BUNDLE_ACTIVATOR1_H<br><br>#include "sof/framework/remote/corba/IRemoteBundleActivator.h"<br>#include "sof/framework/remote/corba/IRemoteBundleContext.h"<br><br>#include "sof/framework/IServiceRegistration.h"<br><br>#include "MultiplierImpl.h"<br><br>using namespace sof::framework::remote::corba;<br><br>class BundleActivator1 : public IRemoteBundleActivator<br>{<br>	private:<br>	IServiceRegistration* serviceReg1;<br>	MultiplierImpl* service1;<br><br>	IServiceRegistration* serviceReg2;<br>	MultiplierImpl* service2;<br><br>	public:<br>	virtual ~BundleActivator1();<br>	virtual void start( IRemoteBundleContext::ConstPtr context ); <br>	virtual void stop( IRemoteBundleContext::ConstPtr context );<br>};<br><br>#endif<br><br></pre>
 
 
 
@@ -1057,8 +916,6 @@ calling&nbsp;<code>registerRemoteService</code>
 
 
 
-
-
 From now on the service instances can be tracked and called by other&nbsp;bundles.<br>
 
 
@@ -1070,11 +927,7 @@ From now on the service instances can be tracked and called by other&nbsp;bundle
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -1096,11 +949,7 @@ From now on the service instances can be tracked and called by other&nbsp;bundle
 
 
 
-
-
-<pre>#include "BundleActivator1.h"<br><br>#include "sof/instantiation/ObjectCreator.h"<br>#include "sof/framework/Properties.h"<br><br>using namespace sof::instantiation;<br>using namespace sof::framework;<br><br>BundleActivator1::~BundleActivator1() <br>{<br>	// Deallocate memory<br>}<br><br>void BundleActivator1::start(IRemoteBundleContext::ConstPtr context) <br>{<br>	Properties props;<br>	props.put( "instance", "1" );<br><br>	this-&gt;service1 = new MultiplierImpl();<br>	this-&gt;serviceReg1 = context-&gt;registerRemoteService( "Multiplier", this-&gt;service1, props );<br><br>	props.put( "instance", "2" );<br><br>	this-&gt;service2 = new MultiplierImpl();<br>	this-&gt;serviceReg2 = context-&gt;registerRemoteService( "Multiplier", this-&gt;service2, props );<br>}<br><br>void BundleActivator1::stop(IRemoteBundleContext::ConstPtr context) <br>{<br>	this-&gt;serviceReg1-&gt;unregister();<br>	delete this-&gt;serviceReg1;<br>	delete this-&gt;service1;<br><br>	this-&gt;serviceReg2-&gt;unregister();<br>	delete this-&gt;serviceReg2;<br>	delete this-&gt;service2;<br>}<br><br>REGISTER_REMOTE_BUNDLE_ACTIVATOR_CLASS( "BundleActivator1", BundleActivator1 )<br><br></pre>
-
-
+<pre>#include "BundleActivator1.h"<br><br>#include "sof/instantiation/ObjectCreator.h"<br>#include "sof/framework/Properties.h"<br><br>using namespace sof::instantiation;<br>using namespace sof::framework;<br><br>BundleActivator1::~BundleActivator1() <br>{<br>	// Deallocate memory<br>}<br><br>void BundleActivator1::start(IRemoteBundleContext::ConstPtr context) <br>{<br>	Properties props;<br>	props.put( "instance", "1" );<br><br>	this-&gt;service1 = new MultiplierImpl();<br>	this-&gt;serviceReg1 = context-&gt;<span style="font-weight: bold;">registerRemoteService</span>( "Multiplier", this-&gt;service1, props );<br><br>	props.put( "instance", "2" );<br><br>	this-&gt;service2 = new MultiplierImpl();<br>	this-&gt;serviceReg2 = context-&gt;<span style="font-weight: bold;">registerRemoteService</span>( "Multiplier", this-&gt;service2, props );<br>}<br><br>void BundleActivator1::stop(IRemoteBundleContext::ConstPtr context) <br>{<br>	this-&gt;serviceReg1-&gt;unregister();<br>	delete this-&gt;serviceReg1;<br>	delete this-&gt;service1;<br><br>	this-&gt;serviceReg2-&gt;unregister();<br>	delete this-&gt;serviceReg2;<br>	delete this-&gt;service2;<br>}<br><br style="font-weight: bold;"><span style="font-weight: bold;">REGISTER_REMOTE_BUNDLE_ACTIVATOR_CLASS( "BundleActivator1", BundleActivator1 )</span><br style="font-weight: bold;"><br></pre>
 
 
 
@@ -1122,11 +971,7 @@ From now on the service instances can be tracked and called by other&nbsp;bundle
 
 
 
-
-
 <h3>Registering and Deregistering Service Listeners</h3>
-
-
 
 
 
@@ -1153,11 +998,7 @@ class&nbsp;three parameters at the constructor:<br>
 
 
 
-
-
 <ul>
-
-
 
 
 
@@ -1179,11 +1020,7 @@ class&nbsp;three parameters at the constructor:<br>
 
 
 
-
-
   <li>The name of the service which has to be found&nbsp;</li>
-
-
 
 
 
@@ -1206,11 +1043,7 @@ interface</li>
 
 
 
-
-
 </ul>
-
-
 
 
 
@@ -1224,8 +1057,6 @@ interface</li>
 In the following the implementation of class&nbsp;<code>BundleActivator2</code>
 shows how to create and use the service tracker object for finding
 registered services. <br>
-
-
 
 
 
@@ -1256,11 +1087,7 @@ Afterwards the service can be called.<br>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -1272,9 +1099,7 @@ Afterwards the service can be called.<br>
 
 
 <span style="font-weight: bold;">Implementation:</span>
-<pre>#include "BundleActivator2.h"<br><br>#include "sof/instantiation/ObjectCreator.h"<br>#include "sof/framework/Properties.h"<br>#include "sof/framework/remote/corba/RemoteServiceReference.h"<br><br>using namespace sof::instantiation;<br>using namespace sof::framework;<br>using namespace sof::framework::remote::corba;<br><br>BundleActivator2::~BundleActivator2() <br>{<br>	// Deallocate memory<br>}<br><br>void BundleActivator2::start(IRemoteBundleContext::ConstPtr context) <br>{<br>	this-&gt;tracker = new RemoteServiceTracker( context, "Multiplier", this );<br>	this-&gt;tracker-&gt;startTracking();<br>}<br><br>void BundleActivator2::stop(IRemoteBundleContext::ConstPtr context) <br>{<br>	this-&gt;tracker-&gt;stopTracking();<br>	delete ( this-&gt;tracker );<br>}<br><br>bool BundleActivator2::addingService( const RemoteServiceReference&amp; ref )<br>{<br>	cout &lt;&lt; "[BundleActivator2#addingService] Called." &lt;&lt; endl; <br>	if ( ref.getServiceName() == "Multiplier" )<br>	{<br>		Properties props = ref.getServiceProperties();<br>		cout &lt;&lt; "[BundleActivator2#addingService] Multiplier instance found." &lt;&lt; endl; <br>		cout &lt;&lt; "[BundleActivator2#addingService] Properties: " &lt;&lt; props.toString() &lt;&lt; endl; <br>		cout &lt;&lt; "[BundleActivator2#addingService] Service reference: " &lt;&lt; ref.toString() &lt;&lt; endl; <br><br>		Multiplier_var multiplier = Multiplier::_narrow( ref.getRemoteService() );<br> 		CORBA::Long result = multiplier-&gt;multiply( 8, 15 );<br><br>		cout &lt;&lt; "Result: " &lt;&lt; result &lt;&lt; endl; <br>		return true;<br>	}<br>	else<br>	{<br>		return false;<br>	}<br>}<br><br>void BundleActivator2::removedService( const RemoteServiceReference&amp; ref )<br>{<br>	cout &lt;&lt; "[BundleActivator2#removedService] Called, ref: " &lt;&lt; ref.toString() &lt;&lt; endl; <br>}<br><br>REGISTER_REMOTE_BUNDLE_ACTIVATOR_CLASS( "BundleActivator2", BundleActivator2 )<br><br></pre>
-
-
+<pre>#include "BundleActivator2.h"<br><br>#include "sof/instantiation/ObjectCreator.h"<br>#include "sof/framework/Properties.h"<br>#include "sof/framework/remote/corba/RemoteServiceReference.h"<br><br>using namespace sof::instantiation;<br>using namespace sof::framework;<br>using namespace sof::framework::remote::corba;<br><br>BundleActivator2::~BundleActivator2() <br>{<br>	// Deallocate memory<br>}<br><br>void BundleActivator2::start(IRemoteBundleContext::ConstPtr context) <br>{<br>	this-&gt;tracker = new <span style="font-weight: bold;">RemoteServiceTracker</span>( context, "Multiplier", this );<br>	this-&gt;tracker-&gt;startTracking();<br>}<br><br>void BundleActivator2::stop(IRemoteBundleContext::ConstPtr context) <br>{<br>	this-&gt;tracker-&gt;stopTracking();<br>	delete ( this-&gt;tracker );<br>}<br><br>bool BundleActivator2::addingService( const <span style="font-weight: bold;">RemoteServiceReference</span>&amp; ref )<br>{<br>	cout &lt;&lt; "[BundleActivator2#addingService] Called." &lt;&lt; endl; <br>	if ( ref.getServiceName() == "Multiplier" )<br>	{<br>		Properties props = ref.getServiceProperties();<br>		cout &lt;&lt; "[BundleActivator2#addingService] Multiplier instance found." &lt;&lt; endl; <br>		cout &lt;&lt; "[BundleActivator2#addingService] Properties: " &lt;&lt; props.toString() &lt;&lt; endl; <br>		cout &lt;&lt; "[BundleActivator2#addingService] Service reference: " &lt;&lt; ref.toString() &lt;&lt; endl; <br><br>		<span style="font-weight: bold;">Multiplier_var multiplier = Multiplier::_narrow( ref.getRemoteService() );</span><br style="font-weight: bold;"><span style="font-weight: bold;"> 		CORBA::Long result = multiplier-&gt;multiply( 8, 15 );</span><br><br>		cout &lt;&lt; "Result: " &lt;&lt; result &lt;&lt; endl; <br>		return true;<br>	}<br>	else<br>	{<br>		return false;<br>	}<br>}<br><br>void BundleActivator2::removedService( const RemoteServiceReference&amp; ref )<br>{<br>	cout &lt;&lt; "[BundleActivator2#removedService] Called, ref: " &lt;&lt; ref.toString() &lt;&lt; endl; <br>}<br><br>REGISTER_REMOTE_BUNDLE_ACTIVATOR_CLASS( "BundleActivator2", BundleActivator2 )<br><br></pre>
 
 
 
@@ -1296,11 +1121,7 @@ Afterwards the service can be called.<br>
 
 
 
-
-
 <h3>Creating bundle libraries</h3>
-
-
 
 
 
@@ -1323,11 +1144,7 @@ possibilities:<br>
 
 
 
-
-
 <ul>
-
-
 
 
 
@@ -1352,8 +1169,6 @@ article</a>).</li>
 
 
 
-
-
   <li>A main method is implemented which starts the&nbsp;<code>RemoteSOFLauncher</code>
 class for loading the bundle at startup.</li>
 
@@ -1366,11 +1181,7 @@ class for loading the bundle at startup.</li>
 
 
 
-
-
 </ul>
-
-
 
 
 
@@ -1393,11 +1204,7 @@ code for making the bundles ready for being loaded as Windows DLL:<br>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -1419,8 +1226,6 @@ code for making the bundles ready for being loaded as Windows DLL:<br>
 
 
 
-
-
 <pre>#include &lt;windows.h&gt;<br><br>#include "sof/instantiation/ObjectCreator.h"<br>#include "sof/framework/remote/corba/IRemoteBundleActivator.h"<br><br>#define DLL extern "C" __declspec(dllexport)<br><br>using namespace sof::framework;<br>using namespace sof::framework::remote::corba;<br>using namespace sof::instantiation;<br><br>BOOL APIENTRY DllMain( HANDLE hModule, <br> DWORD ul_reason_for_call, <br> LPVOID lpReserved<br>	)<br>{ <br>	return TRUE;<br>}<br><br><br>DLL IRemoteBundleActivator* createObject( const string &amp;className )<br>{ <br>	ObjectCreator&lt;IRemoteBundleActivator&gt; OC_BUNDLE_ACTIVATOR;<br>	return OC_BUNDLE_ACTIVATOR.createObject( className ); <br>}<br><br></pre>
 
 
@@ -1432,11 +1237,7 @@ code for making the bundles ready for being loaded as Windows DLL:<br>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -1464,11 +1265,7 @@ bundles which are loaded as Windows DLL.<br>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -1491,11 +1288,7 @@ shows all files which belong to the implementation of the two bundles:<br>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -1517,11 +1310,7 @@ shows all files which belong to the implementation of the two bundles:<br>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -1550,11 +1339,7 @@ MultiplierImpl.cpp</span>).<br>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -1577,8 +1362,6 @@ which is described in the next section.<br>
 
 
 
-
-
 <br>
 
 
@@ -1590,11 +1373,7 @@ which is described in the next section.<br>
 
 
 
-
-
 <h3>Testing the bundles</h3>
-
-
 
 
 
@@ -1618,11 +1397,7 @@ at the <span style="font-style: italic;">Remote SOF</span> diagram at the beginn
 
 
 
-
-
 <h4>CORBA naming service</h4>
-
-
 
 
 
@@ -1648,11 +1423,7 @@ which can be started as follows:<br>
 
 
 
-
-
 <ul>
-
-
 
 
 
@@ -1674,11 +1445,7 @@ which can be started as follows:<br>
 
 
 
-
-
   <li>Change to directory 'sof\remote\registry\bin'</li>
-
-
 
 
 
@@ -1702,11 +1469,7 @@ nsd.exe -ORBIIOPAddr inet:localhost:5000&nbsp;</span></li>
 
 
 
-
-
 </ul>
-
-
 
 
 
@@ -1728,18 +1491,12 @@ nsd.exe -ORBIIOPAddr inet:localhost:5000&nbsp;</span></li>
 
 
 
-
-
 <span style="font-weight: bold;"><br>
-
-
 Note:</span> The
 passed parameters '<span style="font-style: italic;">-ORBIIOPAddr
 inet:localhost:5000' d</span>efines the IP address and port
 number where&nbsp;the naming service shall run. Here 'localhost'
 and port '5000'&nbsp;is chosen<br>
-
-
 
 
 
@@ -1762,11 +1519,7 @@ registry</h4>
 
 
 
-
-
 For starting the remote registry process<br>
-
-
 
 
 
@@ -1788,8 +1541,6 @@ For starting the remote registry process<br>
 
 
 
-
-
   <li>Open a Windows command shell</li>
 
 
@@ -1801,11 +1552,7 @@ For starting the remote registry process<br>
 
 
 
-
-
   <li>Change to directory 'sof\remote\registry\bin'</li>
-
-
 
 
 
@@ -1839,11 +1586,7 @@ which executes <span style="font-style: italic;">registry.exe
 
 
 
-
-
 </ul>
-
-
 
 
 
@@ -1865,11 +1608,7 @@ which executes <span style="font-style: italic;">registry.exe
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -1892,11 +1631,7 @@ object at the CORBA naming service which was started before.<br>
 
 
 
-
-
 <h4>Starting the test bundles</h4>
-
-
 
 
 
@@ -1919,11 +1654,7 @@ bundle:<br>
 
 
 
-
-
 <ul>
-
-
 
 
 
@@ -1945,11 +1676,7 @@ bundle:<br>
 
 
 
-
-
   <li>Change to directory 'sof\remote\console\bin'</li>
-
-
 
 
 
@@ -1973,8 +1700,6 @@ interface for entering commands (e.g. for starting and stopping bundles)</li>
 
 
 
-
-
 </ul>
 
 
@@ -1986,11 +1711,7 @@ interface for entering commands (e.g. for starting and stopping bundles)</li>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -2012,11 +1733,7 @@ interface for entering commands (e.g. for starting and stopping bundles)</li>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -2044,11 +1761,7 @@ the remote registry.<br>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -2070,11 +1783,7 @@ the remote registry.<br>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -2096,11 +1805,7 @@ Now the test bundles can be loaded. Please enter <br>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -2124,11 +1829,7 @@ stbdll bundle1 BundleActivator1
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -2148,11 +1849,7 @@ the first bundle is loaded which registers a service object called
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -2166,11 +1863,7 @@ the first bundle is loaded which registers a service object called
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -2192,11 +1885,7 @@ For starting the second test bundle you have to enter<br>
 
 
 
-
-
 <br style="font-weight: bold;">
-
-
 
 
 
@@ -2220,11 +1909,7 @@ remote_bundle2.dll</span></span>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -2247,11 +1932,7 @@ console prints out the result of the multiplication. <br>
 
 
 
-
-
 <br>
-
-
 
 
 
@@ -2268,8 +1949,6 @@ console prints out the result of the multiplication. <br>
 
 
 
-
-
 <br>
 
 
@@ -2280,11 +1959,7 @@ console prints out the result of the multiplication. <br>
 
 
 
-
-
 <span style="font-weight: bold;">Note:</span> It makes no difference in which order the two bundles are started ('bundle1' before 'bundle2' or vice versa).<br>
-
-
 
 
 
@@ -2307,11 +1982,7 @@ console prints out the result of the multiplication. <br>
 
 
 
-
-
 </ul>
-
-
 
 
 
@@ -2329,11 +2000,7 @@ console prints out the result of the multiplication. <br>
 
 
 
-
-
 This article shortly described how distributed bundles can be implemented by using <span style="font-style: italic;">Remote SOF</span> whereas the <span style="font-style: italic;">Remote SOF</span> API differs not very much from the <span style="font-style: italic;">SOF</span> API. Please have a look at the <a href="http://sof.tiddlyspot.com/">project's website</a> for further documentation.<br>
-
-
 
 
 
@@ -2346,11 +2013,7 @@ This article shortly described how distributed bundles can be implemented by usi
 
 
 
-
-
 For the future the implementation of following issues is considered:<br>
-
-
 
 
 
@@ -2362,18 +2025,12 @@ For the future the implementation of following issues is considered:<br>
 
 
 
-
-
   <li>Currently you have to decide for either implementing distributed bundles (using the <span style="font-style: italic;">Remote SOF</span> framework) or 'local' bundles (using the <span style="font-style: italic;">SOF</span> framework). The aim is to enable a mix of distributed and local bundles within one <span style="font-style: italic;">SOF</span> container.</li>
 
 
 
 
-
-
   <li>Platform independent make files</li>
-
-
 
 
 
@@ -2385,19 +2042,13 @@ For the future the implementation of following issues is considered:<br>
 
 
 
-
-
   <li>Supporting further communication layers beside CORBA (e.g. ICE)</li>
 
 
 
 
 
-
-
   <li>Making the CORBA naming service disposable for simplifying the startup</li>
-
-
 
 
 
@@ -2411,11 +2062,7 @@ For the future the implementation of following issues is considered:<br>
 
 
 
-
-
 <h2>History&nbsp;</h2>
-
-
 
 
 

@@ -1,6 +1,4 @@
-PATH=%PATH%;..\..\corba\libs
-
-..\..\corba\bin\idl.exe --c++-suffix=cpp Multiplier.idl
+idl.exe --c++-suffix=cpp Multiplier.idl
 
 
 copy Multiplier.cpp ..\common\src

@@ -11,6 +11,7 @@
 #include "BundleInfo.h"
 #include "IBundleContextImpl.h"
 
+#include "../framework/BundleInfoBase.h"
 #include "../services/admin/AdministrationActivator.h"
 #include "../services/admin/IAdministrationProvider.h"
 #include "../config/BundleConfiguration.h"
@@ -175,6 +176,17 @@ class Launcher : public IAdministrationProvider
 		 *			A string containing all bundle names.
 		 */
 		virtual string dumpAllBundleNames();
+
+		/**
+		 * Returns the bundle info object for the given bundle name.
+		 *
+		 * @param bundleName
+		 *				The bundle name.
+		 *
+		 * @return
+		 *				The bundle info object.
+		 */
+		virtual BundleInfoBase& getBundleInfo( const string& bundleName );
 
 		/**
 		 * Returns the registry object.
