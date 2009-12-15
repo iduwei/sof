@@ -6,7 +6,7 @@ Logger& RemoteSOFLauncher<ThreadingModel, CreationPolicy>::logger = LoggerFactor
 template<
 	class ThreadingModel,
 	template <class> class CreationPolicy>
-RemoteSOFLauncher<ThreadingModel, CreationPolicy>::RemoteSOFLauncher( CORBAHelper& cHelper ) : corbaHelper( cHelper )
+RemoteSOFLauncher<ThreadingModel, CreationPolicy>::RemoteSOFLauncher( CORBAHelper& cHelper, const string& procName ) : corbaHelper( cHelper ), processName( procName )
 {
 	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#ctor] Called." );
 	this->registry = this->createRegistry();
@@ -117,6 +117,9 @@ template<
 void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::startAdministrationBundle()
 {
 	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#startAdministrationBundle] Called." );
+	
+	this->startRemoteAdminService();
+
 	IRemoteBundleActivator* adminBundleActivator = this->objectCreator.createObject( "sof::services::admin::remote::RemoteAdministrationActivator" );
 	IBundleContext* bundleCtxt = this->createBundleContext( "RemoteAdministrationBundle" );
 	
@@ -166,13 +169,17 @@ template<
 	template <class> class CreationPolicy>
 vector<string> RemoteSOFLauncher<ThreadingModel, CreationPolicy>::getBundleNames()
 {
+	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#getBundleNames] Called." );		
 	vector<string> bundleNameVec;
 	vector<BundleInfoBase*> vec = this->registry->getBundleInfos();
+	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#getBundleNames] Iterate through BundleInfoBase vector." );		
 	vector<BundleInfoBase*>::iterator iter;
 	for ( iter = vec.begin(); iter != vec.end(); iter++ )
 	{
+		logger.log( Logger::DEBUG, "[RemoteSOFLauncher#getBundleNames] Name: %1", (*iter)->getBundleName() );	
 		bundleNameVec.push_back( (*iter)->getBundleName() );
 	}
+	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#getBundleNames] Return bundle name vector." );		
 	return bundleNameVec;
 }
 
@@ -224,7 +231,9 @@ template<
 	template <class> class CreationPolicy>
 void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::startRemoteAdminService()
 {
+	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#startRemoteAdminService] Called." );		
+	
 	CORBAAdminServiceImpl* adminService = new CORBAAdminServiceImpl( ( *this ) );
 	CORBA::Object_var obj = this->corbaHelper.activateObject( adminService );
-	this->corbaHelper.registerObject( obj, "", "" );
+	this->corbaHelper.registerObject( obj, CORBAHelper::REMOTE_ADMIN_PATH, this->processName );
 }

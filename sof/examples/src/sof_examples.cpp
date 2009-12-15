@@ -2,10 +2,9 @@
 #include <vector>
 
 #include "sof/framework/Launcher.h"
-#include "sof/framework/Global.h"
 #include "sof/config/BundleConfiguration.h"
 
-#ifdef WIN
+#ifdef WIN32
 #include "sof/instantiation/win/WinDllCreator.h"
 #endif
 
@@ -17,7 +16,7 @@ using namespace sof::framework;
 using namespace sof::config;
 using namespace sof::util::threading;
 
-#ifdef WIN
+#ifdef WIN32
 using namespace sof::instantiation::win;
 #endif
 
@@ -41,7 +40,7 @@ int main(int argc, char* argv[])
 		}
 	}
 
-	#ifdef WIN
+	#ifdef WIN32
 		Launcher<SingleThreaded,WinDllCreator> launcher;
 	#else
 		Launcher<SingleThreaded,NullCreator> launcher;

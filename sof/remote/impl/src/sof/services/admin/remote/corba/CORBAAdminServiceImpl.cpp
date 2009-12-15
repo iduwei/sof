@@ -40,19 +40,21 @@ CORBAAdminServiceInfoSequence* CORBAAdminServiceImpl::getUsedServices( const cha
 
 CORBAAdminServiceInfoSequence* CORBAAdminServiceImpl::getRegisteredServices( const char* bundleName )
 {
-	logger.log( Logger::DEBUG, "[CORBAAdminServiceImpl#getRegisteredServices] Called, bundleName: %1",
-		bundleName );
-	BundleInfoBase& bundleInfo = this->adminProvider.getBundleInfo( bundleName );
-	
+	string bName( bundleName );
+	logger.log( Logger::DEBUG, "[CORBAAdminServiceImpl#getRegisteredServices] Called, bundleName: %1", bName );
+	BundleInfoBase& bundleInfo = this->adminProvider.getBundleInfo( bName );
+	logger.log( Logger::DEBUG, "[CORBAAdminServiceImpl#getRegisteredServices] Convert bundle info: %1",
+		bundleInfo.toString() );
 	return DataConverter::convert( bundleInfo.getRegisteredServices() );	
 }
 
 CORBAAdminServiceListenerInfoSequence* CORBAAdminServiceImpl::getRegisteredServiceListeners( const char* bundleName ) 
 {
+	string bName( bundleName );
 	logger.log( Logger::DEBUG, "[CORBAAdminServiceImpl#getRegisteredServiceListeners] Called, bundleName: %1",
-		bundleName );
+		bName );
 
-	BundleInfoBase& bundleInfo = this->adminProvider.getBundleInfo( bundleName );
+	BundleInfoBase& bundleInfo = this->adminProvider.getBundleInfo( bName );
 	
 	return DataConverter::convert( bundleInfo.getRegisteredListeners() );
 }

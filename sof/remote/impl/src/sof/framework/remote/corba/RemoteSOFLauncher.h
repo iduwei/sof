@@ -38,7 +38,16 @@ class RemoteSOFLauncher : public IAdministrationProvider
 {
 	protected:
 
+		/**
+		 * Provides CORBA relevant helper functions.
+		 */
 		CORBAHelper& corbaHelper;
+
+		/**
+		 * The name of the SOF process used for registering an administration/diagnosis
+		 * component at naming service.
+		 */
+		string processName;
 
 		/**
 		 * The <code>ObjectCreator</code> instance which is used
@@ -89,8 +98,14 @@ class RemoteSOFLauncher : public IAdministrationProvider
 
 		/**
 		 * Creates instances of class <code>Launcher</code>.
+		 *
+		 * @param corbaHelper
+		 *				Provides CORBA related helper functions.
+	     * 
+		 * @param procName
+		 *				The name of the SOF process.
 		 */
-		RemoteSOFLauncher( CORBAHelper& corbaHelper );
+		RemoteSOFLauncher( CORBAHelper& corbaHelper, const string& procName );
 
 		/**
 		 * Destroys the <code>Launcher</code> instance.

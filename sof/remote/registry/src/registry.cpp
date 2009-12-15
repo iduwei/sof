@@ -7,7 +7,7 @@
 
 #include <list>
 #include <vector>
-#include <iostream.h>
+#include <iostream>
 
 using namespace sof::framework::remote;
 using namespace sof::framework::remote::corba;

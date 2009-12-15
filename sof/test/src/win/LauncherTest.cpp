@@ -5,10 +5,8 @@
 // CppUnitLite Headers
 #include "TestHarness.h"
 #include "Test.h"
-
-#include "sof/framework/Global.h"
  
-#ifdef WIN
+#ifdef WIN32
 #include "sof/framework/Launcher.h"
 #include "sof/framework/BundleInfoBase.h"
 #include "sof/framework/IRegistry.h"
