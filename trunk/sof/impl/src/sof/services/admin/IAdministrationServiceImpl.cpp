@@ -142,20 +142,25 @@ void IAdministrationServiceImpl::startConsole()
 			}
 
 			logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#startConsole] Token: %1", tokens[0] );
-			ConsoleCommand* cmd = this->cmdMap[tokens[0]];
-			if ( cmd == 0 )
-			{
-				cout << "!Unknown command" << endl;
-			} 
-			else if ( cmd->getParameterNum() != (tokens.size() -1) )
-			{
-				cout << "!Command requires " << cmd->getParameterNum() << " parameter(s)" << endl;
-			}
-			else
-			{
-				tokens.erase( tokens.begin() );
-				cout << cmd->execute( this, tokens ) << endl;
-			}
+ 			map<string,ConsoleCommand*>::iterator cmdIter;
+ 			cmdIter = this->cmdMap.find(tokens[0]);
+ 			if ( cmdIter == this->cmdMap.end() )
+  			{
+  				cout << "!Unknown command" << endl;
+  			} 
+  			else
+  			{
+ 				ConsoleCommand* cmd = (*cmdIter).second;
+ 				if ( cmd->getParameterNum() != (tokens.size() -1) )
+ 				{
+ 					cout << "!Command requires " << cmd->getParameterNum() << " parameter(s)" << endl;
+ 				}
+ 				else
+ 				{
+ 					tokens.erase( tokens.begin() );
+ 					cout << cmd->execute( this, tokens ) << endl;
+ 				}
+  			}
 		}
 		cout << ">";
 	}
