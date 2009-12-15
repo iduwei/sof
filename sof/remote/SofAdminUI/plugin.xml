@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+
+     <extension point="org.eclipse.ui.editors">
+      <editor name="GEF Shapes Example"
+              extensions="shapes"
+              icon="resources/icons/shapes.gif"
+              default="true"
+              class="sof.editor.ShapesEditor"
+              contributorClass="sof.editor.ShapesEditorActionBarContributor"
+              id="GEF Shapes Editor">
+      </editor>
+   </extension>
+   <extension point="org.eclipse.ui.newWizards">
+      <category name="Examples"
+                parentCategory="org.eclipse.ui.Examples"
+                id="sof"/>
+      <wizard name="Shapes Diagram"
+              icon="shapes.gif"
+              category="org.eclipse.ui.Examples/sof"
+              class="sof.editor.ShapesCreationWizard"
+              id="sof.diag.ui.ShapesCreationWizard">
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+   
+   <extension
+         id="application"
+         name="SOF Administration Console"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            icon="resources/icons/application.png"
+            thread="main"
+            visible="true">
+         <run
+               class="sof.common.Application">
+         </run>
+      </application>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="sof.editor.Perspective"
+            id="sof.diag.ui.perspective"
+            name="Editor Perspective">
+      </perspective>
+   </extension>
+   
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="sof.diagnosis.ui.DiagnosisPerspective"
+            icon="resources/icons/diagnosis.gif"
+            id="sof.diagnosis.perspective"
+            name="Diagnosis Perspective">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="sof.diagnosis.namingservice.ui.SofProcessView"
+            icon="resources/icons/process_view.gif"
+            id="sof.diagnosis.namingservice.ui.SofProcessView"
+            name="SOF Processes"
+            restorable="true">
+      </view>
+      <view
+            class="sof.diagnosis.bundledata.ui.BundleDataView"
+            icon="resources/icons/data_view.gif"
+            id="sof.diagnosis.namingservice.ui.DataView"
+            name="Data"
+            restorable="true">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="menu:org.eclipse.ui.main.menu">
+         <menu
+               id="sof.diagnosis.menu.connection"
+               label="Connection">
+            <command
+                  commandId="sof.diagnosis.command.connectionSettings"
+                  icon="resources/icons/connection.gif"
+                  label="Connection Settings"
+                  style="push"
+                  tooltip="Defines the address of the CORBA naming service which is connect to">
+            </command>
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeContexts">
+                  <iterate
+                        ifEmpty="false"
+                        operator="or">
+                     <equals
+                           value="sof.diagnosis.actionSet">
+                     </equals>
+                  	ifEmpty="false"
+                  	
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </menu>
+         <menu
+               label="Diagram">
+            <command
+                  commandId="sof.editor.ui.command.new"
+                  label="New"
+                  style="push">
+            </command>
+            <command
+                  commandId="sof.editor.ui.command.open"
+                  label="Open"
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.file.saveAs"
+                  label="Save As..."
+                  style="push">
+            </command>
+            <command
+                  commandId="org.eclipse.ui.file.exit"
+                  label="Exit"
+                  style="push">
+            </command>
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeContexts">
+                  <iterate
+                        ifEmpty="false"
+                        operator="or">
+                     ifEmpty="false"
+                     <equals
+                           value="sof.editor.actionSet">
+                     </equals>
+                  </iterate>
+               </with>
+            </visibleWhen>
+         </menu>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="sof.diagnosis.ui.command.handler.ConnectionSettingsHandler"
+            id="sof.diagnosis.command.connectionSettings"
+            name="Connection Settings">
+      </command>
+      <command
+            defaultHandler="sof.editor.ui.command.handler.NewHandler"
+            description="Creates a new diagram for defining a bundle"
+            id="sof.editor.ui.command.new"
+            name="New">
+      </command>
+      <command
+            defaultHandler="sof.editor.ui.command.handler.OpenHandler"
+            description="Opens an existing diagram for defining a bundle"
+            id="sof.editor.ui.command.open"
+            name="Open">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.actionSets">
+      <actionSet
+            id="sof.diagnosis.actionSet"
+            label="Diagnosis Action Set"
+            visible="false">
+      </actionSet>
+      <actionSet
+            id="sof.editor.actionSet"
+            label="Editor Action Set"
+            visible="false">
+      </actionSet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="sof.diagnosis.actionSet">
+      </perspectiveExtension>
+      <perspectiveExtension
+            targetID="sof.editor.actionSet">
+      </perspectiveExtension>
+   </extension>
+   
+   
+   <extension
+         id="product2"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="sof.admin.ui.application"
+            name="SOF Admin UI">
+         <property
+               name="appName"
+               value="SOF Admin UI">
+         </property>
+         <property
+               name="windowImages"
+               value="resources/icons/application.png">
+         </property>
+      </product>
+   </extension>
+   
+</plugin>
