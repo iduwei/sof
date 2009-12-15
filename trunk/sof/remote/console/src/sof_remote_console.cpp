@@ -1,8 +1,7 @@
-#include "sof/framework/Global.h"
 #include "sof/framework/remote/corba/CORBAHelper.h"
 #include "sof/framework/remote/corba/RemoteSOFLauncher.h"
 
-#ifdef WIN
+#ifdef WIN32
 #include "sof/instantiation/win/WinDllCreator.h"
 #endif
 
@@ -14,7 +13,7 @@ using namespace sof::framework;
 using namespace sof::framework::remote;
 using namespace sof::framework::remote::corba;
 
-#ifdef WIN
+#ifdef WIN32
 using namespace sof::instantiation::win;
 #endif
 
@@ -45,7 +44,7 @@ int main( int argc, char **argv)
 		}		
 		else if ( arg.find( "-proc_name:" ) == 0 )
 		{
-			processName = arg.substr( 10, arg.length() );
+			processName = arg.substr( 11, arg.length() );
 		}
 	}
 
@@ -58,10 +57,10 @@ int main( int argc, char **argv)
 	CORBAHelper corbaHelper( args );
 	corbaHelper.start();
 
-	#ifdef WIN
-		RemoteSOFLauncher<SingleThreaded,WinDllCreator> launcher( corbaHelper );
+	#ifdef WIN32
+		RemoteSOFLauncher<SingleThreaded,WinDllCreator> launcher( corbaHelper, processName );
 	#else
-		RemoteSOFLauncher<SingleThreaded,NullCreator> launcher( corbaHelper );
+		RemoteSOFLauncher<SingleThreaded,NullCreator> launcher( corbaHelper, processName );
 	#endif
 	
 	launcher.setLogLevel( logLevel );

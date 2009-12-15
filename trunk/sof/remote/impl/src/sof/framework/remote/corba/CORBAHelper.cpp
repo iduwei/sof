@@ -119,9 +119,10 @@ CORBA::Object_var CORBAHelper::activateObject( const PortableServer::Servant& se
 	  
 		this->logger.log( Logger::DEBUG, "[CORBAHelper#activateObject] Activate object." );	
 		PortableServer::ObjectId_var oid = this->explicitActPOA->activate_object( servant );
-
+		
 		// get a reference
 		obj = this->explicitActPOA->id_to_reference(oid);
+		logger.log( Logger::DEBUG, "[CORBAHelper#activateObject] OID: %1", obj->_repoid() );
 		if (CORBA::is_nil(obj)){
 			logger.log( Logger::ERROR_, "[CORBAHelper#activateObject] Object is null." );
 		}
@@ -131,6 +132,7 @@ CORBA::Object_var CORBAHelper::activateObject( const PortableServer::Servant& se
 		logger.log( Logger::ERROR_, "[CORBAHelper#activateObject] Servant already active." );
 	}
 	logger.log( Logger::DEBUG, "[CORBAHelper#activateObject] Return activated object." );
+
 	return obj;
 }
 

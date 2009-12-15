@@ -6,10 +6,9 @@
 #include "TestHarness.h"
 #include "Test.h"
 
-#include "sof/framework/Global.h"
 #include "sof/instantiation/ObjectCreator.h"
 
-#ifdef WIN
+#ifdef WIN32
 #include "sof/instantiation/win/WinDllCreator.h"
 #endif
 
@@ -24,11 +23,11 @@ using namespace std;
 
 using namespace sof::instantiation;
 
-#ifdef WIN
+#ifdef WIN32
 using namespace sof::instantiation::win;
 #endif
 
-#ifdef WIN
+#ifdef WIN32
 
 /**
  * Checks whether the object loader is able to load objects from
