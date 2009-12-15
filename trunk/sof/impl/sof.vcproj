@@ -21,7 +21,7 @@
 			OutputDirectory=".\bin"
 			IntermediateDirectory=".\build"
 			ConfigurationType="4"
-			CharacterSet="0"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
