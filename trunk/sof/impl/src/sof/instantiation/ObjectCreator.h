@@ -4,7 +4,6 @@
 #include <map>
 #include <string>
 #include <iostream>
-#include <tchar.h>
 #include <sstream>
 #include <exception>
 

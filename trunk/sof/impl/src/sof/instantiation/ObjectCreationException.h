@@ -36,9 +36,14 @@ class ObjectCreationException : public exception
 		ObjectCreationException( const string &msg );
 
 		/**
+		 * Destroys the exception instance.
+		 */
+		virtual ~ObjectCreationException() throw();
+
+		/**
 		 * Returns what kind of error happened.
 		 */
-		const char* what() const;
+		virtual const char* what() const throw();
 };
 
 }}

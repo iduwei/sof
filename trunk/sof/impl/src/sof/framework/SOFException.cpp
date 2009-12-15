@@ -7,7 +7,12 @@ SOFException::SOFException( const string &msg ) : message( msg )
 
 }
 
-const char* SOFException::what() const
+SOFException::~SOFException( ) throw()
+{
+}
+
+const char* SOFException::what() const throw()
 {
 	return this->message.c_str();
 }
+

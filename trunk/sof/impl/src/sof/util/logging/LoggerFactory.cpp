@@ -8,7 +8,7 @@ using namespace sof::util::logging;
 using namespace std;
 
 map<string,Logger*>* LoggerFactory::loggerMap;
-Logger::LogLevel LoggerFactory::level = Logger::LogLevel::DEBUG;
+Logger::LogLevel LoggerFactory::level = Logger::DEBUG;
 
 LoggerFactory::LoggerFactory()
 {
