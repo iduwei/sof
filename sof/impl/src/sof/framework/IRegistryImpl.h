@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "BundleInfo.h"
 #include "BundleInfoBase.h"
 #include "ServiceInfo.h"
 #include "ServiceListenerInfo.h"

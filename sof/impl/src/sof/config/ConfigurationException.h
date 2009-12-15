@@ -32,6 +32,12 @@ class ConfigurationException : public SOFException
 		 */
 		ConfigurationException( const string &msg );
 
+		/**
+		 * Destroys instances of class <code>ConfigurationException</code>.
+		 *		 
+		 */
+		virtual ~ConfigurationException() throw();
+
 
 };
 

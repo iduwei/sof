@@ -11,7 +11,7 @@ template<class ThreadingModel>
 void IRegistryImpl<ThreadingModel>::addBundleInfo( BundleInfoBase* bundleInfo ) 
 {
 	// !!! synchronized access !!!
-	ThreadingModel::Lock lock;
+	typename ThreadingModel::Lock lock;
 
 	logger.log( Logger::DEBUG, "[IRegistryImpl#addBundleInfo] Called, bundleName: %1", bundleInfo->getBundleName() );
 	this->bundleInfoVec.push_back( bundleInfo );
@@ -21,7 +21,7 @@ template<class ThreadingModel>
 BundleInfoBase* IRegistryImpl<ThreadingModel>::getBundleInfo( const string &bundleName )
 {
 	// !!! synchronized access !!!
-	ThreadingModel::Lock lock;
+	typename ThreadingModel::Lock lock;
 
 	logger.log( Logger::DEBUG, "[IRegistryImpl#getBundleInfo] Called, bundleName: %1", bundleName );
 	vector<BundleInfoBase*>::iterator iter;
@@ -38,8 +38,9 @@ BundleInfoBase* IRegistryImpl<ThreadingModel>::getBundleInfo( const string &bund
 template<class ThreadingModel>
 vector<BundleInfoBase*> IRegistryImpl<ThreadingModel>::getBundleInfos()
 {
+	logger.log( Logger::DEBUG, "[IRegistryImpl#getBundleInfos] Called." );
 	// !!! synchronized access !!!
-	ThreadingModel::Lock lock;
+	typename ThreadingModel::Lock lock;
 
 	return this->bundleInfoVec;
 }
@@ -48,7 +49,7 @@ template<class ThreadingModel>
 void IRegistryImpl<ThreadingModel>::removeAllBundleInfos()
 {
 	// !!! synchronized access !!!
-	ThreadingModel::Lock lock;
+	typename ThreadingModel::Lock lock;
 
 	logger.log( Logger::DEBUG, "[IRegistryImpl#removeAllBundleInfos] Called." );
 
@@ -75,7 +76,7 @@ template<class ThreadingModel>
 void IRegistryImpl<ThreadingModel>::removeBundleInfo( const string &bundleName ) 
 {
 	// !!! synchronized access !!!
-	ThreadingModel::Lock lock;
+	typename ThreadingModel::Lock lock;
 
 	logger.log( Logger::DEBUG, "[IRegistryImpl#removeBundleInfo] Called, bundleName: %1", bundleName );
 	
@@ -139,7 +140,7 @@ template<class ThreadingModel>
 IServiceRegistration::ConstPtr IRegistryImpl<ThreadingModel>::addServiceInfo( const string& bundleName, ServiceInfo* serviceInfo ) 
 {	
 	// !!! synchronized access !!!
-	ThreadingModel::Lock lock;
+	typename ThreadingModel::Lock lock;
 
 	string serviceName = serviceInfo->getServiceName();
 	logger.log( Logger::DEBUG, "[IRegistryImpl#addServiceInfo] Called, bundle name: %1, service name: %2", bundleName, serviceName );		
@@ -159,7 +160,7 @@ template<class ThreadingModel>
 void IRegistryImpl<ThreadingModel>::removeServiceInfo( const string& bundleName, ServiceInfo* serviceInfo ) 
 {
 	// !!! synchronized access !!!
-	ThreadingModel::Lock lock;
+	typename ThreadingModel::Lock lock;
 
 	logger.log( Logger::DEBUG, "[IRegistryImpl#removeServiceInfo] Called, serviceInfo: %1", 
 		serviceInfo->toString() );	
@@ -405,7 +406,7 @@ template<class ThreadingModel>
 vector<ServiceInfo*>* IRegistryImpl<ThreadingModel>::getServiceInfo( const string& serviceName ) 
 {
 	// !!! synchronized access !!!
-	ThreadingModel::Lock lock;
+	typename ThreadingModel::Lock lock;
 
 	logger.log( Logger::DEBUG, "[IRegistryImpl#getServiceInfo] Called, service name: %1", serviceName );	
 	vector<ServiceInfo*>* vec = this->serviceInfoMap[serviceName];
@@ -438,7 +439,7 @@ template<class ThreadingModel>
 void IRegistryImpl<ThreadingModel>::addServiceListener( const string& bundleName, ServiceListenerInfo* listenerInfo ) 
 {
 	// !!! synchronized access !!!
-	ThreadingModel::Lock lock;
+	typename ThreadingModel::Lock lock;
 
 	string serviceName = listenerInfo->getServiceName();
 	logger.log( Logger::DEBUG, "[IRegistryImpl#addServiceListener] Called, bundle name: %1, service name: %2", bundleName, serviceName );	
@@ -468,7 +469,7 @@ template<class ThreadingModel>
 void IRegistryImpl<ThreadingModel>::removeServiceListener( const string& bundleName, const ServiceListenerInfo& serviceListener ) 
 {
 	// !!! synchronized access !!!
-	ThreadingModel::Lock lock;
+	typename ThreadingModel::Lock lock;
 
 	logger.log( Logger::DEBUG, "[IRegistryImpl#removeServiceListener] Called, bundle name: %1", bundleName );
 	this->removeFromServiceListenerInfoVector( bundleName, serviceListener );

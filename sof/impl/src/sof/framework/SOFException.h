@@ -34,9 +34,14 @@ class SOFException : public exception
 		SOFException( const string &msg );
 
 		/**
+		 * Destroys the exception instance.
+		 */
+		virtual ~SOFException() throw();
+
+		/**
 		 * Returns the message text.
 		 */
-		virtual const char* what() const;
+		virtual const char* what() const throw();
 };
 
 }}

@@ -7,3 +7,8 @@ ConfigurationException::ConfigurationException( const string &msg ) : SOFExcepti
 {
 
 }
+
+ConfigurationException::~ConfigurationException() throw()
+{
+
+}
