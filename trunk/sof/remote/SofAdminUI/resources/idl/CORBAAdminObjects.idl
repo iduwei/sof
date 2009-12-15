@@ -1,0 +1,54 @@
+
+
+module sof { 
+	module services {
+		module admin {
+			module remote {
+				module corba {
+					module generated {
+
+	typedef sequence<string> CORBAPropertyKeysSequence;
+	typedef sequence<string> CORBAPropertyValuesSequence;
+	
+	struct CORBAAdminServiceProps
+	{
+		CORBAPropertyKeysSequence keys;
+		CORBAPropertyValuesSequence values;
+	};	
+	
+	struct CORBAAdminServiceInfo
+	{
+		string serviceName;
+		CORBAAdminServiceProps properties;
+		string objID;
+	};
+	
+	struct CORBAAdminServiceListenerInfo
+	{
+		string serviceName;		
+	};
+	
+	
+	typedef sequence<CORBAAdminServiceInfo> CORBAAdminServiceInfoSequence;
+	
+	typedef sequence<CORBAAdminServiceListenerInfo> CORBAAdminServiceListenerInfoSequence;
+
+	typedef sequence<string> CORBABundleNameSequence;
+	
+
+	interface CORBAAdminService
+	{
+		CORBABundleNameSequence getBundleNames();
+		CORBAAdminServiceInfoSequence getUsedServices( in string bundleName );
+		CORBAAdminServiceInfoSequence getRegisteredServices( in string bundleName );
+		CORBAAdminServiceListenerInfoSequence getRegisteredServiceListeners( in string bundleName );
+	};
+
+};
+};
+};
+};
+};
+};
+
+

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="sof.admin.ui" default="build.jars" basedir=".">
+
+	<property name="basews" value="${ws}"/>
+	<property name="baseos" value="${os}"/>
+	<property name="basearch" value="${arch}"/>
+	<property name="basenl" value="${nl}"/>
+	<property name="bundleId" value="sof.admin.ui"/>
+	<property name="bundleVersion" value="3.2.100.200912150614"/>
+
+	<!-- Compiler settings. -->
+	<property name="javacFailOnError" value="false"/>
+	<property name="javacDebugInfo" value="on"/>
+	<property name="javacVerbose" value="false"/>
+	<property name="logExtension" value=".log"/>
+	<property name="compilerArg" value=""/>
+	<property name="javacSource" value="1.3"/>
+	<property name="javacTarget" value="1.2"/>
+	<condition property="dir_bootclasspath" value="${java.home}/../Classes">
+		<os family="mac"/>
+	</condition>
+	<property name="dir_bootclasspath" value="${java.home}/lib"/>
+	<path id="path_bootclasspath">
+		<fileset dir="${dir_bootclasspath}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	<property name="bootclasspath" refid="path_bootclasspath"/>
+	<property name="bundleJavacSource" value="${javacSource}"/>
+	<property name="bundleJavacTarget" value="${javacTarget}"/>
+	<property name="bundleBootClasspath" value="${bootclasspath}"/>
+
+	<target name="init" depends="properties">
+<condition property="pluginTemp" value="${buildTempFolder}/plugins"		>
+			<isset property="buildTempFolder"/>
+		</condition>
+		<property name="pluginTemp" value="${basedir}"/>
+<condition property="build.result.folder" value="${pluginTemp}/sof.admin.ui_3.2.100.200912150614"		>
+			<isset property="buildTempFolder"/>
+		</condition>
+		<property name="build.result.folder" value="${basedir}"/>
+		<property name="temp.folder" value="${basedir}/temp.folder"/>
+		<property name="plugin.destination" value="${basedir}"/>
+	</target>
+
+	<target name="properties" if="eclipse.running">
+		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+
+	</target>
+
+	<target name="build.update.jar" depends="init" description="Build the plug-in: sof.admin.ui for an update site.">
+		<delete dir="${temp.folder}"/>
+		<mkdir dir="${temp.folder}"/>
+		<antcall target="build.jars"/>
+		<antcall target="gather.bin.parts">
+			<param name="destination.temp.folder" value="${temp.folder}/"/>
+		</antcall>
+		<jar destfile="${plugin.destination}/sof.admin.ui_3.2.100.200912150614.jar" basedir="${temp.folder}/sof.admin.ui_3.2.100.200912150614" filesetmanifest="merge"/>
+		<delete dir="${temp.folder}"/>
+	</target>
+
+	<target name="@dot" depends="init" unless="@dot" description="Create jar: sof.admin.ui @dot.">
+		<delete dir="${temp.folder}/@dot.bin"/>
+		<mkdir dir="${temp.folder}/@dot.bin"/>
+		<path id="@dot.classpath">
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.gef_3.4.1.v20080716.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/com.ibm.icu_3.8.1.v20080530.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.draw2d_3.4.0.v20080529.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.swt_3.4.1.v3449c.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.swt.gtk.linux.x86_64_3.4.1.v3449c.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.swt.motif.hpux.ia64_32_3.4.1.v3449c.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.swt.win32.win32.x86_3.4.1.v3449c.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.swt.wpf.win32.x86_3.4.1.v3449c.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.swt.gtk.linux.ppc_3.4.1.v3449c.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.swt.win32.win32.x86_64_3.4.1.v3449c.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.swt.carbon.macosx_3.4.1.v3449c.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.swt.motif.aix.ppc_3.4.1.v3449c.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.swt.gtk.solaris.sparc_3.4.1.v3449c.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.swt.gtk.linux.x86_3.4.1.v3449c.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.runtime_3.4.0.v20080512.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.osgi_3.4.2.R34x_v20080826-1230.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.equinox.common_3.4.0.v20080421-2006.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.jobs_3.4.0.v20080512.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.equinox.registry_3.4.0.v20080516-0950.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.equinox.preferences_3.2.201.R34x_v20080709.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.contenttype_3.3.0.v20080604-1400.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.runtime.compatibility.auth_3.2.100.v20070502.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.equinox.app_1.1.0.v20080421-2006.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.ui.views_3.3.0.I20080509-2000.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.help_3.3.101.v20080702_34x.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.expressions_3.4.0.v20080603-2000.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.ui_3.4.1.M20080910-0800.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.ui.carbon_4.0.0.I20080610-1200.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.jface_3.4.1.M20080827-2000.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.commands_3.4.0.I20080509-2000.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.ui.workbench_3.4.1.M20080827-0800a.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.jface.databinding_1.2.1.M20080827-0800a.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.databinding_1.1.1.M20080827-0800b.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.resources_3.4.1.R34x_v20080902.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.resources.win32.x86_3.4.0.v20071204.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.resources.compatibility_3.4.0.v20080604-1400.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.filesystem_1.2.0.v20080604-1400.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.filesystem.win32.x86_1.1.0.v20080604-1400.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.filesystem.macosx_1.0.0.v20080604-1400.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.filesystem.linux.x86_64_1.0.100.v20080604-1400.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.filesystem.hpux.ia64_32_1.0.0.v20080604-1400.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.filesystem.linux.ppc_1.0.100.v20080604-1400.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.filesystem.solaris.sparc_1.0.100.v20080604-1400.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.core.filesystem.linux.x86_1.2.0.v20080604-1400.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.ui.ide_3.4.1.M20080903-2000.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.ui.win32_3.2.100.v20080408-0800.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.update.configurator_3.2.201.R34x_v20080819.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.update.core_3.2.201.R34x_v20080714.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.update.core.linux_3.2.0.v20080422.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.update.core.win32_3.2.100.v20080107.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.jface.text_3.4.1.r341_v20080827-1100.jar"/>
+			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.text_3.4.0.v20080605-1800.jar"/>
+			<pathelement path="libs/avalon-framework.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/avalon-framework.jar"/>
+			<pathelement path="libs/excalibur-configuration.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/excalibur-configuration.jar"/>
+			<pathelement path="libs/jacorb.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/jacorb.jar"/>
+			<pathelement path="libs/logkit.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/logkit.jar"/>
+			<pathelement path="libs/openorb_ins.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/openorb_ins.jar"/>
+			<pathelement path="libs/openorb.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/openorb.jar"/>
+			<pathelement path="libs/xerces.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/xerces.jar"/>
+			<pathelement path="libs/slf4j-api-1.5.6.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/slf4j-api-1.5.6.jar"/>
+			<pathelement path="libs/slf4j-jdk14-1.5.6.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/slf4j-jdk14-1.5.6.jar"/>
+			<pathelement path="resources/icons/"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/resources/icons/"/>
+		</path>
+		<!-- compile the source code -->
+		<javac destdir="${temp.folder}/@dot.bin" failonerror="${javacFailOnError}" verbose="${javacVerbose}" debug="${javacDebugInfo}" includeAntRuntime="no" bootclasspath="${bundleBootClasspath}" source="${bundleJavacSource}" target="${bundleJavacTarget}"		>
+			<compilerarg line="${compilerArg}" compiler="${build.compiler}"/>
+			<classpath refid="@dot.classpath" />
+			<src path="src/"			/>
+			<compilerarg value="@${basedir}/javaCompiler...args" compiler="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+			<compilerarg line="-log '${temp.folder}/@dot.bin${logExtension}'" compiler="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+		</javac>
+		<!-- Copy necessary resources -->
+		<copy todir="${temp.folder}/@dot.bin" failonerror="true" overwrite="false">
+			<fileset dir="src/">
+				<exclude name="**/*.java"/>
+				<exclude name="**/package.htm*"/>
+			</fileset>
+		</copy>
+		<mkdir dir="${build.result.folder}"/>
+		<copy todir="${build.result.folder}/@dot" failonerror="true" overwrite="false">
+			<fileset dir="${temp.folder}/@dot.bin">
+			</fileset>
+		</copy>
+		<delete dir="${temp.folder}/@dot.bin"/>
+	</target>
+
+	<target name="src.zip" depends="init" unless="src.zip">
+		<mkdir dir="${build.result.folder}"/>
+		<antcall target="zip.src.zip"/>
+	</target>
+	<target name="zip.src.zip">
+		<zip destfile="${build.result.folder}/src.zip" filesonly="false" whenempty="skip" update="false">
+			<fileset dir="src/">
+				<include name="**/*.java"/>
+			</fileset>
+		</zip>
+	</target>
+	<target name="copy.src.zip">
+		<copy todir="${source.destination.folder}/" failonerror="true" overwrite="true">
+			<fileset dir="src/">
+				<include name="**/*.java"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="build.jars" depends="init" description="Compile classes and build nested jars for the plug-in: sof.admin.ui.">
+		<available property="@dot" file="${build.result.folder}/@dot"/>
+		<antcall target="@dot"/>
+	</target>
+
+	<target name="build.sources" depends="init">
+		<available property="src.zip" file="${build.result.folder}/src.zip"/>
+		<antcall target="src.zip"/>
+	</target>
+
+	<target name="gather.bin.parts" depends="init" if="destination.temp.folder">
+		<mkdir dir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614"/>
+		<copy todir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614" failonerror="true" overwrite="false">
+			<fileset dir="${build.result.folder}/@dot">
+				<include name="**"/>
+			</fileset>
+		</copy>
+		<copy todir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614" failonerror="true" overwrite="false">
+			<fileset dir="${basedir}">
+				<include name="plugin.xml"/>
+				<include name="shapes.gif"/>
+				<include name="about.html"/>
+				<include name="META-INF/"/>
+				<include name="plugin.properties"/>
+				<include name="libs/avalon-framework.jar"/>
+				<include name="libs/excalibur-configuration.jar"/>
+				<include name="libs/jacorb.jar"/>
+				<include name="libs/logkit.jar"/>
+				<include name="libs/openorb_ins.jar"/>
+				<include name="libs/openorb.jar"/>
+				<include name="libs/xerces.jar"/>
+				<include name="libs/slf4j-api-1.5.6.jar"/>
+				<include name="libs/slf4j-jdk14-1.5.6.jar"/>
+				<include name="bin/"/>
+				<include name="resources/icons/"/>
+			</fileset>
+		</copy>
+		<eclipse.versionReplacer path="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614" version="3.2.100.200912150614"/>
+	</target>
+
+	<target name="build.zips" depends="init">
+	</target>
+
+	<target name="gather.sources" depends="init" if="destination.temp.folder">
+		<mkdir dir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614"/>
+		<copy file="${build.result.folder}/src.zip" todir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614" failonerror="false" overwrite="false"/>
+		<antcall target="copy.src.includes">
+			<param name="source.destination.folder" value="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614"/>
+		</antcall>
+	</target>
+
+	<target name="gather.individual.sources" depends="init">
+		<antcall target="copy.src.zip">
+			<param name="source.destination.folder" value="${destination.temp.folder}"/>
+		</antcall>
+		<antcall target="copy.src.includes">
+			<param name="source.destination.folder" value="${destination.temp.folder}"/>
+		</antcall>
+	</target>
+
+	<target name="copy.src.includes" depends="init">
+	</target>
+
+	<target name="gather.logs" depends="init" if="destination.temp.folder">
+		<mkdir dir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614"/>
+		<copy todir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614" failonerror="false" overwrite="false">
+			<fileset dir="${temp.folder}">
+				<include name="@dot.bin${logExtension}"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="clean" depends="init" description="Clean the plug-in: sof.admin.ui of all the zips, jars and logs created.">
+		<delete dir="${build.result.folder}/@dot"/>
+		<delete file="${build.result.folder}/src.zip"/>
+		<delete file="${plugin.destination}/sof.admin.ui_3.2.100.200912150614.jar"/>
+		<delete file="${plugin.destination}/sof.admin.ui_3.2.100.200912150614.zip"/>
+		<delete dir="${temp.folder}"/>
+	</target>
+
+	<target name="refresh" depends="init" if="eclipse.running" description="Refresh this folder.">
+		<eclipse.convertPath fileSystemPath="C:/knowhow/projects/private/sourceforge/sof/remote/SofAdminUI" property="resourcePath"/>
+		<eclipse.refreshLocal resource="${resourcePath}" depth="infinite"/>
+	</target>
+
+	<target name="zip.plugin" depends="init" description="Create a zip containing all the elements for the plug-in: sof.admin.ui.">
+		<delete dir="${temp.folder}"/>
+		<mkdir dir="${temp.folder}"/>
+		<antcall target="build.jars"/>
+		<antcall target="build.sources"/>
+		<antcall target="gather.bin.parts">
+			<param name="destination.temp.folder" value="${temp.folder}/"/>
+		</antcall>
+		<antcall target="gather.sources">
+			<param name="destination.temp.folder" value="${temp.folder}/"/>
+		</antcall>
+		<delete>
+			<fileset dir="${temp.folder}">
+				<include name="**/*.bin${logExtension}"/>
+			</fileset>
+		</delete>
+		<zip destfile="${plugin.destination}/sof.admin.ui_3.2.100.200912150614.zip" basedir="${temp.folder}" filesonly="true" whenempty="skip" update="false"/>
+		<delete dir="${temp.folder}"/>
+	</target>
+
+</project>
