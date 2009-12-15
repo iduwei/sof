@@ -1,0 +1,44 @@
+VariantDir( 'build', 'src', duplicate=0 )
+
+Import( 'env' )
+
+sources = [
+	'build/sof/config/BundleConfiguration.cpp',
+	'build/sof/config/ConfigFileReader.cpp',
+	'build/sof/config/ConfigurationException.cpp',
+	
+	'build/sof/framework/BundleInfo.cpp',
+	'build/sof/framework/ServiceInfo.cpp',
+	'build/sof/framework/BundleInfoBase.cpp',
+	'build/sof/framework/IBundleContextImpl.cpp',
+	'build/sof/framework/IServiceRegistrationImpl.cpp',
+	'build/sof/framework/Properties.cpp',
+	'build/sof/framework/ServiceEvent.cpp',
+	'build/sof/framework/ServiceListenerInfo.cpp',
+	'build/sof/framework/ServiceReference.cpp',
+	'build/sof/framework/ServiceTracker.cpp',
+	'build/sof/framework/SOFException.cpp',
+	
+	'build/sof/instantiation/ObjectCreationException.cpp',
+	
+	'build/sof/services/admin/AdministrationActivator.cpp',
+	'build/sof/services/admin/DumpAllBundlesCmd.cpp',
+	'build/sof/services/admin/DumpBundleInfoCmd.cpp',
+	'build/sof/services/admin/IAdministrationServiceImpl.cpp',
+	'build/sof/services/admin/StartBundleCmd.cpp',
+	'build/sof/services/admin/StartBundleFromDLLCmd.cpp',
+	'build/sof/services/admin/StartBundlesFromFileCmd.cpp',
+	'build/sof/services/admin/StopAllBundlesCmd.cpp',
+	'build/sof/services/admin/StopBundleCmd.cpp',
+	
+	'build/sof/util/helper/StringTokenizer.cpp',
+	
+	'build/sof/util/logging/LoggerFactory.cpp',
+	'build/sof/util/logging/LoggerImpl.cpp',		
+	]
+	
+objectFiles = env.Object( sources )
+	
+env.StaticLibrary( 'bin/sof', objectFiles )
+
+
