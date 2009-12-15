@@ -1,0 +1,29 @@
+import os
+
+multiplier_cpp_file = os.getcwd() + '/../common/src/Multiplier.cpp'
+multiplier_header_file = os.getcwd() + '/../common/src/Multiplier.h'
+
+target_cpp = os.getcwd() + '/build/Multiplier.cpp'
+target_h = os.getcwd() + '/build/Multiplier.h'
+
+copy_cpp = Command(target_cpp, multiplier_cpp_file, Copy("$TARGET", "$SOURCE")) 
+Command(target_h, multiplier_header_file, Copy("$TARGET", "$SOURCE"))
+
+Import( 'env' )
+
+VariantDir( 'build', 'src', duplicate=0 ) 
+
+sources = [
+	'build/BundleActivator1.cpp',
+	'build/dll.cpp',
+	'build/MultiplierImpl.cpp',
+	copy_cpp
+]
+
+env.SharedLibrary( 
+	'#/remote/examples/bundle1/bin/remote_bundle1', 
+	sources, 
+	CPPPATH = ['#/impl/src','#/remote/examples/common/src','#/remote/impl/src','#/remote/corba/include', '#/remote/corba/include/pthreads'], 
+	LIBS=['sof','sof_remote','mico2313','micocoss2313','pthreadVC2'], 
+	LIBPATH=['#/impl/bin','#/remote/impl/bin','#/remote/corba/libs'] )
+	

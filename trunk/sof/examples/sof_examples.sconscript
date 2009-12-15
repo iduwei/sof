@@ -1,0 +1,6 @@
+Import( 'env' )
+VariantDir( 'bin', 'src', duplicate=0 )
+
+env.Program( 'bin/sof_examples.cpp', CPPPATH = ['#/impl/src'], LIBS='sof', LIBPATH='#/impl/bin' )
+	
+
