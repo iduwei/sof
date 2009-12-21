@@ -79,6 +79,7 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             locationURI="menu:org.eclipse.ui.main.menu">
+         <!--
          <menu
                id="sof.diagnosis.menu.connection"
                label="Connection">
@@ -105,6 +106,7 @@
                </with>
             </visibleWhen>
          </menu>
+         -->
          <menu
                label="Diagram">
             <command
