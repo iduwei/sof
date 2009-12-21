@@ -4,6 +4,7 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.eclipse.core.runtime.Platform;
 import org.omg.CORBA.ORB;
 
 import sof.common.Const;
@@ -142,7 +143,16 @@ public class CORBAOrbActivator
 	        Properties props = new Properties();
 	        props.put( "org.omg.CORBA.ORBClass", "org.jacorb.orb.ORB" );
 	        props.put( "org.omg.CORBA.ORBSingletonClass","org.jacorb.orb.ORBSingleton" );
-	        String[] args = new String[] {"-ORBInitRef.NameService=corbaloc::localhost:5000/NameService"};
+			String[] progArgs = ( String[] ) Platform.getApplicationArgs();
+			String[] args = new String[] {"-ORBInitRef.NameService=corbaloc::localhost:5000/NameService"};
+	        for ( String arg : progArgs )
+			{
+				if ( arg.startsWith( "-ORBInitRef.NameService=" ) )
+				{
+					args = new String[]{ arg };
+					break;
+				}
+			}
 	        try 
 	        {
 		        this.orb = ORB.init(args, props);	        
