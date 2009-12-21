@@ -6,7 +6,7 @@
 	<property name="basearch" value="${arch}"/>
 	<property name="basenl" value="${nl}"/>
 	<property name="bundleId" value="sof.admin.ui"/>
-	<property name="bundleVersion" value="3.2.100.200912150614"/>
+	<property name="bundleVersion" value="3.2.100.200912211021"/>
 
 	<!-- Compiler settings. -->
 	<property name="javacFailOnError" value="false"/>
@@ -35,7 +35,7 @@
 			<isset property="buildTempFolder"/>
 		</condition>
 		<property name="pluginTemp" value="${basedir}"/>
-<condition property="build.result.folder" value="${pluginTemp}/sof.admin.ui_3.2.100.200912150614"		>
+<condition property="build.result.folder" value="${pluginTemp}/sof.admin.ui_3.2.100.200912211021"		>
 			<isset property="buildTempFolder"/>
 		</condition>
 		<property name="build.result.folder" value="${basedir}"/>
@@ -55,7 +55,7 @@
 		<antcall target="gather.bin.parts">
 			<param name="destination.temp.folder" value="${temp.folder}/"/>
 		</antcall>
-		<jar destfile="${plugin.destination}/sof.admin.ui_3.2.100.200912150614.jar" basedir="${temp.folder}/sof.admin.ui_3.2.100.200912150614" filesetmanifest="merge"/>
+		<jar destfile="${plugin.destination}/sof.admin.ui_3.2.100.200912211021.jar" basedir="${temp.folder}/sof.admin.ui_3.2.100.200912211021" filesetmanifest="merge"/>
 		<delete dir="${temp.folder}"/>
 	</target>
 
@@ -116,25 +116,25 @@
 			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.jface.text_3.4.1.r341_v20080827-1100.jar"/>
 			<pathelement path="../../../../../../../Programme/eclipse/eclipse3.4.1_rcpsdk_delta/eclipse/plugins/org.eclipse.text_3.4.0.v20080605-1800.jar"/>
 			<pathelement path="libs/avalon-framework.jar"/>
-			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/avalon-framework.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912211021/libs/avalon-framework.jar"/>
 			<pathelement path="libs/excalibur-configuration.jar"/>
-			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/excalibur-configuration.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912211021/libs/excalibur-configuration.jar"/>
 			<pathelement path="libs/jacorb.jar"/>
-			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/jacorb.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912211021/libs/jacorb.jar"/>
 			<pathelement path="libs/logkit.jar"/>
-			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/logkit.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912211021/libs/logkit.jar"/>
 			<pathelement path="libs/openorb_ins.jar"/>
-			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/openorb_ins.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912211021/libs/openorb_ins.jar"/>
 			<pathelement path="libs/openorb.jar"/>
-			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/openorb.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912211021/libs/openorb.jar"/>
 			<pathelement path="libs/xerces.jar"/>
-			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/xerces.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912211021/libs/xerces.jar"/>
 			<pathelement path="libs/slf4j-api-1.5.6.jar"/>
-			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/slf4j-api-1.5.6.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912211021/libs/slf4j-api-1.5.6.jar"/>
 			<pathelement path="libs/slf4j-jdk14-1.5.6.jar"/>
-			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/libs/slf4j-jdk14-1.5.6.jar"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912211021/libs/slf4j-jdk14-1.5.6.jar"/>
 			<pathelement path="resources/icons/"/>
-			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912150614/resources/icons/"/>
+			<pathelement path="${build.result.folder}/../sof.admin.ui_3.2.100.200912211021/resources/icons/"/>
 		</path>
 		<!-- compile the source code -->
 		<javac destdir="${temp.folder}/@dot.bin" failonerror="${javacFailOnError}" verbose="${javacVerbose}" debug="${javacDebugInfo}" includeAntRuntime="no" bootclasspath="${bundleBootClasspath}" source="${bundleJavacSource}" target="${bundleJavacTarget}"		>
@@ -189,13 +189,13 @@
 	</target>
 
 	<target name="gather.bin.parts" depends="init" if="destination.temp.folder">
-		<mkdir dir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614"/>
-		<copy todir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614" failonerror="true" overwrite="false">
+		<mkdir dir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912211021"/>
+		<copy todir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912211021" failonerror="true" overwrite="false">
 			<fileset dir="${build.result.folder}/@dot">
 				<include name="**"/>
 			</fileset>
 		</copy>
-		<copy todir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614" failonerror="true" overwrite="false">
+		<copy todir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912211021" failonerror="true" overwrite="false">
 			<fileset dir="${basedir}">
 				<include name="plugin.xml"/>
 				<include name="shapes.gif"/>
@@ -215,17 +215,17 @@
 				<include name="resources/icons/"/>
 			</fileset>
 		</copy>
-		<eclipse.versionReplacer path="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614" version="3.2.100.200912150614"/>
+		<eclipse.versionReplacer path="${destination.temp.folder}/sof.admin.ui_3.2.100.200912211021" version="3.2.100.200912211021"/>
 	</target>
 
 	<target name="build.zips" depends="init">
 	</target>
 
 	<target name="gather.sources" depends="init" if="destination.temp.folder">
-		<mkdir dir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614"/>
-		<copy file="${build.result.folder}/src.zip" todir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614" failonerror="false" overwrite="false"/>
+		<mkdir dir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912211021"/>
+		<copy file="${build.result.folder}/src.zip" todir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912211021" failonerror="false" overwrite="false"/>
 		<antcall target="copy.src.includes">
-			<param name="source.destination.folder" value="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614"/>
+			<param name="source.destination.folder" value="${destination.temp.folder}/sof.admin.ui_3.2.100.200912211021"/>
 		</antcall>
 	</target>
 
@@ -242,8 +242,8 @@
 	</target>
 
 	<target name="gather.logs" depends="init" if="destination.temp.folder">
-		<mkdir dir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614"/>
-		<copy todir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912150614" failonerror="false" overwrite="false">
+		<mkdir dir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912211021"/>
+		<copy todir="${destination.temp.folder}/sof.admin.ui_3.2.100.200912211021" failonerror="false" overwrite="false">
 			<fileset dir="${temp.folder}">
 				<include name="@dot.bin${logExtension}"/>
 			</fileset>
@@ -253,8 +253,8 @@
 	<target name="clean" depends="init" description="Clean the plug-in: sof.admin.ui of all the zips, jars and logs created.">
 		<delete dir="${build.result.folder}/@dot"/>
 		<delete file="${build.result.folder}/src.zip"/>
-		<delete file="${plugin.destination}/sof.admin.ui_3.2.100.200912150614.jar"/>
-		<delete file="${plugin.destination}/sof.admin.ui_3.2.100.200912150614.zip"/>
+		<delete file="${plugin.destination}/sof.admin.ui_3.2.100.200912211021.jar"/>
+		<delete file="${plugin.destination}/sof.admin.ui_3.2.100.200912211021.zip"/>
 		<delete dir="${temp.folder}"/>
 	</target>
 
@@ -279,7 +279,7 @@
 				<include name="**/*.bin${logExtension}"/>
 			</fileset>
 		</delete>
-		<zip destfile="${plugin.destination}/sof.admin.ui_3.2.100.200912150614.zip" basedir="${temp.folder}" filesonly="true" whenempty="skip" update="false"/>
+		<zip destfile="${plugin.destination}/sof.admin.ui_3.2.100.200912211021.zip" basedir="${temp.folder}" filesonly="true" whenempty="skip" update="false"/>
 		<delete dir="${temp.folder}"/>
 	</target>
 
