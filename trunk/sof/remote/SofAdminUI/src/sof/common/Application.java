@@ -22,12 +22,6 @@ public class Application implements IApplication {
 	 */
 	public Object start(IApplicationContext context) throws Exception
 	{
-		
-		String[] args = ( String[] ) Platform.getApplicationArgs();
-		for ( String arg : args )
-		{
-			System.out.println( "Program argument: " + arg );
-		}
 		Display display = PlatformUI.createDisplay();
 		try {
 			int returnCode = PlatformUI.createAndRunWorkbench(display, new ApplicationWorkbenchAdvisor());
