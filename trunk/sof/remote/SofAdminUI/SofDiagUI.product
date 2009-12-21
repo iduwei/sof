@@ -7,7 +7,6 @@
    </configIni>
 
    <launcherArgs>
-      <programArgs>foo bar</programArgs>
       <vmArgs>-Djava.util.logging.config.file=c:/temp/logging.properties</vmArgs>
       <vmArgsMac>-XstartOnFirstThread -Dorg.eclipse.swt.internal.carbon.smallFonts</vmArgsMac>
    </launcherArgs>
