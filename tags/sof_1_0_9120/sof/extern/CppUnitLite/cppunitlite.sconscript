@@ -1,0 +1,6 @@
+VariantDir( 'build', 'src', duplicate=0 )
+Import( 'env' )
+
+objectFiles = env.Object( Glob('build/*.cpp') )
+StaticLibrary( 'bin/cppunitlite', Glob( 'build/*.obj' ) )
+

@@ -1,0 +1,49 @@
+import os
+import sys
+
+env = Environment(ENV = os.environ)
+Export( 'env' )
+
+mode = ARGUMENTS.get('mode', 'release')
+if not (mode in ['debug', 'release']):
+	print "Error: expected 'debug' or 'release', found: " + mode
+	Exit(1)
+
+if mode == 'debug':
+	env.Append( CCFLAGS = ['-D_DEBUG', '/MDd'] )
+else:
+	env.Append( CCFLAGS = ['-DNDEBUG', '/MD'] )	
+	
+if sys.platform == 'win32':		
+	env.Append(CPPDEFINES = 'WIN32')
+	print 'Platform: win32'
+	print 'Setting compiler flags:', env['CCFLAGS']
+	print 'Setting CPP defines:', env['CPPDEFINES']
+	
+	cppunitlite_lib = SConscript( 'extern/CppUnitLite/cppunitlite.sconscript' )
+	sof_lib = SConscript( 'impl/sof.sconscript')
+	sof_console_exe = SConscript( 'console/sof_console.sconscript')
+	sof_remote_lib = SConscript( 'remote/impl/sof_remote.sconscript')
+	sof_remote_console_exe = SConscript( 'remote/console/sof_remote_console.sconscript')
+	sof_registry_exe = SConscript( 'remote/registry/registry.sconscript')
+	sof_examples_bundle1 = SConscript( 'examples/bundle1/sof_examples_bundle1.sconscript' )
+	sof_examples_bundle2 = SConscript( 'examples/bundle2/sof_examples_bundle2.sconscript' )
+	sof_examples = SConscript( 'examples/sof_examples.sconscript' )
+	sof_test = SConscript( 'test/sof_test.sconscript' )
+	sof_test_testdll1 = SConscript( 'test/TestDll1/sof_test_dll1.sconscript' )
+	sof_test_testdll2 = SConscript( 'test/TestDll2/sof_test_dll2.sconscript' )
+	sof_remote_examples_dll1 = SConscript( 'remote/examples/bundle1/sof_remote_examples_bundle1.sconscript' )
+	sof_remote_examples_dll2 = SConscript( 'remote/examples/bundle2/sof_remote_examples_bundle2.sconscript' )
+	
+else:
+	print( 'Platform: no Windows' )
+
+	cppunitlite_lib = SConscript( 'extern/CppUnitLite/cppunitlite.sconscript' )
+	sof_lib = SConscript( 'impl/sof.sconscript')
+	sof_console_exe = SConscript( 'console/sof_console.sconscript')
+	sof_remote_lib = SConscript( 'remote/impl/sof_remote.sconscript')
+	sof_remote_console_exe = SConscript( 'remote/console/sof_remote_console.sconscript')
+	sof_registry_exe = SConscript( 'remote/registry/registry.sconscript')
+	sof_test = SConscript( 'test/sof_test.sconscript' )
+	
+
