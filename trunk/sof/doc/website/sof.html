@@ -617,7 +617,7 @@ To be done.</pre>
 ![[Starting Bundles]]
 ![[Stopping Bundles]]</pre>
 </div>
-<div title="Console" modifier="magr74" modified="200807180856" created="200804161803" changecount="19">
+<div title="Console" modifier="magro74" modified="200912220741" created="200804161803" changecount="21">
 <pre>The SOF console provides a text based user interface for starting and stopping bundles. The console can be started by calling {{{sof_console.exe}}} which is located in directory '//sof\console\bin//'. See [[Starting SOF]] for further information.
 
 [img[http://farm4.static.flickr.com/3251/2678806149_914f03de0d_o.gif]]
@@ -678,15 +678,17 @@ The SOF supports developing modular software which consists of components (bundl
 !![[Registering services]]
 !![[Tracking services]]</pre>
 </div>
-<div title="Documentation - Remote SOF" modifier="magro74" created="200905151038" changecount="1">
-<pre>!![[Building|Building Remote SOF]]</pre>
+<div title="Documentation - Remote SOF" modifier="magro74" modified="200912220708" created="200905151038" changecount="2">
+<pre>!![[Building|Building Remote SOF]]
+!![[Using Remote SOF]]</pre>
 </div>
-<div title="Download" modifier="magro74" modified="200912210755" created="200805101452" changecount="49">
+<div title="Download" modifier="magro74" modified="200912220828" created="200805101452" changecount="52">
 <pre>Following stable builds are available. For downloading the software please click [[here|http://sourceforge.net/project/showfiles.php?group_id=217435]].
 * ''sof_1.0_9120 (includes SOF and Remote SOF'')
 ** Release notes:
 *** Features:
 **** Platform independent build tool for building [[SOF|Building]] and [[Remote SOF|Building Remote SOF]]
+**** The //Remote SOF// console application (sof_remote_console) requires now a process name ('-proc_name:&lt;process_name&gt;') which is defined as program argument of the console application. The process name is necessary for identifying the //Remote SOF// processes in the new diagnosis and administration UI.
 **** [[Diagnosis &amp; Administration UI|SofAdminUI]]
 *** Thank you very much for the patches:
 **** Provided by Eugene Burov:
@@ -1099,8 +1101,18 @@ The following diagram shows an use case where one bundle registers a service obj
 <div title="SiteTitle" modifier="magro74" modified="200802080850" created="200802080626" changecount="2">
 <pre>SOF</pre>
 </div>
-<div title="SofAdminUI" modifier="magro74" created="200912210713" changecount="1">
-<pre>[&lt;img[SofAdminUI|http://farm5.static.flickr.com/4010/4202818162_6e800c7d6f_o.gif]]</pre>
+<div title="SofAdminUI" modifier="magro74" modified="200912220848" created="200912210713" changecount="25">
+<pre>The //~SofAdminUI// represents a diagnosis an administration tool for //Remote SOF//. The first version of the tool does not implement any administration features yet but it allows to display the bundle data of the running bundles. 
+At [[Sourceforge|http://sourceforge.net/projects/sof/files/]] you'll find the latest binaries for several platforms. Please choose the right one and unzip the archive file into a directory. Afterwards run the 'eclipse' executable which you find in the 'eclipse' directory of the unzipped distribution. The tool is started and looks like as follows:
+
+[img[SofAdminUI|http://farm5.static.flickr.com/4010/4202818162_6e800c7d6f_o.gif]]
+
+The UI consists of two parts, the process view on the left side and the bundle data view on the right side. The process view lists all running //Remote SOF// processes (here 'ernie' and 'bert'). The process names here are consistent with the process names which are used for the //Remote SOF// console application. The view can be updated maybe after running further //Remote SOF// processes by pressing the 'Update View' button. Everytime you press the update button the ~SofAdminUI connects the CORBA naming service and reads all registered //Remote SOF// processes. The UI uses 'localhost:5000' as default address of the CORBA naming service. For the case you started the CORBA naming service on a different address and port, it is possible to define the address for the UI. For this you have to pass a program argument to its executable.
+
+''Example:''
+//eclipse.exe -~ORBInitRef.~NameService=corbaloc::&lt;ip-address&gt;:&lt;port-number&gt;/~NameService//
+
+After choosing a process in the process view the bundle data view displays all running bundles of the selected process in the 'Bundle Names' list. If you click a bundle in the list, all registered services, used services and registered service listeners are listed in the fields next to the bundle list.</pre>
 </div>
 <div title="Starting Bundles" modifier="magro74" modified="200806260500" created="200806151510" changecount="34">
 <pre>!By program at framework startup
@@ -1393,18 +1405,18 @@ merge(config.shadowTiddlers,{
 //}}}
 </pre>
 </div>
-<div title="UploadLog" modifier="magro74" modified="200912210757" created="200802080629">
+<div title="UploadLog" modifier="magro74" modified="200912220848" created="200802080629">
 <pre>| !date | !user | !location | !storeUrl | !uploadDir | !toFilename | !backupdir | !origin |
-| 17/12/2009 07:46:29 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 21/12/2009 08:13:41 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 21/12/2009 08:17:18 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 21/12/2009 08:41:50 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 21/12/2009 08:43:22 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 21/12/2009 08:47:51 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 21/12/2009 08:50:03 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 21/12/2009 08:55:15 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 21/12/2009 08:56:13 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 21/12/2009 08:57:55 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
+| 21/12/2009 10:41:41 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 22/12/2009 08:14:33 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 22/12/2009 08:24:43 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 22/12/2009 08:32:33 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 22/12/2009 08:40:09 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 22/12/2009 08:40:14 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok | ok |
+| 22/12/2009 08:46:13 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 22/12/2009 09:28:46 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 22/12/2009 09:44:49 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 22/12/2009 09:48:39 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
 </div>
 <div title="UploadPlugin" modifier="YourName" modified="200802080624" created="200706061221" tags="systemConfig">
 <pre>/***
@@ -2041,6 +2053,9 @@ config.backstageTasks.push(&quot;uploadOptions&quot;);
 </div>
 <div title="Usage" modifier="magro74" modified="200802181621" created="200802181620" changecount="4">
 <pre>For using SOF you only have to build the 'impl' project (see [[Project Structure]]) in the SOF directory. </pre>
+</div>
+<div title="Using Remote SOF" modifier="magro74" modified="200912220712" created="200912220710" changecount="3">
+<pre>Please look [[here|http://www.codeproject.com/KB/library/Remote_SOF.aspx]] for a short introduction into Remote SOF.</pre>
 </div>
 </div>
 <!--POST-STOREAREA-->
