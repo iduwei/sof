@@ -9,6 +9,7 @@ sources = [
 	'build/ObjectCreatorTest.cpp',
 	'build/osgi_sof_test.cpp',
 	'build/ServiceListenerNotificationTest.cpp',
+	'build/ServiceListenerNotificationErrorTest.cpp',
 	'build/TestBundleActivator.cpp',
 	'build/TestClass.cpp',
 	'build/ThreadingTest.cpp',

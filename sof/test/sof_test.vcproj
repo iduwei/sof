@@ -208,6 +208,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\ServiceListenerNotificationErrorTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\ServiceListenerNotificationTest.cpp"
 				>
 			</File>
