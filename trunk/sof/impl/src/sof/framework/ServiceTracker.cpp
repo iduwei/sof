@@ -32,20 +32,34 @@ void ServiceTracker::stopTracking()
 
 bool ServiceTracker::serviceChanged( const ServiceEvent &serviceEvent )
 {
-	if ( serviceEvent.getType() == ServiceEvent::REGISTER )
+	bool retVal = false;
+	try
 	{
-		logger.log( Logger::DEBUG, "[ServiceTracker#serviceChanged] Service is registered, service name: %1", serviceEvent.getReference().getServiceName() );
-		return this->serviceTracker->addingService( serviceEvent.getReference() );
+		if ( serviceEvent.getType() == ServiceEvent::REGISTER )
+		{
+			logger.log( Logger::DEBUG, "[ServiceTracker#serviceChanged] Service is registered, service name: %1", serviceEvent.getReference().getServiceName() );
+			retVal = this->serviceTracker->addingService( serviceEvent.getReference() );		
+		}
+		else if ( serviceEvent.getType() == ServiceEvent::UNREGISTER )
+		{
+			logger.log( Logger::DEBUG, "[ServiceTracker#serviceChanged] Service is unregistered, service name: %1", serviceEvent.getReference().getServiceName() );		
+			this->serviceTracker->removedService( serviceEvent.getReference() );
+			retVal = true;
+		}
+		else
+		{
+			logger.log( Logger::DEBUG, "[ServiceTracker#serviceChanged] Unhandled event, service name: %1", serviceEvent.getReference().getServiceName() );				
+			retVal = false;
+		}
 	}
-	else if ( serviceEvent.getType() == ServiceEvent::UNREGISTER )
+	catch( std::exception exc )
 	{
-		logger.log( Logger::DEBUG, "[ServiceTracker#serviceChanged] Service is unregistered, service name: %1", serviceEvent.getReference().getServiceName() );		
-		this->serviceTracker->removedService( serviceEvent.getReference() );
-		return true;
+		logger.log( Logger::ERROR_, "[ServiceTracker#serviceChanged] Error occurred during adding/removing service: %1", string( exc.what() ) );			
 	}
-	else
+	// To play it safe, catch all exceptions which are not standard c++ exceptions.
+	catch( ... )
 	{
-		logger.log( Logger::DEBUG, "[ServiceTracker#serviceChanged] Unhandled event, service name: %1", serviceEvent.getReference().getServiceName() );				
-		return false;
+		logger.log( Logger::ERROR_, "[ServiceTracker#serviceChanged] Error occurred during adding/removing service." );		
 	}
+	return retVal;
 }
