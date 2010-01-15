@@ -184,10 +184,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\BundleConfigurationTest.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\src\ConfigFileReaderTest.cpp"
 				>
 			</File>
