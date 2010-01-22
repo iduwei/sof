@@ -20,7 +20,7 @@ using namespace sof::instantiation::win;
 
 int main( int argc, char **argv)
 {	
-	Logger::LogLevel logLevel = Logger::LogLevel::DEBUG;
+	Logger::LogLevel logLevel = Logger::DEBUG;
 	vector<string> args;
 
 	string processName;
@@ -32,15 +32,15 @@ int main( int argc, char **argv)
 		
 		if ( arg == "-nolog" )
 		{
-			logLevel = Logger::LogLevel::NOLOG;
+			logLevel = Logger::NOLOG;
 		}
 		else if ( arg == "-errorlog" )
 		{
-			logLevel = Logger::LogLevel::ERROR_;
+			logLevel = Logger::ERROR_;
 		}
 		else if ( arg == "-debuglog" )
 		{
-			logLevel = Logger::LogLevel::DEBUG;
+			logLevel = Logger::DEBUG;
 		}		
 		else if ( arg.find( "-proc_name:" ) == 0 )
 		{
