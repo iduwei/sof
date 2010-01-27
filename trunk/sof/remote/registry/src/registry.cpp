@@ -22,9 +22,6 @@ int main( int argc, char **argv)
 	{
 		args.push_back( argv[i] );
 	}
-	
-	args.push_back( "-ORBNamingAddr" );
-	args.push_back( "inet:localhost:5000" );
 
 	CORBAHelper corbaHelper( args );
 	CORBARegistryImpl registry;
