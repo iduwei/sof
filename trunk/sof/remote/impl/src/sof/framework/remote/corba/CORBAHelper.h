@@ -3,6 +3,7 @@
 
 #include <CORBA.h>
 #include <mico/poa_base.h>
+#include <pthread.h>
 
 #include <string>
 #include <vector>
@@ -37,6 +38,32 @@ using namespace sof::framework::remote::corba::generated;
 class CORBAHelper
 {
 	private:
+		
+		/**
+		 * Copy constructor, but declared as private. Should not be called!
+		 *
+		 * @param corbaHelper
+		 *				The <code>CORBAHelper</code> object which is copied.
+		 */
+		CORBAHelper( const CORBAHelper& corbaHelper );
+
+		/**
+		 * Assignment operator, but declared as private. Should not be called!
+		 *
+		 * @param other
+		 *				The <code>CORBAHelper</code> object which is assigned to this object.
+		 *
+		 * @return
+		 *				This object.
+		 */
+		CORBAHelper& operator=( const CORBAHelper& other);
+
+		/**
+		 * Helper method for releasing resources.
+		 */
+		void cleanUp();
+
+	protected:
 
 		/**
 		 * The CORBA orb instance.
@@ -63,12 +90,22 @@ class CORBAHelper
 		PortableServer::POA_var explicitActPOA;		
 
 		/**
+		 * The root POA instance.
+		 */
+		PortableServer::POA_var rootPOA;		
+
+		/**
+		 * The root POA manager.
+		 */
+		PortableServer::POAManager_var rootPOAManager;
+
+	public:
+		
+		/**
 		 * The logger instance.
 		 */
 		static Logger& logger;
 
-	public:
-		
 		/**
 		 * Constant string value representing the path to
 		 * the remote registry component at CORBA naming service.
@@ -94,6 +131,11 @@ class CORBAHelper
 		 *			The arguments for initializing the CORBA orb.
 		 */
 		CORBAHelper( const vector<string>& args );
+
+		/**
+		 * Destroys the <code>CORBAHelper<code> object.
+		 */
+		virtual ~CORBAHelper();
 
 		/** 
 		 * Creates an activates a CORBA object.

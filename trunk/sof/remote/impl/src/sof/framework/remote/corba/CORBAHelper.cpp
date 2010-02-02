@@ -1,7 +1,5 @@
 #include "CORBAHelper.h"
 
-#include <pthread.h>
-
 using namespace std;
 
 using namespace sof::framework::remote::corba;
@@ -16,6 +14,22 @@ CORBAHelper::CORBAHelper( const vector<string>& args )
 {
 	this->logger.log( Logger::DEBUG, "[CORBAHelper#ctor] Called." );
 	this->initORB( args );
+}
+
+CORBAHelper::~CORBAHelper()
+{
+	this->logger.log( Logger::DEBUG, "[CORBAHelper#destructor] Called." );
+	this->cleanUp();
+}
+
+CORBAHelper::CORBAHelper( const CORBAHelper& corbaHelper )
+{
+	// Should not be called!
+}
+
+CORBAHelper& CORBAHelper::operator=( const CORBAHelper& other)
+{
+	// Should not be called!
 }
 
 void CORBAHelper::initORB( const vector<string>& args )
@@ -40,36 +54,56 @@ void CORBAHelper::initORB( const vector<string>& args )
 
     CORBA::Object_var poaobj =
 		orb->resolve_initial_references("RootPOA");
-    PortableServer::POA_var rootPOA = PortableServer::POA::_narrow( poaobj);
-    PortableServer::POAManager_var rootPOAManager = rootPOA->the_POAManager();
+    this->rootPOA = PortableServer::POA::_narrow( poaobj);
+    this->rootPOAManager = rootPOA->the_POAManager();
+	this->logger.log( Logger::DEBUG, "[CORBAHelper#initORB] Creating the naming service accessor class." );
 	this->ns = new CORBANamingServiceImpl( this->orb );	
 
-	try {
-	  CORBA::PolicyList policies;
-	  policies.length(1);
-	  policies[0] = rootPOA->create_implicit_activation_policy( PortableServer::NO_IMPLICIT_ACTIVATION );
+	this->logger.log( Logger::DEBUG, "[CORBAHelper#initORB] Creating the naming service accessor class - done." );
 
-	  this->logger.log( Logger::DEBUG, "[CORBAHelper#initORB] Creating the POA instance." );
-	  this->explicitActPOA = rootPOA->create_POA("MyPOA", rootPOAManager, policies);
+	try 
+	{
+		CORBA::PolicyList policies;
+		policies.length(1);
+		policies[0] = rootPOA->create_implicit_activation_policy( PortableServer::NO_IMPLICIT_ACTIVATION );
 
-	  if (CORBA::is_nil(this->explicitActPOA)){
-		// handle this error
-	  }
-
-	  // activate POA manager
-	  rootPOAManager->activate();
-
-	} catch (const PortableServer::POA::AdapterAlreadyExists& e){
+		this->logger.log( Logger::DEBUG, "[CORBAHelper#initORB] Creating the POA instance." );
+		this->explicitActPOA = this->rootPOA->create_POA("MyPOA", rootPOAManager, policies);
+		this->logger.log( Logger::DEBUG, "[CORBAHelper#initORB] POA instance created." );
+	  
+		if (CORBA::is_nil(this->explicitActPOA))
+		{
+			this->logger.log( Logger::ERROR_, "[CORBAHelper#initORB] Explicit POA can't be created, POA is null." );
+		}
+		this->logger.log( Logger::DEBUG, "[CORBAHelper#initORB] Activate root POA manager." );
+		this->rootPOAManager->activate();
+		this->logger.log( Logger::DEBUG, "[CORBAHelper#initORB] Root POA manager activated" );
+	} 
+	catch (const PortableServer::POA::AdapterAlreadyExists& e)
+	{
 		this->logger.log( Logger::ERROR_, "[CORBAHelper#initORB] POA already exists." );	  
-		try {
+		try 
+		{
 			this->explicitActPOA = rootPOA->find_POA("MyPOA", 0);
-		} catch (const PortableServer::POA::AdapterNonExistent&){
+		} 
+		catch (const PortableServer::POA::AdapterNonExistent&)
+		{
 			this->logger.log( Logger::ERROR_, "[CORBAHelper#initORB] No POA found." );	  		
 		}
-		} catch (const PortableServer::POA::InvalidPolicy& e){
-			// the choosen policy combination is invalid
-			this->logger.log( Logger::ERROR_, "[CORBAHelper#initORB] Invalid policy used." );	  	
-		}
+	} 
+	catch (const PortableServer::POA::InvalidPolicy& e)
+	{
+		// the choosen policy combination is invalid
+		this->logger.log( Logger::ERROR_, "[CORBAHelper#initORB] Invalid policy used." );	  	
+	}
+	catch( const CORBA::UserException& userEx )
+	{
+		this->logger.log( Logger::ERROR_, "[CORBAHelper#initORB] CORBA UserException occurred: %1", string( userEx._repoid() ) );	  
+	}
+	catch( const CORBA::SystemException sysEx )
+	{
+		this->logger.log( Logger::ERROR_, "[CORBAHelper#initORB] CORBA SystemException occurred: %1", string( sysEx._repoid() ) );	  
+	}
 }
 
 void CORBAHelper::registerObject( CORBA::Object_var obj, const string& namingServicePath, const string& objectName )
@@ -97,15 +131,14 @@ void CORBAHelper::deregisterObject( const string& namingServicePath, const strin
 void CORBAHelper::deactivateObject( CORBA::Object_var obj )
 {		
 	this->logger.log( Logger::DEBUG, "[CORBAHelper#deactivateObject] Called" );	
-	try {
+	try 
+	{
 		PortableServer::ObjectId_var oid = this->explicitActPOA->reference_to_id( obj );
 		this->explicitActPOA->deactivate_object( oid );
 		
 	} catch (const PortableServer::POA::WrongPolicy& e){
-	  // TODO: handle error
 		this->logger.log( Logger::ERROR_, "[CORBAHelper#deactivateObject] Wrong policy." );	
 	} catch (const PortableServer::POA::ServantAlreadyActive&){
-	  // TODO: handle error
 		this->logger.log( Logger::ERROR_, "[CORBAHelper#deactivateObject] Servant already active." );	
 	}	
 }
@@ -115,15 +148,16 @@ CORBA::Object_var CORBAHelper::activateObject( const PortableServer::Servant& se
 	this->logger.log( Logger::DEBUG, "[CORBAHelper#activateObject] Called" );	
 	CORBA::Object_var obj;
 
-	try {
-	  
+	try 
+	{	  
 		this->logger.log( Logger::DEBUG, "[CORBAHelper#activateObject] Activate object." );	
 		PortableServer::ObjectId_var oid = this->explicitActPOA->activate_object( servant );
 		
 		// get a reference
 		obj = this->explicitActPOA->id_to_reference(oid);
 		logger.log( Logger::DEBUG, "[CORBAHelper#activateObject] OID: %1", obj->_repoid() );
-		if (CORBA::is_nil(obj)){
+		if (CORBA::is_nil(obj))
+		{
 			logger.log( Logger::ERROR_, "[CORBAHelper#activateObject] Object is null." );
 		}
 	} catch (const PortableServer::POA::WrongPolicy& e){
@@ -152,7 +186,12 @@ void CORBAHelper::start()
 {
 	this->logger.log( Logger::DEBUG, "[CORBAHelper#start] Called, creating thread for running orb in its own thread." );	
 	pthread_t thread;
-	pthread_create(&thread, NULL, ThreadStartup, this );
+	pthread_create(&thread, NULL, ThreadStartup, this );	
+
+	// TODO: Why this log message causes problems?
+	// Note: Probably synchronisation problems at logger instance. Both
+	// main thread and ORB runner thread use the same instance.
+	
 }
 
 void CORBAHelper::startAndWait()
@@ -163,6 +202,10 @@ void CORBAHelper::startAndWait()
 
 void *ThreadStartup(void *_tgtObject) {
   CORBAHelper *tgtObject = (CORBAHelper *)_tgtObject;
+
+  // TODO: this log message causes problems
+  //(*tgtObject).logger.log( Logger::DEBUG, "[CORBAHelper#ThreadStartup] Called, running ORB." );
+
   tgtObject->run_orb();
   return NULL;
 }
@@ -170,13 +213,29 @@ void *ThreadStartup(void *_tgtObject) {
 void CORBAHelper::run_orb()
 {
 	this->logger.log( Logger::DEBUG, "[CORBAHelper#run_orb] Called." );	
-	this->orb->run();   
+	this->orb->run();  
+	this->logger.log( Logger::DEBUG, "[CORBAHelper#run_orb] Left" );	
 }
 
 void CORBAHelper::stop()
 {
-	// TODO: implement
 	this->logger.log( Logger::DEBUG, "[CORBAHelper#stop] Called." );	
+	this->logger.log( Logger::DEBUG, "[CORBAHelper#stop] Shutdown the ORB instance." );		
+	this->orb->shutdown( true );
+	
+}
+
+void CORBAHelper::cleanUp()
+{
+	this->logger.log( Logger::DEBUG, "[CORBAHelper#cleanUp] Called." );	
+	delete( this->ns );
+	this->logger.log( Logger::DEBUG, "[CORBAHelper#cleanUp] Destroy POAs." );	
+	this->explicitActPOA->destroy( true, true );	
+	this->rootPOA->destroy( true, true );
+	this->logger.log( Logger::DEBUG, "[CORBAHelper#cleanUp] Deactivate the POA manager." );	
+	this->rootPOAManager->deactivate( true, true );
+	this->logger.log( Logger::DEBUG, "[CORBAHelper#cleanUp] Destroy the ORBA instance." );		
+	this->orb->destroy();
 }
 
 RemoteServiceInfo& CORBAHelper::convertToServiceInfo( const string& serviceName,
