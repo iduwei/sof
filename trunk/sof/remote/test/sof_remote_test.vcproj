@@ -184,7 +184,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\src\CORBAHelperTest.cpp"
+				RelativePath=".\src\CustomizedCORBAHelper.cpp"
 				>
 			</File>
 			<File
@@ -193,6 +193,10 @@
 			</File>
 			<File
 				RelativePath=".\src\MultiplierImpl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\RemoteSOFLauncherTest.cpp"
 				>
 			</File>
 			<File
@@ -215,6 +219,10 @@
 			</File>
 			<File
 				RelativePath=".\src\BundleActivator2.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\CustomizedCORBAHelper.h"
 				>
 			</File>
 			<File
