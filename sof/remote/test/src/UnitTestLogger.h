@@ -6,9 +6,19 @@
 
 using namespace sof::util::logging;
 
+/**
+ * Logger used by the test cases.
+ */
 class UnitTestLogger
 {
 	public:
+
+		/**
+		 * Returns the logger instance.
+		 *
+		 * @return
+		 *			The logger instance.
+		 */
 		static Logger& getInstance();
 };
 #endif
