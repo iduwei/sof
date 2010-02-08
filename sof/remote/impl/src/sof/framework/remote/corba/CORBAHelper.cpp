@@ -337,7 +337,7 @@ Properties CORBAHelper::convertServiceProperties( const CORBAServiceProps& props
 
 	
 	int len = keys.length();
-	logger.log( Logger::DEBUG, "[CORBAHelper#convertServiceProperties] Lenght of keys: %1", len );
+	logger.log( Logger::DEBUG, "[CORBAHelper#convertServiceProperties] Length of keys: %1", len );
 	Properties properties;
 	
 	for ( int i=0; i< len; i++ )
