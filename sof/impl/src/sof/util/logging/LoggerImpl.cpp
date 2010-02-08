@@ -28,10 +28,6 @@ void LoggerImpl::log( LogLevel level, const string& message, int param1,
 		ints.push_back( param3 );
 		this->logMessage( message, ints, level );		
 	}
-	else
-	{
-		this->lastLogMessage = "";
-	}
 }
 
 void LoggerImpl::log( LogLevel level, const string& message, int param1,
@@ -44,10 +40,6 @@ void LoggerImpl::log( LogLevel level, const string& message, int param1,
 		ints.push_back( param2 );
 		this->logMessage( message, ints, level );		
 	}
-	else
-	{
-		this->lastLogMessage = "";
-	}
 }
 
 void LoggerImpl::log( LogLevel level, const string& message, int param1 )
@@ -57,10 +49,6 @@ void LoggerImpl::log( LogLevel level, const string& message, int param1 )
 		vector<int> ints;
 		ints.push_back( param1 );
 		this->logMessage( message, ints, level );		
-	}
-	else
-	{
-		this->lastLogMessage = "";
 	}
 }
 
@@ -76,10 +64,6 @@ void LoggerImpl::log( LogLevel level, const string& message, const string& param
 		strs.push_back( param3 );
 		this->logMessage( strs, level );		
 	}
-	else
-	{
-		this->lastLogMessage = "";
-	}
 }
 
 void LoggerImpl::log( LogLevel level, const string& message, const string& param1,
@@ -93,10 +77,6 @@ void LoggerImpl::log( LogLevel level, const string& message, const string& param
 		strs.push_back( param2 );
 		this->logMessage( strs, level );		
 	}
-	else
-	{
-		this->lastLogMessage = "";
-	}
 }
 
 void LoggerImpl::log( LogLevel level, const string& message, const string& param1 )
@@ -107,10 +87,6 @@ void LoggerImpl::log( LogLevel level, const string& message, const string& param
 		strs.push_back( message );
 		strs.push_back( param1 );
 		this->logMessage( strs, level );		
-	}
-	else
-	{
-		this->lastLogMessage = "";
 	}
 }
 
@@ -124,10 +100,6 @@ void LoggerImpl::log( LogLevel level, const string& message, bool param1,
 		bools.push_back( param2 );
 		this->logMessage( message, bools, level );		
 	}
-	else
-	{
-		this->lastLogMessage = "";
-	}
 }
 
 void LoggerImpl::log( LogLevel level, const string& message, bool param1 )
@@ -138,10 +110,6 @@ void LoggerImpl::log( LogLevel level, const string& message, bool param1 )
 		bools.push_back( param1 );
 		this->logMessage( message, bools, level );		
 	}
-	else
-	{
-		this->lastLogMessage = "";
-	}
 }
 
 void LoggerImpl::log( LogLevel level, const string& message )
@@ -151,10 +119,6 @@ void LoggerImpl::log( LogLevel level, const string& message )
 		vector<string> strs;
 		strs.push_back( message );
 		this->logMessage( strs, level );		
-	}
-	else
-	{
-		this->lastLogMessage = "";
 	}
 }
 
@@ -179,8 +143,7 @@ void LoggerImpl::logMessage( const vector<string>& messageParts, LogLevel level 
 	ostringstream logStream;
 	logStream << "<" << this->logCh << "> <" <<  
 			levels[level] << "> " << message;
-	this->lastLogMessage = logStream.str();
-	cout << this->lastLogMessage << endl;
+	cout << logStream.str() << endl;
 }
 
 void LoggerImpl::logMessage( const string& msgStr, const vector<int>& messageParts, LogLevel level )
@@ -207,8 +170,7 @@ void LoggerImpl::logMessage( const string& msgStr, const vector<int>& messagePar
 	ostringstream logStream;
 	logStream << "<" << this->logCh << "> <" <<  
 			levels[level] << "> " << msg;
-	this->lastLogMessage = logStream.str();
-	cout << this->lastLogMessage << endl;
+	cout << logStream.str() << endl;
 }
 
 void LoggerImpl::logMessage( const string& msgStr, const vector<bool>& messageParts, LogLevel level )
@@ -235,8 +197,7 @@ void LoggerImpl::logMessage( const string& msgStr, const vector<bool>& messagePa
 	ostringstream logStream;
 	logStream << "<" << this->logCh << "> <" <<  
 			levels[level] << "> " << msg;
-	this->lastLogMessage = logStream.str();
-	cout << this->lastLogMessage << endl;
+	cout << logStream.str() << endl;
 }
 
 
