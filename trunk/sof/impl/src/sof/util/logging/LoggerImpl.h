@@ -75,11 +75,6 @@ class LoggerImpl : public Logger
 		 */
 		void logMessage( const string& msg, const vector<bool>& messageParts, LogLevel level );
 
-		/**
-		 * Caches the last printed log message.
-		 */
-		string lastLogMessage;
-
 	public:
 
 		/**
