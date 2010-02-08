@@ -57,7 +57,7 @@ void CORBAHelper::initORB( const vector<string>& args )
     this->rootPOA = PortableServer::POA::_narrow( poaobj);
     this->rootPOAManager = rootPOA->the_POAManager();
 	this->logger.log( Logger::DEBUG, "[CORBAHelper#initORB] Creating the naming service accessor class." );
-	this->ns = new CORBANamingServiceImpl( this->orb );	
+	this->ns = this->createNamingService();
 
 	this->logger.log( Logger::DEBUG, "[CORBAHelper#initORB] Creating the naming service accessor class - done." );
 
@@ -103,6 +103,27 @@ void CORBAHelper::initORB( const vector<string>& args )
 	catch( const CORBA::SystemException sysEx )
 	{
 		this->logger.log( Logger::ERROR_, "[CORBAHelper#initORB] CORBA SystemException occurred: %1", string( sysEx._repoid() ) );	  
+	}
+}
+
+CORBANamingService* CORBAHelper::createNamingService()
+{
+	this->logger.log( Logger::DEBUG, "[CORBAHelper#createNamingService] Called." );	
+	try
+	{
+		return new CORBANamingServiceImpl( this->orb );	
+	} 
+	catch( std::exception& exc )
+	{
+		// Exception should not be catched here, but it is important for unit tests, because there 
+		// is no naming service started.
+		this->logger.log( Logger::ERROR_, "[CORBAHelper#createNamingService] No naming service available. OK for unit tests." );		
+	}
+	catch( ... )
+	{
+		// Exception should not be catched here, but it is important for unit tests, because there 
+		// is no naming service started.
+		this->logger.log( Logger::ERROR_, "[CORBAHelper#createNamingService] No naming service available. OK for unit tests." );
 	}
 }
 

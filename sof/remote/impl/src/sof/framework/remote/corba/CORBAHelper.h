@@ -63,7 +63,7 @@ class CORBAHelper
 		 */
 		void cleanUp();
 
-	protected:
+	protected: 
 
 		/**
 		 * The CORBA orb instance.
@@ -98,6 +98,11 @@ class CORBAHelper
 		 * The root POA manager.
 		 */
 		PortableServer::POAManager_var rootPOAManager;
+
+		/**
+		 * Creates the CORBA naming service accessor class.
+		 */
+		CORBANamingService* createNamingService();
 
 	public:
 		
@@ -194,7 +199,7 @@ class CORBAHelper
 		 *			Returns a list of CORBA objects which were found under specified
 		 *			path at naming service.
 		 */
-		list<CORBA::Object_var> findObjects( const string& path);
+		virtual list<CORBA::Object_var> findObjects( const string& path);
 
 		/**
 		 * Helper method for converting a CORBA object to a string
