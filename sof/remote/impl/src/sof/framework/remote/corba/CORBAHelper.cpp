@@ -223,10 +223,7 @@ void CORBAHelper::startAndWait()
 
 void *ThreadStartup(void *_tgtObject) {
   CORBAHelper *tgtObject = (CORBAHelper *)_tgtObject;
-
-  // TODO: this log message causes problems
-  //(*tgtObject).logger.log( Logger::DEBUG, "[CORBAHelper#ThreadStartup] Called, running ORB." );
-
+  (*tgtObject).logger.log( Logger::DEBUG, "[CORBAHelper#ThreadStartup] Called, running ORB." );
   tgtObject->run_orb();
   return NULL;
 }
