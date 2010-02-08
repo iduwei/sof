@@ -23,15 +23,46 @@ using namespace std;
 
 using namespace sof::framework::remote::corba;
 
+/**
+ * Helper class for verifying test results.
+ */
 class TestHelper
 {
 	public:
+
+		/**
+		 * Checks if the specified service is registered by the given bundle.
+		 */
 		static int isServiceRegisteredByBundle( IRegistry& reg, const string& bundleName, const string& serviceName, int propsSize );
+		
+		/**  
+		 * Checks if the specified service is used by the given bundle.
+		 */
 		static int isServiceUsedByBundle( IRegistry& reg, const string& bundleName, const string& serviceName, int propsSize );
+
+		/**
+		 * Checks if the specified service listener is registered by the given bundle.
+		 */
 		static int isServiceListenerRegisteredByBundle( IRegistry& reg, const string& bundleName, const string& serviceName );
+		
+		/**
+		 * Checks if a service is registered by the given bundle.
+		 */
 		static int isServiceRegisteredByBundle( IRegistry& reg, const string& bundleName );
+		
+		/**
+		 * Checks if a service is used by the given bundle.
+		 */
 		static int isServiceUsedByBundle( IRegistry& reg, const string& bundleName );
+		
+		/**
+		 * Checks if a service listener is registered by the given bundle.
+		 */
 		static int isServiceListenerRegisteredByBundle( IRegistry& reg, const string& bundleName );
+
+		/**
+		 * Checks if the specified bundle is started.
+		 */
 		static bool isBundleStarted( IRegistry& reg, const string& bundleName );
 };
 
@@ -120,6 +151,9 @@ int TestHelper::isServiceUsedByBundle( IRegistry& registry, const string& bundle
 	return serviceInfos.size();
 }
 
+/** 
+ * Tests the registering and tracking of services.
+ */
 TEST( Services, RemoteSOFLauncherTest )
 {
 	UnitTestLogger::getInstance().log( Logger::DEBUG, "[RemoteSOFLauncherTest] *** Services Test" );
