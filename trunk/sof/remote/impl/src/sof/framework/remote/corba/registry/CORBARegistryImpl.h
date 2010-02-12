@@ -1,7 +1,7 @@
 #ifndef CORBA_REGISTRY_IMPL_H
 #define CORBA_REGISTRY_IMPL_H
 
-#include <vector>
+#include <list>
 #include <string>
 
 #include "sof/util/logging/Logger.h"
@@ -40,9 +40,12 @@ class CORBARegistryImpl : virtual public POA_sof::framework::remote::corba::gene
 		CORBARegistryObserver_var obs;
 
 		/**
-		 * Vector containing the registry observer instances.
+		 * Vector containing the registry observer instances. 
+		 *
+		 * Note: using list instead of vector in order to avoid that container object
+		 * is invalidated after deleting an element during iteration.
 		 */
-		vector<CORBARegistryObserver_var> objectVec;
+		list<CORBARegistryObserver_var> objectList;
 
 	public:
 
