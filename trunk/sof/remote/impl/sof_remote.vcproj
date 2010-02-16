@@ -227,6 +227,14 @@
 								<File
 									RelativePath="..\impl\src\sof\framework\remote\corba\registry\CORBARegistryImpl.cpp"
 									>
+									<FileConfiguration
+										Name="Release|Win32"
+										ExcludedFromBuild="true"
+										>
+										<Tool
+											Name="VCCLCompilerTool"
+										/>
+									</FileConfiguration>
 								</File>
 								<File
 									RelativePath="..\impl\src\sof\framework\remote\corba\registry\CORBARegistryObserverImpl.cpp"
