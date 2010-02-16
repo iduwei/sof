@@ -15,7 +15,6 @@ sources = [
 	'build/sof/framework/remote/corba/namingservice/CORBANamingServiceFactory.cpp',
 	'build/sof/framework/remote/corba/namingservice/CORBANamingServiceImpl.cpp',
 
-	'build/sof/framework/remote/corba/registry/CORBARegistryImpl.cpp',
 	'build/sof/framework/remote/corba/registry/CORBARegistryObserverImpl.cpp',
 	'build/sof/framework/remote/corba/registry/IRegistryFacadeImpl.cpp',
 
