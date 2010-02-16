@@ -30,6 +30,7 @@ CORBAHelper::CORBAHelper( const CORBAHelper& corbaHelper )
 CORBAHelper& CORBAHelper::operator=( const CORBAHelper& other)
 {
 	// Should not be called!
+	return (*this);
 }
 
 void CORBAHelper::initORB( const vector<string>& args )
