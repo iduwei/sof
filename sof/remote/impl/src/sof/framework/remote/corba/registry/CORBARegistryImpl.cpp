@@ -1,22 +1,23 @@
-#include "CORBARegistryImpl.h"
+template<class ThreadingModel>
+Logger& CORBARegistryImpl<ThreadingModel>::logger = LoggerFactory::getLogger( "Remote-Framework" );
 
-#include <CORBA.h>
-#include <sstream>
-
-using namespace sof::framework::remote::corba::registry;
-using namespace sof::framework::remote::corba::generated;
-
-Logger& CORBARegistryImpl::logger = LoggerFactory::getLogger( "Remote-Framework" );
-
-void CORBARegistryImpl::addRegistryObserver( CORBARegistryObserver_ptr observer )
+template<class ThreadingModel>
+void CORBARegistryImpl<ThreadingModel>::addRegistryObserver( CORBARegistryObserver_ptr observer )
 {
+	// !!! synchronized access !!!
+	typename ThreadingModel::Lock lock;
+
 	logger.log( Logger::DEBUG, "[CORBARegistryImpl#addRegistryObserver] Called." );
 	this->objectList.push_back( CORBARegistryObserver::_duplicate( observer ) );
 	logger.log( Logger::DEBUG, "[CORBARegistryImpl#addRegistryObserver] Left." );
 }
 
-void CORBARegistryImpl::registerService( const char* bundleName, const char* serviceName, CORBAService_ptr service, const CORBAServiceProps& props )
+template<class ThreadingModel>
+void CORBARegistryImpl<ThreadingModel>::registerService( const char* bundleName, const char* serviceName, CORBAService_ptr service, const CORBAServiceProps& props )
 {
+	// !!! synchronized access !!!
+	typename ThreadingModel::Lock lock;
+
 	logger.log( Logger::DEBUG, "[CORBARegistryImpl#registerService] Entered." );
 	list<CORBARegistryObserver_var>::iterator iter;
 	for ( iter = this->objectList.begin(); iter != this->objectList.end();)
@@ -47,8 +48,12 @@ void CORBARegistryImpl::registerService( const char* bundleName, const char* ser
 	logger.log( Logger::DEBUG, "[CORBARegistryImpl#registerService] Left." );
 }
 
-void CORBARegistryImpl::registerServiceListener( const char* bundleName, const char* serviceName, CORBAServiceListener_ptr listener )
+template<class ThreadingModel>
+void CORBARegistryImpl<ThreadingModel>::registerServiceListener( const char* bundleName, const char* serviceName, CORBAServiceListener_ptr listener )
 {
+	// !!! synchronized access !!!
+	typename ThreadingModel::Lock lock;
+
 	logger.log( Logger::DEBUG, "[CORBARegistryImpl#registerServiceListener] Entered." );
 	list<CORBARegistryObserver_var>::iterator iter;
 	for ( iter = this->objectList.begin(); iter != this->objectList.end();)
@@ -80,8 +85,12 @@ void CORBARegistryImpl::registerServiceListener( const char* bundleName, const c
 	logger.log( Logger::DEBUG, "[CORBARegistryImpl#registerServiceListener] Left." );
 }
 
-void CORBARegistryImpl::unregisterService( const char* bundleName, const char* serviceName, CORBAService_ptr service, const CORBAServiceProps& props )
+template<class ThreadingModel>
+void CORBARegistryImpl<ThreadingModel>::unregisterService( const char* bundleName, const char* serviceName, CORBAService_ptr service, const CORBAServiceProps& props )
 {
+	// !!! synchronized access !!!
+	typename ThreadingModel::Lock lock;
+
 	logger.log( Logger::DEBUG, "[CORBARegistryImpl#unregisterService] Entered." );
 	list<CORBARegistryObserver_var>::iterator iter;
 	for ( iter = this->objectList.begin(); iter != this->objectList.end();)
@@ -112,8 +121,12 @@ void CORBARegistryImpl::unregisterService( const char* bundleName, const char* s
 	logger.log( Logger::DEBUG, "[CORBARegistryImpl#unregisterService] Left." );
 }
 
-void CORBARegistryImpl::unregisterServiceListener( const char* bundleName, const char* serviceName, CORBAServiceListener_ptr listener )
+template<class ThreadingModel>
+void CORBARegistryImpl<ThreadingModel>::unregisterServiceListener( const char* bundleName, const char* serviceName, CORBAServiceListener_ptr listener )
 {
+	// !!! synchronized access !!!
+	typename ThreadingModel::Lock lock;
+
 	logger.log( Logger::DEBUG, "[CORBARegistryImpl#unregisterServiceListener] Entered." );
 	list<CORBARegistryObserver_var>::iterator iter;
 	for ( iter = this->objectList.begin(); iter != this->objectList.end();)

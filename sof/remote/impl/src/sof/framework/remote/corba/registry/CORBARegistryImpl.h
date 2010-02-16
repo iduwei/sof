@@ -3,9 +3,13 @@
 
 #include <list>
 #include <string>
+#include <sstream>
+
+#include <CORBA.h>
 
 #include "sof/util/logging/Logger.h"
 #include "sof/util/logging/LoggerFactory.h"
+#include "sof/util/threading/SingleThreaded.h"
 
 #include "../generated/CORBAObjects.h"
 
@@ -13,8 +17,11 @@ namespace sof { namespace framework { namespace remote { namespace corba { names
 
 using namespace std;
 
-using namespace sof::util::logging;
+using namespace sof::framework::remote::corba::registry;
 using namespace sof::framework::remote::corba::generated;
+
+using namespace sof::util::logging;
+using namespace sof::util::threading;
 
 /**
  * The <code>CORBARegistryImpl</code> class represents the registry component where
@@ -25,6 +32,7 @@ using namespace sof::framework::remote::corba::generated;
  *
  * @author magr74
  */
+template<class ThreadingModel=SingleThreaded>
 class CORBARegistryImpl : virtual public POA_sof::framework::remote::corba::generated::CORBARegistry
 {
 	private:
@@ -127,6 +135,8 @@ class CORBARegistryImpl : virtual public POA_sof::framework::remote::corba::gene
 			CORBAServiceListener_ptr listener );
 
 };
+
+#include "CORBARegistryImpl.cpp"
 
 }}}}}
 #endif
