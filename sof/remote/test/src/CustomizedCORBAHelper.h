@@ -3,11 +3,13 @@
 
 #include "sof/framework/remote/corba/CORBAHelper.h"
 #include "sof/framework/remote/corba/registry/CORBARegistryImpl.h"
+#include "sof/util/threading/SingleThreaded.h"
 
 #include "UnitTestLogger.h"
 
 using namespace sof::framework::remote::corba;
 using namespace sof::framework::remote::corba::registry;
+using namespace sof::util::threading;
 
 /**
  * The <code>CustomizedCORBAHelper</code> class modifies the behaviour of the 
@@ -21,7 +23,7 @@ class CustomizedCORBAHelper : public CORBAHelper
 		/**
 		 * The remote registry object the SOF process usually gets from the naming service.
 		 */
-		CORBARegistryImpl registry;		
+		CORBARegistryImpl<SingleThreaded> registry;		
 
 	public:
 
