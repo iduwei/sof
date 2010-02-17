@@ -1,0 +1,21 @@
+Import( 'env' )
+VariantDir( 'build', 'src', duplicate=0 )
+sources = [
+	'build/BundleActivator1.cpp',
+	'build/BundleActivator2.cpp',
+	'build/CustomizedCORBAHelper.cpp',
+	'build/Multiplier.cpp',
+	'build/MultiplierImpl.cpp',
+	'build/RemoteSOFLauncherTest.cpp',
+	'build/sof_remote_test.cpp',
+	'build/UnitTestLogger.cpp'
+]
+
+env.Program( 
+	'bin/sof_remote_test', 
+	sources, 
+	CPPPATH = ['#/impl/src','#/remote/impl/src','#/extern/CppUnitLite/src','#/remote/corba/include', '#/remote/corba/include/pthreads'], 
+	LIBS=['sof','sof_remote','cppunitlite','mico2313','micocoss2313','pthreadVC2'], 
+	LIBPATH=['#/remote/corba/libs','#/impl/bin','#/remote/impl/bin','#/extern/cppunitlite/bin'] )
+	
+
