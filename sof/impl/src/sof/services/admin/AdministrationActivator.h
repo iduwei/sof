@@ -57,6 +57,11 @@ class AdministrationActivator : public IBundleActivator
 	public:
 
 		/**
+		 * Creates instances of class <code>AdministrationActivator</code>
+		 */
+		AdministrationActivator();
+
+		/**
 		 * Starts the administration bundle by creating
 		 * a console and waits for user input.
 		 */

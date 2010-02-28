@@ -22,7 +22,7 @@ string Properties::toString() const
 	
 	ostringstream propsStream;
 	propsStream << "properties={";
-	for( iter = mapper.begin(); iter != mapper.end(); iter++ ) 
+	for( iter = mapper.begin(); iter != mapper.end(); ++iter ) 
 	{
 		propsStream << "[" << iter->first << "," << iter->second << "], ";		
 	}

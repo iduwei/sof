@@ -75,7 +75,7 @@ int TestHelper::isServiceListenerRegisteredByBundle( IRegistry& reg, const strin
 	vector<ServiceListenerInfo*> serviceListenerInfos = bi->getRegisteredListeners();
 	vector<ServiceListenerInfo*>::iterator iter;
 	int counter = 0;
-	for ( iter = serviceListenerInfos.begin(); iter != serviceListenerInfos.end(); iter++ )
+	for ( iter = serviceListenerInfos.begin(); iter != serviceListenerInfos.end(); ++iter )
 	{
 		if ( (*iter)->getBundleName() == bundleName &&
 			(*iter)->getServiceName() == serviceName )
@@ -92,7 +92,7 @@ int TestHelper::isServiceRegisteredByBundle( IRegistry& registry, const string& 
 	vector<ServiceInfo*> serviceInfos = bi->getRegisteredServices();
 	vector<ServiceInfo*>::iterator iter;
 	int foundCounter = 0;
-	for ( iter = serviceInfos.begin(); iter != serviceInfos.end(); iter++ )
+	for ( iter = serviceInfos.begin(); iter != serviceInfos.end(); ++iter )
 	{
 		if ( (*iter)->getServiceName() == serviceName &&
 			(*iter)->getProperties().getSize() == propsSize )
@@ -109,7 +109,7 @@ int TestHelper::isServiceUsedByBundle( IRegistry& registry, const string& bundle
 	vector<ServiceInfo*> serviceInfos = bi->getUsedServices();
 	vector<ServiceInfo*>::iterator iter;
 	int foundCounter = 0;
-	for ( iter = serviceInfos.begin(); iter != serviceInfos.end(); iter++ )
+	for ( iter = serviceInfos.begin(); iter != serviceInfos.end(); ++iter )
 	{
 		if ( (*iter)->getServiceName() == serviceName &&
 			(*iter)->getProperties().getSize() == propsSize )

@@ -20,6 +20,7 @@ class BundleActivator1 : public IRemoteBundleActivator
 		MultiplierImpl* service2;
 
 	public:
+		BundleActivator1();
 		virtual ~BundleActivator1();
 		virtual void start( IRemoteBundleContext::ConstPtr context );	
 		virtual void stop( IRemoteBundleContext::ConstPtr context );

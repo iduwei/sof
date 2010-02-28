@@ -6,6 +6,14 @@
 using namespace sof::instantiation;
 using namespace sof::framework;
 
+BundleActivator1::BundleActivator1() 
+{
+	this->service1 = 0;
+	this->service2 = 0;
+	this->serviceReg1 = 0;
+	this->serviceReg2 = 0;
+}
+
 BundleActivator1::~BundleActivator1() 
 {
 	// Deallocate memory

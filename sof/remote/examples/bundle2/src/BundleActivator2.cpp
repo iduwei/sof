@@ -8,6 +8,11 @@ using namespace sof::instantiation;
 using namespace sof::framework;
 using namespace sof::framework::remote::corba;
 
+BundleActivator2::BundleActivator2() 
+{
+	this->tracker = 0;
+}
+
 BundleActivator2::~BundleActivator2() 
 {
 	// Deallocate memory

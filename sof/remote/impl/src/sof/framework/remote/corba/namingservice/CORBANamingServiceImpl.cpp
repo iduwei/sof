@@ -97,7 +97,7 @@ CosNaming::NamingContext_var CORBANamingServiceImpl::getNamingContext( list<stri
 
 	CosNaming::NamingContext_var tempContext = naming_context;
 
-	for ( pos = names.begin(); pos != names.end(); pos++ ) {
+	for ( pos = names.begin(); pos != names.end(); ++pos ) {
 		CORBA::String_var str = (*pos).c_str();
 		name[0].id = str;
 		try {

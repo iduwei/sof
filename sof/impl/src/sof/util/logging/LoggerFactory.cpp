@@ -39,7 +39,7 @@ void LoggerFactory::setLogLevel( Logger::LogLevel logLevel )
 
 	level = logLevel;
 	map<string,Logger*>::iterator iter;
-	for ( iter = loggerMap->begin(); iter != loggerMap->end(); iter++ )
+	for ( iter = loggerMap->begin(); iter != loggerMap->end(); ++iter )
 	{
 		Logger* log = (*loggerMap)[iter->first];		
 		log->setLogLevel( level );

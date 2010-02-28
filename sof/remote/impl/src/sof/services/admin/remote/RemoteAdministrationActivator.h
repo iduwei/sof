@@ -56,6 +56,11 @@ class RemoteAdministrationActivator : public IRemoteBundleActivator
 	public:
 
 		/**
+		 * Creates instances of class <code>RemoteAdministrationActivator</code>.
+		 */
+		RemoteAdministrationActivator::RemoteAdministrationActivator();
+
+		/**
 		 * Starts the administration bundle by creating
 		 * a console and waits for user input.
 		 */

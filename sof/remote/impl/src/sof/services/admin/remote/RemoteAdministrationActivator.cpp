@@ -13,6 +13,13 @@ using namespace sof::services::admin::remote;
 
 Logger& RemoteAdministrationActivator::log = LoggerFactory::getLogger( "services" );
 
+RemoteAdministrationActivator::RemoteAdministrationActivator()
+{
+	this->adminProvider = 0;
+	this->adminService = 0;
+	this->serviceReg = 0;
+}
+
 void RemoteAdministrationActivator::start( IRemoteBundleContext::ConstPtr context )
 {
 	log.log( Logger::DEBUG, "[RemoteAdministrationActivator#start] Called." );
@@ -28,7 +35,7 @@ void RemoteAdministrationActivator::stop( IRemoteBundleContext::ConstPtr context
 	log.log( Logger::DEBUG, "[RemoteAdministrationActivator#stop] Called." );
 	//this->serviceReg->unregister();
 	//delete (this->serviceReg);
-	//delete (this->adminService);
+	delete (this->adminService);
 }
 
 void RemoteAdministrationActivator::setAdministrationProvider( IAdministrationProvider* provider )

@@ -21,7 +21,7 @@ CORBABundleNameSequence* DataConverter::convert( const vector<string>& bundleNam
 	vector<string>::const_iterator iter;
 
 	logger.log( Logger::DEBUG, "[DataConverter#convert] Iterate..." );
-	for ( iter = bundleNames.begin(); iter != bundleNames.end(); iter++ )
+	for ( iter = bundleNames.begin(); iter != bundleNames.end(); ++iter )
 	{		
 		logger.log( Logger::DEBUG, "[DataConverter#convert] Bundle name: %1", (*iter) );
 		(*sequence)[counter] = CORBA::string_dup( iter->c_str() );	
@@ -44,7 +44,7 @@ CORBAAdminServiceProps* DataConverter::convert( const Properties& props )
 
 	int counter = 0;
 	map<string,string>::const_iterator iter;
-	for ( iter = props.begin(); iter != props.end(); iter++ )
+	for ( iter = props.begin(); iter != props.end(); ++iter )
 	{				
 		(*keys)[counter] = CORBA::string_dup( (iter->first).c_str() );
 		(*values)[counter] = CORBA::string_dup( (iter->second).c_str() );
@@ -84,7 +84,7 @@ CORBAAdminServiceInfoSequence* DataConverter::convert( const vector<ServiceInfo*
 	seq->length( serviceInfo.size() );
 	vector<ServiceInfo*>::const_iterator it;
 	int counter = 0;
-	for( it = serviceInfo.begin(); it != serviceInfo.end(); it++ )
+	for( it = serviceInfo.begin(); it != serviceInfo.end(); ++it )
 	{
 		RemoteServiceInfo* servInfoObj = dynamic_cast<RemoteServiceInfo*>(*it);
 		logger.log( Logger::DEBUG, "[DataConverter#convert] ServiceInfo object: %1", (*servInfoObj).toString() );
@@ -100,7 +100,7 @@ CORBAAdminServiceListenerInfoSequence* DataConverter::convert( const vector<Serv
 	seq->length( serviceListenerInfo.size() );
 	vector<ServiceListenerInfo*>::const_iterator it;
 	int counter = 0;
-	for( it = serviceListenerInfo.begin(); it != serviceListenerInfo.end(); it++ )
+	for( it = serviceListenerInfo.begin(); it != serviceListenerInfo.end(); ++it )
 	{
 		RemoteServiceListenerInfo* servListenerInfoObj = dynamic_cast<RemoteServiceListenerInfo*>(*it);
 		(*seq)[counter] = ( * ( convert( (*servListenerInfoObj) ) ) );

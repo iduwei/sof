@@ -21,6 +21,11 @@ using namespace sof::framework;
 
 BundleActivator2::BundleActivator2()
 {
+	this->service1 = 0;
+	this->service2 = 0;
+	this->serviceReg1 = 0;
+	this->serviceReg2 = 0;
+	this->tracker = 0;
 }
 
 void BundleActivator2::start( IBundleContext::ConstPtr context )
