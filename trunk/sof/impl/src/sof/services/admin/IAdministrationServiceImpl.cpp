@@ -133,7 +133,7 @@ void IAdministrationServiceImpl::startConsole()
 			{
 				cout << endl << "Available commands:" << endl;
 				map<string,ConsoleCommand*>::iterator iter;
-				for ( iter = this->cmdMap.begin(); iter != this->cmdMap.end(); iter++ )
+				for ( iter = this->cmdMap.begin(); iter != this->cmdMap.end(); ++iter )
 				{
 					cout << iter->second->getName() << "\t\t - " << iter->second->getDescription() << endl;
 				}

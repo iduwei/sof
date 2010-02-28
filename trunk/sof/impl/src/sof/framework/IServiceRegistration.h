@@ -26,6 +26,11 @@ class IServiceRegistration
 		typedef IServiceRegistration* const ConstPtr;
 
 		/**
+		 * Deletes the object.
+		 */
+		virtual ~IServiceRegistration() {};
+
+		/**
 		 * Unregisters a service object with the framework.
 		 */
 		virtual void unregister() = 0;

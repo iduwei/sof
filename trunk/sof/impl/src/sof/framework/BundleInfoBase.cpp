@@ -40,7 +40,7 @@ void BundleInfoBase::removeDeregisteredService( ServiceInfo* serviceInfo )
 
 	logger.log( Logger::DEBUG, "[BundleInfoBase#removeDeregisteredService] Iterate over vector of registered services." );					
 	vector<ServiceInfo*>::iterator iter;
-	for ( iter = this->registeredServices.begin(); iter != this->registeredServices.end(); iter++ )
+	for ( iter = this->registeredServices.begin(); iter != this->registeredServices.end(); ++iter )
 	{
 		if ( (*iter)->equals( (*(*iter)), (*serviceInfo) ) )
 		{
@@ -64,7 +64,7 @@ void BundleInfoBase::removeUsedService( ServiceInfo* serviceInfo )
 	logger.log( Logger::DEBUG, "[BundleInfoBase#removeUsedService] Iterate over vector of used services." );					
 	
 	vector<ServiceInfo*>::iterator iter;
-	for ( iter = this->usedServices.begin(); iter != this->usedServices.end(); iter++ )
+	for ( iter = this->usedServices.begin(); iter != this->usedServices.end(); ++iter )
 	{
 		if ( (*(*iter)) == (*serviceInfo) )
 		{
@@ -92,7 +92,7 @@ void BundleInfoBase::removeUsedService( const string& serviceName )
 	logger.log( Logger::DEBUG, "[BundleInfoBase#removeUsedService] Iterate over vector of used services." );					
 	
 	vector<ServiceInfo*>::iterator iter;
-	for ( iter = this->usedServices.begin(); iter != this->usedServices.end(); iter++ )
+	for ( iter = this->usedServices.begin(); iter != this->usedServices.end(); ++iter )
 	{
 		if ( (*iter)->getServiceName() == serviceName )
 		{
@@ -118,7 +118,7 @@ void BundleInfoBase::addUsedService( ServiceInfo* serviceInfo )
 	logger.log( Logger::DEBUG, "[BundleInfoBase#addUsedService] Check whether service info is already cached in vector." );					
 	
 	vector<ServiceInfo*>::iterator iter;
-	for ( iter = this->usedServices.begin(); iter != this->usedServices.end(); iter++ )
+	for ( iter = this->usedServices.begin(); iter != this->usedServices.end(); ++iter )
 	{
 		if ( (*(*iter)) == (*serviceInfo) )
 		{
@@ -143,7 +143,7 @@ void BundleInfoBase::removeRegisteredListener( ServiceListenerInfo* listenerInfo
 	logger.log( Logger::DEBUG, "[BundleInfoBase#removeRegisteredListener] Iterate over vector of registered listeners." );					
 	
 	vector<ServiceListenerInfo*>::iterator iter;
-	for ( iter = this->registeredListeners.begin(); iter != this->registeredListeners.end(); iter++ )
+	for ( iter = this->registeredListeners.begin(); iter != this->registeredListeners.end(); ++iter )
 	{
 		if ( (*(*iter)).equals( (*listenerInfo), (*(*iter) ) )   )
 		{
@@ -168,13 +168,13 @@ string BundleInfoBase::toString()
 	
 	stream << "*** Registered services ***" << endl;
 	vector<ServiceInfo*>::iterator iter;
-	for ( iter = registeredServices.begin(); iter != registeredServices.end(); iter++ )
+	for ( iter = registeredServices.begin(); iter != registeredServices.end(); ++iter )
 	{
 		stream << "  ->" << (*iter)->toString() << endl;
 	}
 
 	stream << "*** Services in use ***" << endl;
-	for ( iter = usedServices.begin(); iter != usedServices.end(); iter++ )
+	for ( iter = usedServices.begin(); iter != usedServices.end(); ++iter )
 	{
 		stream << "  ->" << (*iter)->toString() << endl;
 	}
@@ -182,7 +182,7 @@ string BundleInfoBase::toString()
 	stream << "*** Registered service listener ***" << endl;
 	vector<ServiceListenerInfo*>::iterator listenerIter;
 
-	for ( listenerIter = registeredListeners.begin(); listenerIter != registeredListeners.end(); listenerIter++ )
+	for ( listenerIter = registeredListeners.begin(); listenerIter != registeredListeners.end(); ++listenerIter )
 	{
 		stream << "  ->" << (*listenerIter)->toString() << endl;
 	}

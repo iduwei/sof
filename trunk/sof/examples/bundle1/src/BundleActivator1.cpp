@@ -9,6 +9,13 @@
 using namespace sof::instantiation;
 using namespace sof::framework;
 
+BundleActivator1::BundleActivator1() 
+{
+	this->service = 0;
+	this->serviceReg = 0;
+}
+
+
 BundleActivator1::~BundleActivator1() 
 {
 	// Deallocate memory

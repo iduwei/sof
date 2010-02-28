@@ -21,6 +21,11 @@ class CORBANamingService {
 	public:
 
 		/**
+		 * Destroys the object.
+		 */
+		virtual ~CORBANamingService() {}
+
+		/**
 		 * Searches for CORBA objects at naming service.
 		 *
 		 * @param path 

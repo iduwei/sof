@@ -21,6 +21,11 @@ class IServiceListener
 		 */
 		typedef IServiceListener* const ConstPtr;
 
+		/** 
+		 * Destroys the object.		 
+		 */
+		virtual ~IServiceListener() {};
+
 		/**
 		 * Is called when a service event ocurred.
 		 *

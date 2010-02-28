@@ -17,6 +17,7 @@ class BundleActivator2 : public IBundleActivator, public IServiceTrackerCustomiz
 		IMultiplier* service;
 
 	public:
+		BundleActivator2();
 		virtual ~BundleActivator2();
 		virtual void start( IBundleContext::ConstPtr context );	
 		virtual void stop( IBundleContext::ConstPtr context );

@@ -13,6 +13,14 @@ using namespace sof::instantiation;
 
 Logger& AdministrationActivator::log = LoggerFactory::getLogger( "services" );
 
+AdministrationActivator::AdministrationActivator()
+{
+	log.log( Logger::DEBUG, "[AdministrationActivator#ctor] Called." );
+	this->adminProvider = 0;
+	this->adminService = 0;
+	this->serviceReg = 0;
+}
+
 void AdministrationActivator::start( IBundleContext::ConstPtr context )
 {
 	log.log( Logger::DEBUG, "[AdministrationActivator#start] Called." );

@@ -26,6 +26,7 @@ if sys.platform == 'win32':
 	sof_remote_lib = SConscript( 'remote/impl/sof_remote.sconscript')
 	sof_remote_console_exe = SConscript( 'remote/console/sof_remote_console.sconscript')
 	sof_registry_exe = SConscript( 'remote/registry/registry.sconscript')
+	sof_remote_test = SConscript( 'remote/test/sof_remote_test.sconscript' )
 	sof_examples_bundle1 = SConscript( 'examples/bundle1/sof_examples_bundle1.sconscript' )
 	sof_examples_bundle2 = SConscript( 'examples/bundle2/sof_examples_bundle2.sconscript' )
 	sof_examples = SConscript( 'examples/sof_examples.sconscript' )
@@ -45,5 +46,6 @@ else:
 	sof_remote_console_exe = SConscript( 'remote/console/sof_remote_console.sconscript')
 	sof_registry_exe = SConscript( 'remote/registry/registry.sconscript')
 	sof_test = SConscript( 'test/sof_test.sconscript' )
+	sof_remote_test = SConscript( 'remote/test/sof_remote_test.sconscript' )
 	
 

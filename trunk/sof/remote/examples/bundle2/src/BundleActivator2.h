@@ -19,6 +19,7 @@ class BundleActivator2 : public IRemoteBundleActivator, public IRemoteServiceTra
 		Multiplier_var service;
 
 	public:
+		BundleActivator2();
 		virtual ~BundleActivator2();
 		virtual void start( IRemoteBundleContext::ConstPtr context );	
 		virtual void stop( IRemoteBundleContext::ConstPtr context );

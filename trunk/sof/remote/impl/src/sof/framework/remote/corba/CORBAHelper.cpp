@@ -13,6 +13,7 @@ Logger& CORBAHelper::logger = LoggerFactory::getLogger( "Framework" );
 CORBAHelper::CORBAHelper( const vector<string>& args )
 {
 	this->logger.log( Logger::DEBUG, "[CORBAHelper#ctor] Called." );
+	this->ns = 0;
 	this->initORB( args );
 }
 
@@ -40,7 +41,7 @@ void CORBAHelper::initORB( const vector<string>& args )
 	char** argv = (char**)malloc( sizeof(char**) * argc ); 
 	vector<string>::const_iterator iter;
 	int counter = 0;
-	for ( iter = args.begin(); iter != args.end(); iter++ )
+	for ( iter = args.begin(); iter != args.end(); ++iter )
 	{
 		argv[counter] = const_cast<char*> ( (*iter).c_str() );
 		this->logger.log( Logger::DEBUG, "[CORBAHelper#initORB] Argument: %1", (*iter) );
@@ -223,7 +224,7 @@ void CORBAHelper::startAndWait()
 }
 
 void *ThreadStartup(void *_tgtObject) {
-  CORBAHelper *tgtObject = (CORBAHelper *)_tgtObject;
+  CORBAHelper *tgtObject = static_cast<CORBAHelper *> (_tgtObject);
   (*tgtObject).logger.log( Logger::DEBUG, "[CORBAHelper#ThreadStartup] Called, running ORB." );
   tgtObject->run_orb();
   return NULL;
@@ -311,7 +312,7 @@ CORBAServiceProps CORBAHelper::convertServiceProperties( const Properties& props
 	int counter = 0; 
 
 	map<string,string>::const_iterator iter;
-	for ( iter = props.begin(); iter != props.end(); iter++ )
+	for ( iter = props.begin(); iter != props.end(); ++iter )
 	{		
 		keys[counter] = CORBA::string_dup( (iter->first).c_str() );
 		values[counter] = CORBA::string_dup( (iter->second).c_str() );

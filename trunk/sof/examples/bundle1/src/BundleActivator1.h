@@ -16,6 +16,7 @@ class BundleActivator1 : public IBundleActivator
 		IServiceRegistration* serviceReg;
 
 	public:
+		BundleActivator1();
 		virtual ~BundleActivator1();
 		virtual void start( IBundleContext::ConstPtr context );	
 		virtual void stop( IBundleContext::ConstPtr context );

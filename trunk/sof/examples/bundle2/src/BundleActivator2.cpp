@@ -9,6 +9,12 @@
 using namespace std;
 using namespace sof::instantiation;
 
+BundleActivator2::BundleActivator2() 
+{
+	this->tracker = 0;
+	this->service = 0;
+}
+
 BundleActivator2::~BundleActivator2() 
 {
 	// Deallocate memory
