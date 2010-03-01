@@ -47,7 +47,7 @@ TEST( ConfigFileReader, ReadValidFileCheckContent )
 		vector<BundleConfiguration> bc = ConfigFileReader::readFromFile( "./config_file_reader_test.sof" );	
 		vector<BundleConfiguration>::iterator iter;
 		int counter = 0;
-		for ( iter = bc.begin(); iter != bc.end(); iter++ )
+		for ( iter = bc.begin(); iter != bc.end(); ++iter )
 		{
 			CHECK( (*iter).getBundleName() == bundleNames[counter] );
 			CHECK( (*iter).getClassName() == activatorNames[counter] );

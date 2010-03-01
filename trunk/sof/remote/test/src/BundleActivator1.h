@@ -39,6 +39,11 @@ class BundleActivator1 : public IRemoteBundleActivator
 
 	public:
 
+		/** 
+		 * Creates instances of class <code>BundleActivator2</code>.
+		 */
+		BundleActivator1();
+
 		/**
 		 * Destroys the bundle activator object.
 		 */

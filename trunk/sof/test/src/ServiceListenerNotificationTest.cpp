@@ -26,10 +26,16 @@ class DefaultServiceListener : public IServiceTrackerCustomizer
 		int callCounter;
 
 	public:
+		DefaultServiceListener();
 		virtual bool addingService( const ServiceReference& ref );
 		virtual void removedService( const ServiceReference& ref );
 		int getCounter();
 };
+
+DefaultServiceListener::DefaultServiceListener()
+{
+	callCounter = 0;
+}
 
 bool DefaultServiceListener::addingService( const ServiceReference& ref )
 {
@@ -75,12 +81,21 @@ class BundleActivatorServiceListenerNotification : public IBundleActivator
 		IServiceBImpl serviceB;	
 
 	public:		
+		BundleActivatorServiceListenerNotification();
 		virtual ~BundleActivatorServiceListenerNotification();
 		virtual void start( IBundleContext::ConstPtr context );
 		virtual void stop( IBundleContext::ConstPtr context );	
 		static DefaultServiceListener& getServiceListener1();
 		static DefaultServiceListener& getServiceListener2();
 };
+
+BundleActivatorServiceListenerNotification::BundleActivatorServiceListenerNotification()
+{
+	this->tracker1 = 0;
+	this->tracker2 = 0;
+	this->context = 0;
+	this->serviceReg = 0;
+}
 
 DefaultServiceListener& BundleActivatorServiceListenerNotification::getServiceListener1()
 {

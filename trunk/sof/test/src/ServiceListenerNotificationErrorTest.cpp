@@ -30,6 +30,11 @@ class FaultyServiceListener : public IServiceTrackerCustomizer
 	public:
 
 		/**
+		 * Creates instances of class <code>FaultyServiceListener</code>.
+		 */
+		FaultyServiceListener();
+
+		/**
 		 * The type of the exception which is thrown in the listener methods.
 		 */
 		enum ExceptionType { STD, NON_STD };
@@ -56,6 +61,11 @@ class FaultyServiceListener : public IServiceTrackerCustomizer
 		 */
 		ExceptionType excType;
 };
+
+FaultyServiceListener::FaultyServiceListener() 
+{
+	excType = FaultyServiceListener::STD;
+}
 
 bool FaultyServiceListener::addingService( const ServiceReference& ref )
 {
@@ -99,11 +109,19 @@ class BundleActivatorServiceListenerNotificationError : public IBundleActivator
 		IServiceBImpl serviceB;	
 
 	public:		
+		BundleActivatorServiceListenerNotificationError();
 		virtual ~BundleActivatorServiceListenerNotificationError();
 		virtual void start( IBundleContext::ConstPtr context );
 		virtual void stop( IBundleContext::ConstPtr context );	
 		static FaultyServiceListener& getServiceListener();
 };
+
+BundleActivatorServiceListenerNotificationError::BundleActivatorServiceListenerNotificationError()
+{
+	this->tracker = 0;
+	this->context = 0;
+	this->serviceReg = 0;
+}
 
 FaultyServiceListener& BundleActivatorServiceListenerNotificationError::getServiceListener()
 {

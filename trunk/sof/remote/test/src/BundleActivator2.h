@@ -27,6 +27,11 @@ class BundleActivator2 : public IRemoteBundleActivator, public IRemoteServiceTra
 
 	public:
 
+		/** 
+		 * Creates instances of class <code>BundleActivator2</code>.
+		 */
+		BundleActivator2();
+
 		/**
 		 * Destroys the test bundle.
 		 */
