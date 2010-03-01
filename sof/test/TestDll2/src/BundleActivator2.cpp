@@ -62,6 +62,8 @@ void BundleActivator2::stop( IBundleContext::ConstPtr context )
 	this->serviceReg2->unregister();
 	delete this->serviceReg1;
 	delete this->serviceReg2;
+	delete this->service1;
+	delete this->service2;
 }
 
 
