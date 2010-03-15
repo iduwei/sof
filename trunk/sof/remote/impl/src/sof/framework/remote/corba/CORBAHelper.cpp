@@ -119,13 +119,15 @@ CORBANamingService* CORBAHelper::createNamingService()
 	{
 		// Exception should not be catched here, but it is important for unit tests, because there 
 		// is no naming service started.
-		this->logger.log( Logger::ERROR_, "[CORBAHelper#createNamingService] No naming service available. OK for unit tests." );		
+		this->logger.log( Logger::ERROR_, "[CORBAHelper#createNamingService] No naming service available. OK for unit tests." );
+		return 0;
 	}
 	catch( ... )
 	{
 		// Exception should not be catched here, but it is important for unit tests, because there 
 		// is no naming service started.
 		this->logger.log( Logger::ERROR_, "[CORBAHelper#createNamingService] No naming service available. OK for unit tests." );
+		return 0;
 	}
 }
 
