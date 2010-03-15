@@ -2,8 +2,12 @@
 
 #include <CORBA.h>
 
+#include "sof/util/memory/ScopeGuard.h"
+
 #include "../RemoteServiceInfo.h"
 #include "../CORBAHelper.h"
+
+using namespace sof::util::memory;
 
 using namespace sof::framework::remote::corba::registry;
 using namespace sof::framework::remote::corba::generated;
@@ -53,6 +57,10 @@ void CORBARegistryObserverImpl::unregisterService( const char* bundleName, const
 	string bName( bundleName );
 	string sName( serviceName );
 	RemoteServiceInfo& info = this->corbaHelper.convertToServiceInfo( serviceName, CORBAService::_duplicate( service ), props );
+
+	// Bugfix: Memory leak of RemoteServiceInfo objects, ID: 2970487
+	ScopeGuard<RemoteServiceInfo> guard( &info );
+
 	this->registry.removeServiceInfo( bName, &info );
 	logger.log( Logger::DEBUG, "[CORBARegistryObserverImpl#unregisterService] Left." );
 }
