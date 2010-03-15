@@ -183,7 +183,7 @@ TEST( Services, RemoteSOFLauncherTest )
 	IRegistry& registry = launcher.getRegistry();
 
 	int result = TestHelper::isServiceListenerRegisteredByBundle( registry, "bundle1", "Multiplier" );
-	CHECK( result == 0 );
+	CHECK( result == 1 );
 	
 	result = TestHelper::isServiceListenerRegisteredByBundle( registry, "bundle2", "Multiplier" );
 	CHECK( result == 1 );
@@ -193,6 +193,12 @@ TEST( Services, RemoteSOFLauncherTest )
 	
 	result = TestHelper::isServiceRegisteredByBundle( registry, "bundle2" );
 	CHECK( result == 0 );
+
+	result = TestHelper::isServiceUsedByBundle( registry, "bundle1", "Multiplier", 1 );
+	CHECK( result == 1 );
+
+	result = TestHelper::isServiceUsedByBundle( registry, "bundle2", "Multiplier", 1 );
+	CHECK( result == 2 );
 
 	launcher.stop();
 

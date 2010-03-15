@@ -3,8 +3,9 @@
 
 #include "sof/framework/remote/corba/IRemoteBundleActivator.h"
 #include "sof/framework/remote/corba/IRemoteBundleContext.h"
-
+#include "sof/framework/remote/corba/IRemoteServiceTrackerCustomizer.h"
 #include "sof/framework/IServiceRegistration.h"
+#include "sof/framework/remote/corba/RemoteServiceTracker.h"
 
 #include "MultiplierImpl.h"
 
@@ -13,9 +14,14 @@ using namespace sof::framework::remote::corba;
 /**
  * Implements a test bundle and registers services.
  */
-class BundleActivator1 : public IRemoteBundleActivator
+class BundleActivator1 : public IRemoteBundleActivator, public IRemoteServiceTrackerCustomizer
 {
 	private:
+
+		/**
+		 * Tracks the test services.
+		 */
+		RemoteServiceTracker* tracker;
 
 		/**
 		 * The registration object of service 1.
@@ -58,6 +64,16 @@ class BundleActivator1 : public IRemoteBundleActivator
 		 * Stops the test bundle.
 		 */
 		virtual void stop( IRemoteBundleContext::ConstPtr context );
+
+		/**
+		 * Listener method is called when services are started.
+		 */
+		virtual bool addingService( const RemoteServiceReference& ref );
+
+		/**
+		 * Listener method is called when services were removed.
+		 */
+		virtual void removedService( const RemoteServiceReference& ref );
 };
 
 #endif
