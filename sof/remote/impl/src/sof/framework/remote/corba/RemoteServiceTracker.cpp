@@ -52,7 +52,7 @@ CORBA::Boolean RemoteServiceTracker::serviceChanged( const CORBAServiceEvent &re
 		if ( flag )
 		{
 			// Bugfix: [Remote SOF] Services 'in use' are not available - ID: 2818461
-			// only store as service as used service if return flag of 'addingService' call is true
+			// Note: only store a service as used service if return flag of 'addingService' call is true
 			logger.log( Logger::DEBUG, "[RemoteServiceTracker#serviceChanged] Service is used, cache used service." );
 			this->bundleCtxt->addUsedService( this->bundleCtxt->getBundleName(), (*info) );
 		}
