@@ -513,6 +513,14 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="memory"
+						>
+						<File
+							RelativePath=".\src\sof\util\memory\ScopeGuard.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="services"
