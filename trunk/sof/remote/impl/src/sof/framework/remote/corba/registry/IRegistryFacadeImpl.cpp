@@ -5,12 +5,13 @@
 
 #include "sof/framework/SOFException.h"
 #include "sof/framework/IServiceRegistrationImpl.h"
-
+#include "sof/util/memory/ScopeGuard.h"
 
 using namespace std;
 
 using namespace sof::framework;
 using namespace sof::util::logging;
+using namespace sof::util::memory;
 
 using namespace sof::framework::remote::corba::registry;
 
@@ -117,6 +118,9 @@ void IRegistryFacadeImpl::removeServiceInfo( const string& bundleName, ServiceIn
 	logger.log( Logger::DEBUG, "[IRegistryFacadeImpl#removeServiceInfo] Called, bundle name: %1, service info: %2",
 		bundleName, serviceInfo->toString() );	
 	RemoteServiceInfo* corbaServiceInfo = dynamic_cast<RemoteServiceInfo*> (serviceInfo);
+
+	// Bugfix: Memory leak of RemoteServiceInfo objects, ID: 2970487
+	ScopeGuard<RemoteServiceInfo> guard( corbaServiceInfo );
 	
 	logger.log( Logger::DEBUG, "[IRegistryFacadeImpl#removeServiceInfo] Unregister service at remote registry." );	
 	
@@ -128,7 +132,6 @@ void IRegistryFacadeImpl::removeServiceInfo( const string& bundleName, ServiceIn
 		);
 
 	logger.log( Logger::DEBUG, "[IRegistryFacadeImpl#removeServiceInfo] Deactivate corba object." );	
-
 	this->corbaHelper.deactivateObject( CORBAService::_duplicate( corbaServiceInfo->getRemoteService() ) );
 }
 
