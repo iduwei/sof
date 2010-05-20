@@ -6,12 +6,12 @@ Logger& ServiceInfo::logger = LoggerFactory::getLogger( "Framework" );
 
 ServiceInfo::ServiceInfo( const string &servName, IService::ConstPtr service, const Properties &properties ) : serviceName( servName ), props( properties ), service( service )
 {
-	logger.log( Logger::DEBUG, "[ServiceInfo#ctor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[ServiceInfo#ctor] Called." );
 }
 
 ServiceInfo::~ServiceInfo()
 {
-	logger.log( Logger::DEBUG, "[ServiceInfo#destructor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[ServiceInfo#destructor] Called." );
 }
 
 string ServiceInfo::getServiceName() const
@@ -46,7 +46,7 @@ bool ServiceInfo::operator==( const ServiceInfo& serviceInfo1 )
 
 bool ServiceInfo::equals( const ServiceInfo& info1, const ServiceInfo& info2 )
 {
-	logger.log( Logger::DEBUG, "[ServiceInfo#equals] Called." );	
+	logger.log( Logger::LOG_DEBUG, "[ServiceInfo#equals] Called." );	
 	if ( info1.getServiceName() == info2.getServiceName() &&
 		info1.getProperties() == info2.getProperties() &&
 		info1.getService() == info2.getService() )

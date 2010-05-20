@@ -9,12 +9,12 @@ using namespace sof::framework;
 
 BundleInfo::BundleInfo( const string& bdleName, IBundleActivator* act, IBundleContext::ConstPtr bundleCtxt ) : activator(act), BundleInfoBase( bdleName, bundleCtxt )
 {
-	logger.log( Logger::DEBUG, "[BundleInfo#ctor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[BundleInfo#ctor] Called." );
 }
 
 BundleInfo::~BundleInfo()
 {
-	logger.log( Logger::DEBUG, "[BundleInfo#destructor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[BundleInfo#destructor] Called." );
 }
 
 

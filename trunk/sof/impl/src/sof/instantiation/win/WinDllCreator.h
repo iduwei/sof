@@ -79,7 +79,7 @@ BaseT* WinDllCreator<BaseT>::createObjectFromDll( const string &path, const stri
 		str << path << '/' << dllName;	
 	}
 	
-	getLogger().log( Logger::DEBUG, "[WinDllCreator#createObjectFromDll] Loading DLL: '%1'", str.str() );
+	getLogger().log( Logger::LOG_DEBUG, "[WinDllCreator#createObjectFromDll] Loading DLL: '%1'", str.str() );
 
 	HMODULE hMod = NULL;
 	try
@@ -88,7 +88,7 @@ BaseT* WinDllCreator<BaseT>::createObjectFromDll( const string &path, const stri
 	}
 	catch( exception &exc )
 	{
-		getLogger().log( Logger::ERROR_, "[WinDllCreator#createObjectFromDll] Error occurred during loading DLL: %1", exc.what() );
+		getLogger().log( Logger::LOG_ERROR, "[WinDllCreator#createObjectFromDll] Error occurred during loading DLL: %1", exc.what() );
 		hMod = NULL;
 	}
 
@@ -104,7 +104,7 @@ BaseT* WinDllCreator<BaseT>::createObjectFromDll( const string &path, const stri
 	}
 	catch( exception &exc)
 	{
-		getLogger().log( Logger::ERROR_, "[WinDllCreator#createObjectFromDll] Error occurred during calling DLL entry method, %1", exc.what() );
+		getLogger().log( Logger::LOG_ERROR, "[WinDllCreator#createObjectFromDll] Error occurred during calling DLL entry method, %1", exc.what() );
 		pFunc = NULL;
 	}
 

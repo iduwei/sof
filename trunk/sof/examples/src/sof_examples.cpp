@@ -22,21 +22,21 @@ using namespace sof::instantiation::win;
 
 int main(int argc, char* argv[])
 {
-	Logger::LogLevel logLevel = Logger::DEBUG;
+	Logger::LogLevel logLevel = Logger::LOG_DEBUG;
 	for ( int i=0; i<argc; i++ )
 	{
 		string arg(argv[i]);
 		if ( arg == "-nolog" )
 		{
-			logLevel = Logger::NOLOG;
+			logLevel = Logger::LOG_NOLOG;
 		}
 		else if ( arg == "-errorlog" )
 		{
-			logLevel = Logger::ERROR_;
+			logLevel = Logger::LOG_ERROR;
 		}
 		else if ( arg == "-debuglog" )
 		{
-			logLevel = Logger::DEBUG;
+			logLevel = Logger::LOG_DEBUG;
 		}
 	}
 

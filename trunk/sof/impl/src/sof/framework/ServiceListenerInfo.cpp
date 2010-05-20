@@ -10,12 +10,12 @@ Logger& ServiceListenerInfo::logger = LoggerFactory::getLogger( "Framework" );
 
 ServiceListenerInfo::ServiceListenerInfo( const string& bdleName, const string& servName, IServiceListener::ConstPtr serviceListener ) : bundleName( bdleName ), serviceName( servName ), serviceListenerObj( serviceListener )
 {
-	logger.log( Logger::DEBUG, "[ServiceListenerInfo#ctor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[ServiceListenerInfo#ctor] Called." );
 }
 
 ServiceListenerInfo::~ServiceListenerInfo()
 {
-	logger.log( Logger::DEBUG, "[ServiceListenerInfo#destructor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[ServiceListenerInfo#destructor] Called." );
 }
  
 string ServiceListenerInfo::getBundleName() const

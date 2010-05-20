@@ -241,7 +241,7 @@ class LoggerImpl : public Logger
 		 * to the console, otherwise the log message is not printed.
 		 *
 		 * @param level
-		 *			The log level (NOLOG, ERROR_, TRACE, DEBUG.
+		 *			The log level (LOG_NOLOG, LOG_ERROR, LOG_TRACE, LOG_DEBUG.
 		 */
 		void setLogLevel( Logger::LogLevel level );
 

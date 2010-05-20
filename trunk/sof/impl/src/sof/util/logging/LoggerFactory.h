@@ -60,7 +60,7 @@ class LoggerFactory
 		 * This method sets the log level for all existing loggers.
 		 *
 		 * @param level
-		 *			The log level (NO_LOG, ERROR_, TRACE, DEBUG).
+		 *			The log level (LOG_NOLOG, LOG_ERROR, LOG_TRACE, LOG_DEBUG).
 		 */
 		static void setLogLevel( Logger::LogLevel level );
 };

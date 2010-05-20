@@ -24,42 +24,42 @@ Logger& IAdministrationServiceImpl::logger = LoggerFactory::getLogger( "services
 
 IAdministrationServiceImpl::IAdministrationServiceImpl( IAdministrationProvider* provider ) : adminProvider( provider )
 {
-	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#ctor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[IAdministrationServiceImpl#ctor] Called." );
 }
 
 vector<string> IAdministrationServiceImpl::getBundleNames()
 {
-	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#getBundleNames] Called." );
+	logger.log( Logger::LOG_DEBUG, "[IAdministrationServiceImpl#getBundleNames] Called." );
 	return this->adminProvider->getBundleNames();
 }
 
 string IAdministrationServiceImpl::dumpBundleInfo( const string& bundleName )
 {
-	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#dumpBundleInfo] Called, bundle name: %1", bundleName );
+	logger.log( Logger::LOG_DEBUG, "[IAdministrationServiceImpl#dumpBundleInfo] Called, bundle name: %1", bundleName );
 	return this->adminProvider->dumpBundleInfo( bundleName );
 }
 
 string IAdministrationServiceImpl::dumpAllBundleNames()
 {
-	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#dumpAllBundleNames] Called." );
+	logger.log( Logger::LOG_DEBUG, "[IAdministrationServiceImpl#dumpAllBundleNames] Called." );
 	return this->adminProvider->dumpAllBundleNames();
 }
 
 void IAdministrationServiceImpl::stopBundle( const string& bundleName )
 {
-	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#stopBundle] Called, bundle name: %1", bundleName );
+	logger.log( Logger::LOG_DEBUG, "[IAdministrationServiceImpl#stopBundle] Called, bundle name: %1", bundleName );
 	this->adminProvider->stopBundle( bundleName );
 }
 
 void IAdministrationServiceImpl::stopAllBundles()
 {
-	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#stopAllBundles] Called." );
+	logger.log( Logger::LOG_DEBUG, "[IAdministrationServiceImpl#stopAllBundles] Called." );
 	this->adminProvider->stop();
 }
 
 void IAdministrationServiceImpl::startBundleFromDLL( const string& bundleName, const string& className, const string& libPath, const string& libName )
 {
-	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#startBundleFromDLL] Called, bundle name: %1, class name: %2", bundleName, className );
+	logger.log( Logger::LOG_DEBUG, "[IAdministrationServiceImpl#startBundleFromDLL] Called, bundle name: %1, class name: %2", bundleName, className );
 	BundleConfiguration bundleConf( bundleName, className, libPath, libName );
 	vector<BundleConfiguration> vec;
 	vec.push_back( bundleConf );
@@ -68,7 +68,7 @@ void IAdministrationServiceImpl::startBundleFromDLL( const string& bundleName, c
 
 void IAdministrationServiceImpl::startBundle( const string& bundleName, const string& className )
 {
-	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#startBundle] Called, bundle name: %1, class name: %2", bundleName, className );
+	logger.log( Logger::LOG_DEBUG, "[IAdministrationServiceImpl#startBundle] Called, bundle name: %1, class name: %2", bundleName, className );
 	BundleConfiguration bundleConf( bundleName, className );
 	vector<BundleConfiguration> vec;
 	vec.push_back( bundleConf );
@@ -77,14 +77,14 @@ void IAdministrationServiceImpl::startBundle( const string& bundleName, const st
 
 void IAdministrationServiceImpl::startBundlesFromConfigFile( const string& configFile )
 {
-	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#startBundles] Called, configFile: %1", configFile );
+	logger.log( Logger::LOG_DEBUG, "[IAdministrationServiceImpl#startBundles] Called, configFile: %1", configFile );
 	vector<BundleConfiguration> bundleConfVec = ConfigFileReader::readFromFile( configFile );
 	this->adminProvider->start( bundleConfVec );
 }
 
 void IAdministrationServiceImpl::startConsole()
 {
-	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#startConsole] Called." );
+	logger.log( Logger::LOG_DEBUG, "[IAdministrationServiceImpl#startConsole] Called." );
 
 	DumpBundleInfoCmd dumpBundleCmd;
 	this->cmdMap[dumpBundleCmd.getName()] = &dumpBundleCmd;
@@ -118,7 +118,7 @@ void IAdministrationServiceImpl::startConsole()
 	while( getline(cin,input) ) 
 	{
 		tokens.clear();
-		logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#startConsole] Input: %1", input );
+		logger.log( Logger::LOG_DEBUG, "[IAdministrationServiceImpl#startConsole] Input: %1", input );
 			
 		StringTokenizer::tokenize( input, tokens );
 		if ( tokens.size() >=1 )
@@ -141,7 +141,7 @@ void IAdministrationServiceImpl::startConsole()
 				continue;
 			}
 
-			logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#startConsole] Token: %1", tokens[0] );
+			logger.log( Logger::LOG_DEBUG, "[IAdministrationServiceImpl#startConsole] Token: %1", tokens[0] );
  			map<string,ConsoleCommand*>::iterator cmdIter;
  			cmdIter = this->cmdMap.find(tokens[0]);
  			if ( cmdIter == this->cmdMap.end() )
@@ -168,7 +168,7 @@ void IAdministrationServiceImpl::startConsole()
 
 void IAdministrationServiceImpl::stopConsole()
 {
-	logger.log( Logger::DEBUG, "[IAdministrationServiceImpl#stopConsole] Called." );
+	logger.log( Logger::LOG_DEBUG, "[IAdministrationServiceImpl#stopConsole] Called." );
 }
 
 
