@@ -18,7 +18,7 @@ using namespace std;
  *		<li>The parameters containing the current values of variables.<br>
  * </ul><br>
  * Example:<p>
- * logInstance.log( Logger::DEBUG, "Value of the loop variable: %1", counter );<p>
+ * logInstance.log( Logger::LOG_DEBUG, "Value of the loop variable: %1", counter );<p>
  *
  * The <code>log</code> call in the example leads to following output (if loop variable
  * has the value "2"):<p>
@@ -41,14 +41,14 @@ class Logger
 		 * Note: The "_" after 'ERROR' is a workaround and 
 		 * is written due to compiling problems.
 		 */
-		enum LogLevel { NOLOG, ERROR_ = 1, TRACE, DEBUG };
+		enum LogLevel { LOG_NOLOG, LOG_ERROR = 1, LOG_TRACE, LOG_DEBUG };
 
 		/**
 		 * Prints out a log message.
 		 *
 		 * @param level
 		 *			The log level. The log level must have one of following values:
-		 *			ERROR_, TRACE, DEBUG.
+		 *			LOG_ERROR, TRACE, LOG_DEBUG.
 		 * @param message
 		 *			The text which describes what happened.
 		 *
@@ -185,9 +185,9 @@ class Logger
 		 *
 		 * @param level
 		 *			If the log level of the logger instance is set
-		 *			to NOLOG, no log message will be visible on console.
-		 *			The ERROR_ level prints out only the error messages and the
-		 *			DEBUG level prints out all kind of log messages (ERROR_, TRACE, DEBUG).
+		 *			to LOG_NOLOG, no log message will be visible on console.
+		 *			The LOG_ERROR level prints out only the error messages and the
+		 *			LOG_DEBUG level prints out all kind of log messages (LOG_ERROR, LOG_TRACE, LOG_DEBUG).
 		 *			That means the highest log level (regarding to the enum value) 
 		 *			contains the lower levels.
 		 */

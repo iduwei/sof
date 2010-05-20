@@ -204,7 +204,7 @@ template<
 	template <class> class CreationPolicy>
 ObjectCreator<BaseT,CreationPolicy>::ObjectCreator() : localSearch( true ), path( "" ), dllName( "" )
 {	
-	getLogger().log( Logger::DEBUG, "[ObjectCreator#ctor] Called" );
+	getLogger().log( Logger::LOG_DEBUG, "[ObjectCreator#ctor] Called" );
 }
 
 template<
@@ -212,9 +212,9 @@ template<
 	template <class> class CreationPolicy>
 void ObjectCreator<BaseT,CreationPolicy>::setSearchConfiguration( bool searchLocal, const string &pathName, const string &libName )
 {
-	getLogger().log( Logger::DEBUG, "[ObjectCreator#setSearchConfiguration] Called, local search: %1", searchLocal );
+	getLogger().log( Logger::LOG_DEBUG, "[ObjectCreator#setSearchConfiguration] Called, local search: %1", searchLocal );
 	
-	getLogger().log( Logger::DEBUG, "[ObjectCreator#setSearchConfiguration] Called, path name: %1, lib name: %2",
+	getLogger().log( Logger::LOG_DEBUG, "[ObjectCreator#setSearchConfiguration] Called, path name: %1, lib name: %2",
 		pathName, libName );
 	this->localSearch = searchLocal;
 	this->path = pathName;
@@ -227,9 +227,9 @@ template<
 ObjectCreator<BaseT,CreationPolicy>::ObjectCreator( bool doLocalSearch, const string &dllPath, const string &dll ) : 
 	localSearch( doLocalSearch ), path( dllPath ), dllName( dll )
 {
-	getLogger().log( Logger::DEBUG, "[ObjectCreator#ctor] Called, local search: %1", doLocalSearch );
+	getLogger().log( Logger::LOG_DEBUG, "[ObjectCreator#ctor] Called, local search: %1", doLocalSearch );
 	
-	getLogger().log( Logger::DEBUG, "[ObjectCreator#ctor] Called, dll path: %1, lib name: %2",
+	getLogger().log( Logger::LOG_DEBUG, "[ObjectCreator#ctor] Called, dll path: %1, lib name: %2",
 		dllPath, dll );
 }
 
@@ -238,13 +238,13 @@ template<
 	template <class> class CreationPolicy>
 map<string,BaseFactory<BaseT>* >* ObjectCreator<BaseT,CreationPolicy>::getInstanceMap()
 {
-	getLogger().log( Logger::DEBUG, "[ObjectCreator#getInstanceMap] Called." );
+	getLogger().log( Logger::LOG_DEBUG, "[ObjectCreator#getInstanceMap] Called." );
 	if ( instanceMap == 0 )
 	{
-		getLogger().log( Logger::DEBUG, "[ObjectCreator#getInstanceMap] Instance map is null, create it." );
+		getLogger().log( Logger::LOG_DEBUG, "[ObjectCreator#getInstanceMap] Instance map is null, create it." );
 		instanceMap = new map<string,BaseFactory<BaseT>* >;
 	}
-	getLogger().log( Logger::DEBUG, "[ObjectCreator#getInstanceMap] Return instance map." );
+	getLogger().log( Logger::LOG_DEBUG, "[ObjectCreator#getInstanceMap] Return instance map." );
 	return instanceMap;
 }
 
@@ -253,9 +253,9 @@ template<
 	template <class> class CreationPolicy>
 void ObjectCreator<BaseT,CreationPolicy>::addFactory( const string &key, BaseFactory<BaseT>* intantiator )
 {
-	getLogger().log( Logger::DEBUG, "[ObjectCreator#addFactory] Called, key: '%1'", key );
+	getLogger().log( Logger::LOG_DEBUG, "[ObjectCreator#addFactory] Called, key: '%1'", key );
 	(*getInstanceMap())[key] = intantiator;
-	getLogger().log( Logger::DEBUG, "[ObjectCreator#addFactory] Factory for key '%1' added.", key );		
+	getLogger().log( Logger::LOG_DEBUG, "[ObjectCreator#addFactory] Factory for key '%1' added.", key );		
 }
 
 template<
@@ -265,11 +265,11 @@ BaseT* ObjectCreator<BaseT,CreationPolicy>::createObject( const string &key )
 {	
 	if ( this->localSearch )
 	{
-		getLogger().log( Logger::DEBUG, "[ObjectCreator#createObject] Do local search, path='%1', key='%2'", path, key);
+		getLogger().log( Logger::LOG_DEBUG, "[ObjectCreator#createObject] Do local search, path='%1', key='%2'", path, key);
 		if ( ( path == "" ) && ( dllName == "" ) )
 		{
 			// do only local search
-			getLogger().log( Logger::DEBUG, "[ObjectCreator#createObject] Do ONLY local search." );
+			getLogger().log( Logger::LOG_DEBUG, "[ObjectCreator#createObject] Do ONLY local search." );
 			return createLocalObject( key );
 		}
 		else
@@ -280,14 +280,14 @@ BaseT* ObjectCreator<BaseT,CreationPolicy>::createObject( const string &key )
 			}
 			catch( ObjectCreationException &exc )
 			{
-				getLogger().log( Logger::DEBUG, "[ObjectCreator#createObject] Local search failed, load from DLL." );			
+				getLogger().log( Logger::LOG_DEBUG, "[ObjectCreator#createObject] Local search failed, load from DLL." );			
 				return createObjectFromDll( this->path, this->dllName, key );
 			}			
 		}
 	}
 	else
 	{
-		getLogger().log( Logger::DEBUG, "[ObjectCreator#createObject] Do NOT local search, but load directly from DLL." );			
+		getLogger().log( Logger::LOG_DEBUG, "[ObjectCreator#createObject] Do NOT local search, but load directly from DLL." );			
 		// search in DLL for loading object
 		return createObjectFromDll( this->path, this->dllName, key );
 	}		
@@ -298,11 +298,11 @@ template<
 	template <class> class CreationPolicy>
 BaseT* ObjectCreator<BaseT,CreationPolicy>::createLocalObject( const string &key )
 {	
-	getLogger().log( Logger::ERROR_, "[ObjectCreator#createLocalObject] Called, key: %1", key );					
+	getLogger().log( Logger::LOG_ERROR, "[ObjectCreator#createLocalObject] Called, key: %1", key );					
 	BaseFactory<BaseT>* intantiator = ( *(ObjectCreator<BaseT,NullCreator>::getInstanceMap()) )[key];
 	if ( intantiator == 0 )
 	{
-		getLogger().log( Logger::ERROR_, "[ObjectCreator#createLocalObject] No intantiator for class available." );					
+		getLogger().log( Logger::LOG_ERROR, "[ObjectCreator#createLocalObject] No intantiator for class available." );					
 		ObjectCreationException exc( "No intantiator for class available." );
 		throw exc;
 	}
@@ -314,7 +314,7 @@ template<
 	template <class> class CreationPolicy>
 BaseT* ObjectCreator<BaseT,CreationPolicy>::createObjectFromDll( const string &path, const string &dllName, const string &className )
 {	
-	getLogger().log( Logger::ERROR_, "[ObjectCreator#createObjectFromDll] Called, DLL name: %1, class name: %2", dllName, className );	
+	getLogger().log( Logger::LOG_ERROR, "[ObjectCreator#createObjectFromDll] Called, DLL name: %1, class name: %2", dllName, className );	
 	return CreationPolicy<BaseT>::createObjectFromDll( path, dllName, className );
 }
 

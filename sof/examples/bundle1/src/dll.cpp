@@ -26,25 +26,25 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 {			
 	if(ul_reason_for_call==DLL_THREAD_ATTACH)
 	{
-	  LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[bundle1_dll#DllMain] Called, dll thread attach." );
+	  LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[bundle1_dll#DllMain] Called, dll thread attach." );
 	}
 
 	if(ul_reason_for_call==DLL_THREAD_DETACH)
 	{
-	  LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[bundle1_dll#DllMain] Called, dll thread detach." );
+	  LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[bundle1_dll#DllMain] Called, dll thread detach." );
 	}
 
 	if(ul_reason_for_call==DLL_PROCESS_ATTACH)
 	{
-	  LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[bundle1_dll#DllMain] Called, dll process attach." );
+	  LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[bundle1_dll#DllMain] Called, dll process attach." );
 	}
 
 	if(ul_reason_for_call==DLL_PROCESS_DETACH)
 	{
-	  LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[bundle1_dll#DllMain] Called, dll process detach." );
+	  LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[bundle1_dll#DllMain] Called, dll process detach." );
 	}
 
-	LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[bundle1_dll#DllMain] Left." );
+	LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[bundle1_dll#DllMain] Left." );
 	return TRUE;
 }
 
@@ -52,7 +52,7 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 DLL IBundleActivator* createObject( const string &className )
 {	
 	ObjectCreator<IBundleActivator> OC_BUNDLE_ACTIVATOR;
-	LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[bundle1_dll#createObject] Loading instance of class '%1'.", className );
+	LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[bundle1_dll#createObject] Loading instance of class '%1'.", className );
 	return OC_BUNDLE_ACTIVATOR.createObject( className );					
 }
 

@@ -27,7 +27,7 @@ vector<BundleConfiguration> ConfigFileReader::readFromFile( const string& filena
 	vector<string> tokens;
 	while (fin.good()) {
 		getline(fin,buffer,'\n');
-		logger.log( Logger::DEBUG, "[ConfigFileReader#readFromFile] Read line: %1", buffer );
+		logger.log( Logger::LOG_DEBUG, "[ConfigFileReader#readFromFile] Read line: %1", buffer );
 		StringTokenizer::tokenize( buffer, tokens, "," );
 		if ( tokens.size() == 2 )
 		{
@@ -41,7 +41,7 @@ vector<BundleConfiguration> ConfigFileReader::readFromFile( const string& filena
 		}
 		else
 		{
-			logger.log( Logger::DEBUG, "[ConfigFileReader#readFromFile] Read line is ignored, no valid bundle configuration." );
+			logger.log( Logger::LOG_DEBUG, "[ConfigFileReader#readFromFile] Read line is ignored, no valid bundle configuration." );
 		}
 		tokens.clear();
 	}

@@ -10,7 +10,7 @@ template<
 	template <class> class CreationPolicy>
 Launcher<ThreadingModel, CreationPolicy>::Launcher() 
 {
-	logger.log( Logger::DEBUG, "[Launcher#ctor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[Launcher#ctor] Called." );
 	this->registry = this->createRegistry();
 }
  
@@ -19,7 +19,7 @@ template<
 	template <class> class CreationPolicy>
 Launcher<ThreadingModel, CreationPolicy>::~Launcher() 
 {
-	logger.log( Logger::DEBUG, "[Launcher#destructor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[Launcher#destructor] Called." );
 	delete (this->registry);
 }
 
@@ -45,7 +45,7 @@ template<
 	template <class> class CreationPolicy>
 IRegistry* Launcher<ThreadingModel, CreationPolicy>::createRegistry()
 {
-	logger.log( Logger::DEBUG, "[Launcher#createRegistry] Called." );
+	logger.log( Logger::LOG_DEBUG, "[Launcher#createRegistry] Called." );
 	return new IRegistryImpl<ThreadingModel>;
 }
 
@@ -54,7 +54,7 @@ template<
 	template <class> class CreationPolicy>
 IBundleContext* Launcher<ThreadingModel, CreationPolicy>::createBundleContext( const string& bundleName )
 {
-	logger.log( Logger::DEBUG, "[Launcher#createBundleContext] Called." );
+	logger.log( Logger::LOG_DEBUG, "[Launcher#createBundleContext] Called." );
 	return new IBundleContextImpl( bundleName, this->registry );
 }
 
@@ -63,7 +63,7 @@ template<
 	template <class> class CreationPolicy>
 void Launcher<ThreadingModel, CreationPolicy>::start( vector<BundleConfiguration> &configVector )
 {
-	logger.log( Logger::DEBUG, "[Launcher#start] Called." );
+	logger.log( Logger::LOG_DEBUG, "[Launcher#start] Called." );
 
 	vector<BundleConfiguration>::iterator itVectorData;
 	itVectorData = configVector.begin();
@@ -73,10 +73,10 @@ void Launcher<ThreadingModel, CreationPolicy>::start( vector<BundleConfiguration
 		this->objectCreator.setSearchConfiguration( true, 
 			bundleConfig.getLibraryPath(), bundleConfig.getLibraryName() );
 		
-		logger.log( Logger::DEBUG, "[Launcher#start] Reading configuration: Library path: %1, class name: %2",
+		logger.log( Logger::LOG_DEBUG, "[Launcher#start] Reading configuration: Library path: %1, class name: %2",
 			bundleConfig.getLibraryPath(), bundleConfig.getClassName() );
 		
-		logger.log( Logger::DEBUG, "[Launcher#start] Loading bundle activator: Library path: %1, class name: %2",
+		logger.log( Logger::LOG_DEBUG, "[Launcher#start] Loading bundle activator: Library path: %1, class name: %2",
 			bundleConfig.getLibraryPath(), bundleConfig.getClassName() );
 		
 		IBundleActivator* bundleActivator;
@@ -87,7 +87,7 @@ void Launcher<ThreadingModel, CreationPolicy>::start( vector<BundleConfiguration
 		catch( ObjectCreationException &exc )
 		{
 			string msg( exc.what() );
-			logger.log( Logger::ERROR_, "[Launcher#start] Error during loading bundle activator, exc: %1", msg );
+			logger.log( Logger::LOG_ERROR, "[Launcher#start] Error during loading bundle activator, exc: %1", msg );
 			continue;
 		}
 
@@ -96,7 +96,7 @@ void Launcher<ThreadingModel, CreationPolicy>::start( vector<BundleConfiguration
 		BundleInfoBase* bundleInfo = new BundleInfo( bundleConfig.getBundleName(), bundleActivator, bundleCtxt );		
 		this->registry->addBundleInfo( bundleInfo );
 
-		logger.log( Logger::DEBUG, "[Launcher#start] Start bundle." );
+		logger.log( Logger::LOG_DEBUG, "[Launcher#start] Start bundle." );
 		
 		bundleActivator->start( bundleCtxt );
 	}	
@@ -107,14 +107,14 @@ template<
 	template <class> class CreationPolicy>
 void Launcher<ThreadingModel, CreationPolicy>::startAdministrationBundle()
 {
-	logger.log( Logger::DEBUG, "[Launcher#startAdministrationBundle] Called." );
+	logger.log( Logger::LOG_DEBUG, "[Launcher#startAdministrationBundle] Called." );
 	IBundleActivator* adminBundleActivator = this->objectCreator.createObject( "sof::services::admin::AdministrationActivator" );
 	IBundleContext* bundleCtxt = this->createBundleContext( "AdministrationBundle" );
 		
 	BundleInfoBase* bundleInfo = new BundleInfo( "AdministrationBundle", adminBundleActivator, bundleCtxt );		
 	this->registry->addBundleInfo( bundleInfo );
 
-	logger.log( Logger::DEBUG, "[Launcher#start] Start bundle." );
+	logger.log( Logger::LOG_DEBUG, "[Launcher#start] Start bundle." );
 		
 	AdministrationActivator* adminActivator = static_cast<AdministrationActivator*> (adminBundleActivator);	
 	adminActivator->setAdministrationProvider( this );
@@ -126,7 +126,7 @@ template<
 	template <class> class CreationPolicy>
 void Launcher<ThreadingModel, CreationPolicy>::stop()
 {
-	logger.log( Logger::DEBUG, "[Launcher#stop] Called." );	
+	logger.log( Logger::LOG_DEBUG, "[Launcher#stop] Called." );	
 	this->registry->removeAllBundleInfos();
 }
 
@@ -135,7 +135,7 @@ template<
 	template <class> class CreationPolicy>
 void Launcher<ThreadingModel, CreationPolicy>::startBundle( BundleConfiguration bundleConfig )
 {
-	logger.log( Logger::DEBUG, "[Launcher#startBundle] Called, bundle config: %1", bundleConfig.toString() );	
+	logger.log( Logger::LOG_DEBUG, "[Launcher#startBundle] Called, bundle config: %1", bundleConfig.toString() );	
 	vector<BundleConfiguration> vec;
 	vec.push_back( bundleConfig );
 	this->start( vec );
@@ -146,7 +146,7 @@ template<
 	template <class> class CreationPolicy>
 void Launcher<ThreadingModel, CreationPolicy>::stopBundle( const string& bundleName )
 {
-	logger.log( Logger::DEBUG, "[Launcher#stopBundle] Called, bundle name: %1", bundleName );		
+	logger.log( Logger::LOG_DEBUG, "[Launcher#stopBundle] Called, bundle name: %1", bundleName );		
 	this->registry->removeBundleInfo( bundleName );
 }
 
