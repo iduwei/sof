@@ -15,7 +15,7 @@ using namespace sof::framework;
 
 int main()
 {	
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[sof_remote_test#main] *** Begin tests...." );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[sof_remote_test#main] *** Begin tests...." );
     TestResult tr;
     TestRegistry::runAllTests(tr);
 	return 0;

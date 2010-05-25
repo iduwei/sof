@@ -27,7 +27,7 @@ using namespace sof::instantiation;
  */
 TEST( ObjectCreator, Loading )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[ObjectCreatorTest] *** ObjectCreator-Loading Test" );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[ObjectCreatorTest] *** ObjectCreator-Loading Test" );
 		
 	// only local search
 	ObjectCreator<ITest,NullCreator> OC;
@@ -40,7 +40,7 @@ TEST( ObjectCreator, Loading )
 	catch( ObjectCreationException &exc )
 	{
 		string msg( exc.what() );
-		UnitTestLogger::getInstance().log( Logger::DEBUG, "[ObjectCreatorTest] Exception occured: %1", msg );	
+		UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[ObjectCreatorTest] Exception occured: %1", msg );	
 		FAIL( "Should not happen, class must be loadable" );
 	}	
 }
@@ -53,7 +53,7 @@ TEST( ObjectCreator, Loading )
  */
 TEST( ObjectCreator, LoadingAndCast )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[ObjectCreatorTest] *** ObjectLoader-LoadingAndCast Test" );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[ObjectCreatorTest] *** ObjectLoader-LoadingAndCast Test" );
 	
 	// only local search
 	ObjectCreator<ITest,NullCreator> OC;
@@ -65,7 +65,7 @@ TEST( ObjectCreator, LoadingAndCast )
 	}
 	catch( ObjectCreationException &exc )
 	{
-		UnitTestLogger::getInstance().log( Logger::DEBUG, "[ObjectCreatorTest] Exception occured: %1", string( exc.what() ) );	
+		UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[ObjectCreatorTest] Exception occured: %1", string( exc.what() ) );	
 		FAIL( "Should not happen, class must be loadable" );
 	}	
 }
@@ -77,7 +77,7 @@ TEST( ObjectCreator, LoadingAndCast )
  */
 TEST( ObjectCreator, NotAvailableClass )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[ObjectCreatorTest] *** ObjectLoader-NotAvailableClass Test" );	
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[ObjectCreatorTest] *** ObjectLoader-NotAvailableClass Test" );	
 	
 	// only local search
 	ObjectCreator<ITest,NullCreator> OC;
@@ -90,7 +90,7 @@ TEST( ObjectCreator, NotAvailableClass )
 	catch( ObjectCreationException &exc )
 	{
 		// OK!
-		UnitTestLogger::getInstance().log( Logger::DEBUG, "[ObjectCreatorTest] Exception occured: %1", string( exc.what() ) );			
+		UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[ObjectCreatorTest] Exception occured: %1", string( exc.what() ) );			
 	}	
 }
 
@@ -102,7 +102,7 @@ TEST( ObjectCreator, NotAvailableClass )
  */
 TEST( ObjectCreator, LoadingAndWrongCast )
 {	
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[ObjectCreatorTest] *** ObjectLoader-LoadingAndWrongCast Test" );	
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[ObjectCreatorTest] *** ObjectLoader-LoadingAndWrongCast Test" );	
 	
 	ObjectCreator<BaseTestClass,NullCreator> OC;	
 	
@@ -117,7 +117,7 @@ TEST( ObjectCreator, LoadingAndWrongCast )
  */
 TEST( ObjectCreator, LoadFromDLLWithNullCreator )
 {	
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[ObjectCreatorTest] *** ObjectLoader-LoadFromDLLWithNullCreator Test" );	
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[ObjectCreatorTest] *** ObjectLoader-LoadFromDLLWithNullCreator Test" );	
 	
 	ObjectCreator<ITest,NullCreator> OC;
 	ITest* test = OC.createObjectFromDll( ".", "sof_TestDll1.dll", "ITestImpl2" );

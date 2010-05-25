@@ -30,7 +30,7 @@ BundleActivator2::BundleActivator2()
 
 void BundleActivator2::start( IBundleContext::ConstPtr context )
 {
-	LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[BundleActivator2#start] Called." );
+	LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[BundleActivator2#start] Called." );
 	this->tracker = new ServiceTracker( context, "ServiceB", this );
 	this->tracker->startTracking();
 
@@ -49,12 +49,12 @@ void BundleActivator2::start( IBundleContext::ConstPtr context )
 
 BundleActivator2::~BundleActivator2()
 {
-	LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[BundleActivator2#destructor] Called." );
+	LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[BundleActivator2#destructor] Called." );
 }
 
 void BundleActivator2::stop( IBundleContext::ConstPtr context )
 {
-	LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[BundleActivator2#stop] Called." );
+	LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[BundleActivator2#stop] Called." );
 	this->tracker->stopTracking();
 	delete this->tracker;
 
@@ -69,14 +69,14 @@ void BundleActivator2::stop( IBundleContext::ConstPtr context )
 
 bool BundleActivator2::addingService( const ServiceReference& ref )
 {
-	LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[BundleActivator2#addingService] Called, service name: %1", ref.getServiceName() );
+	LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[BundleActivator2#addingService] Called, service name: %1", ref.getServiceName() );
 	if ( ref.getServiceName() == "ServiceB" )
 	{
-		LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[BundleActivator2#addingService] ServiceB found." );
+		LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[BundleActivator2#addingService] ServiceB found." );
 		Properties props = ref.getServiceProperties();
 		if ( props.get( "instance" ) == "1" )
 		{
-			LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[BundleActivator2#addingService] Instance 1 found." );
+			LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[BundleActivator2#addingService] Instance 1 found." );
 			return true;
 		}
 		else
@@ -92,7 +92,7 @@ bool BundleActivator2::addingService( const ServiceReference& ref )
 
 void BundleActivator2::removedService( const ServiceReference& ref )
 {
-	LoggerFactory::getLogger( "Test" ).log( Logger::DEBUG, "[BundleActivator2#removedService] Called, service name: %1", ref.getServiceName() );
+	LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[BundleActivator2#removedService] Called, service name: %1", ref.getServiceName() );
 }
 
 REGISTER_BUNDLE_ACTIVATOR_CLASS("BundleActivator2",BundleActivator2)

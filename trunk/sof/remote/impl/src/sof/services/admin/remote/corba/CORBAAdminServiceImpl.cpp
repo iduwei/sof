@@ -13,24 +13,24 @@ Logger& CORBAAdminServiceImpl::logger = LoggerFactory::getLogger( "Remote-Framew
 
 CORBAAdminServiceImpl::CORBAAdminServiceImpl( IAdministrationProvider& provider ) : adminProvider( provider )
 {	
-	logger.log( Logger::DEBUG, "[CORBAAdminServiceImpl#ctor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[CORBAAdminServiceImpl#ctor] Called." );
 }
 
 CORBAAdminServiceImpl::~CORBAAdminServiceImpl()
 {
-	logger.log( Logger::DEBUG, "[CORBAAdminServiceImpl#destructor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[CORBAAdminServiceImpl#destructor] Called." );
 }
 
 CORBABundleNameSequence* CORBAAdminServiceImpl::getBundleNames()
 {
-	logger.log( Logger::DEBUG, "[CORBAAdminServiceImpl#getBundleNames] Called." );
+	logger.log( Logger::LOG_DEBUG, "[CORBAAdminServiceImpl#getBundleNames] Called." );
 	vector<string> bundleNames = this->adminProvider.getBundleNames();
 	return DataConverter::convert( bundleNames );	
 }
 
 CORBAAdminServiceInfoSequence* CORBAAdminServiceImpl::getUsedServices( const char* bundleName ) 
 {
-	logger.log( Logger::DEBUG, "[CORBAAdminServiceImpl#getUsedServices] Called, bundleName: %1",
+	logger.log( Logger::LOG_DEBUG, "[CORBAAdminServiceImpl#getUsedServices] Called, bundleName: %1",
 		bundleName );
 
 	BundleInfoBase& bundleInfo = this->adminProvider.getBundleInfo( bundleName );
@@ -41,9 +41,9 @@ CORBAAdminServiceInfoSequence* CORBAAdminServiceImpl::getUsedServices( const cha
 CORBAAdminServiceInfoSequence* CORBAAdminServiceImpl::getRegisteredServices( const char* bundleName )
 {
 	string bName( bundleName );
-	logger.log( Logger::DEBUG, "[CORBAAdminServiceImpl#getRegisteredServices] Called, bundleName: %1", bName );
+	logger.log( Logger::LOG_DEBUG, "[CORBAAdminServiceImpl#getRegisteredServices] Called, bundleName: %1", bName );
 	BundleInfoBase& bundleInfo = this->adminProvider.getBundleInfo( bName );
-	logger.log( Logger::DEBUG, "[CORBAAdminServiceImpl#getRegisteredServices] Convert bundle info: %1",
+	logger.log( Logger::LOG_DEBUG, "[CORBAAdminServiceImpl#getRegisteredServices] Convert bundle info: %1",
 		bundleInfo.toString() );
 	return DataConverter::convert( bundleInfo.getRegisteredServices() );	
 }
@@ -51,7 +51,7 @@ CORBAAdminServiceInfoSequence* CORBAAdminServiceImpl::getRegisteredServices( con
 CORBAAdminServiceListenerInfoSequence* CORBAAdminServiceImpl::getRegisteredServiceListeners( const char* bundleName ) 
 {
 	string bName( bundleName );
-	logger.log( Logger::DEBUG, "[CORBAAdminServiceImpl#getRegisteredServiceListeners] Called, bundleName: %1",
+	logger.log( Logger::LOG_DEBUG, "[CORBAAdminServiceImpl#getRegisteredServiceListeners] Called, bundleName: %1",
 		bName );
 
 	BundleInfoBase& bundleInfo = this->adminProvider.getBundleInfo( bName );

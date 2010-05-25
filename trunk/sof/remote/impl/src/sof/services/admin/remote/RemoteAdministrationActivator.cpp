@@ -22,7 +22,7 @@ RemoteAdministrationActivator::RemoteAdministrationActivator()
 
 void RemoteAdministrationActivator::start( IRemoteBundleContext::ConstPtr context )
 {
-	log.log( Logger::DEBUG, "[RemoteAdministrationActivator#start] Called." );
+	log.log( Logger::LOG_DEBUG, "[RemoteAdministrationActivator#start] Called." );
 	
 	//Properties props;
 	this->adminService = new IAdministrationServiceImpl( this->adminProvider );
@@ -32,7 +32,7 @@ void RemoteAdministrationActivator::start( IRemoteBundleContext::ConstPtr contex
 
 void RemoteAdministrationActivator::stop( IRemoteBundleContext::ConstPtr context )
 {
-	log.log( Logger::DEBUG, "[RemoteAdministrationActivator#stop] Called." );
+	log.log( Logger::LOG_DEBUG, "[RemoteAdministrationActivator#stop] Called." );
 	//this->serviceReg->unregister();
 	//delete (this->serviceReg);
 	delete (this->adminService);
@@ -40,7 +40,7 @@ void RemoteAdministrationActivator::stop( IRemoteBundleContext::ConstPtr context
 
 void RemoteAdministrationActivator::setAdministrationProvider( IAdministrationProvider* provider )
 {
-	log.log( Logger::DEBUG, "[RemoteAdministrationActivator#setLauncher] Called." );
+	log.log( Logger::LOG_DEBUG, "[RemoteAdministrationActivator#setLauncher] Called." );
 	this->adminProvider = provider;
 }
 

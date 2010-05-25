@@ -8,7 +8,7 @@ template<
 	template <class> class CreationPolicy>
 RemoteSOFLauncher<ThreadingModel, CreationPolicy>::RemoteSOFLauncher( CORBAHelper& cHelper, const string& procName ) : corbaHelper( cHelper ), processName( procName )
 {
-	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#ctor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#ctor] Called." );
 	this->registry = this->createRegistry();
 }
 
@@ -17,7 +17,7 @@ template<
 	template <class> class CreationPolicy>
 RemoteSOFLauncher<ThreadingModel, CreationPolicy>::~RemoteSOFLauncher() 
 {
-	logger.log( Logger::DEBUG, "[Launcher#destructor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[Launcher#destructor] Called." );
 	delete (this->registry);
 }
 
@@ -44,7 +44,7 @@ template<
 IRegistry* RemoteSOFLauncher<ThreadingModel, CreationPolicy>::createRegistry()
 {
 	// TODO: create IRegistryFacadeImpl
-	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#createRegistry] Called." );
+	logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#createRegistry] Called." );
 	// TODO: memory leak, fix it!
 	this->registry =  new IRemoteRegistryImpl<ThreadingModel>( this->corbaHelper );
 	return new IRegistryFacadeImpl( this->corbaHelper, (*registry) );
@@ -55,7 +55,7 @@ template<
 	template <class> class CreationPolicy>
 IBundleContext* RemoteSOFLauncher<ThreadingModel, CreationPolicy>::createBundleContext( const string& bundleName )
 {
-	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#createBundleContext] Called." );
+	logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#createBundleContext] Called." );
 	return new IRemoteBundleContextImpl( bundleName, (*(this->registry)), this->corbaHelper );
 }
 
@@ -64,7 +64,7 @@ template<
 	template <class> class CreationPolicy>
 void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::start( vector<BundleConfiguration> &configVector )
 {
-	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#start] Called." );
+	logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#start] Called." );
 
 	vector<BundleConfiguration>::iterator itVectorData;
 	itVectorData = configVector.begin();
@@ -74,10 +74,10 @@ void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::start( vector<BundleConf
 		this->objectCreator.setSearchConfiguration( true, 
 			bundleConfig.getLibraryPath(), bundleConfig.getLibraryName() );
 		
-		logger.log( Logger::DEBUG, "[RemoteSOFLauncher#start] Reading configuration: Library path: %1, class name: %2",
+		logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#start] Reading configuration: Library path: %1, class name: %2",
 			bundleConfig.getLibraryPath(), bundleConfig.getClassName() );
 		
-		logger.log( Logger::DEBUG, "[RemoteSOFLauncher#start] Loading bundle activator: Library path: %1, class name: %2",
+		logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#start] Loading bundle activator: Library path: %1, class name: %2",
 			bundleConfig.getLibraryPath(), bundleConfig.getClassName() );
 		
 		IRemoteBundleActivator* bundleActivator;
@@ -88,26 +88,26 @@ void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::start( vector<BundleConf
 		catch( ObjectCreationException &exc )
 		{
 			string msg( exc.what() );
-			logger.log( Logger::ERROR_, "[RemoteSOFLauncher#start] Error during loading bundle activator, exc: %1", msg );
+			logger.log( Logger::LOG_ERROR, "[RemoteSOFLauncher#start] Error during loading bundle activator, exc: %1", msg );
 			continue;
 		}
 
-		logger.log( Logger::ERROR_, "[RemoteSOFLauncher#start] Create bundle context." );
+		logger.log( Logger::LOG_ERROR, "[RemoteSOFLauncher#start] Create bundle context." );
 		IBundleContext* bundleCtxt = this->createBundleContext( bundleConfig.getBundleName() );
 		
-		logger.log( Logger::ERROR_, "[RemoteSOFLauncher#start] Create bundle info." );		
+		logger.log( Logger::LOG_ERROR, "[RemoteSOFLauncher#start] Create bundle info." );		
 		RemoteBundleInfo* bundleInfo = new RemoteBundleInfo( bundleConfig.getBundleName(), bundleActivator, bundleCtxt );		
 
-		logger.log( Logger::ERROR_, "[RemoteSOFLauncher#start] Add bundle info object to registry." );	
+		logger.log( Logger::LOG_ERROR, "[RemoteSOFLauncher#start] Add bundle info object to registry." );	
 		this->registry->addBundleInfo( bundleInfo );
 
-		logger.log( Logger::DEBUG, "[RemoteSOFLauncher#start] Start bundle." );
+		logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#start] Start bundle." );
 		
 		IRemoteBundleContext* bc = dynamic_cast<IRemoteBundleContext*>( bundleCtxt );
 
-		logger.log( Logger::DEBUG, "[RemoteSOFLauncher#start] Start activator" );
+		logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#start] Start activator" );
 		bundleActivator->start( bc );
-		logger.log( Logger::DEBUG, "[RemoteSOFLauncher#start] Activator started." );
+		logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#start] Activator started." );
 	}	
 }
 
@@ -116,7 +116,7 @@ template<
 	template <class> class CreationPolicy>
 void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::startAdministrationBundle()
 {
-	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#startAdministrationBundle] Called." );
+	logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#startAdministrationBundle] Called." );
 	
 	this->startRemoteAdminService();
 
@@ -128,7 +128,7 @@ void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::startAdministrationBundl
 	BundleInfoBase* bundleInfo = new RemoteBundleInfo( "RemoteAdministrationBundle", adminBundleActivator, bundleCtxt );		
 	this->registry->addBundleInfo( bundleInfo );
 
-	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#start] Start bundle." );
+	logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#start] Start bundle." );
 		
 	RemoteAdministrationActivator* adminActivator = static_cast<RemoteAdministrationActivator*> (adminBundleActivator);	
 	adminActivator->setAdministrationProvider( this );
@@ -140,7 +140,7 @@ template<
 	template <class> class CreationPolicy>
 void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::stop()
 {
-	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#stop] Called." );	
+	logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#stop] Called." );	
 	this->registry->removeAllBundleInfos();
 }
 
@@ -149,7 +149,7 @@ template<
 	template <class> class CreationPolicy>
 void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::startBundle( BundleConfiguration bundleConfig )
 {
-	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#startBundle] Called, bundle config: %1", bundleConfig.toString() );	
+	logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#startBundle] Called, bundle config: %1", bundleConfig.toString() );	
 	vector<BundleConfiguration> vec;
 	vec.push_back( bundleConfig );
 	this->start( vec );
@@ -160,7 +160,7 @@ template<
 	template <class> class CreationPolicy>
 void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::stopBundle( const string& bundleName )
 {
-	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#stopBundle] Called, bundle name: %1", bundleName );		
+	logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#stopBundle] Called, bundle name: %1", bundleName );		
 	this->registry->removeBundleInfo( bundleName );
 }
 
@@ -169,17 +169,17 @@ template<
 	template <class> class CreationPolicy>
 vector<string> RemoteSOFLauncher<ThreadingModel, CreationPolicy>::getBundleNames()
 {
-	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#getBundleNames] Called." );		
+	logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#getBundleNames] Called." );		
 	vector<string> bundleNameVec;
 	vector<BundleInfoBase*> vec = this->registry->getBundleInfos();
-	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#getBundleNames] Iterate through BundleInfoBase vector." );		
+	logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#getBundleNames] Iterate through BundleInfoBase vector." );		
 	vector<BundleInfoBase*>::iterator iter;
 	for ( iter = vec.begin(); iter != vec.end(); iter++ )
 	{
-		logger.log( Logger::DEBUG, "[RemoteSOFLauncher#getBundleNames] Name: %1", (*iter)->getBundleName() );	
+		logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#getBundleNames] Name: %1", (*iter)->getBundleName() );	
 		bundleNameVec.push_back( (*iter)->getBundleName() );
 	}
-	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#getBundleNames] Return bundle name vector." );		
+	logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#getBundleNames] Return bundle name vector." );		
 	return bundleNameVec;
 }
 
@@ -231,7 +231,7 @@ template<
 	template <class> class CreationPolicy>
 void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::startRemoteAdminService()
 {
-	logger.log( Logger::DEBUG, "[RemoteSOFLauncher#startRemoteAdminService] Called." );		
+	logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#startRemoteAdminService] Called." );		
 	
 	CORBAAdminServiceImpl* adminService = new CORBAAdminServiceImpl( ( *this ) );
 	CORBA::Object_var obj = this->corbaHelper.activateObject( adminService );

@@ -7,9 +7,9 @@ void CORBARegistryImpl<ThreadingModel>::addRegistryObserver( CORBARegistryObserv
 	// !!! synchronized access !!!
 	typename ThreadingModel::Lock lock;
 
-	logger.log( Logger::DEBUG, "[CORBARegistryImpl#addRegistryObserver] Called." );
+	logger.log( Logger::LOG_DEBUG, "[CORBARegistryImpl#addRegistryObserver] Called." );
 	this->objectList.push_back( CORBARegistryObserver::_duplicate( observer ) );
-	logger.log( Logger::DEBUG, "[CORBARegistryImpl#addRegistryObserver] Left." );
+	logger.log( Logger::LOG_DEBUG, "[CORBARegistryImpl#addRegistryObserver] Left." );
 }
 
 template<class ThreadingModel>
@@ -18,11 +18,11 @@ void CORBARegistryImpl<ThreadingModel>::registerService( const char* bundleName,
 	// !!! synchronized access !!!
 	typename ThreadingModel::Lock lock;
 
-	logger.log( Logger::DEBUG, "[CORBARegistryImpl#registerService] Entered." );
+	logger.log( Logger::LOG_DEBUG, "[CORBARegistryImpl#registerService] Entered." );
 	list<CORBARegistryObserver_var>::iterator iter;
 	for ( iter = this->objectList.begin(); iter != this->objectList.end();)
 	{
-		logger.log( Logger::DEBUG, "[CORBARegistryImpl#registerService] Forward registering service, bundle name: %1, service name: %2",
+		logger.log( Logger::LOG_DEBUG, "[CORBARegistryImpl#registerService] Forward registering service, bundle name: %1, service name: %2",
 			string( bundleName ), string( serviceName) );
 		try 
 		{			
@@ -31,21 +31,21 @@ void CORBARegistryImpl<ThreadingModel>::registerService( const char* bundleName,
 		} 
 		catch( std::exception &exc )
 		{
-			logger.log( Logger::ERROR_, "[CORBARegistryImpl#registerService] std::exception occurred: %1", string( exc.what() ) );
+			logger.log( Logger::LOG_ERROR, "[CORBARegistryImpl#registerService] std::exception occurred: %1", string( exc.what() ) );
 			iter = this->objectList.erase( iter );
 		}
 		catch(CORBA::Exception &cexc)
 		{
-			logger.log( Logger::ERROR_, "[CORBARegistryImpl#registerService] CORBA::Exception occurred: %1", string( cexc._repoid() ) );
+			logger.log( Logger::LOG_ERROR, "[CORBARegistryImpl#registerService] CORBA::Exception occurred: %1", string( cexc._repoid() ) );
 			iter = this->objectList.erase( iter );
 		}
 		catch(...)
 		{
-			logger.log( Logger::ERROR_, "[CORBARegistryImpl#registerService] Exception occurred." );
+			logger.log( Logger::LOG_ERROR, "[CORBARegistryImpl#registerService] Exception occurred." );
 			iter = this->objectList.erase( iter );
 		}
 	}
-	logger.log( Logger::DEBUG, "[CORBARegistryImpl#registerService] Left." );
+	logger.log( Logger::LOG_DEBUG, "[CORBARegistryImpl#registerService] Left." );
 }
 
 template<class ThreadingModel>
@@ -54,11 +54,11 @@ void CORBARegistryImpl<ThreadingModel>::registerServiceListener( const char* bun
 	// !!! synchronized access !!!
 	typename ThreadingModel::Lock lock;
 
-	logger.log( Logger::DEBUG, "[CORBARegistryImpl#registerServiceListener] Entered." );
+	logger.log( Logger::LOG_DEBUG, "[CORBARegistryImpl#registerServiceListener] Entered." );
 	list<CORBARegistryObserver_var>::iterator iter;
 	for ( iter = this->objectList.begin(); iter != this->objectList.end();)
 	{
-		logger.log( Logger::DEBUG, "[CORBARegistryImpl#registerServiceListener] Forward registering service listener, bundle name: %1, service name: %2",
+		logger.log( Logger::LOG_DEBUG, "[CORBARegistryImpl#registerServiceListener] Forward registering service listener, bundle name: %1, service name: %2",
 			string( bundleName ), string( serviceName) );
 		try
 		{
@@ -67,22 +67,22 @@ void CORBARegistryImpl<ThreadingModel>::registerServiceListener( const char* bun
 		}
 		catch( std::exception &exc )
 		{
-			logger.log( Logger::ERROR_, "[CORBARegistryImpl#registerServiceListener] std::exception occurred: %1", string( exc.what() ) );
+			logger.log( Logger::LOG_ERROR, "[CORBARegistryImpl#registerServiceListener] std::exception occurred: %1", string( exc.what() ) );
 			iter = this->objectList.erase( iter );
 		}
 		catch(CORBA::Exception &cexc)
 		{
-			logger.log( Logger::ERROR_, "[CORBARegistryImpl#registerServiceListener] CORBA::Exception occurred: %1", string( cexc._repoid() ) );
+			logger.log( Logger::LOG_ERROR, "[CORBARegistryImpl#registerServiceListener] CORBA::Exception occurred: %1", string( cexc._repoid() ) );
 			iter = this->objectList.erase( iter );
 		}
 		catch(...)
 		{
-			logger.log( Logger::ERROR_, "[CORBARegistryImpl#registerServiceListener] Exception occurred." );
+			logger.log( Logger::LOG_ERROR, "[CORBARegistryImpl#registerServiceListener] Exception occurred." );
 			iter = this->objectList.erase( iter );
 		}
 
 	}
-	logger.log( Logger::DEBUG, "[CORBARegistryImpl#registerServiceListener] Left." );
+	logger.log( Logger::LOG_DEBUG, "[CORBARegistryImpl#registerServiceListener] Left." );
 }
 
 template<class ThreadingModel>
@@ -91,11 +91,11 @@ void CORBARegistryImpl<ThreadingModel>::unregisterService( const char* bundleNam
 	// !!! synchronized access !!!
 	typename ThreadingModel::Lock lock;
 
-	logger.log( Logger::DEBUG, "[CORBARegistryImpl#unregisterService] Entered." );
+	logger.log( Logger::LOG_DEBUG, "[CORBARegistryImpl#unregisterService] Entered." );
 	list<CORBARegistryObserver_var>::iterator iter;
 	for ( iter = this->objectList.begin(); iter != this->objectList.end();)
 	{
-		logger.log( Logger::DEBUG, "[CORBARegistryImpl#unregisterService] Forward unregistering service, bundle name: %1, service name: %2",
+		logger.log( Logger::LOG_DEBUG, "[CORBARegistryImpl#unregisterService] Forward unregistering service, bundle name: %1, service name: %2",
 			string( bundleName ), string( serviceName) );
 		try
 		{
@@ -104,21 +104,21 @@ void CORBARegistryImpl<ThreadingModel>::unregisterService( const char* bundleNam
 		}
 		catch( std::exception &exc )
 		{
-			logger.log( Logger::ERROR_, "[CORBARegistryImpl#unregisterService] std::exception occurred: %1", string( exc.what() ) );
+			logger.log( Logger::LOG_ERROR, "[CORBARegistryImpl#unregisterService] std::exception occurred: %1", string( exc.what() ) );
 			iter = this->objectList.erase( iter );
 		}
 		catch(CORBA::Exception &cexc)
 		{
-			logger.log( Logger::ERROR_, "[CORBARegistryImpl#unregisterService] CORBA::Exception occurred: %1", string( cexc._repoid() ) );
+			logger.log( Logger::LOG_ERROR, "[CORBARegistryImpl#unregisterService] CORBA::Exception occurred: %1", string( cexc._repoid() ) );
 			iter = this->objectList.erase( iter );
 		}
 		catch(...)
 		{
-			logger.log( Logger::ERROR_, "[CORBARegistryImpl#unregisterService] Exception occurred." );
+			logger.log( Logger::LOG_ERROR, "[CORBARegistryImpl#unregisterService] Exception occurred." );
 			iter = this->objectList.erase( iter );
 		}
 	}
-	logger.log( Logger::DEBUG, "[CORBARegistryImpl#unregisterService] Left." );
+	logger.log( Logger::LOG_DEBUG, "[CORBARegistryImpl#unregisterService] Left." );
 }
 
 template<class ThreadingModel>
@@ -127,11 +127,11 @@ void CORBARegistryImpl<ThreadingModel>::unregisterServiceListener( const char* b
 	// !!! synchronized access !!!
 	typename ThreadingModel::Lock lock;
 
-	logger.log( Logger::DEBUG, "[CORBARegistryImpl#unregisterServiceListener] Entered." );
+	logger.log( Logger::LOG_DEBUG, "[CORBARegistryImpl#unregisterServiceListener] Entered." );
 	list<CORBARegistryObserver_var>::iterator iter;
 	for ( iter = this->objectList.begin(); iter != this->objectList.end();)
 	{
-		logger.log( Logger::DEBUG, "[CORBARegistryImpl#unregisterServiceListener] Forward unregistering service listener, bundle name: %1, service name: %2",
+		logger.log( Logger::LOG_DEBUG, "[CORBARegistryImpl#unregisterServiceListener] Forward unregistering service listener, bundle name: %1, service name: %2",
 			string( bundleName ), string( serviceName) );
 		try
 		{
@@ -140,19 +140,19 @@ void CORBARegistryImpl<ThreadingModel>::unregisterServiceListener( const char* b
 		}
 		catch( std::exception &exc )
 		{
-			logger.log( Logger::ERROR_, "[CORBARegistryImpl#unregisterServiceListener] std::exception occurred: %1", string( exc.what() ) );
+			logger.log( Logger::LOG_ERROR, "[CORBARegistryImpl#unregisterServiceListener] std::exception occurred: %1", string( exc.what() ) );
 			iter = this->objectList.erase( iter );
 		}
 		catch(CORBA::Exception &cexc)
 		{
-			logger.log( Logger::ERROR_, "[CORBARegistryImpl#unregisterServiceListener] CORBA::Exception occurred: %1", string( cexc._repoid() ) );
+			logger.log( Logger::LOG_ERROR, "[CORBARegistryImpl#unregisterServiceListener] CORBA::Exception occurred: %1", string( cexc._repoid() ) );
 			iter = this->objectList.erase( iter );
 		}
 		catch(...)
 		{
-			logger.log( Logger::ERROR_, "[CORBARegistryImpl#unregisterServiceListener] Exception occurred." );
+			logger.log( Logger::LOG_ERROR, "[CORBARegistryImpl#unregisterServiceListener] Exception occurred." );
 			iter = this->objectList.erase( iter );
 		}
 	}
-	logger.log( Logger::DEBUG, "[CORBARegistryImpl#unregisterServiceListener] Left." );
+	logger.log( Logger::LOG_DEBUG, "[CORBARegistryImpl#unregisterServiceListener] Left." );
 }

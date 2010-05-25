@@ -160,7 +160,7 @@ int TestHelper::isServiceUsedByBundle( IRegistry& registry, const string& bundle
  */
 TEST( Launcher, Load )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[LauncherTest] *** Launcher-Load Test" );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[LauncherTest] *** Launcher-Load Test" );
 			
 	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", "sof_TestDll2.dll" );
 	BundleConfiguration bundleConf2( "bundle2", "TestBundleActivator" );
@@ -177,7 +177,7 @@ TEST( Launcher, Load )
  */
 TEST( Launcher, RegisterServiceListeners )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[LauncherTest] *** Launcher-RegisterServiceListeners Test" );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[LauncherTest] *** Launcher-RegisterServiceListeners Test" );
 			
 	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", "sof_TestDll2.dll" );
 	BundleConfiguration bundleConf2( "bundle2", "TestBundleActivator" );
@@ -202,7 +202,7 @@ TEST( Launcher, RegisterServiceListeners )
  */
 TEST( Launcher, UsedServices )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[LauncherTest] *** Launcher-UsedServices Test" );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[LauncherTest] *** Launcher-UsedServices Test" );
 			
 	// Registers service listener for 'ServiceB'
 	// Registers 'ServiceA' with properties 'instance=1'
@@ -236,7 +236,7 @@ TEST( Launcher, UsedServices )
  */
 TEST( Launcher, RegisterServices )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[LauncherTest] *** Launcher-RegisterServices Test" );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[LauncherTest] *** Launcher-RegisterServices Test" );
 			
 	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", "sof_TestDll2.dll" );
 	BundleConfiguration bundleConf2( "bundle2", "TestBundleActivator" );
@@ -261,7 +261,7 @@ TEST( Launcher, RegisterServices )
  */
 TEST( Launcher, DeregisterService )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[LauncherTest] *** Launcher-DeregisterService Test" );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[LauncherTest] *** Launcher-DeregisterService Test" );
 			
 	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", "sof_TestDll2.dll" );
 	BundleConfiguration bundleConf2( "bundle2", "TestBundleActivator" );
@@ -297,7 +297,7 @@ TEST( Launcher, DeregisterService )
  */
 TEST( Launcher, DeregisterListener )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[LauncherTest] *** Launcher-DeregisterListener Test" );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[LauncherTest] *** Launcher-DeregisterListener Test" );
 			
 	// Registers service listener for 'ServiceB'
 	// Registers 'ServiceA' with properties 'instance=1'
@@ -332,7 +332,7 @@ TEST( Launcher, DeregisterListener )
  */
 TEST( Launcher, StopBundle )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[LauncherTest] *** Launcher-StopBundle Test" );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[LauncherTest] *** Launcher-StopBundle Test" );
 		
 	// Registers service listener for 'ServiceB'
 	// Registers 'ServiceA' with properties 'instance=1'
@@ -366,7 +366,7 @@ TEST( Launcher, StopBundle )
  */
 TEST( Launcher, StopAllBundles )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[LauncherTest] *** Launcher-StopAllBundles Test" );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[LauncherTest] *** Launcher-StopAllBundles Test" );
 			
 	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", "sof_TestDll2.dll" );
 	BundleConfiguration bundleConf2( "bundle2", "TestBundleActivator" );

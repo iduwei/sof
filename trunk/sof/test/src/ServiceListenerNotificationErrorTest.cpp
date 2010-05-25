@@ -69,15 +69,15 @@ FaultyServiceListener::FaultyServiceListener()
 
 bool FaultyServiceListener::addingService( const ServiceReference& ref )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[FaultyServiceListener#addingService] Called." );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[FaultyServiceListener#addingService] Called." );
 	switch( this->excType )
 	{
 		case FaultyServiceListener::STD:
-			UnitTestLogger::getInstance().log( Logger::DEBUG, "[FaultyServiceListener#addingService] Throw std::exception." );
+			UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[FaultyServiceListener#addingService] Throw std::exception." );
 			throw std::exception();
 			break;
 		case FaultyServiceListener::NON_STD:
-			UnitTestLogger::getInstance().log( Logger::DEBUG, "[FaultyServiceListener#addingService] Throw int." );
+			UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[FaultyServiceListener#addingService] Throw int." );
 			throw -1;
 			break;
 		default:
@@ -87,7 +87,7 @@ bool FaultyServiceListener::addingService( const ServiceReference& ref )
 
 void FaultyServiceListener::removedService( const ServiceReference& ref )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[FaultyServiceListener#removedService] Called." );		
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[FaultyServiceListener#removedService] Called." );		
 }
 
 void FaultyServiceListener::setException( ExceptionType type )
@@ -132,30 +132,30 @@ FaultyServiceListener& BundleActivatorServiceListenerNotificationError::getServi
 void BundleActivatorServiceListenerNotificationError::start( IBundleContext::ConstPtr ctxt )
 {
 	this->context = ctxt;
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[BundleActivatorServiceListenerNotificationError#start] Called." );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[BundleActivatorServiceListenerNotificationError#start] Called." );
 	
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[BundleActivatorServiceListenerNotificationError#start] Register ServiceB..." );	
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[BundleActivatorServiceListenerNotificationError#start] Register ServiceB..." );	
 
 	Properties props;
 	props.put( "instance", "1" );
 	this->serviceReg = this->context->registerService( "ServiceB", &( this->serviceB ), props );
 	
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[BundleActivatorServiceListenerNotificationError#start] ServiceB registered." );	
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[BundleActivatorServiceListenerNotificationError#start] ServiceB registered." );	
 	
 	this->tracker = new ServiceTracker( context, "ServiceB", &(getServiceListener()) );
 	this->tracker->startTracking();
 
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[BundleActivatorServiceListenerNotificationError#start] Left." );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[BundleActivatorServiceListenerNotificationError#start] Left." );
 }
 
 BundleActivatorServiceListenerNotificationError::~BundleActivatorServiceListenerNotificationError()
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[BundleActivatorServiceListenerNotificationError#destructor] Called." );		
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[BundleActivatorServiceListenerNotificationError#destructor] Called." );		
 }
 
 void BundleActivatorServiceListenerNotificationError::stop( IBundleContext::ConstPtr context )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[BundleActivatorServiceListenerNotificationError#stop] Called." );		
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[BundleActivatorServiceListenerNotificationError#stop] Called." );		
 	this->serviceReg->unregister();
 	delete this->serviceReg;
 
@@ -172,7 +172,7 @@ REGISTER_BUNDLE_ACTIVATOR_CLASS( "BundleActivatorServiceListenerNotificationErro
  */
 TEST( StandardException, ServiceListenerNotificationError  )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[BundleActivatorServiceListenerNotificationErrorTest] *** StandardException" );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[BundleActivatorServiceListenerNotificationErrorTest] *** StandardException" );
 			
 	BundleActivatorServiceListenerNotificationError::getServiceListener().setException( FaultyServiceListener::STD );
 	BundleConfiguration bundleConf( "bundle1", "BundleActivatorServiceListenerNotificationError" );
@@ -190,7 +190,7 @@ TEST( StandardException, ServiceListenerNotificationError  )
  */
 TEST( NonStandardException, ServiceListenerNotificationError  )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[BundleActivatorServiceListenerNotificationErrorTest] *** NonStandardException" );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[BundleActivatorServiceListenerNotificationErrorTest] *** NonStandardException" );
 			
 	BundleActivatorServiceListenerNotificationError::getServiceListener().setException( FaultyServiceListener::NON_STD );
 	BundleConfiguration bundleConf( "bundle1", "BundleActivatorServiceListenerNotificationError" );

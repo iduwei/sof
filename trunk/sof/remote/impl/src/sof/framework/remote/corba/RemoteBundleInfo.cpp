@@ -9,12 +9,12 @@ using namespace sof::framework::remote::corba;
 
 RemoteBundleInfo::RemoteBundleInfo( const string& bdleName, IRemoteBundleActivator* act, IBundleContext::ConstPtr bundleCtxt ) : activator(act), BundleInfoBase( bdleName, bundleCtxt )
 {
-	logger.log( Logger::DEBUG, "[RemoteBundleInfo#ctor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[RemoteBundleInfo#ctor] Called." );
 }
 
 RemoteBundleInfo::~RemoteBundleInfo()
 {
-	logger.log( Logger::DEBUG, "[RemoteBundleInfo#destructor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[RemoteBundleInfo#destructor] Called." );
 }
 
 
