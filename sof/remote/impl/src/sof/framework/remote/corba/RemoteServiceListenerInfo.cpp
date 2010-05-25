@@ -12,18 +12,18 @@ RemoteServiceListenerInfo::RemoteServiceListenerInfo( const string& bundleName, 
 								remoteServiceObject( CORBAServiceListener::_duplicate( serviceObj ) ), objID( objIdentifier ), 
 								ServiceListenerInfo( bundleName, servName , NULL )
 {
-	logger.log( Logger::DEBUG, "[RemoteServiceListenerInfo#ctor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[RemoteServiceListenerInfo#ctor] Called." );
 }
 
 
 RemoteServiceListenerInfo::~RemoteServiceListenerInfo()
 {
-	logger.log( Logger::DEBUG, "[RemoteServiceListenerInfo#destructor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[RemoteServiceListenerInfo#destructor] Called." );
 }
 
 /*RemoteServiceListenerInfo::RemoteServiceListenerInfo( const RemoteServiceListenerInfo& info )
 {
-	logger.log( Logger::DEBUG, "[RemoteServiceListenerInfo#copy-ctor] Called." );
+	logger.log( Logger::LOG_DEBUG, "[RemoteServiceListenerInfo#copy-ctor] Called." );
 
 	this->bundleName = info.bundleName;
 	this->serviceName = info.serviceName;
@@ -61,7 +61,7 @@ string RemoteServiceListenerInfo::toString() const
 
 RemoteServiceListenerInfo& RemoteServiceListenerInfo::operator=( const RemoteServiceListenerInfo &remoteServiceListenerInfo ) 
 {
-	logger.log( Logger::DEBUG, "[RemoteServiceListenerInfo#operator=] Called." );
+	logger.log( Logger::LOG_DEBUG, "[RemoteServiceListenerInfo#operator=] Called." );
 
 	if (this != &remoteServiceListenerInfo) 
     {

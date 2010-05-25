@@ -156,7 +156,7 @@ int TestHelper::isServiceUsedByBundle( IRegistry& registry, const string& bundle
  */
 TEST( Services, RemoteSOFLauncherTest )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[RemoteSOFLauncherTest] *** Services Test" );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[RemoteSOFLauncherTest] *** Services Test" );
 			
 	// Registers two instances of multiplier service
 	BundleConfiguration bundleConf1( "bundle1", "BundleActivator1" );

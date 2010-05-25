@@ -39,14 +39,14 @@ DefaultServiceListener::DefaultServiceListener()
 
 bool DefaultServiceListener::addingService( const ServiceReference& ref )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[DefaultServiceListener#addingService] Called." );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[DefaultServiceListener#addingService] Called." );
 	if ( ref.getServiceName() == "ServiceB" )
 	{
-		UnitTestLogger::getInstance().log( Logger::DEBUG, "[DefaultServiceListener#addingService] ServiceB found." );	
+		UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[DefaultServiceListener#addingService] ServiceB found." );	
 		Properties props = ref.getServiceProperties();
 		if ( props.get( "instance" ) == "1" )
 		{
-			UnitTestLogger::getInstance().log( Logger::DEBUG, "[DefaultServiceListener#addingService] Instance 1 found." );	
+			UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[DefaultServiceListener#addingService] Instance 1 found." );	
 			callCounter++;
 			return true;
 		}
@@ -63,7 +63,7 @@ bool DefaultServiceListener::addingService( const ServiceReference& ref )
 
 void DefaultServiceListener::removedService( const ServiceReference& ref )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[DefaultServiceListener#removedService] Called." );		
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[DefaultServiceListener#removedService] Called." );		
 }
 
 int DefaultServiceListener::getCounter()
@@ -112,15 +112,15 @@ DefaultServiceListener& BundleActivatorServiceListenerNotification::getServiceLi
 void BundleActivatorServiceListenerNotification::start( IBundleContext::ConstPtr ctxt )
 {
 	this->context = ctxt;
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[BundleActivatorServiceListenerNotification#start] Called." );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[BundleActivatorServiceListenerNotification#start] Called." );
 	
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[BundleActivatorServiceListenerNotification#start] Register ServiceB..." );	
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[BundleActivatorServiceListenerNotification#start] Register ServiceB..." );	
 
 	Properties props;
 	props.put( "instance", "1" );
 	this->serviceReg = this->context->registerService( "ServiceB", &( this->serviceB ), props );
 	
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[BundleActivatorServiceListenerNotification#start] ServiceB registered." );	
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[BundleActivatorServiceListenerNotification#start] ServiceB registered." );	
 	
 	this->tracker1 = new ServiceTracker( context, "ServiceB", &(getServiceListener1()) );
 	this->tracker1->startTracking();
@@ -128,17 +128,17 @@ void BundleActivatorServiceListenerNotification::start( IBundleContext::ConstPtr
 	this->tracker2 = new ServiceTracker( context, "ServiceB", &(getServiceListener2()) );
 	this->tracker2->startTracking();	
 
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[BundleActivatorServiceListenerNotification#start] Left." );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[BundleActivatorServiceListenerNotification#start] Left." );
 }
 
 BundleActivatorServiceListenerNotification::~BundleActivatorServiceListenerNotification()
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[BundleActivatorServiceListenerNotification#destructor] Called." );		
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[BundleActivatorServiceListenerNotification#destructor] Called." );		
 }
 
 void BundleActivatorServiceListenerNotification::stop( IBundleContext::ConstPtr context )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[BundleActivatorServiceListenerNotification#stop] Called." );		
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[BundleActivatorServiceListenerNotification#stop] Called." );		
 	this->serviceReg->unregister();
 	delete this->serviceReg;
 
@@ -160,7 +160,7 @@ REGISTER_BUNDLE_ACTIVATOR_CLASS( "BundleActivatorServiceListenerNotification", B
  */
 TEST( ServiceListener, Notification  )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[ServiceListenerNotificationTest] *** Notification Test" );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[ServiceListenerNotificationTest] *** Notification Test" );
 			
 	BundleConfiguration bundleConf( "bundle1", "BundleActivatorServiceListenerNotification" );
 	vector<BundleConfiguration> bundleConfVec;

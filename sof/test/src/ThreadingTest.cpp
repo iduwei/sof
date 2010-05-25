@@ -70,7 +70,7 @@ void Bar<ThreadingModel,CreationPolicy>::createObjectFromDll( const string &path
 
 TEST( SingleThreaded, threading1 )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[ThreadingTest] *** SingleThreaded-threading1 Test" );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[ThreadingTest] *** SingleThreaded-threading1 Test" );
 	Bar<SingleThreaded,NullCreator> bar;
 	bar.callFoo();	
 	bar.createObjectFromDll( "a", "b", "c" );

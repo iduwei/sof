@@ -35,7 +35,7 @@ using namespace sof::instantiation::win;
  */
 TEST( WinObjectCreator, LoadingFromDll )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[WinObjectCreatorTest] *** ObjectLoader-LoadingDll Test" );	
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[WinObjectCreatorTest] *** ObjectLoader-LoadingDll Test" );	
 	
 	// loading object of type 'ITestImpl' from DLL './TestDll1.dll'
 	ObjectCreator<ITest,WinDllCreator> OC( false, ".", "sof_TestDll1.dll" );	
@@ -50,7 +50,7 @@ TEST( WinObjectCreator, LoadingFromDll )
  */
 TEST( WinObjectCreator, LoadingFromDllDifferentType )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[WinObjectCreatorTest] *** ObjectLoader-LoadingFromDllDifferentType Test" );	
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[WinObjectCreatorTest] *** ObjectLoader-LoadingFromDllDifferentType Test" );	
 	
 	ObjectCreator<ITest,WinDllCreator> OC( false, ".", "sof_TestDll1.dll" );	
 	ITest* test = OC.createObject( "ITestImpl2" );
@@ -65,7 +65,7 @@ TEST( WinObjectCreator, LoadingFromDllDifferentType )
  */
 TEST( WinObjectCreator, LoadingFromDllAfterLocalSearch )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[WinObjectCreatorTest] *** ObjectLoader-LoadingFromDllAfterLocalSearch Test" );	
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[WinObjectCreatorTest] *** ObjectLoader-LoadingFromDllAfterLocalSearch Test" );	
 
 	ObjectCreator<ITest,WinDllCreator> OC( true, ".", "sof_TestDll1.dll" );	
 	ITest* test = OC.createObject( "ITestImpl2" );
@@ -79,7 +79,7 @@ TEST( WinObjectCreator, LoadingFromDllAfterLocalSearch )
  */
 TEST( WinObjectCreator, LoadingLocalObjectByConfiguredSearchingInDLL )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[WinObjectCreatorTest] *** ObjectLoader-LoadingLocalObjectByConfiguredSearchingInDLL Test" );	
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[WinObjectCreatorTest] *** ObjectLoader-LoadingLocalObjectByConfiguredSearchingInDLL Test" );	
 
 	ObjectCreator<ITest,WinDllCreator> OC( true, ".", "sof_TestDll1.dll" );	
 	ITest* test = OC.createObject( "ITestImpl" );
@@ -93,7 +93,7 @@ TEST( WinObjectCreator, LoadingLocalObjectByConfiguredSearchingInDLL )
  */
 TEST( WinObjectCreator, LoadingSeveralObjectsOfDifferentTypes )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[WinObjectCreatorTest] *** ObjectLoader-LoadingSeveralObjectsOfDifferentTypes Test" );	
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[WinObjectCreatorTest] *** ObjectLoader-LoadingSeveralObjectsOfDifferentTypes Test" );	
 
 	ObjectCreator<ITest,WinDllCreator> OC( true, ".", "sof_TestDll1.dll" );	
 	ITest* testObject1 = OC.createObject( "ITestImpl" );

@@ -23,7 +23,7 @@ string libNames[] = { BundleConfiguration::NO_LIB_NAME, "test_bundle2.dll", "tes
 
 TEST( ConfigFileReader, ReadValidFileCheckNumberOfConfigEntries )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[ConfigFileReaderTest] *** ConfigFileReader-ReadValidFileCheckNumberOfConfigEntries Test" );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[ConfigFileReaderTest] *** ConfigFileReader-ReadValidFileCheckNumberOfConfigEntries Test" );
 
 	try
 	{
@@ -33,14 +33,14 @@ TEST( ConfigFileReader, ReadValidFileCheckNumberOfConfigEntries )
 	catch( ConfigurationException &exc )
 	{
 		string msg( exc.what() );
-		UnitTestLogger::getInstance().log( Logger::DEBUG, "[ConfigFileReaderTest] Exception occured: %1", msg );	
+		UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[ConfigFileReaderTest] Exception occured: %1", msg );	
 		FAIL( "Should not happen, file must be loadable" );
 	}	
 }
 
 TEST( ConfigFileReader, ReadValidFileCheckContent )
 {
-	UnitTestLogger::getInstance().log( Logger::DEBUG, "[ConfigFileReaderTest] *** ConfigFileReader-ReadValidFileCheckContent Test" );
+	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[ConfigFileReaderTest] *** ConfigFileReader-ReadValidFileCheckContent Test" );
 
 	try
 	{
@@ -59,7 +59,7 @@ TEST( ConfigFileReader, ReadValidFileCheckContent )
 	catch( ConfigurationException &exc )
 	{
 		string msg( exc.what() );
-		UnitTestLogger::getInstance().log( Logger::DEBUG, "[ConfigFileReaderTest] Exception occured: %1", msg );	
+		UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[ConfigFileReaderTest] Exception occured: %1", msg );	
 		FAIL( "Should not happen, file must be loadable" );
 	}	
 }
