@@ -8,7 +8,7 @@ using namespace sof::util::logging;
 Logger& ServiceTracker::logger = LoggerFactory::getLogger( "Framework" );
 
 ServiceTracker::ServiceTracker( IBundleContext::ConstPtr bc, const string &servName, 
-							   IServiceTrackerCustomizer::ConstPtr customizer ) : bundleCtxt( bc ), serviceName( servName ), serviceTracker( customizer )
+							   IServiceTrackerCustomizer::ConstPtr customizer ) : bundleCtxt( bc ), serviceName( servName ), serviceTracker( customizer ), isTrackingActive( false )
 {
 	logger.log( Logger::LOG_DEBUG, "[ServiceTracker#ctor] Called, service name: %1", servName );
 }
@@ -16,18 +16,26 @@ ServiceTracker::ServiceTracker( IBundleContext::ConstPtr bc, const string &servN
 ServiceTracker::~ServiceTracker()
 {
 	logger.log( Logger::LOG_DEBUG, "[ServiceTracker#destructor] Called." );
+	// Bugfix for ID 3000086: ServiceTracker destructor should call stopTracking
+	if ( this->isTrackingActive )
+	{
+		logger.log( Logger::LOG_DEBUG, "[ServiceTracker#destructor] Service tracking is active, stop tracking." );
+		this->stopTracking();
+	}
 }
 
 void ServiceTracker::startTracking()
 {
 	logger.log( Logger::LOG_DEBUG, "[ServiceTracker#startTracking] Called." );
 	this->bundleCtxt->addServiceListener( this, this->serviceName );
+	this->isTrackingActive = true;
 }
 
 void ServiceTracker::stopTracking()
 {
 	logger.log( Logger::LOG_DEBUG, "[ServiceTracker#stopTracking] Called." );
 	this->bundleCtxt->removeServiceListener( this );
+	this->isTrackingActive = false;
 }
 
 bool ServiceTracker::serviceChanged( const ServiceEvent &serviceEvent )

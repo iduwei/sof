@@ -32,6 +32,11 @@ class ServiceTracker : public IServiceListener
 {
 	private:
 
+		/** 
+		 * Indicates that service tracking is active.
+		 */
+		bool isTrackingActive;
+
 		/**
 		 * The bundle context.
 		 */
