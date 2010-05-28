@@ -212,11 +212,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\ServiceListenerRegistrationTest.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\TestBundleActivator.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\src\TestClass.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\src\TestHelper.cpp"
 				>
 			</File>
 			<File
@@ -275,6 +283,10 @@
 			</File>
 			<File
 				RelativePath=".\src\TestClass.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\TestHelper.h"
 				>
 			</File>
 			<File

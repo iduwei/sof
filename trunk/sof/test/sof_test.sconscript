@@ -1,6 +1,7 @@
 Import( 'env' )
 VariantDir( 'build', 'src', duplicate=0 )
 sources = [
+	'build/TestHelper.cpp',
 	'build/BaseTestClass.cpp',
 	'build/ConfigFileReaderTest.cpp',
 	'build/IServiceBImpl.cpp',
@@ -8,6 +9,7 @@ sources = [
 	'build/ObjectCreatorTest.cpp',
 	'build/osgi_sof_test.cpp',
 	'build/ServiceListenerNotificationTest.cpp',
+	'build/ServiceListenerRegistrationTest.cpp',
 	'build/ServiceListenerNotificationErrorTest.cpp',
 	'build/TestBundleActivator.cpp',
 	'build/TestClass.cpp',
