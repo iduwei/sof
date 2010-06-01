@@ -15,18 +15,26 @@ RemoteServiceTracker::RemoteServiceTracker( IRemoteBundleContext::ConstPtr bc, c
 RemoteServiceTracker::~RemoteServiceTracker()
 {
 	logger.log( Logger::LOG_DEBUG, "[RemoteServiceTracker#destructor] Called." );
+	// Bugfix for ID 3000086: ServiceTracker destructor should call stopTracking
+	if ( this->isTrackingActive )
+	{
+		logger.log( Logger::LOG_DEBUG, "[RemoteServiceTracker#destructor] Service tracking is active, stop tracking." );
+		this->stopTracking();
+	}
 }
 
 void RemoteServiceTracker::startTracking()
 {
 	logger.log( Logger::LOG_DEBUG, "[RemoteServiceTracker#startTracking] Called." );
 	this->bundleCtxt->addRemoteServiceListener( this, this->serviceName );
+	this->isTrackingActive = true;
 }
 
 void RemoteServiceTracker::stopTracking()
 {
 	logger.log( Logger::LOG_DEBUG, "[RemoteServiceTracker#stopTracking] Called." );
 	this->bundleCtxt->removeRemoteServiceListener( this );
+	this->isTrackingActive = false;
 }
 
 CORBA::Boolean RemoteServiceTracker::serviceChanged( const CORBAServiceEvent &remoteServiceEvent )

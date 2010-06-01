@@ -34,6 +34,11 @@ class RemoteServiceTracker : public POA_sof::framework::remote::corba::generated
 {
 	private:
 
+		/** 
+		 * Indicates that service tracking is active.
+		 */
+		bool isTrackingActive;
+
 		/**
 		 * The bundle context.
 		 */
