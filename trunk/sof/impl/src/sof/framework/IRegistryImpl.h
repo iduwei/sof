@@ -61,7 +61,13 @@ class IRegistryImpl : public IRegistry
 		 * The vector storing <code>BundleInfo</code> objects
 		 * which hold all bundle relevant data.
 		 */
-		vector<BundleInfoBase*> bundleInfoVec;
+		map<string,BundleInfoBase*> bundleInfoMap;
+
+		/**
+		 * This vector is only necessary for storing the starting order of the bundles, because
+		 * the <code>bundleInfoMap</code> does not.
+		 */
+		vector<string> bundleNames;
 
 		/**
 		 * Stores vectors of <code>ServiceInfo</code> objects 
