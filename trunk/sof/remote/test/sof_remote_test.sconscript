@@ -11,11 +11,16 @@ sources = [
 	'build/UnitTestLogger.cpp'
 ]
 
+if ( env['BUILD_MODE'] == 'debug' ):
+	pthreadLibrary = 'pthreadVC2d'
+else:
+	pthreadLibrary = 'pthreadVC2'
+	
 env.Program( 
 	'bin/sof_remote_test', 
 	sources, 
 	CPPPATH = ['#/impl/src','#/remote/impl/src','#/extern/CppUnitLite/src','#/remote/corba/include', '#/remote/corba/include/pthreads'], 
-	LIBS=['sof','sof_remote','cppunitlite','mico2313','micocoss2313','pthreadVC2'], 
+	LIBS=['sof','sof_remote','cppunitlite','mico2313','micocoss2313',pthreadLibrary], 
 	LIBPATH=['#/remote/corba/libs','#/impl/bin','#/remote/impl/bin','#/extern/cppunitlite/bin'] )
 	
 
