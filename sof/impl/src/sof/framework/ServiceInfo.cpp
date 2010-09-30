@@ -9,6 +9,15 @@ ServiceInfo::ServiceInfo( const string &servName, IService::ConstPtr service, co
 	logger.log( Logger::LOG_DEBUG, "[ServiceInfo#ctor] Called." );
 }
 
+ServiceInfo::ServiceInfo( const ServiceInfo &serviceInfo ) 
+{
+	logger.log( Logger::LOG_DEBUG, "[ServiceInfo#copy-ctor] Called." );
+	this->props = serviceInfo.props;
+	this->service = serviceInfo.service;
+	this->serviceName = serviceInfo.serviceName;
+}
+
+
 ServiceInfo::~ServiceInfo()
 {
 	logger.log( Logger::LOG_DEBUG, "[ServiceInfo#destructor] Called." );
@@ -27,6 +36,19 @@ Properties ServiceInfo::getProperties() const
 IService::ConstPtr ServiceInfo::getService() const
 {
 	return this->service;
+}
+
+ServiceInfo& ServiceInfo::operator=( const ServiceInfo &serviceInfo )
+{
+	logger.log( Logger::LOG_DEBUG, "[ServiceInfo#operator=] Called." );
+
+	if (this != &serviceInfo) 
+    {
+		this->service = serviceInfo.service;
+		this->serviceName = serviceInfo.serviceName;
+		this->props = serviceInfo.props;
+    }
+    return *this; 
 }
 
 string ServiceInfo::toString() const

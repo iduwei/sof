@@ -32,7 +32,7 @@ class ServiceInfo
 		/**
 		 * Defines a constant pointer to the service object.
 		 */
-		IService::ConstPtr service;
+		IService* service;
 
 		/**
 		 * The name of the service object.
@@ -66,6 +66,14 @@ class ServiceInfo
 		 *				The properties describing the service object.
 		 */
 		ServiceInfo( const string &servName, IService::ConstPtr service, const Properties &properties );
+		
+		/**
+		 * Copys instances of class <code>ServiceInfo</code>.
+		 *
+		 * @param serviceInfo
+		 *				The service info object which is copied.
+		 */
+		ServiceInfo( const ServiceInfo &serviceInfo );
 
 		/**
 		 * Destroys the <code>ServiceInfo</code> object.
@@ -105,6 +113,17 @@ class ServiceInfo
 		 *		<code>ServiceInfo</code> object.
 		 */
 		virtual string toString() const;
+
+		/**
+		 * Assigns the passed <code>ServiceInfo</code> object to this object.
+		 *
+		 * @param serviceInfo
+		 *				The service info object which is assigned to this.
+		 *
+		 * @return
+		 *				This service info object.
+		 */			
+		virtual ServiceInfo& operator=( const ServiceInfo &serviceInfo );
 
 		/**
 		 * Compares two <code>ServiceInfo</code> objects.
