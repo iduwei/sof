@@ -21,7 +21,7 @@
 			OutputDirectory=".\bin"
 			IntermediateDirectory=".\build"
 			ConfigurationType="1"
-			CharacterSet="1"
+			CharacterSet="2"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -62,12 +62,12 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="kernel32.lib idl2313.lib mico2313.lib micocoss2313.lib pthreadVC2.lib sof_remote.lib $(NOINHERIT)"
-				OutputFile=".\bin\registry.exe"
+				AdditionalDependencies="kernel32.lib idl2313.lib mico2313.lib micocoss2313.lib pthreadVC2d.lib sof_remote.lib $(NOINHERIT)"
+				OutputFile="$(OutDir)\sof_remote_console.exe"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="..\impl\bin;..\corba\libs"
 				ManifestFile=".\bin\$(TargetFileName).intermediate.manifest"
-				GenerateDebugInformation="false"
+				GenerateDebugInformation="true"
 				SubSystem="1"
 				RandomizedBaseAddress="1"
 				DataExecutionPrevention="0"
