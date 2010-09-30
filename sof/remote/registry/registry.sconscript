@@ -1,9 +1,14 @@
 Import( 'env' )
 VariantDir( 'bin', 'src', duplicate=0 )
 
+if ( env['BUILD_MODE'] == 'debug' ):
+	pthreadLibrary = 'pthreadVC2d'
+else:
+	pthreadLibrary = 'pthreadVC2'
+	
 env.Program( 'bin/registry.cpp', 
 	CPPPATH = ['#/impl/src', '#/remote/impl/src','#/remote/corba/include', '#/remote/corba/include/pthreads'],
-	LIBS=['sof_remote','mico2313','micocoss2313','pthreadVC2','sof'], 
+	LIBS=['sof_remote','mico2313','micocoss2313',pthreadLibrary,'sof'], 
 	LIBPATH=['#/remote/impl/bin','#/remote/corba/libs','#/impl/bin'] )
 	
 

@@ -18,11 +18,16 @@ sources = [
 	copy_cpp
 ]
 
+if ( env['BUILD_MODE'] == 'debug' ):
+	pthreadLibrary = 'pthreadVC2d'
+else:
+	pthreadLibrary = 'pthreadVC2'
+
 env.SharedLibrary( 
 	'#/remote/examples/bundle2/bin/remote_bundle2', 
 	sources, 
 	CPPPATH = ['#/impl/src','#/remote/examples/common/src','#/remote/impl/src','#/remote/corba/include', '#/remote/corba/include/pthreads'], 
-	LIBS=['sof','sof_remote','mico2313','micocoss2313','pthreadVC2'], 
+	LIBS=['sof','sof_remote','mico2313','micocoss2313',pthreadLibrary], 
 	LIBPATH=['#/impl/bin','#/remote/impl/bin','#/remote/corba/libs'] )
 	
 

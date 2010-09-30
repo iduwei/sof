@@ -11,8 +11,10 @@ if not (mode in ['debug', 'release']):
 
 if mode == 'debug':
 	env.Append( CCFLAGS = ['-D_DEBUG', '/MDd'] )
+	env.Append( BUILD_MODE = 'debug' )
 else:
 	env.Append( CCFLAGS = ['-DNDEBUG', '/MD'] )	
+	env.Append( BUILD_MODE = 'release' )
 	
 if sys.platform == 'win32':		
 	env.Append(CPPDEFINES = 'WIN32')
