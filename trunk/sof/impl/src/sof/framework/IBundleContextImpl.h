@@ -33,7 +33,7 @@ class IBundleContextImpl : public IBundleContext
 		 * The registry which stores all relevant information
 		 * about the bundles (registered services, registered listeners etc.)
 		 */
-		IRegistry* const registry;
+		IRegistry& registry;
 
 		/**
 		 * The logger instance.
@@ -60,7 +60,7 @@ class IBundleContextImpl : public IBundleContext
 		 *				The registry which stores bundle information of all
 		 *				bundles.
 		 */
-		IBundleContextImpl( const string& bundleName, IRegistry* const reg );
+		IBundleContextImpl( const string& bundleName, IRegistry& reg );
 
 		/**
 		 * The destructor of the bundle context.

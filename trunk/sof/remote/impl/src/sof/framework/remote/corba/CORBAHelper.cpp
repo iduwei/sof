@@ -282,7 +282,7 @@ RemoteServiceListenerInfo& CORBAHelper::convertToServiceListenerInfo( const stri
 	return (*info);
 }
 
-RemoteServiceReference* CORBAHelper::convertServiceReference( const CORBAServiceReference& ref )
+RemoteServiceReference CORBAHelper::convertServiceReference( const CORBAServiceReference& ref )
 {
 	logger.log( Logger::LOG_DEBUG, "[CORBAHelper#convertServiceReference] Called." );
 	Properties properties = this->convertServiceProperties( ref.props );
@@ -293,7 +293,8 @@ RemoteServiceReference* CORBAHelper::convertServiceReference( const CORBAService
 
 	logger.log( Logger::LOG_DEBUG, "[CORBAHelper#convertServiceReference] IOR: %1", ior );
 	
-	return new RemoteServiceReference( CORBA::string_dup( ref.serviceName ), properties, CORBAService::_duplicate( ref.service ), ior );
+	RemoteServiceReference remoteServiceRef( CORBA::string_dup( ref.serviceName ), properties, CORBAService::_duplicate( ref.service ), ior );
+	return remoteServiceRef;
 }
 
 
@@ -368,25 +369,24 @@ CORBAServiceReference CORBAHelper::convertServiceReference( const RemoteServiceR
 	return remoteRef;
 }
 
-ServiceEvent CORBAHelper::convertEvent( const CORBAServiceEvent& eventObj )
+RemoteServiceEvent CORBAHelper::convertEvent( const CORBAServiceEvent& eventObj )
 {
 	logger.log( Logger::LOG_DEBUG, "[CORBAHelper#convertEvent] Called." );
 	
-	RemoteServiceReference* corbaServiceReference = this->convertServiceReference( eventObj.serviceRef );
+	RemoteServiceReference corbaServiceReference = this->convertServiceReference( eventObj.serviceRef );
 	logger.log( Logger::LOG_DEBUG, "[CORBAHelper#convertEvent] RemoteServiceReference object created." );
-	ServiceEvent serviceEvent( eventObj.serviceType, (*corbaServiceReference) ); 
+	RemoteServiceEvent serviceEvent( eventObj.serviceType, corbaServiceReference ); 
 	logger.log( Logger::LOG_DEBUG, "[CORBAHelper#convertEvent] ServiceEvent object created." );
 	
 	return serviceEvent;
 }
 
-CORBAServiceEvent CORBAHelper::convertEvent( const ServiceEvent& eventObj )
+CORBAServiceEvent CORBAHelper::convertEvent( const RemoteServiceEvent& eventObj )
 {
 	logger.log( Logger::LOG_DEBUG, "[CORBAHelper#convertEvent] Called, service event: %1", eventObj.toString() );
 	CORBAServiceEvent remoteServiceEvent;
-	logger.log( Logger::LOG_DEBUG, "[CORBAHelper#convertEvent] Create RemoteServiceReference object." );	
-	RemoteServiceReference* corbaServiceReference = dynamic_cast<RemoteServiceReference*> ( &( eventObj.getReference()) );
-	remoteServiceEvent.serviceRef = this->convertServiceReference( *corbaServiceReference );
+	logger.log( Logger::LOG_DEBUG, "[CORBAHelper#convertEvent] Create RemoteServiceReference object for: %1", eventObj.getReference().toString() );	
+	remoteServiceEvent.serviceRef = this->convertServiceReference( eventObj.getReference() );
 	remoteServiceEvent.serviceType = eventObj.getType();
 	logger.log( Logger::LOG_DEBUG, "[CORBAHelper#convertEvent] Return CORBAServiceEvent object." );	
 	return remoteServiceEvent;

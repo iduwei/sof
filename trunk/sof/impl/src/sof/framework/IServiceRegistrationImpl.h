@@ -27,13 +27,13 @@ class IServiceRegistrationImpl : public IServiceRegistration
 		/**
 		 * The registry object which stores all bundle relevant data.
 		 */
-		IRegistry* const registry;
+		IRegistry& registry;
 
 		/**
 		 * The <code>ServiceInfo</code> describing the service which can
 		 * be unregistered by this service registration object.
 		 */
-		ServiceInfo* const serviceInfo;
+		ServiceInfo& serviceInfo;
 
 		/**
          * The name of the bundle which registered the service object.
@@ -59,7 +59,7 @@ class IServiceRegistrationImpl : public IServiceRegistration
 		 * @param serviceInfo
 		 *				The service info object.
 		 */
-		IServiceRegistrationImpl( const string& bundleName, IRegistry* const reg, ServiceInfo* const serviceInfo );
+		IServiceRegistrationImpl( const string& bundleName, IRegistry& reg, ServiceInfo& serviceInfo );
 
 		/**
 		 * Deletes the object.

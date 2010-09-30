@@ -2,7 +2,7 @@
 
 using namespace sof::framework;
 
-ServiceEvent::ServiceEvent( const int &eventType, ServiceReference &ref ) : type( eventType ), reference( ref ) 
+ServiceEvent::ServiceEvent( int eventType, const ServiceReference& ref ) : type( eventType ), reference( ref ) 
 {
 	
 }
@@ -12,7 +12,7 @@ int ServiceEvent::getType() const
 	return this->type;
 }
 
-ServiceReference& ServiceEvent::getReference() const 
+ServiceReference ServiceEvent::getReference() const 
 {
 	return this->reference;
 }

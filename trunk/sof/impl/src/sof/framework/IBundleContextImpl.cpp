@@ -10,7 +10,7 @@ using namespace sof::util::logging;
  
 Logger& IBundleContextImpl::logger = LoggerFactory::getLogger( "Framework" );
 
-IBundleContextImpl::IBundleContextImpl( const string& bdleName, IRegistry* const reg ) : bundleName( bdleName ), registry( reg )
+IBundleContextImpl::IBundleContextImpl( const string& bdleName, IRegistry& reg ) : bundleName( bdleName ), registry( reg )
 {
 	logger.log( Logger::LOG_DEBUG, "[IBundleContextImpl#ctor] Called, bundle name: %1", bdleName );
 }
@@ -29,19 +29,19 @@ IServiceRegistration* IBundleContextImpl::registerService( const string& classNa
 {
 	logger.log( Logger::LOG_DEBUG, "[IBundleContextImpl#registerService] Called, bundle name: %1, service name: %2", this->bundleName, className );
 	ServiceInfo* serviceInfo = new ServiceInfo( className, service, dict );
-	return this->registry->addServiceInfo( this->bundleName, serviceInfo );
+	return this->registry.addServiceInfo( this->bundleName, *serviceInfo );
 }
 
 void IBundleContextImpl::addServiceListener( IServiceListener::ConstPtr serviceListener, const string &serviceName )
 {
 	logger.log( Logger::LOG_DEBUG, "[IBundleContextImpl#addServiceListener] Called, bundle name: %1, service name: %2", this->bundleName, serviceName );	
-	ServiceListenerInfo* listenerInfo = new ServiceListenerInfo( bundleName, serviceName, serviceListener );	
-	this->registry->addServiceListener( this->bundleName, listenerInfo );
+	ServiceListenerInfo* listenerInfo = new ServiceListenerInfo( bundleName, serviceName, serviceListener );		
+	this->registry.addServiceListener( this->bundleName, *listenerInfo );
 }
 
 void IBundleContextImpl::removeServiceListener( IServiceListener::ConstPtr serviceListener )
 {
 	logger.log( Logger::LOG_DEBUG, "[IBundleContextImpl#removeServiceListener] Called, bundle name: %1", this->bundleName );	
 	ServiceListenerInfo info( bundleName, "", serviceListener );
-	this->registry->removeServiceListener( this->bundleName, info );
+	this->registry.removeServiceListener( this->bundleName, info );
 }
