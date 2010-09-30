@@ -55,7 +55,7 @@ template<
 IBundleContext* Launcher<ThreadingModel, CreationPolicy>::createBundleContext( const string& bundleName )
 {
 	logger.log( Logger::LOG_DEBUG, "[Launcher#createBundleContext] Called." );
-	return new IBundleContextImpl( bundleName, this->registry );
+	return new IBundleContextImpl( bundleName, (*(this->registry)) );
 }
 
 template<
@@ -94,7 +94,7 @@ void Launcher<ThreadingModel, CreationPolicy>::start( vector<BundleConfiguration
 		IBundleContext* bundleCtxt = this->createBundleContext( bundleConfig.getBundleName() );
 		
 		BundleInfoBase* bundleInfo = new BundleInfo( bundleConfig.getBundleName(), bundleActivator, bundleCtxt );		
-		this->registry->addBundleInfo( bundleInfo );
+		this->registry->addBundleInfo( (*bundleInfo) );
 
 		logger.log( Logger::LOG_DEBUG, "[Launcher#start] Start bundle." );
 		
@@ -112,7 +112,7 @@ void Launcher<ThreadingModel, CreationPolicy>::startAdministrationBundle()
 	IBundleContext* bundleCtxt = this->createBundleContext( "AdministrationBundle" );
 		
 	BundleInfoBase* bundleInfo = new BundleInfo( "AdministrationBundle", adminBundleActivator, bundleCtxt );		
-	this->registry->addBundleInfo( bundleInfo );
+	this->registry->addBundleInfo( (*bundleInfo) );
 
 	logger.log( Logger::LOG_DEBUG, "[Launcher#start] Start bundle." );
 		

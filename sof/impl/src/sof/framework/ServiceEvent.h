@@ -26,6 +26,13 @@ using namespace std;
  */
 class ServiceEvent
 {
+	public:
+
+		/**
+		 * Definition of the events.
+		 */
+		enum EventType { REGISTER, UNREGISTER };
+
 	private:		
 		
 		/**
@@ -37,27 +44,21 @@ class ServiceEvent
 		 * The service reference which represents
 		 * the service whose lifecycle changed.
 		 */
-		ServiceReference &reference;
-
-	public:
-
-		/**
-		 * Definition of the events.
-		 */
-		enum EventType { REGISTER, UNREGISTER };
+		ServiceReference reference;	
 
 	public:
 
 		/**
 		 * Creates instances of class <code>ServiceEvent</code>.
-		 *
+		 * 
 		 * @param type
-		 *				The type of the event.
+		 *				The type of the event. Has to be of type integer due to compatibility to 
+		 *				CORBA::short.
 		 *
 		 * @param reference
 		 *				Describes the service.
 		 */
-		ServiceEvent( const int &type, ServiceReference &reference );
+		ServiceEvent( int type, const ServiceReference& reference );
 
 		/**
 		 * Returns the type of the event.
@@ -73,7 +74,7 @@ class ServiceEvent
 		 * @return
 		 *			The <code>ServiceReference</code> object.
 		 */
-		ServiceReference& getReference() const;
+		ServiceReference getReference() const;
 
 		/**
 		 * Returns a string representation of the <code>ServiceEvent</code> object.

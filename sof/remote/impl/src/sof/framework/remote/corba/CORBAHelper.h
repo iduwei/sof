@@ -8,10 +8,10 @@
 #include <string>
 #include <vector>
 
-#include "sof/framework/ServiceEvent.h"
 #include "sof/util/logging/Logger.h"
 #include "sof/util/logging/LoggerFactory.h"
 
+#include "RemoteServiceEvent.h"
 #include "RemoteServiceReference.h"
 #include "RemoteServiceInfo.h"
 #include "RemoteServiceListenerInfo.h"
@@ -256,10 +256,10 @@ class CORBAHelper
 		 *			The <code>CORBAServiceReference</code> object.
 		 *
 		 * @return
-		 *			The pointer to the <code>RemoteServiceReference</code> object.
+		 *			The <code>RemoteServiceReference</code> object.
 		 *			
 		 */
-		RemoteServiceReference* convertServiceReference( const CORBAServiceReference& reference );
+		RemoteServiceReference convertServiceReference( const CORBAServiceReference& reference );
 
 		/**		 
 		 * Converts a <code>RemoteServiceReference</code> object into a 
@@ -282,23 +282,23 @@ class CORBAHelper
 		 *			The <code>CORBAServiceEvent</code> object.
 		 *
 		 * @return
-		 *			The <code>ServiceEvent</code> object.
+		 *			The <code>RemoteServiceEvent</code> object.
 		 *			
 		 */
-		ServiceEvent convertEvent( const CORBAServiceEvent& servEvent );
+		RemoteServiceEvent convertEvent( const CORBAServiceEvent& servEvent );
 
 		/**		 
-		 * Converts a <code>ServiceEvent</code> object into a 
+		 * Converts a <code>RemoteServiceEvent</code> object into a 
 		 * <code>CORBAServiceEvent</code> object.
 		 *
 		 * @param reference
-		 *			The <code>ServiceEvent</code> object.
+		 *			The <code>RemoteServiceEvent</code> object.
 		 *
 		 * @return
 		 *			The <code>CORBAServiceEvent</code> object.
 		 *			
 		 */
-		CORBAServiceEvent convertEvent( const ServiceEvent& servEvent );
+		CORBAServiceEvent convertEvent( const RemoteServiceEvent& servEvent );
 
 		/**		 
 		 * Converts a <code>Properties</code> object into a 

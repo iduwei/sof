@@ -102,7 +102,7 @@ class BundleInfoBase
 		 * @param serviceInfo
 		 *				The service information object.
 		 */
-		virtual void addRegisteredService( ServiceInfo* serviceInfo );
+		virtual void addRegisteredService( ServiceInfo& serviceInfo );
 
 		/**
 		 * Removes information about the specified service.
@@ -110,7 +110,7 @@ class BundleInfoBase
 		 * @param serviceInfo
 		 *				The service information object.
 		 */
-		virtual void removeDeregisteredService( ServiceInfo* serviceInfo );
+		virtual void removeDeregisteredService( const ServiceInfo& serviceInfo );
 
 		/**
 		 * Adds information about the specified service which is used by the
@@ -119,7 +119,7 @@ class BundleInfoBase
 		 * @param serviceInfo
 		 *				The service information object.
 		 */
-		virtual void addUsedService( ServiceInfo* serviceInfo );
+		virtual void addUsedService( ServiceInfo& serviceInfo );
 
 		/**
 		 * Removes the information about the specified service which was used by the
@@ -128,7 +128,7 @@ class BundleInfoBase
 		 * @param serviceInfo
 		 *				The service information object.
 		 */
-		virtual void removeUsedService( ServiceInfo* serviceInfo );
+		virtual void removeUsedService( const ServiceInfo& serviceInfo );
 
 		/**
 		 * Removes the information about the specified service which was used by the
@@ -150,7 +150,7 @@ class BundleInfoBase
 		 * @param listenerInfo
 		 *				The service listener information object.
 		 */
-		virtual void addRegisteredListener( ServiceListenerInfo* listenerInfo );
+		virtual void addRegisteredListener( ServiceListenerInfo& listenerInfo );
 
 		/**
 		 * Removes the information about a registered service listener.
@@ -158,7 +158,7 @@ class BundleInfoBase
 		 * @param listenerInfo
 		 *				The service listener information object.
 		 */
-		virtual void removeRegisteredListener( ServiceListenerInfo* listenerInfo );
+		virtual void removeRegisteredListener( const ServiceListenerInfo& listenerInfo );
 
 		/**
 		 * Returns the name of the bundle.
@@ -166,7 +166,7 @@ class BundleInfoBase
 		 * @return
 		 *			The name of the bundle.
 		 */
-		virtual string getBundleName();
+		virtual string getBundleName() const;
 
 		/**
 		 * Returns a vector which contains all service information objects
@@ -175,7 +175,7 @@ class BundleInfoBase
 		 * @return 
 		 *		Vector of <code>ServiceInfo</code> instances.
 		 */
-		virtual vector<ServiceInfo*> getRegisteredServices();
+		virtual vector<ServiceInfo*> getRegisteredServices() const;
 
 		/**
 		 * Returns a vector which contains all service information objects
@@ -184,7 +184,7 @@ class BundleInfoBase
 		 * @return 
 		 *		Vector of <code>ServiceInfo</code> instances.
 		 */
-		virtual vector<ServiceInfo*> getUsedServices();
+		virtual vector<ServiceInfo*> getUsedServices() const;
 
 		/**
 		 * Returns a vector which contains all service information objects
@@ -193,7 +193,7 @@ class BundleInfoBase
 		 * @return 
 		 *		Vector of <code>ServiceListenerInfo</code> instances.
 		 */
-		virtual vector<ServiceListenerInfo*> getRegisteredListeners();
+		virtual vector<ServiceListenerInfo*> getRegisteredListeners() const;
 		
 		/**
 		 * Returns the string representation of all information stored
@@ -202,7 +202,7 @@ class BundleInfoBase
 		 * @return 
 		 *		The string representation of the bundle info object.
 		 */
-		virtual string toString();
+		virtual string toString() const;
 };
 
 }}
