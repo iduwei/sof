@@ -5,6 +5,7 @@ sources = [
 	'build/sof/framework/remote/corba/CORBAHelper.cpp',
 	'build/sof/framework/remote/corba/IRemoteBundleContextImpl.cpp',
 	'build/sof/framework/remote/corba/RemoteBundleInfo.cpp',
+	'build/sof/framework/remote/corba/RemoteServiceEvent.cpp',
 	'build/sof/framework/remote/corba/RemoteServiceInfo.cpp',
 	'build/sof/framework/remote/corba/RemoteServiceListenerInfo.cpp',
 	'build/sof/framework/remote/corba/RemoteServiceReference.cpp',
