@@ -18,6 +18,27 @@ ServiceListenerInfo::~ServiceListenerInfo()
 	logger.log( Logger::LOG_DEBUG, "[ServiceListenerInfo#destructor] Called." );
 }
  
+ServiceListenerInfo::ServiceListenerInfo( const ServiceListenerInfo& info ) : serviceListenerObj( info.serviceListenerObj )
+{
+	logger.log( Logger::LOG_DEBUG, "[ServiceListenerInfo#copy-ctor] Called." );
+
+	this->bundleName = info.bundleName;
+	this->serviceName = info.serviceName;
+}
+
+ServiceListenerInfo& ServiceListenerInfo::operator=( const ServiceListenerInfo &serviceListenerInfo ) 
+{
+	logger.log( Logger::LOG_DEBUG, "[ServiceListenerInfo#operator=] Called." );
+
+	if (this != &serviceListenerInfo) 
+    {
+		this->bundleName = serviceListenerInfo.bundleName;
+		this->serviceName = serviceListenerInfo.serviceName;
+		this->serviceListenerObj = serviceListenerInfo.serviceListenerObj;
+    }
+    return *this; 
+}
+
 string ServiceListenerInfo::getBundleName() const
 {
 	return this->bundleName;

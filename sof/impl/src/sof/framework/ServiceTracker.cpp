@@ -40,6 +40,7 @@ void ServiceTracker::stopTracking()
 
 bool ServiceTracker::serviceChanged( const ServiceEvent &serviceEvent )
 {
+	logger.log( Logger::LOG_DEBUG, "[ServiceTracker#serviceChanged] Called, service event: %1", serviceEvent.toString() );
 	bool retVal = false;
 	try
 	{

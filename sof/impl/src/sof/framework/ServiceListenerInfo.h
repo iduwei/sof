@@ -39,7 +39,7 @@ class ServiceListenerInfo
 		/**
 		 * The constant pointer to the service listener object.
 		 */
-		IServiceListener::ConstPtr serviceListenerObj;
+		IServiceListener* serviceListenerObj;
 
 		/**
 		 * The logger instance.
@@ -61,6 +61,14 @@ class ServiceListenerInfo
 		 *				The service listener.
 		 */
 		ServiceListenerInfo( const string& bundleName, const string& serviceName, IServiceListener::ConstPtr serviceListener );
+
+		/**
+		 * Copy constructor.
+		 *
+		 * @param info
+		 *			The <code>ServiceListenerInfo</code> object which is copied.
+		 */
+		ServiceListenerInfo( const ServiceListenerInfo& info );
 
 		/**
 		 * Destroys the object.
@@ -101,6 +109,17 @@ class ServiceListenerInfo
 		 */
 		virtual bool operator==( const ServiceListenerInfo& info1 );
 		
+		/**
+		 * Assigns the passed <code>ServiceListenerInfo</code> object to this object.
+		 *
+		 * @param serviceListenerInfo
+		 *				The service listener object which is assigned to this.
+		 *
+		 * @return
+		 *				This service listener object.
+		 */			
+		virtual ServiceListenerInfo& operator=( const ServiceListenerInfo &serviceListenerInfo );
+
 		/**
 		 * Compares two objects of type <code>ServiceListenerInfo</code>.
 		 *
