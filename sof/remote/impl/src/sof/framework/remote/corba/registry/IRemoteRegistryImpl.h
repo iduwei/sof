@@ -48,16 +48,19 @@ class IRemoteRegistryImpl : public IRegistryImpl<ThreadingModel>
 		virtual ~IRemoteRegistryImpl();
 
 		/**
-		 * Calls the remote service listener object.
+		 * Sends an event to a service listener.
+		 * 
+		 * @param listenerInfo 
+		 *					The <code>ServiceListenerInfo</code> object describing the service listener which
+		 *					is notified.
 		 *
-		 * @param info
-		 *			The service listener info object.
+		 * @param serviceInfo 
+		 *					The <code>ServiceInfo</code> object describing the service the event is related to.
 		 *
-		 * @param serviceEvent
-		 *			The occured event the remote service listener has to be
-		 *			informed about.
+		 * @param eventType
+		 *					The service event type (e.g. REGISTER, UNREGISTER).
 		 */
-		virtual bool callServiceListenerObject( const ServiceListenerInfo& info, const ServiceEvent& serviceEvent );
+		virtual bool callServiceListenerObject( const ServiceListenerInfo& info, const ServiceInfo& serviceInfo, const ServiceEvent::						EventType& eventType );
 
 		/**
 		 * Stops the activator of the specified bundel information object.
@@ -65,7 +68,7 @@ class IRemoteRegistryImpl : public IRegistryImpl<ThreadingModel>
 		 * @param bi
 		 *			The object which encapsulates bundle information.
 		 */
-		virtual void stopActivator( BundleInfoBase* bi ) ;
+		virtual void stopActivator( const BundleInfoBase& bi ) ;
 
 		/**
 		 * Destroys the activator object which is specified by the
@@ -75,17 +78,7 @@ class IRemoteRegistryImpl : public IRegistryImpl<ThreadingModel>
 		 *			The object which encapsulates bundle information
 		 *			(e.g. bundle activator).
 		 */
-		virtual void deleteActivator( BundleInfoBase* bi ) ;
-
-		/**
-		 * Creates a <code>ServiceReference</code> object.
-		 *
-		 * @param serviceInfo
-		 *				The <code>ServiceInfo</code> instance.
-		 * @return 
-		 *				The created <code>ServiceReference</code>.
-         */		
-		virtual ServiceReference* createServiceReference( const ServiceInfo& serviceInfo );
+		virtual void deleteActivator( const BundleInfoBase& bi ) ;
 
 		/**
 		 * Compares two objects of type <code>ServiceListenerInfo</code>.

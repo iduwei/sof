@@ -12,31 +12,43 @@ IRemoteRegistryImpl<ThreadingModel>::~IRemoteRegistryImpl()
 
 
 template<class ThreadingModel>
-void IRemoteRegistryImpl<ThreadingModel>::stopActivator( BundleInfoBase* bi ) 
+void IRemoteRegistryImpl<ThreadingModel>::stopActivator( const BundleInfoBase& bi ) 
 {
 	logger.log( Logger::LOG_DEBUG, "[IRemoteRegistryImpl#stopActivator] Called." );	
-	RemoteBundleInfo* bundleInfo = dynamic_cast<RemoteBundleInfo*>( bi );
+	BundleInfoBase* bInfo = const_cast<BundleInfoBase*>( &bi );
+	RemoteBundleInfo* bundleInfo = dynamic_cast<RemoteBundleInfo*>( bInfo );
 	IRemoteBundleContext* bundleContext = dynamic_cast<IRemoteBundleContext*>( bundleInfo->getBundleContext() );
 	bundleInfo->getRemoteBundleActivator()->stop( bundleContext );
 }
 
 template<class ThreadingModel>
-void IRemoteRegistryImpl<ThreadingModel>::deleteActivator( BundleInfoBase* bi ) 
+void IRemoteRegistryImpl<ThreadingModel>::deleteActivator( const BundleInfoBase& bi ) 
 {
 	logger.log( Logger::LOG_DEBUG, "[IRemoteRegistryImpl#deleteActivator] Called." );	
-	RemoteBundleInfo* bundleInfo = dynamic_cast<RemoteBundleInfo*>( bi );
+	BundleInfoBase* bInfo = const_cast<BundleInfoBase*>( &bi );
+	RemoteBundleInfo* bundleInfo = dynamic_cast<RemoteBundleInfo*>( bInfo );
 	delete ( bundleInfo->getRemoteBundleActivator() );
 }
 
 template<class ThreadingModel>
-bool IRemoteRegistryImpl<ThreadingModel>::callServiceListenerObject( const ServiceListenerInfo& info, const ServiceEvent& serviceEvent )
+bool IRemoteRegistryImpl<ThreadingModel>::callServiceListenerObject( const ServiceListenerInfo& info, const ServiceInfo& serviceInfo, const ServiceEvent::EventType& eventType )
 {
-	logger.log( Logger::LOG_DEBUG, "[IRemoteRegistryImpl#callServiceListenerObject] Called, listenerInfo: %1, event: %2", 
-		info.toString(), serviceEvent.toString() );
-		
+	logger.log( Logger::LOG_DEBUG, "[IRemoteRegistryImpl#callServiceListenerObject] Called, listenerInfo: %1", 
+		info.toString() );
+			
 	ServiceListenerInfo* serviceListenerInfo = const_cast<ServiceListenerInfo*>( &info );
 	RemoteServiceListenerInfo* corbaListenerInfo = dynamic_cast<RemoteServiceListenerInfo*>( serviceListenerInfo );
 	
+	ServiceInfo* tempServiceInfo = const_cast<ServiceInfo*>( &serviceInfo );
+	RemoteServiceInfo* corbaServiceInfo = dynamic_cast<RemoteServiceInfo*> (tempServiceInfo);
+
+	RemoteServiceReference remoteServiceRef( corbaServiceInfo->getServiceName(), 
+			corbaServiceInfo->getProperties(), 
+			corbaServiceInfo->getRemoteService(), 
+			corbaServiceInfo->getRemoteServiceID() );
+
+	RemoteServiceEvent serviceEvent( eventType, remoteServiceRef );
+
 	logger.log( Logger::LOG_DEBUG, "[IRemoteRegistryImpl#callServiceListenerObject] Getting remote service listener." );
 	
 	CORBAServiceListener_var remoteListener = CORBAServiceListener::_duplicate( corbaListenerInfo->getRemoteServiceListener() );
@@ -48,17 +60,6 @@ bool IRemoteRegistryImpl<ThreadingModel>::callServiceListenerObject( const Servi
 	CORBA::Boolean result =  remoteListener->serviceChanged( servEvent );
 	logger.log( Logger::LOG_DEBUG, "[IRemoteRegistryImpl#callServiceListenerObject] Service listener object called." );			
 	return result;
-}
-
-template<class ThreadingModel>
-ServiceReference* IRemoteRegistryImpl<ThreadingModel>::createServiceReference( const ServiceInfo& serviceInfo )
-{
-	logger.log( Logger::LOG_DEBUG, "[IRemoteRegistryImpl#createServiceReference] Called, serviceInfo: %1", 
-		serviceInfo.toString() );
-	
-	ServiceInfo* tempServiceInfo = const_cast<ServiceInfo*>( &serviceInfo );
-	RemoteServiceInfo* corbaServiceInfo = dynamic_cast<RemoteServiceInfo*> (tempServiceInfo);
-	return new RemoteServiceReference( corbaServiceInfo->getServiceName(), corbaServiceInfo->getProperties(), corbaServiceInfo->getRemoteService(), corbaServiceInfo->getRemoteServiceID() );
 }
 
 template<class ThreadingModel>

@@ -55,6 +55,14 @@ class RemoteServiceInfo : public ServiceInfo
 			const Properties &properties );
 
 		/**
+		 * Copy constructor.
+		 *
+		 * @param info
+		 *			The <code>RemoteServiceInfo</code> object which is copied.
+		 */
+		RemoteServiceInfo( const RemoteServiceInfo& info );
+
+		/**
 		 * Compares two <code>RemoteServiceInfo</code> objects.
 		 *
 		 * @param info1
@@ -101,6 +109,17 @@ class RemoteServiceInfo : public ServiceInfo
 		 *				True, if both objects are equal, otherwise false.
 		 */
 		virtual bool operator==( const RemoteServiceInfo& serviceInfo );
+
+		/**
+		 * Assigns the passed <code>RemoteServiceInfo</code> object to this object.
+		 *
+		 * @param serviceInfo
+		 *				The service info object which is assigned to this.
+		 *
+		 * @return
+		 *				This service info object.
+		 */			
+		virtual RemoteServiceInfo& operator=( const RemoteServiceInfo &serviceInfo );
 
 		/**
 		 * Returns a string representation of the remote service object.

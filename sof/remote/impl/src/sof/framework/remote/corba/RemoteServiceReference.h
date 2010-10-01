@@ -6,6 +6,9 @@
 #include "sof/framework/ServiceReference.h"
 #include "sof/framework/SOFException.h"
 
+#include "sof/util/logging/LoggerFactory.h"
+#include "sof/util/logging/Logger.h"
+
 #include "./generated/CORBAObjects.h"
 
 namespace sof { namespace framework { namespace remote { namespace corba {

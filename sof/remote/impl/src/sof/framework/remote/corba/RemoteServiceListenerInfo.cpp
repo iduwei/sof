@@ -21,15 +21,12 @@ RemoteServiceListenerInfo::~RemoteServiceListenerInfo()
 	logger.log( Logger::LOG_DEBUG, "[RemoteServiceListenerInfo#destructor] Called." );
 }
 
-/*RemoteServiceListenerInfo::RemoteServiceListenerInfo( const RemoteServiceListenerInfo& info )
+RemoteServiceListenerInfo::RemoteServiceListenerInfo( const RemoteServiceListenerInfo& info ) : ServiceListenerInfo( info )
 {
 	logger.log( Logger::LOG_DEBUG, "[RemoteServiceListenerInfo#copy-ctor] Called." );
-
-	this->bundleName = info.bundleName;
-	this->serviceName = info.serviceName;
 	this->objID = info.objID;
 	this->remoteServiceObject = CORBAServiceListener::_duplicate( info.remoteServiceObject );
-}*/
+}
 
 string RemoteServiceListenerInfo::getRemoteServiceListenerID() const
 {
@@ -65,6 +62,8 @@ RemoteServiceListenerInfo& RemoteServiceListenerInfo::operator=( const RemoteSer
 
 	if (this != &remoteServiceListenerInfo) 
     {
+		// TODO: check if necessary!
+		ServiceListenerInfo::operator =(remoteServiceListenerInfo);
 		this->bundleName = remoteServiceListenerInfo.bundleName;
 		this->serviceName = remoteServiceListenerInfo.serviceName;
 		this->objID = remoteServiceListenerInfo.objID;
@@ -80,6 +79,7 @@ bool RemoteServiceListenerInfo::operator==( const RemoteServiceListenerInfo& ser
 
 bool RemoteServiceListenerInfo::equals( const ServiceListenerInfo& serviceInfo1, const ServiceListenerInfo& serviceInfo2 )
 {
+	// TODO: check if const_cast is really necessary?
 	ServiceListenerInfo* remoteServInfo1 = const_cast<ServiceListenerInfo*> (&serviceInfo1);
 	RemoteServiceListenerInfo* remoteServiceInfo1 = dynamic_cast<RemoteServiceListenerInfo*> (remoteServInfo1);
 	

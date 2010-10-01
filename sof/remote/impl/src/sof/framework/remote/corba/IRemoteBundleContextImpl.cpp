@@ -39,7 +39,7 @@ IServiceRegistration* IRemoteBundleContextImpl::registerRemoteService( const str
 	
 	logger.log( Logger::LOG_DEBUG, "[IRemoteBundleContextImpl#registerRemoteService] Add service info object to registry." );	
 	
-	return this->registry.addServiceInfo( this->bundleName, serviceInfo );
+	return this->registry.addServiceInfo( this->bundleName, *serviceInfo );
 }
 
 void IRemoteBundleContextImpl::addRemoteServiceListener( POA_sof::framework::remote::corba::generated::CORBAServiceListener* remoteServiceListener, const string &serviceName )
@@ -51,7 +51,7 @@ void IRemoteBundleContextImpl::addRemoteServiceListener( POA_sof::framework::rem
 		this->corbaHelper.objectToString( object ) );
 	
 	this->listenerMap[remoteServiceListener] = object;
-	return this->registry.addServiceListener( this->bundleName, serviceListenerInfo );
+	return this->registry.addServiceListener( this->bundleName, *serviceListenerInfo );
 }
 
 void IRemoteBundleContextImpl::removeRemoteServiceListener( POA_sof::framework::remote::corba::generated::CORBAServiceListener* remoteServiceListener )
@@ -99,7 +99,7 @@ CORBAHelper& IRemoteBundleContextImpl::getCORBAHelper()
 	return this->corbaHelper;
 }
 
-void IRemoteBundleContextImpl::addUsedService( const string& bundleName, const ServiceInfo& serviceInfo )
+void IRemoteBundleContextImpl::addUsedService( const string& bundleName, ServiceInfo& serviceInfo )
 {
 	logger.log( Logger::LOG_DEBUG, "[IRemoteBundleContextImpl#addUsedService] Called, bundle name: %1, service info: %2",
 		bundleName, serviceInfo.toString() );	

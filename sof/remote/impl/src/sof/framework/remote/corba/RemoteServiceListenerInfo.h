@@ -54,6 +54,14 @@ class RemoteServiceListenerInfo : public ServiceListenerInfo
 		RemoteServiceListenerInfo( const string& bundleName, const string &servName, CORBAServiceListener_var serviceObj, const string& objID );
 
 		/**
+		 * Copy constructor.
+		 *
+		 * @param info
+		 *			The <code>RemoteServiceListenerInfo</code> object which is copied.
+		 */
+		RemoteServiceListenerInfo( const RemoteServiceListenerInfo& info );
+
+		/**
 		 * Destroys objects of type <code>RemoteServiceListenerInfo</code>.
 		 */
 		virtual ~RemoteServiceListenerInfo();

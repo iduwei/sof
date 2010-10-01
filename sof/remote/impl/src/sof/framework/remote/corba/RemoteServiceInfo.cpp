@@ -13,6 +13,13 @@ RemoteServiceInfo::RemoteServiceInfo( const string &servName, CORBAService_var s
 	logger.log( Logger::LOG_DEBUG, "[RemoteServiceInfo#ctor] Called." );
 }
 
+RemoteServiceInfo::RemoteServiceInfo( const RemoteServiceInfo& remoteServiceInfo ) : ServiceInfo( remoteServiceInfo )
+{
+	logger.log( Logger::LOG_DEBUG, "[RemoteServiceInfo#copy-ctor] Called." );
+	this->objID = remoteServiceInfo.objID;
+	this->remoteServiceObject = CORBAService::_duplicate( remoteServiceInfo.remoteServiceObject );
+}
+
 RemoteServiceInfo::~RemoteServiceInfo()
 {
 	logger.log( Logger::LOG_DEBUG, "[RemoteServiceInfo#destructor] Called." );
@@ -48,6 +55,20 @@ IService::ConstPtr RemoteServiceInfo::getService() const
 bool RemoteServiceInfo::operator==( const RemoteServiceInfo& serviceInfo )
 {
 	return this->equals( (*this), serviceInfo );
+}
+
+RemoteServiceInfo& RemoteServiceInfo::operator=( const RemoteServiceInfo &remoteServiceInfo ) 
+{
+	logger.log( Logger::LOG_DEBUG, "[RemoteServiceInfo#operator=] Called." );
+
+	if (this != &remoteServiceInfo) 
+    {
+		this->serviceName = remoteServiceInfo.serviceName;
+		this->props = remoteServiceInfo.props;
+		this->objID = remoteServiceInfo.objID;
+		this->remoteServiceObject = CORBAService::_duplicate( remoteServiceInfo.remoteServiceObject );		
+    }
+    return *this; 
 }
 
 bool RemoteServiceInfo::equals( const ServiceInfo& info1, const ServiceInfo& info2 )
