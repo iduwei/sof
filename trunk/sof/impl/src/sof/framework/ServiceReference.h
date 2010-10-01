@@ -7,11 +7,15 @@
 #include "Properties.h"
 #include "IService.h"
 
+#include "../util/logging/LoggerFactory.h"
+#include "../util/logging/Logger.h"
+
 namespace sof { namespace framework {
 
 using namespace std;
 
 using namespace sof::framework;
+using namespace sof::util::logging;
 
 /**
  * The <code>ServiceReference</code> represents a 
@@ -39,7 +43,18 @@ class ServiceReference
 		 */
 		IService* service;
 
+		/**
+		 * The logger instance.
+		 */
+		static Logger& logger;
+
 	public:
+
+		/**
+		 * Creates instances of class <code>ServiceReference</code>.
+		 *
+		 */
+		ServiceReference();
 
 		/**
 		 * Creates instances of class <code>ServiceReference</code>.
@@ -76,6 +91,30 @@ class ServiceReference
 		 * Destroys the <code>ServiceReference</code> object.
 		 */
 		virtual ~ServiceReference();
+
+		/**
+		 * Sets the name of the service.
+		 *
+		 * @param name
+		 *			The service name.
+		 */
+		virtual void setServiceName( const string& name );
+
+		/**
+		 * Sets the properties of the service.
+		 *
+		 * @param props
+		 *			The service properties.
+		 */
+		virtual void setServiceProperties( const Properties& props );
+
+		/**
+		 * Sets the service object.
+		 * 
+		 * @param service
+		 *				The service object.
+		 */
+		virtual void setService( IService::ConstPtr service );
 
 		/**
 		 * Returns the service name.
