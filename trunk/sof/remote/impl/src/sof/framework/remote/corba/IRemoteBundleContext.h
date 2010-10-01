@@ -105,7 +105,7 @@ class IRemoteBundleContext : public IBundleContext
 		 * @param serviceInfo
 		 *				The service information object.
 		 */
-		virtual void addUsedService( const string& bundleName, const ServiceInfo& serviceInfo ) = 0;
+		virtual void addUsedService( const string& bundleName, ServiceInfo& serviceInfo ) = 0;
 		
 		/**
 		 * Removes the service information object of an used service from the bundle context.

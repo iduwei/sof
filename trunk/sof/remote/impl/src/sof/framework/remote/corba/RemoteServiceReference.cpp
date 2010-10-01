@@ -6,16 +6,22 @@ RemoteServiceReference::RemoteServiceReference( const string &name, const Proper
 								remoteService( serviceObj ), remoteObjectID( objID ), 
 								ServiceReference( name, properties, NULL )
 {
+	logger.log( Logger::LOG_DEBUG, "[RemoteServiceReference#ctor] Called." );
 }
 
 RemoteServiceReference::RemoteServiceReference( const RemoteServiceReference& serviceRef ) : ServiceReference( serviceRef )
 {
+	logger.log( Logger::LOG_DEBUG, "[RemoteServiceReference#copy-ctor] Called." );
+	this->serviceName = serviceRef.serviceName;
+	this->props = serviceRef.props;	
+	this->service = serviceRef.service;
 	this->remoteObjectID = serviceRef.remoteObjectID;
 	this->remoteService = CORBAService::_duplicate( serviceRef.remoteService );
 }
 
 RemoteServiceReference& RemoteServiceReference::operator=( const RemoteServiceReference &serviceRef ) 
 {
+	logger.log( Logger::LOG_DEBUG, "[RemoteServiceReference#operator=] Called." );
 	if (this != &serviceRef) 
     {
 		this->serviceName = serviceRef.serviceName;
@@ -28,6 +34,7 @@ RemoteServiceReference& RemoteServiceReference::operator=( const RemoteServiceRe
 
 RemoteServiceReference:: ~RemoteServiceReference()
 {
+	logger.log( Logger::LOG_DEBUG, "[RemoteServiceReference#destructor] Called." );
 }
 
 string RemoteServiceReference::getRemoteServiceID() const
@@ -42,6 +49,7 @@ CORBAService_var RemoteServiceReference::getRemoteService() const
 
 bool RemoteServiceReference::operator==( const RemoteServiceReference& serviceReference )
 {
+	logger.log( Logger::LOG_DEBUG, "[RemoteServiceReference#operator==] Called." );
 	if ( this->serviceName == serviceReference.getServiceName() &&
 		this->props == serviceReference.getServiceProperties() &&
 		this->remoteObjectID == serviceReference.getRemoteServiceID() )
@@ -57,7 +65,7 @@ bool RemoteServiceReference::operator==( const RemoteServiceReference& serviceRe
 string RemoteServiceReference::toString() const
 {
 	ostringstream propsStream;
-	propsStream << "serviceReference={";
+	propsStream << "RemoteServiceReference={";
 	propsStream << "serviceName=" << this->serviceName << ", ";
 	propsStream << this->props.toString() << ", ";
 	propsStream << "objectID=" << this->remoteObjectID;

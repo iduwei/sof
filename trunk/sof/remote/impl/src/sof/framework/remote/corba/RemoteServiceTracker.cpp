@@ -40,23 +40,22 @@ void RemoteServiceTracker::stopTracking()
 CORBA::Boolean RemoteServiceTracker::serviceChanged( const CORBAServiceEvent &remoteServiceEvent )
 {
 	logger.log( Logger::LOG_DEBUG, "[RemoteServiceTracker#serviceChanged] Called." );
-	ServiceEvent serviceEvent = this->bundleCtxt->getCORBAHelper().convertEvent( remoteServiceEvent );
+	RemoteServiceEvent serviceEvent = this->bundleCtxt->getCORBAHelper().convertEvent( remoteServiceEvent );
 	bool flag = false;
 
-	ServiceReference* tempRef = const_cast<ServiceReference*>( &serviceEvent.getReference() );
-	RemoteServiceReference* remoteServiceReference = dynamic_cast<RemoteServiceReference*>( tempRef );			
+	RemoteServiceReference remoteServiceReference = serviceEvent.getReference();
 
 	if ( serviceEvent.getType() == ServiceEvent::REGISTER )
 	{
 		logger.log( Logger::LOG_DEBUG, "[RemoteServiceTracker#serviceChanged] Service is registered, service name: %1", serviceEvent.getReference().getServiceName() );
 
 		// Creating the remote service info dynamically for storing in vector
-		RemoteServiceInfo* info = new RemoteServiceInfo( remoteServiceReference->getServiceName(), 
-			CORBAService::_duplicate( remoteServiceReference->getRemoteService() ), 
-			remoteServiceReference->getRemoteServiceID(), 
-			remoteServiceReference->getServiceProperties() );	
+		RemoteServiceInfo* info = new RemoteServiceInfo( remoteServiceReference.getServiceName(), 
+			CORBAService::_duplicate( remoteServiceReference.getRemoteService() ), 
+			remoteServiceReference.getRemoteServiceID(), 
+			remoteServiceReference.getServiceProperties() );	
 
-		flag = this->serviceTracker->addingService( (*remoteServiceReference) );
+		flag = this->serviceTracker->addingService( remoteServiceReference );
 		if ( flag )
 		{
 			// Bugfix: [Remote SOF] Services 'in use' are not available - ID: 2818461
@@ -74,13 +73,13 @@ CORBA::Boolean RemoteServiceTracker::serviceChanged( const CORBAServiceEvent &re
 		logger.log( Logger::LOG_DEBUG, "[RemoteServiceTracker#serviceChanged] Service is unregistered, service name: %1", serviceEvent.getReference().getServiceName() );		
 
 		// creating the remote service info on stack 
-		RemoteServiceInfo info( remoteServiceReference->getServiceName(), 
-			CORBAService::_duplicate( remoteServiceReference->getRemoteService() ), 
-			remoteServiceReference->getRemoteServiceID(), 
-			remoteServiceReference->getServiceProperties() );
+		RemoteServiceInfo info( remoteServiceReference.getServiceName(), 
+			CORBAService::_duplicate( remoteServiceReference.getRemoteService() ), 
+			remoteServiceReference.getRemoteServiceID(), 
+			remoteServiceReference.getServiceProperties() );
 		
 		// Bugfix: [Remote SOF] Services 'in use' are not available - ID: 2818461
-		this->serviceTracker->removedService( (*remoteServiceReference) );
+		this->serviceTracker->removedService( remoteServiceReference );
 		this->bundleCtxt->removeUsedService( this->bundleCtxt->getBundleName(), info );
 		flag = true;
 	}
@@ -89,6 +88,5 @@ CORBA::Boolean RemoteServiceTracker::serviceChanged( const CORBAServiceEvent &re
 		logger.log( Logger::LOG_DEBUG, "[RemoteServiceTracker#serviceChanged] Unhandled event, service name: %1", serviceEvent.getReference().getServiceName() );						
 		flag = false;
 	}
-	delete ( &(serviceEvent.getReference()) );
 	return flag;
 }

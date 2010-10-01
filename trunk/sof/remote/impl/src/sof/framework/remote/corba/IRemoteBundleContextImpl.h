@@ -179,7 +179,7 @@ class IRemoteBundleContextImpl : public IRemoteBundleContext
 		 * @param serviceInfo
 		 *				The service information object.
 		 */
-		virtual void addUsedService( const string& bundleName, const ServiceInfo& serviceInfo );
+		virtual void addUsedService( const string& bundleName, ServiceInfo& serviceInfo );
 		
 		/**
 		 * Removes the service information object of an used service from the bundle context.

@@ -46,9 +46,9 @@ void IRegistryFacadeImpl::init()
 	remoteRegistry->addRegistryObserver( CORBARegistryObserver::_narrow( this->remoteRegistryObserver ) );
 }
 
-void IRegistryFacadeImpl::addBundleInfo( BundleInfoBase* bundleInfo )
+void IRegistryFacadeImpl::addBundleInfo( BundleInfoBase& bundleInfo )
 {
-	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#addBundleInfo] Called, bundle info: %1", bundleInfo->toString() );
+	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#addBundleInfo] Called, bundle info: %1", bundleInfo.toString() );
 	this->registry.addBundleInfo( bundleInfo );
 }
 
@@ -70,7 +70,7 @@ void IRegistryFacadeImpl::removeBundleInfo( const string& bundleName )
 	this->registry.removeBundleInfo( bundleName );
 }
 
-void IRegistryFacadeImpl::addUsedService( const string& bundleName, const ServiceInfo& info )
+void IRegistryFacadeImpl::addUsedService( const string& bundleName, ServiceInfo& info )
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#addUsedService] Called, bundle name: %1, service info: %2", 
 		bundleName, info.toString() );	
@@ -90,10 +90,10 @@ void IRegistryFacadeImpl::removeAllBundleInfos()
 	this->registry.removeAllBundleInfos();
 }
 
-IServiceRegistration::ConstPtr IRegistryFacadeImpl::addServiceInfo( const string& bundleName, ServiceInfo* serviceInfo )
+IServiceRegistration::ConstPtr IRegistryFacadeImpl::addServiceInfo( const string& bundleName, ServiceInfo& serviceInfo )
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#addServiceInfo] Called." );
-	RemoteServiceInfo* corbaServiceInfo = dynamic_cast<RemoteServiceInfo*> (serviceInfo);
+	RemoteServiceInfo* corbaServiceInfo = dynamic_cast<RemoteServiceInfo*> (&serviceInfo);
 	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#addServiceInfo] Called, service info object: %1", corbaServiceInfo->toString() );
 
 	CORBAServiceProps props = this->corbaHelper.convertServiceProperties( corbaServiceInfo->getProperties() );
@@ -102,7 +102,7 @@ IServiceRegistration::ConstPtr IRegistryFacadeImpl::addServiceInfo( const string
 
 	this->remoteRegistry->registerService( 
 		bundleName.c_str(), 
-		serviceInfo->getServiceName().c_str(), 
+		serviceInfo.getServiceName().c_str(), 
 		corbaServiceInfo->getRemoteService(),
 		props );
 
@@ -110,14 +110,15 @@ IServiceRegistration::ConstPtr IRegistryFacadeImpl::addServiceInfo( const string
 	
 	// Bugfix: [Remote SOF] Services and listeners are not deregistered - ID: 2818458
 	// Do pass IRegistryFacadeImpl instead of IRegistryImpl object.
-	return new IServiceRegistrationImpl( bundleName, this, serviceInfo );
+	return new IServiceRegistrationImpl( bundleName, (*this), serviceInfo );
 }
 		
-void IRegistryFacadeImpl::removeServiceInfo( const string& bundleName, ServiceInfo* serviceInfo )
+void IRegistryFacadeImpl::removeServiceInfo( const string& bundleName, const ServiceInfo& serviceInfo )
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#removeServiceInfo] Called, bundle name: %1, service info: %2",
-		bundleName, serviceInfo->toString() );	
-	RemoteServiceInfo* corbaServiceInfo = dynamic_cast<RemoteServiceInfo*> (serviceInfo);
+		bundleName, serviceInfo.toString() );	
+	ServiceInfo* servInfo = const_cast<ServiceInfo*> (&serviceInfo);
+	RemoteServiceInfo* corbaServiceInfo = dynamic_cast<RemoteServiceInfo*> (servInfo);
 
 	// Bugfix: Memory leak of RemoteServiceInfo objects, ID: 2970487
 	ScopeGuard<RemoteServiceInfo> guard( corbaServiceInfo );
@@ -126,7 +127,7 @@ void IRegistryFacadeImpl::removeServiceInfo( const string& bundleName, ServiceIn
 	
 	this->remoteRegistry->unregisterService( 
 		bundleName.c_str(), 
-		serviceInfo->getServiceName().c_str(), 
+		serviceInfo.getServiceName().c_str(), 
 		corbaServiceInfo->getRemoteService(),
 		this->corbaHelper.convertServiceProperties( corbaServiceInfo->getProperties() ) 
 		);
@@ -142,11 +143,11 @@ vector<ServiceInfo*>* IRegistryFacadeImpl::getServiceInfo( const string &service
 	return this->registry.getServiceInfo( serviceName );
 }
 
-void IRegistryFacadeImpl::addServiceListener( const string& bundleName, ServiceListenerInfo* listenerInfo )
+void IRegistryFacadeImpl::addServiceListener( const string& bundleName, ServiceListenerInfo& listenerInfo )
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#addServiceListener] Called, bundle name: %1, listener info: %2",
-		bundleName, listenerInfo->toString() );	
-	RemoteServiceListenerInfo* corbaServiceListenerInfo = dynamic_cast<RemoteServiceListenerInfo*> (listenerInfo);
+		bundleName, listenerInfo.toString() );	
+	RemoteServiceListenerInfo* corbaServiceListenerInfo = dynamic_cast<RemoteServiceListenerInfo*> (&listenerInfo);
 	this->remoteRegistry->registerServiceListener( bundleName.c_str(), corbaServiceListenerInfo->getServiceName().c_str(),
 		corbaServiceListenerInfo->getRemoteServiceListener() );
 }

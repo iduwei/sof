@@ -94,7 +94,7 @@ class IRegistryFacadeImpl : public IRegistry
 		 * @param serviceInfo
 		 *				The service information object.
 		 */
-		virtual void addUsedService( const string& bundleName, const ServiceInfo& serviceInfo );
+		virtual void addUsedService( const string& bundleName, ServiceInfo& serviceInfo );
 		
 		/**
 		 * Removes the service information object of an used service from the registry cache.
@@ -113,7 +113,7 @@ class IRegistryFacadeImpl : public IRegistry
 		 * @param bundleInfo
 		 *			The <code>BundleInfo</code> object which describes a bundle.
 		 */
-		virtual void addBundleInfo( BundleInfoBase* bundleInfo );
+		virtual void addBundleInfo( BundleInfoBase& bundleInfo );
 
 		/**
 		 * Returns the <code>BundleInfo</code> object of a specific bundle.
@@ -160,7 +160,7 @@ class IRegistryFacadeImpl : public IRegistry
 		 * @param serviceInfo
 		 *				The <code>ServiceInfo</code> object describing the service.
 		 */
-		virtual IServiceRegistration::ConstPtr addServiceInfo( const string& bundleName, ServiceInfo* serviceInfo );
+		virtual IServiceRegistration::ConstPtr addServiceInfo( const string& bundleName, ServiceInfo& serviceInfo );
 		
 		/**
 		 * Removes a <code>ServiceInfo</code> object from the registry.
@@ -171,7 +171,7 @@ class IRegistryFacadeImpl : public IRegistry
 		 * @param serviceInfo
 		 *				The <code>ServiceInfo</code> object describing the service.
 		 */
-		virtual void removeServiceInfo( const string& bundleName, ServiceInfo* serviceInfo );
+		virtual void removeServiceInfo( const string& bundleName, const ServiceInfo& serviceInfo );
 
 		/**
 		 * Returns the <code>ServiceInfo</code> object for a specific service.
@@ -195,7 +195,7 @@ class IRegistryFacadeImpl : public IRegistry
 		 * @param serviceName
 		 *				The name of the service.
 		 */
-		virtual void addServiceListener( const string& bundleName, ServiceListenerInfo* listenerInfo );
+		virtual void addServiceListener( const string& bundleName, ServiceListenerInfo& listenerInfo );
 		
 		/**
 		 * Removes a service listener object from the registry.

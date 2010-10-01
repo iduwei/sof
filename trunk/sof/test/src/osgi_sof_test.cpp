@@ -20,6 +20,9 @@ using namespace sof::framework;
 
 int main()
 {	
+
+
+
 	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[osgi_sof_test#main] *** Begin tests...." );
     TestResult tr;
     TestRegistry::runAllTests(tr);

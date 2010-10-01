@@ -35,7 +35,7 @@ void CORBARegistryObserverImpl::registerService( const char* bundleName, const c
 	string bName( bundleName );
 	string sName( serviceName );
 	RemoteServiceInfo& info = this->corbaHelper.convertToServiceInfo( serviceName, CORBAService::_duplicate( service ), props );
-	this->registry.addServiceInfo( bName, &info );
+	this->registry.addServiceInfo( bName, info );
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#registerService] Left." );
 }
 
@@ -47,7 +47,7 @@ void CORBARegistryObserverImpl::registerServiceListener( const char* bundleName,
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#registerServiceListener] Converting service listener info." );	
 	RemoteServiceListenerInfo& info = this->corbaHelper.convertToServiceListenerInfo( bName, sName, CORBAServiceListener::_duplicate( listener ) );
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#registerServiceListener] Registering service listener." );	
-	this->registry.addServiceListener( bName, &info );
+	this->registry.addServiceListener( bName, info );
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#registerServiceListener] Left." );
 }
 
@@ -57,11 +57,11 @@ void CORBARegistryObserverImpl::unregisterService( const char* bundleName, const
 	string bName( bundleName );
 	string sName( serviceName );
 	RemoteServiceInfo& info = this->corbaHelper.convertToServiceInfo( serviceName, CORBAService::_duplicate( service ), props );
-
+	
 	// Bugfix: Memory leak of RemoteServiceInfo objects, ID: 2970487
 	ScopeGuard<RemoteServiceInfo> guard( &info );
-
-	this->registry.removeServiceInfo( bName, &info );
+	
+	this->registry.removeServiceInfo( bName, info );
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#unregisterService] Left." );
 }
 

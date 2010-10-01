@@ -99,7 +99,7 @@ void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::start( vector<BundleConf
 		RemoteBundleInfo* bundleInfo = new RemoteBundleInfo( bundleConfig.getBundleName(), bundleActivator, bundleCtxt );		
 
 		logger.log( Logger::LOG_ERROR, "[RemoteSOFLauncher#start] Add bundle info object to registry." );	
-		this->registry->addBundleInfo( bundleInfo );
+		this->registry->addBundleInfo( *bundleInfo );
 
 		logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#start] Start bundle." );
 		
@@ -126,7 +126,7 @@ void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::startAdministrationBundl
 	IRemoteBundleContext* bc = dynamic_cast<IRemoteBundleContext*>( bundleCtxt );
 
 	BundleInfoBase* bundleInfo = new RemoteBundleInfo( "RemoteAdministrationBundle", adminBundleActivator, bundleCtxt );		
-	this->registry->addBundleInfo( bundleInfo );
+	this->registry->addBundleInfo( *bundleInfo );
 
 	logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#start] Start bundle." );
 		
