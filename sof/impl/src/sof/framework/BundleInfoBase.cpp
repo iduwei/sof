@@ -28,27 +28,29 @@ IBundleContext::ConstPtr BundleInfoBase::getBundleContext()
 	return this->bundleContext;
 }
 
-void BundleInfoBase::addRegisteredService( ServiceInfo& serviceInfo )
+void BundleInfoBase::addRegisteredService( ServiceInfoPtr serviceInfo )
 {
 	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#addRegisteredService] Called." );
-	this->registeredServices.push_back( &serviceInfo );
+	this->registeredServices.push_back( serviceInfo );
 }
 
-void BundleInfoBase::removeDeregisteredService( const ServiceInfo& serviceInfo )
+void BundleInfoBase::removeDeregisteredService( ServiceInfoPtr serviceInfo )
 {	
-	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeDeregisteredService] Called, service info: %1", serviceInfo.toString() );
+	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeDeregisteredService] Called, service info: %1", serviceInfo->toString() );
 
 	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeDeregisteredService] Iterate over vector of registered services." );					
-	vector<ServiceInfo*>::iterator iter;
+	vector<ServiceInfoPtr>::iterator iter;
 	for ( iter = this->registeredServices.begin(); iter != this->registeredServices.end(); ++iter )
 	{
-		if ( (*iter)->equals( (*(*iter)), serviceInfo ) )
+		if ( (*iter)->equals( (*((*iter).GetRawPointer() ) ), (*serviceInfo.GetRawPointer() ) ) )
 		{
 			logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeDeregisteredService] Service found." );	
-			logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeDeregisteredService] Delete service object." );	
-			delete (*iter);
+			//logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeDeregisteredService] Delete service object." );
+			// TODO: no longer necessary due to usage of smart pointer
+			//delete (*iter);
 			logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeDeregisteredService] Service object deleted." );									
 			logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeDeregisteredService] Remove element from vector of registered services." );					
+			logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeDeregisteredService] Counter: %1", (( int ) (*iter).GetCount()));
 			iter = this->registeredServices.erase( iter );		
 			
 			// TODO: Why breaking here?
@@ -57,16 +59,16 @@ void BundleInfoBase::removeDeregisteredService( const ServiceInfo& serviceInfo )
 	}
 }
 
-void BundleInfoBase::removeUsedService( const ServiceInfo& serviceInfo )
+void BundleInfoBase::removeUsedService( ServiceInfoPtr serviceInfo )
 {
-	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeUsedService] Called, service info: %1", serviceInfo.toString() );
+	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeUsedService] Called, service info: %1", serviceInfo->toString() );
 
 	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeUsedService] Iterate over vector of used services." );					
 	
-	vector<ServiceInfo*>::iterator iter;
+	vector<ServiceInfoPtr>::iterator iter;
 	for ( iter = this->usedServices.begin(); iter != this->usedServices.end(); ++iter )
 	{
-		if ( (*(*iter)) == serviceInfo )
+		if ( (* ((*iter).GetRawPointer()) ) == (*(serviceInfo.GetRawPointer() ) ) )
 		{
 			logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeUsedService] Service found." );	
 			logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeUsedService] Remove element from vector of used services." );					
@@ -91,7 +93,7 @@ void BundleInfoBase::removeUsedService( const string& serviceName )
 	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeUsedService] Called, service name: %1", serviceName );		
 	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeUsedService] Iterate over vector of used services." );					
 	
-	vector<ServiceInfo*>::iterator iter;
+	vector<ServiceInfoPtr>::iterator iter;
 	for ( iter = this->usedServices.begin(); iter != this->usedServices.end(); ++iter )
 	{
 		if ( (*iter)->getServiceName() == serviceName )
@@ -106,28 +108,28 @@ void BundleInfoBase::removeUsedService( const string& serviceName )
 }
 
 
-void BundleInfoBase::addUsedService( ServiceInfo& serviceInfo )
+void BundleInfoBase::addUsedService( ServiceInfoPtr serviceInfo )
 {
 	// Bugfix: [Remote SOF] Services are listed double as used services - ID: 2821783
 	// Note:
 	//	- 'addUsedService' could be call twice (in RemoteServiceTracker and in registry)
 	//		for the same service info object, therefore double entries have to be avoided
 	
-	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#addUsedService] Called, service info: %1", serviceInfo.toString() );
+	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#addUsedService] Called, service info: %1", serviceInfo->toString() );
 
 	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#addUsedService] Check whether service info is already cached in vector." );					
 	
-	vector<ServiceInfo*>::iterator iter;
+	vector<ServiceInfoPtr>::iterator iter;
 	for ( iter = this->usedServices.begin(); iter != this->usedServices.end(); ++iter )
 	{
-		if ( (*(*iter)) == serviceInfo )
+		if ( (*((*iter).GetRawPointer()) ) == (*(serviceInfo.GetRawPointer())) )
 		{
 			logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#addUsedService] Service already cached, do not put it once again!" );					
 			return;
 		}
 	}	
 	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#addUsedService] Put service info into vector." );								
-	this->usedServices.push_back( &serviceInfo );
+	this->usedServices.push_back( serviceInfo );
 }
 
 void BundleInfoBase::addRegisteredListener( ServiceListenerInfo& listenerInfo )
@@ -167,7 +169,7 @@ string BundleInfoBase::toString() const
 	stream << "*** Bundle: " << this->bundleName << " ****" << endl;
 	
 	stream << "*** Registered services ***" << endl;
-	vector<ServiceInfo*>::const_iterator iter;
+	vector<ServiceInfoPtr>::const_iterator iter;
 	
 	for ( iter = registeredServices.begin(); iter != registeredServices.end(); ++iter )
 	{
@@ -191,12 +193,12 @@ string BundleInfoBase::toString() const
 	return stream.str();
 }
 
-vector<ServiceInfo*> BundleInfoBase::getRegisteredServices() const
+vector<ServiceInfoPtr> BundleInfoBase::getRegisteredServices() const
 {
 	return this->registeredServices;
 }
 
-vector<ServiceInfo*> BundleInfoBase::getUsedServices() const
+vector<ServiceInfoPtr> BundleInfoBase::getUsedServices() const
 {
 	return this->usedServices;
 }

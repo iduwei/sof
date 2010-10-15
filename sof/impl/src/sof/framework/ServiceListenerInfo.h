@@ -5,6 +5,7 @@
 
 #include "../util/logging/LoggerFactory.h"
 #include "../util/logging/Logger.h"
+#include "../util/memory/SmartPtr.h"
 
 #include "IServiceListener.h"
 
@@ -12,8 +13,9 @@ namespace sof { namespace framework {
 
 using namespace std;
 
-using namespace sof::util::logging;
 using namespace sof::framework;
+using namespace sof::util::logging;
+using namespace sof::util::memory;
 
 /**
  * The <code>ServiceListenerInfo</code> class is a helper
@@ -142,8 +144,13 @@ class ServiceListenerInfo
 		 *		A string containing all data of the
 		 *		<code>ServiceListenerInfo</code>.
 		 */
-		virtual string toString() const;
+		virtual string toString() const;		
 };
+
+		/** 
+		 * Smart pointer for <code>ServiceInfo</code> objects.
+		 */
+		typedef SmartPtr<ServiceListenerInfo> ServiceListenerInfoPtr;
 
 }}
 

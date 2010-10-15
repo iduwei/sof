@@ -6,11 +6,13 @@
 #include <string>
 
 #include "sof/framework/ServiceInfo.h"
+#include "sof/util/memory/SmartPtr.h"
 
 #include "./generated/CORBAObjects.h"
 
 using namespace sof::framework;
 using namespace sof::framework::remote::corba::generated;
+using namespace sof::util::memory;
 
 namespace sof { namespace framework { namespace remote { namespace corba {
 
@@ -139,6 +141,11 @@ class RemoteServiceInfo : public ServiceInfo
 		 */
 		virtual IService::ConstPtr getService() const;
 };
+
+/** 
+ * Smart pointer for <code>RemoteServiceInfo</code> objects.
+ */
+typedef SmartPtr<RemoteServiceInfo> RemoteServiceInfoPtr;
 
 }}}}
 #endif

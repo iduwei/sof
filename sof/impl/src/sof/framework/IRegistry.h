@@ -85,7 +85,7 @@ class IRegistry
 		 * @param serviceInfo
 		 *				The <code>ServiceInfo</code> object describing the service.
 		 */
-		virtual IServiceRegistration::ConstPtr addServiceInfo( const string& bundleName, ServiceInfo& serviceInfo ) = 0;
+		virtual IServiceRegistration::ConstPtr addServiceInfo( const string& bundleName, ServiceInfoPtr serviceInfo ) = 0;
 		
 		/**
 		 * Removes a <code>ServiceInfo</code> object from the registry.
@@ -96,7 +96,7 @@ class IRegistry
 		 * @param serviceInfo
 		 *				The <code>ServiceInfo</code> object describing the service.
 		 */
-		virtual void removeServiceInfo( const string& bundleName, const ServiceInfo& serviceInfo ) = 0;
+		virtual void removeServiceInfo( const string& bundleName, ServiceInfoPtr serviceInfo ) = 0;
 
 		/**
 		 * Returns the <code>ServiceInfo</code> object for a specific service.
@@ -107,7 +107,7 @@ class IRegistry
 		 * @return 
 		 *				A pointer to a vector of pointers to <code>ServiceInfo</code> objects.
 		 */
-		virtual vector<ServiceInfo*>* getServiceInfo( const string &serviceName ) = 0;
+		virtual vector<ServiceInfoPtr>* getServiceInfo( const string &serviceName ) = 0;
 
 		/**
 		 * Adds the service information object of an used service to the registry cache.
@@ -118,7 +118,7 @@ class IRegistry
 		 * @param serviceInfo
 		 *				The service information object.
 		 */
-		virtual void addUsedService( const string& bundleName, ServiceInfo& serviceInfo ) = 0;
+		virtual void addUsedService( const string& bundleName, ServiceInfoPtr serviceInfo ) = 0;
 		
 		/**
 		 * Removes the service information object of an used service from the registry cache.
@@ -129,7 +129,7 @@ class IRegistry
 		 * @param serviceInfo
 		 *				The service information object.
 		 */		
-		virtual void removeUsedService( const string& bundleName, const ServiceInfo& serviceInfo ) = 0;
+		virtual void removeUsedService( const string& bundleName, ServiceInfoPtr serviceInfo ) = 0;
 
 		/**
 		 * Adds a service listener object to the registry.

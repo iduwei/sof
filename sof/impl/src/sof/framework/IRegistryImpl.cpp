@@ -88,12 +88,12 @@ void IRegistryImpl<ThreadingModel>::removeBundleInfo( const string &bundleName )
 
 	bi->removeAllUsedServices();
 
-	vector<ServiceInfo*> serviceInfos = bi->getRegisteredServices();
-	vector<ServiceInfo*>::iterator iter;
+	vector<ServiceInfoPtr> serviceInfos = bi->getRegisteredServices();
+	vector<ServiceInfoPtr>::iterator iter;
 	for ( iter = serviceInfos.begin(); iter != serviceInfos.end(); iter++ )
 	{
 		logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#removeBundleInfo] Deregister service: %1", (*iter)->getServiceName() );	
-		this->removeServiceInfo( bundleName, (*(*iter)) );
+		this->removeServiceInfo( bundleName, (*iter) );
 	}
 
 	vector<ServiceListenerInfo*> serviceListenerInfos = bi->getRegisteredListeners();
@@ -132,12 +132,12 @@ void IRegistryImpl<ThreadingModel>::deleteActivator( const BundleInfoBase& bi )
 }
 
 template<class ThreadingModel>
-IServiceRegistration::ConstPtr IRegistryImpl<ThreadingModel>::addServiceInfo( const string& bundleName, ServiceInfo& serviceInfo ) 
+IServiceRegistration::ConstPtr IRegistryImpl<ThreadingModel>::addServiceInfo( const string& bundleName, ServiceInfoPtr serviceInfo ) 
 {	
 	// !!! synchronized access !!!
 	typename ThreadingModel::Lock lock;
 
-	string serviceName = serviceInfo.getServiceName();
+	string serviceName = serviceInfo->getServiceName();
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#addServiceInfo] Called, bundle name: %1, service name: %2", bundleName, serviceName );		
 
 	this->addToServiceInfoVector( bundleName, serviceName, serviceInfo );
@@ -148,29 +148,36 @@ IServiceRegistration::ConstPtr IRegistryImpl<ThreadingModel>::addServiceInfo( co
 	// notifying all Listeners about new registered service
 	vector<ServiceListenerInfo*>* serviceListenerInfoVec = this->getServiceListenerInfoVector( serviceName );
 	this->notifyListenersAboutRegisteredService( bundleName, serviceInfo, serviceListenerInfoVec, serviceName );
+	return this->createServiceRegistrationObject( bundleName, serviceInfo );
+}
+
+template<class ThreadingModel>
+IServiceRegistration::ConstPtr IRegistryImpl<ThreadingModel>::createServiceRegistrationObject( const string& bundleName, ServiceInfoPtr serviceInfo ) 
+{
+	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#createServiceRegistrationObject] Called" );	
 	return new IServiceRegistrationImpl( bundleName, (*this), serviceInfo );
 }
 
 template<class ThreadingModel>
-void IRegistryImpl<ThreadingModel>::removeServiceInfo( const string& bundleName, const ServiceInfo& serviceInfo ) 
+void IRegistryImpl<ThreadingModel>::removeServiceInfo( const string& bundleName, ServiceInfoPtr serviceInfo ) 
 {
 	// !!! synchronized access !!!
 	typename ThreadingModel::Lock lock;
 
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#removeServiceInfo] Called, serviceInfo: %1", 
-		serviceInfo.toString() );	
+		serviceInfo->toString() );	
 	this->removeFromServiceInfoVector( serviceInfo );
-	vector<ServiceListenerInfo*>* serviceListenerInfoVec = this->getServiceListenerInfoVector( serviceInfo.getServiceName() );
+	vector<ServiceListenerInfo*>* serviceListenerInfoVec = this->getServiceListenerInfoVector( serviceInfo->getServiceName() );
 	this->notifyListenersAboutDeregisteredService( bundleName, serviceInfo, serviceListenerInfoVec );
 	this->removeDeregisteredServiceFromBundleInfo( bundleName, serviceInfo );	
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#removeServiceInfo] Left." );	
 }
 
 template<class ThreadingModel>
-void IRegistryImpl<ThreadingModel>::addRegisteredServiceToBundleInfo( const string& bundleName, ServiceInfo& serviceInfo ) 
+void IRegistryImpl<ThreadingModel>::addRegisteredServiceToBundleInfo( const string& bundleName, ServiceInfoPtr serviceInfo ) 
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#addRegisteredServiceToBundleInfo] Called, bundle name: %1, service info: %2", 
-		bundleName, serviceInfo.toString() );	
+		bundleName, serviceInfo->toString() );	
 	BundleInfoBase* bundleInfo = this->getBundleInfo( bundleName );
 	if ( bundleInfo == 0 )
 	{
@@ -184,10 +191,10 @@ void IRegistryImpl<ThreadingModel>::addRegisteredServiceToBundleInfo( const stri
 }
 
 template<class ThreadingModel>
-void IRegistryImpl<ThreadingModel>::removeDeregisteredServiceFromBundleInfo( const string& bundleName, const ServiceInfo& serviceInfo ) 
+void IRegistryImpl<ThreadingModel>::removeDeregisteredServiceFromBundleInfo( const string& bundleName, ServiceInfoPtr serviceInfo ) 
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#removeDeregisteredServiceFromBundleInfo] Called, bundle name: %1, service info: %2", 
-		bundleName, serviceInfo.toString() );	
+		bundleName, serviceInfo->toString() );	
 	BundleInfoBase* bundleInfo = this->getBundleInfo( bundleName );
 	if ( bundleInfo == 0 )
 	{
@@ -201,10 +208,10 @@ void IRegistryImpl<ThreadingModel>::removeDeregisteredServiceFromBundleInfo( con
 }
 
 template<class ThreadingModel>
-void IRegistryImpl<ThreadingModel>::addUsedService( const string& bundleName, ServiceInfo& serviceInfo )
+void IRegistryImpl<ThreadingModel>::addUsedService( const string& bundleName, ServiceInfoPtr serviceInfo )
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#addUsedService] Called, bundle name: %1, service info: %2", 
-		bundleName, serviceInfo.toString() );	
+		bundleName, serviceInfo->toString() );	
 	BundleInfoBase* bundleInfo = this->getBundleInfo( bundleName );
 	if ( bundleInfo == 0 )
 	{
@@ -217,10 +224,10 @@ void IRegistryImpl<ThreadingModel>::addUsedService( const string& bundleName, Se
 }
 
 template<class ThreadingModel>
-void IRegistryImpl<ThreadingModel>::removeUsedService( const string& bundleName, const ServiceInfo& serviceInfo )
+void IRegistryImpl<ThreadingModel>::removeUsedService( const string& bundleName, ServiceInfoPtr serviceInfo )
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#removeUsedService] Called, bundle name: %1, service info: %2", 
-		bundleName, serviceInfo.toString() );	
+		bundleName, serviceInfo->toString() );	
 	BundleInfoBase* bundleInfo = this->getBundleInfo( bundleName );
 	if ( bundleInfo != 0 )
 	{
@@ -233,7 +240,7 @@ void IRegistryImpl<ThreadingModel>::removeUsedService( const string& bundleName,
 }
 
 template<class ThreadingModel>
-void IRegistryImpl<ThreadingModel>::addToServiceInfoVector( const string& bundleName, const string& serviceName, ServiceInfo& serviceInfo ) 
+void IRegistryImpl<ThreadingModel>::addToServiceInfoVector( const string& bundleName, const string& serviceName, ServiceInfoPtr serviceInfo ) 
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#addToServiceInfoVector] Called, bundle name: %1, service name: %2", bundleName, serviceName );	
 	
@@ -244,28 +251,28 @@ void IRegistryImpl<ThreadingModel>::addToServiceInfoVector( const string& bundle
 		return;
 	}
 
-	vector<ServiceInfo*>* serviceVec = this->getServiceInfo( serviceName );
+	vector<ServiceInfoPtr>* serviceVec = this->getServiceInfo( serviceName );
 
-	serviceVec->push_back( &serviceInfo );	
+	serviceVec->push_back( serviceInfo );	
 
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#addToServiceInfoVector] Left." );	
 }
 
 template<class ThreadingModel>
-void IRegistryImpl<ThreadingModel>::removeFromServiceInfoVector( const ServiceInfo& serviceInfo ) 
+void IRegistryImpl<ThreadingModel>::removeFromServiceInfoVector( ServiceInfoPtr serviceInfo ) 
 {
-	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#removeFromServiceInfoVector] Called, service name: %1", serviceInfo.getServiceName() );	
+	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#removeFromServiceInfoVector] Called, service name: %1", serviceInfo->getServiceName() );	
 
-	vector<ServiceInfo*>* vec = this->getServiceInfo( serviceInfo.getServiceName() );
+	vector<ServiceInfoPtr>* vec = this->getServiceInfo( serviceInfo->getServiceName() );
 	
-	vector<ServiceInfo*>::iterator iter;	
+	vector<ServiceInfoPtr>::iterator iter;	
 
 	for ( iter = vec->begin(); iter != vec->end(); iter++ )
 	{
 		// TODO: check why following statement can not be used (ServiceInfo class is called)
 		//if ( (*(*iter)) == (*serviceInfo) )
 
-		if ( (*iter)->equals( ( *(*iter) ), serviceInfo ) )
+		if ( (*iter)->equals( ( (*((*iter).GetRawPointer())) ), (*(serviceInfo.GetRawPointer())) ) )
 		{
 			logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#removeFromServiceInfoVector] Service was found in ServiceInfo vector." );	
 			iter = vec->erase( iter );
@@ -277,23 +284,23 @@ void IRegistryImpl<ThreadingModel>::removeFromServiceInfoVector( const ServiceIn
 
 
 template<class ThreadingModel>
-void IRegistryImpl<ThreadingModel>::notifyListenersAboutRegisteredService( const string& bundleName, vector<ServiceInfo*>* serviceVec, vector<ServiceListenerInfo*>* serviceListenerInfoVec, const string& serviceName ) 
+void IRegistryImpl<ThreadingModel>::notifyListenersAboutRegisteredService( const string& bundleName, vector<ServiceInfoPtr>* serviceVec, vector<ServiceListenerInfo*>* serviceListenerInfoVec, const string& serviceName ) 
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#notifyListenersAboutRegisteredService] Called." );	
 
 	vector<ServiceListenerInfo*>::iterator listenerIter;
 	for ( listenerIter = serviceListenerInfoVec->begin(); listenerIter != serviceListenerInfoVec->end(); listenerIter++ )
 	{
-		vector<ServiceInfo*>::iterator serviceIter;
+		vector<ServiceInfoPtr>::iterator serviceIter;
 		for ( serviceIter = serviceVec->begin(); serviceIter != serviceVec->end(); serviceIter++ )
 		{	
-			bool interested = this->callServiceListenerObject( (*(*listenerIter)), (*(*serviceIter)), ServiceEvent::REGISTER );
+			bool interested = this->callServiceListenerObject( (*(*listenerIter)), (*serviceIter), ServiceEvent::REGISTER );
 
 			if ( interested )
 			{
 				logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#notifyListenersAboutRegisteredService] Service listener is interested in registered service '%1'.",
 					(*serviceIter)->getServiceName() );
-				this->addUsedService( bundleName, (*(*serviceIter)) );	
+				this->addUsedService( bundleName, (*serviceIter) );	
 			} else
 			{
 				logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#notifyListenersAboutRegisteredService] Service listener is NOT interested in registered service '%1'.",
@@ -306,7 +313,7 @@ void IRegistryImpl<ThreadingModel>::notifyListenersAboutRegisteredService( const
 }
 
 template<class ThreadingModel>
-void IRegistryImpl<ThreadingModel>::notifyListenersAboutRegisteredService( const string& bundleName, ServiceInfo& serviceInfo, vector<ServiceListenerInfo*>* serviceListenerInfoVec, const string& serviceName ) 
+void IRegistryImpl<ThreadingModel>::notifyListenersAboutRegisteredService( const string& bundleName, ServiceInfoPtr serviceInfo, vector<ServiceListenerInfo*>* serviceListenerInfoVec, const string& serviceName ) 
 {
 	
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#notifyListenersAboutRegisteredService] Called." );	
@@ -319,13 +326,13 @@ void IRegistryImpl<ThreadingModel>::notifyListenersAboutRegisteredService( const
 		if ( interested )
 		{
 			logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#notifyListenersAboutRegisteredService] Service listener is interested in registered service '%1'.",
-				serviceInfo.getServiceName() );
+				serviceInfo->getServiceName() );
 			this->addUsedService( (*listenerIter)->getBundleName(), serviceInfo );		
 		}
 		else
 		{
 			logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#notifyListenersAboutRegisteredService] Service listener is NOT interested in registered service '%1'.",
-				serviceInfo.getServiceName() );
+				serviceInfo->getServiceName() );
 		}
 	}	
 
@@ -334,22 +341,22 @@ void IRegistryImpl<ThreadingModel>::notifyListenersAboutRegisteredService( const
 }
 
 template<class ThreadingModel>
-void IRegistryImpl<ThreadingModel>::notifyListenerAboutRegisteredService( const string& bundleName, vector<ServiceInfo*>* serviceVec, const ServiceListenerInfo& serviceListenerInfo, const string& serviceName ) 
+void IRegistryImpl<ThreadingModel>::notifyListenerAboutRegisteredService( const string& bundleName, vector<ServiceInfoPtr>* serviceVec, const ServiceListenerInfo& serviceListenerInfo, const string& serviceName ) 
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#notifyListenerAboutRegisteredService] Called." );	
 
-	vector<ServiceInfo*>::iterator serviceIter;
+	vector<ServiceInfoPtr>::iterator serviceIter;
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#notifyListenerAboutRegisteredService] Iterate through service info vector." );	
 	for ( serviceIter = serviceVec->begin(); serviceIter != serviceVec->end(); serviceIter++ )
 	{
 		logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#notifyListenerAboutRegisteredService] Service name: %1",				
 			(*serviceIter)->getServiceName() );
-		bool interested = this->callServiceListenerObject( serviceListenerInfo, (*(*serviceIter)), ServiceEvent::REGISTER );
+		bool interested = this->callServiceListenerObject( serviceListenerInfo, (*serviceIter), ServiceEvent::REGISTER );
 		if ( interested )
 		{
 			logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#notifyListenerAboutRegisteredService] Service listener is interested in registered service '%1'.",
 				(*serviceIter)->getServiceName() );
-			this->addUsedService( bundleName, (*(*serviceIter)) );	
+			this->addUsedService( bundleName, (*serviceIter) );	
 		} 
 		else
 		{
@@ -363,7 +370,7 @@ void IRegistryImpl<ThreadingModel>::notifyListenerAboutRegisteredService( const 
 }
 
 template<class ThreadingModel>
-void IRegistryImpl<ThreadingModel>::notifyListenersAboutDeregisteredService( const string& bundleName, const ServiceInfo& serviceInfo, vector<ServiceListenerInfo*>* serviceListenerInfoVec ) 
+void IRegistryImpl<ThreadingModel>::notifyListenersAboutDeregisteredService( const string& bundleName, ServiceInfoPtr serviceInfo, vector<ServiceListenerInfo*>* serviceListenerInfoVec ) 
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#notifyListenersAboutDeregisteredService] Called." );	
 
@@ -374,11 +381,11 @@ void IRegistryImpl<ThreadingModel>::notifyListenersAboutDeregisteredService( con
 
 		if ( interested )
 		{
-			logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#notifyListenersAboutDeregisteredService] Listener is interested in deregistered service '%1'.", serviceInfo.getServiceName() );	
+			logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#notifyListenersAboutDeregisteredService] Listener is interested in deregistered service '%1'.", serviceInfo->getServiceName() );	
 			this->removeUsedService( (*listenerIter)->getBundleName(), serviceInfo );		
 		} else
 		{
-			logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#notifyListenersAboutDeregisteredService] Listener is NOT interested in deregistered service '%1'.", serviceInfo.getServiceName() );	
+			logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#notifyListenersAboutDeregisteredService] Listener is NOT interested in deregistered service '%1'.", serviceInfo->getServiceName() );	
 		}
 
 	}	
@@ -387,17 +394,17 @@ void IRegistryImpl<ThreadingModel>::notifyListenersAboutDeregisteredService( con
 }
 
 template<class ThreadingModel>
-vector<ServiceInfo*>* IRegistryImpl<ThreadingModel>::getServiceInfo( const string& serviceName ) 
+vector<ServiceInfoPtr>* IRegistryImpl<ThreadingModel>::getServiceInfo( const string& serviceName ) 
 {
 	// !!! synchronized access !!!
 	typename ThreadingModel::Lock lock;
 
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#getServiceInfo] Called, service name: %1", serviceName );	
-	vector<ServiceInfo*>* vec = this->serviceInfoMap[serviceName];
+	vector<ServiceInfoPtr>* vec = this->serviceInfoMap[serviceName];
 	if ( vec == 0 )
 	{
 		logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#getServiceInfo] ServiceInfo vector is null, create one." );		
-		vec = new vector<ServiceInfo*>;
+		vec = new vector<ServiceInfoPtr>;
 		this->serviceInfoMap[serviceName] = vec;
 	}
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#getServiceInfo] Left." );		
@@ -443,7 +450,7 @@ void IRegistryImpl<ThreadingModel>::addServiceListener( const string& bundleName
 		bundleInfo->addRegisteredListener( listenerInfo );
 	}
 
-	vector<ServiceInfo*>* serviceVec = this->getServiceInfo( serviceName );
+	vector<ServiceInfoPtr>* serviceVec = this->getServiceInfo( serviceName );
 
 	this->notifyListenerAboutRegisteredService( bundleName, serviceVec, listenerInfo, serviceName );	
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#addServiceListener] Left." );				
@@ -510,11 +517,11 @@ bool IRegistryImpl<ThreadingModel>::areServiceListenerObjectsEqual( const Servic
 }
 
 template<class ThreadingModel>
-bool IRegistryImpl<ThreadingModel>::callServiceListenerObject( const ServiceListenerInfo& info, const ServiceInfo& serviceInfo, const ServiceEvent::EventType& eventType )
+bool IRegistryImpl<ThreadingModel>::callServiceListenerObject( const ServiceListenerInfo& info, ServiceInfoPtr serviceInfo, const ServiceEvent::EventType& eventType )
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#callServiceListenerObject] Called, serviceInfo: %1", 
-		serviceInfo.toString() );
-	ServiceReference serviceRef( serviceInfo.getServiceName(), serviceInfo.getProperties(), serviceInfo.getService() );
+		serviceInfo->toString() );
+	ServiceReference serviceRef( serviceInfo->getServiceName(), serviceInfo->getProperties(), serviceInfo->getService() );
 	ServiceEvent servEvent( eventType, serviceRef );
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#callServiceListenerObject] Called, listenerInfo: %1, event: %2", 
 		info.toString(), servEvent.toString() );

@@ -28,8 +28,8 @@ string IBundleContextImpl::getBundleName()
 IServiceRegistration* IBundleContextImpl::registerService( const string& className, IService::ConstPtr service, const Properties &dict )
 {
 	logger.log( Logger::LOG_DEBUG, "[IBundleContextImpl#registerService] Called, bundle name: %1, service name: %2", this->bundleName, className );
-	ServiceInfo* serviceInfo = new ServiceInfo( className, service, dict );
-	return this->registry.addServiceInfo( this->bundleName, *serviceInfo );
+	ServiceInfoPtr serviceInfo( new ServiceInfo( className, service, dict ) );
+	return this->registry.addServiceInfo( this->bundleName, serviceInfo );
 }
 
 void IBundleContextImpl::addServiceListener( IServiceListener::ConstPtr serviceListener, const string &serviceName )

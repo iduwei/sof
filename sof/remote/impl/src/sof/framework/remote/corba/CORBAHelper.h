@@ -344,7 +344,7 @@ class CORBAHelper
 		 * @return
 		 *				The created <code>RemoteServiceInfo</code> object.
 		 */
-		RemoteServiceInfo& convertToServiceInfo( const string& serviceName,
+		RemoteServiceInfoPtr convertToServiceInfo( const string& serviceName,
 			CORBAService_ptr service, const CORBAServiceProps& props );
 
 		/**

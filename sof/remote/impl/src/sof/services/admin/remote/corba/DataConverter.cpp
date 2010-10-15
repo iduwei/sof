@@ -57,15 +57,16 @@ CORBAAdminServiceProps* DataConverter::convert( const Properties& props )
 	return adminServiceProps;
 }
 
-CORBAAdminServiceInfo* DataConverter::convert( const RemoteServiceInfo& serviceInfo )
+CORBAAdminServiceInfo* DataConverter::convert( ServiceInfoPtr servInfo )
 {
 	logger.log( Logger::LOG_DEBUG, "[DataConverter#convert] Called." );
+	RemoteServiceInfo* serviceInfo = dynamic_cast<RemoteServiceInfo*>(servInfo.GetRawPointer() );
 	CORBAAdminServiceInfo* corbaAdminServiceInfo = new CORBAAdminServiceInfo();
 	logger.log( Logger::LOG_DEBUG, "[DataConverter#convert] Called, ID: %1, service name: %2", 
-		serviceInfo.getRemoteServiceID(), serviceInfo.getServiceName() );
-	corbaAdminServiceInfo->objID = CORBA::string_dup( serviceInfo.getRemoteServiceID().c_str() );
-	corbaAdminServiceInfo->properties = ( * ( convert( serviceInfo.getProperties() ) ) );
-	corbaAdminServiceInfo->serviceName = CORBA::string_dup( serviceInfo.getServiceName().c_str() );
+		serviceInfo->getRemoteServiceID(), serviceInfo->getServiceName() );
+	corbaAdminServiceInfo->objID = CORBA::string_dup( serviceInfo->getRemoteServiceID().c_str() );
+	corbaAdminServiceInfo->properties = ( * ( convert( serviceInfo->getProperties() ) ) );
+	corbaAdminServiceInfo->serviceName = CORBA::string_dup( serviceInfo->getServiceName().c_str() );
 	return corbaAdminServiceInfo;
 }
 
@@ -77,18 +78,19 @@ CORBAAdminServiceListenerInfo* DataConverter::convert( const RemoteServiceListen
 	return corbaAdminServiceListenerInfo;
 }
 
-CORBAAdminServiceInfoSequence* DataConverter::convert( const vector<ServiceInfo*>& serviceInfo )
+CORBAAdminServiceInfoSequence* DataConverter::convert( const vector<ServiceInfoPtr>& serviceInfo )
 {
 	logger.log( Logger::LOG_DEBUG, "[DataConverter#convert] Called." );
 	CORBAAdminServiceInfoSequence* seq = new CORBAAdminServiceInfoSequence();
 	seq->length( serviceInfo.size() );
-	vector<ServiceInfo*>::const_iterator it;
+	vector<ServiceInfoPtr>::const_iterator it;
 	int counter = 0;
 	for( it = serviceInfo.begin(); it != serviceInfo.end(); ++it )
 	{
-		RemoteServiceInfo* servInfoObj = dynamic_cast<RemoteServiceInfo*>(*it);
-		logger.log( Logger::LOG_DEBUG, "[DataConverter#convert] ServiceInfo object: %1", (*servInfoObj).toString() );
-		(*seq)[counter] = ( * ( convert( (*servInfoObj) ) ) );
+		// TODO: remove the following line no longer necessary
+		//RemoteServiceInfoPtr servInfoObj = dynamic_cast<RemoteServiceInfoPtr>(*it);
+		logger.log( Logger::LOG_DEBUG, "[DataConverter#convert] ServiceInfo object: %1", (*it)->toString() );
+		(*seq)[counter] = ( * ( convert( (*it) ) ) );
 		counter++;
 	}
 	return seq;

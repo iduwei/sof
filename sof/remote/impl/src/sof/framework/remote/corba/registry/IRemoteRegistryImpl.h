@@ -47,6 +47,8 @@ class IRemoteRegistryImpl : public IRegistryImpl<ThreadingModel>
 		 */
 		virtual ~IRemoteRegistryImpl();
 
+	protected:
+
 		/**
 		 * Sends an event to a service listener.
 		 * 
@@ -60,7 +62,7 @@ class IRemoteRegistryImpl : public IRegistryImpl<ThreadingModel>
 		 * @param eventType
 		 *					The service event type (e.g. REGISTER, UNREGISTER).
 		 */
-		virtual bool callServiceListenerObject( const ServiceListenerInfo& info, const ServiceInfo& serviceInfo, const ServiceEvent::						EventType& eventType );
+		virtual bool callServiceListenerObject( const ServiceListenerInfo& info, ServiceInfoPtr serviceInfo, const ServiceEvent::						EventType& eventType );
 
 		/**
 		 * Stops the activator of the specified bundel information object.
@@ -91,7 +93,11 @@ class IRemoteRegistryImpl : public IRegistryImpl<ThreadingModel>
 		 */		 			
 		virtual bool areServiceListenerObjectsEqual( const ServiceListenerInfo& info1, const ServiceListenerInfo& info2 );
 
-
+		/**
+		 * Creates no service registration object on 'remote' side and returns null. The service
+		 * registration object was already created on client side.
+		 */
+		virtual IServiceRegistration::ConstPtr createServiceRegistrationObject( const string& bundleName, ServiceInfoPtr serviceInfo );
 };
 
 #include "IRemoteRegistryImpl.cpp"

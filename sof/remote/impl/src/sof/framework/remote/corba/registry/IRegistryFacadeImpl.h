@@ -94,7 +94,7 @@ class IRegistryFacadeImpl : public IRegistry
 		 * @param serviceInfo
 		 *				The service information object.
 		 */
-		virtual void addUsedService( const string& bundleName, ServiceInfo& serviceInfo );
+		virtual void addUsedService( const string& bundleName, ServiceInfoPtr serviceInfo );
 		
 		/**
 		 * Removes the service information object of an used service from the registry cache.
@@ -105,7 +105,7 @@ class IRegistryFacadeImpl : public IRegistry
 		 * @param serviceInfo
 		 *				The service information object.
 		 */		
-		virtual void removeUsedService( const string& bundleName, const ServiceInfo& serviceInfo );
+		virtual void removeUsedService( const string& bundleName, ServiceInfoPtr serviceInfo );
 
 		/**
 		 * Adds a <code>BundleInfo</code> object to the registry.
@@ -160,7 +160,7 @@ class IRegistryFacadeImpl : public IRegistry
 		 * @param serviceInfo
 		 *				The <code>ServiceInfo</code> object describing the service.
 		 */
-		virtual IServiceRegistration::ConstPtr addServiceInfo( const string& bundleName, ServiceInfo& serviceInfo );
+		virtual IServiceRegistration::ConstPtr addServiceInfo( const string& bundleName, ServiceInfoPtr serviceInfo );
 		
 		/**
 		 * Removes a <code>ServiceInfo</code> object from the registry.
@@ -171,7 +171,7 @@ class IRegistryFacadeImpl : public IRegistry
 		 * @param serviceInfo
 		 *				The <code>ServiceInfo</code> object describing the service.
 		 */
-		virtual void removeServiceInfo( const string& bundleName, const ServiceInfo& serviceInfo );
+		virtual void removeServiceInfo( const string& bundleName, ServiceInfoPtr serviceInfo );
 
 		/**
 		 * Returns the <code>ServiceInfo</code> object for a specific service.
@@ -181,7 +181,7 @@ class IRegistryFacadeImpl : public IRegistry
 		 *
 		 * @return A pointer to a vector of pointers to <code>ServiceInfo</code> objects.
 		 */
-		virtual vector<ServiceInfo*>* getServiceInfo( const string &serviceName );
+		virtual vector<ServiceInfoPtr>* getServiceInfo( const string &serviceName );
 
 		/**
 		 * Adds a service listener object to the registry.
