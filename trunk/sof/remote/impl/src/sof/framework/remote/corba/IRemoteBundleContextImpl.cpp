@@ -34,12 +34,12 @@ IServiceRegistration* IRemoteBundleContextImpl::registerRemoteService( const str
 	logger.log( Logger::LOG_DEBUG, "[IRemoteBundleContextImpl#registerRemoteService] Called, bundle name: %1, service name: %2", this->bundleName, className );
 	CORBA::Object_var object = this->corbaHelper.activateObject( remoteService );
 	logger.log( Logger::LOG_DEBUG, "[IRemoteBundleContextImpl#registerRemoteService] Create service info object." );	
-	RemoteServiceInfo* serviceInfo = new RemoteServiceInfo( className, CORBAService::_narrow( object ),
-		this->corbaHelper.objectToString( object ), dict );
+	RemoteServiceInfoPtr serviceInfo( new RemoteServiceInfo( className, CORBAService::_narrow( object ),
+		this->corbaHelper.objectToString( object ), dict ) );
 	
 	logger.log( Logger::LOG_DEBUG, "[IRemoteBundleContextImpl#registerRemoteService] Add service info object to registry." );	
 	
-	return this->registry.addServiceInfo( this->bundleName, *serviceInfo );
+	return this->registry.addServiceInfo( this->bundleName, serviceInfo );
 }
 
 void IRemoteBundleContextImpl::addRemoteServiceListener( POA_sof::framework::remote::corba::generated::CORBAServiceListener* remoteServiceListener, const string &serviceName )
@@ -99,16 +99,16 @@ CORBAHelper& IRemoteBundleContextImpl::getCORBAHelper()
 	return this->corbaHelper;
 }
 
-void IRemoteBundleContextImpl::addUsedService( const string& bundleName, ServiceInfo& serviceInfo )
+void IRemoteBundleContextImpl::addUsedService( const string& bundleName, ServiceInfoPtr serviceInfo )
 {
 	logger.log( Logger::LOG_DEBUG, "[IRemoteBundleContextImpl#addUsedService] Called, bundle name: %1, service info: %2",
-		bundleName, serviceInfo.toString() );	
+		bundleName, serviceInfo->toString() );	
 	this->registry.addUsedService( bundleName, serviceInfo );	
 }
 
-void IRemoteBundleContextImpl::removeUsedService( const string& bundleName, const ServiceInfo& serviceInfo )
+void IRemoteBundleContextImpl::removeUsedService( const string& bundleName, ServiceInfoPtr serviceInfo )
 {
 	logger.log( Logger::LOG_DEBUG, "[IRemoteBundleContextImpl#removeUsedService] Called, bundle name: %1, service info: %2",
-		bundleName, serviceInfo.toString() );	
+		bundleName, serviceInfo->toString() );	
 	this->registry.removeUsedService( bundleName, serviceInfo );	
 }

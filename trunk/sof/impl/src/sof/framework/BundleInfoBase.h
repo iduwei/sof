@@ -49,12 +49,12 @@ class BundleInfoBase
 		/**
 		 * Contains <code>ServiceInfo</code> objects of all registered services.
 		 */
-		vector<ServiceInfo*> registeredServices;
+		vector<ServiceInfoPtr> registeredServices;
 
 		/**
 		 * Contains <code>ServiceInfo</code> objects of all used services.
 		 */
-		vector<ServiceInfo*> usedServices;
+		vector<ServiceInfoPtr> usedServices;
 		
 		/**
 		 * Contains the registered service listeners.
@@ -102,7 +102,7 @@ class BundleInfoBase
 		 * @param serviceInfo
 		 *				The service information object.
 		 */
-		virtual void addRegisteredService( ServiceInfo& serviceInfo );
+		virtual void addRegisteredService( ServiceInfoPtr serviceInfo );
 
 		/**
 		 * Removes information about the specified service.
@@ -110,7 +110,7 @@ class BundleInfoBase
 		 * @param serviceInfo
 		 *				The service information object.
 		 */
-		virtual void removeDeregisteredService( const ServiceInfo& serviceInfo );
+		virtual void removeDeregisteredService( const ServiceInfoPtr serviceInfo );
 
 		/**
 		 * Adds information about the specified service which is used by the
@@ -119,7 +119,7 @@ class BundleInfoBase
 		 * @param serviceInfo
 		 *				The service information object.
 		 */
-		virtual void addUsedService( ServiceInfo& serviceInfo );
+		virtual void addUsedService( ServiceInfoPtr serviceInfo );
 
 		/**
 		 * Removes the information about the specified service which was used by the
@@ -128,7 +128,7 @@ class BundleInfoBase
 		 * @param serviceInfo
 		 *				The service information object.
 		 */
-		virtual void removeUsedService( const ServiceInfo& serviceInfo );
+		virtual void removeUsedService( ServiceInfoPtr serviceInfo );
 
 		/**
 		 * Removes the information about the specified service which was used by the
@@ -175,7 +175,7 @@ class BundleInfoBase
 		 * @return 
 		 *		Vector of <code>ServiceInfo</code> instances.
 		 */
-		virtual vector<ServiceInfo*> getRegisteredServices() const;
+		virtual vector<ServiceInfoPtr> getRegisteredServices() const;
 
 		/**
 		 * Returns a vector which contains all service information objects
@@ -184,7 +184,7 @@ class BundleInfoBase
 		 * @return 
 		 *		Vector of <code>ServiceInfo</code> instances.
 		 */
-		virtual vector<ServiceInfo*> getUsedServices() const;
+		virtual vector<ServiceInfoPtr> getUsedServices() const;
 
 		/**
 		 * Returns a vector which contains all service information objects

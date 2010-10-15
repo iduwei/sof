@@ -33,7 +33,7 @@ class IServiceRegistrationImpl : public IServiceRegistration
 		 * The <code>ServiceInfo</code> describing the service which can
 		 * be unregistered by this service registration object.
 		 */
-		ServiceInfo& serviceInfo;
+		ServiceInfoPtr serviceInfo;
 
 		/**
          * The name of the bundle which registered the service object.
@@ -59,7 +59,7 @@ class IServiceRegistrationImpl : public IServiceRegistration
 		 * @param serviceInfo
 		 *				The service info object.
 		 */
-		IServiceRegistrationImpl( const string& bundleName, IRegistry& reg, ServiceInfo& serviceInfo );
+		IServiceRegistrationImpl( const string& bundleName, IRegistry& reg, ServiceInfoPtr serviceInfo );
 
 		/**
 		 * Deletes the object.

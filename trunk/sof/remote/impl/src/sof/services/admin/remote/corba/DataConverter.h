@@ -64,12 +64,12 @@ class DataConverter
 		 * Converts a <code>RemoteServiceInfo</code> object into a <code>CORBAAdminServiceInfo</code> object.
 		 *
 		 * @param props
-		 *					The <code>RemoteServiceInfo</code> object
+		 *					The <code>ServiceInfo</code> object
 		 *
 		 * @return
 		 *					The pointer to the <code>CORBAAdminServiceInfo</code> object.
 		 */
-		static CORBAAdminServiceInfo* convert( const RemoteServiceInfo& serviceInfo );
+		static CORBAAdminServiceInfo* convert( ServiceInfoPtr serviceInfo );
 		
 		/**
 		 * Converts a <code>RemoteServiceListenerInfo</code> object into a <code>CORBAAdminServiceListenerInfo</code> object.
@@ -91,7 +91,7 @@ class DataConverter
 		 * @return
 		 *					The pointer to the <code>CORBAAdminServiceInfoSequence</code> object.
 		 */
-		static CORBAAdminServiceInfoSequence* convert( const vector<ServiceInfo*>& serviceInfo );
+		static CORBAAdminServiceInfoSequence* convert( const vector<ServiceInfoPtr>& serviceInfo );
 		
 		/**
 		 * Converts a vector of <code>ServiceListenerInfo</code> objects into a <code>CORBAAdminServiceListenerInfoSequence</code> object.

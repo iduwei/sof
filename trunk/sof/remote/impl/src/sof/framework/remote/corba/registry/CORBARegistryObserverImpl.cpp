@@ -3,10 +3,12 @@
 #include <CORBA.h>
 
 #include "sof/util/memory/ScopeGuard.h"
+#include "sof/framework/IServiceRegistrationImpl.h"
 
 #include "../RemoteServiceInfo.h"
 #include "../CORBAHelper.h"
 
+using namespace sof::framework;
 using namespace sof::util::memory;
 
 using namespace sof::framework::remote::corba::registry;
@@ -34,7 +36,8 @@ void CORBARegistryObserverImpl::registerService( const char* bundleName, const c
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#registerService] Entered." );
 	string bName( bundleName );
 	string sName( serviceName );
-	RemoteServiceInfo& info = this->corbaHelper.convertToServiceInfo( serviceName, CORBAService::_duplicate( service ), props );
+	RemoteServiceInfoPtr info = this->corbaHelper.convertToServiceInfo( serviceName, CORBAService::_duplicate( service ), props );
+	// Note: addServiceInfo call returns NULL (for service registration object)
 	this->registry.addServiceInfo( bName, info );
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#registerService] Left." );
 }
@@ -56,11 +59,7 @@ void CORBARegistryObserverImpl::unregisterService( const char* bundleName, const
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#unregisterService] Entered." );
 	string bName( bundleName );
 	string sName( serviceName );
-	RemoteServiceInfo& info = this->corbaHelper.convertToServiceInfo( serviceName, CORBAService::_duplicate( service ), props );
-	
-	// Bugfix: Memory leak of RemoteServiceInfo objects, ID: 2970487
-	ScopeGuard<RemoteServiceInfo> guard( &info );
-	
+	RemoteServiceInfoPtr info = this->corbaHelper.convertToServiceInfo( serviceName, CORBAService::_duplicate( service ), props );
 	this->registry.removeServiceInfo( bName, info );
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#unregisterService] Left." );
 }

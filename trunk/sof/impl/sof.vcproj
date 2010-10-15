@@ -520,6 +520,10 @@
 							RelativePath=".\src\sof\util\memory\ScopeGuard.h"
 							>
 						</File>
+						<File
+							RelativePath=".\src\sof\util\memory\SmartPtr.h"
+							>
+						</File>
 					</Filter>
 				</Filter>
 				<Filter

@@ -31,7 +31,7 @@ void IRemoteRegistryImpl<ThreadingModel>::deleteActivator( const BundleInfoBase&
 }
 
 template<class ThreadingModel>
-bool IRemoteRegistryImpl<ThreadingModel>::callServiceListenerObject( const ServiceListenerInfo& info, const ServiceInfo& serviceInfo, const ServiceEvent::EventType& eventType )
+bool IRemoteRegistryImpl<ThreadingModel>::callServiceListenerObject( const ServiceListenerInfo& info, ServiceInfoPtr serviceInfo, const ServiceEvent::EventType& eventType )
 {
 	logger.log( Logger::LOG_DEBUG, "[IRemoteRegistryImpl#callServiceListenerObject] Called, listenerInfo: %1", 
 		info.toString() );
@@ -39,8 +39,7 @@ bool IRemoteRegistryImpl<ThreadingModel>::callServiceListenerObject( const Servi
 	ServiceListenerInfo* serviceListenerInfo = const_cast<ServiceListenerInfo*>( &info );
 	RemoteServiceListenerInfo* corbaListenerInfo = dynamic_cast<RemoteServiceListenerInfo*>( serviceListenerInfo );
 	
-	ServiceInfo* tempServiceInfo = const_cast<ServiceInfo*>( &serviceInfo );
-	RemoteServiceInfo* corbaServiceInfo = dynamic_cast<RemoteServiceInfo*> (tempServiceInfo);
+	RemoteServiceInfo* corbaServiceInfo = dynamic_cast<RemoteServiceInfo*> (serviceInfo.GetRawPointer());
 
 	RemoteServiceReference remoteServiceRef( corbaServiceInfo->getServiceName(), 
 			corbaServiceInfo->getProperties(), 
@@ -83,4 +82,11 @@ bool IRemoteRegistryImpl<ThreadingModel>::areServiceListenerObjectsEqual( const 
 		logger.log( Logger::LOG_DEBUG, "[IRemoteRegistryImpl#areServiceListenerObjectsEqual] Objects are NOT equal." );	
 		return false;
 	}	
+}
+
+template<class ThreadingModel>
+IServiceRegistration::ConstPtr IRemoteRegistryImpl<ThreadingModel>::createServiceRegistrationObject( const string& bundleName, ServiceInfoPtr serviceInfo ) 
+{
+	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#createServiceRegistrationObject] Called, return null" );	
+	return NULL;
 }

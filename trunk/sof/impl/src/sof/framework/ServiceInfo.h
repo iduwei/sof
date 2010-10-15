@@ -9,12 +9,14 @@
 
 #include "../util/logging/LoggerFactory.h"
 #include "../util/logging/Logger.h"
+#include "../util/memory/SmartPtr.h"
 
 namespace sof { namespace framework {
 
 using namespace std;
 
 using namespace sof::util::logging;
+using namespace sof::util::memory;
 using namespace sof::framework;
 
 /**
@@ -134,6 +136,11 @@ class ServiceInfo
 		 */
 		virtual bool operator==( const ServiceInfo& serviceInfo1 );
 };
+
+/** 
+ * Smart pointer for <code>ServiceInfo</code> objects.
+ */
+typedef SmartPtr<ServiceInfo> ServiceInfoPtr;
 
 }}
 #endif

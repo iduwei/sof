@@ -260,15 +260,15 @@ void CORBAHelper::cleanUp()
 	this->orb->destroy();
 }
 
-RemoteServiceInfo& CORBAHelper::convertToServiceInfo( const string& serviceName,
+RemoteServiceInfoPtr CORBAHelper::convertToServiceInfo( const string& serviceName,
 			CORBAService_ptr service, const CORBAServiceProps& props )
 {	
 	logger.log( Logger::LOG_DEBUG, "[CORBAHelper#convertToServiceInfo] Called, serviceName: %1", serviceName );
 	string objID = this->objectToString( service );
-	RemoteServiceInfo* info = new RemoteServiceInfo( serviceName, CORBAService::_duplicate( service ), 
-		objID , this->convertServiceProperties( props ) );	
+	RemoteServiceInfoPtr info( new RemoteServiceInfo( serviceName, CORBAService::_duplicate( service ), 
+		objID , this->convertServiceProperties( props ) ) );	
 	logger.log( Logger::LOG_DEBUG, "[CORBAHelper#convertToServiceInfo] Return RemoteServiceInfo object." );	
-	return (*info);
+	return info;
 }
 
 RemoteServiceListenerInfo& CORBAHelper::convertToServiceListenerInfo( const string& bundleName,

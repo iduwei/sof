@@ -86,8 +86,8 @@ int TestHelper::isServiceListenerRegisteredByBundle( IRegistry& reg, const strin
 int TestHelper::isServiceRegisteredByBundle( IRegistry& registry, const string& bundleName, const string& serviceName, int propsSize )
 {
 	BundleInfoBase* bi = registry.getBundleInfo( bundleName );	
-	vector<ServiceInfo*> serviceInfos = bi->getRegisteredServices();
-	vector<ServiceInfo*>::iterator iter;
+	vector<ServiceInfoPtr> serviceInfos = bi->getRegisteredServices();
+	vector<ServiceInfoPtr>::iterator iter;
 	int foundCounter = 0;
 	for ( iter = serviceInfos.begin(); iter != serviceInfos.end(); ++iter )
 	{
@@ -103,8 +103,8 @@ int TestHelper::isServiceRegisteredByBundle( IRegistry& registry, const string& 
 int TestHelper::isServiceUsedByBundle( IRegistry& registry, const string& bundleName, const string& serviceName, int propsSize )
 {
 	BundleInfoBase* bi = registry.getBundleInfo( bundleName );	
-	vector<ServiceInfo*> serviceInfos = bi->getUsedServices();
-	vector<ServiceInfo*>::iterator iter;
+	vector<ServiceInfoPtr> serviceInfos = bi->getUsedServices();
+	vector<ServiceInfoPtr>::iterator iter;
 	int foundCounter = 0;
 	for ( iter = serviceInfos.begin(); iter != serviceInfos.end(); ++iter )
 	{
@@ -140,14 +140,14 @@ bool TestHelper::isBundleStarted( IRegistry& reg, const string& bundleName )
 int TestHelper::isServiceRegisteredByBundle( IRegistry& registry, const string& bundleName )
 {
 	BundleInfoBase* bi = registry.getBundleInfo( bundleName );	
-	vector<ServiceInfo*> serviceInfos = bi->getRegisteredServices();
+	vector<ServiceInfoPtr> serviceInfos = bi->getRegisteredServices();
 	return serviceInfos.size();
 }
 
 int TestHelper::isServiceUsedByBundle( IRegistry& registry, const string& bundleName )
 {
 	BundleInfoBase* bi = registry.getBundleInfo( bundleName );	
-	vector<ServiceInfo*> serviceInfos = bi->getUsedServices();
+	vector<ServiceInfoPtr> serviceInfos = bi->getUsedServices();
 	return serviceInfos.size();
 }
 

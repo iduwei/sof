@@ -29,8 +29,8 @@ int TestHelper::isServiceRegisteredByBundle( IRegistry& registry, const string& 
 	{
 		return 0;
 	}
-	vector<ServiceInfo*> serviceInfos = bi->getRegisteredServices();
-	vector<ServiceInfo*>::iterator iter;
+	vector<ServiceInfoPtr> serviceInfos = bi->getRegisteredServices();
+	vector<ServiceInfoPtr>::iterator iter;
 	int foundCounter = 0;
 	for ( iter = serviceInfos.begin(); iter != serviceInfos.end(); ++iter )
 	{
@@ -50,8 +50,8 @@ int TestHelper::isServiceUsedByBundle( IRegistry& registry, const string& bundle
 	{
 		return 0;
 	}
-	vector<ServiceInfo*> serviceInfos = bi->getUsedServices();
-	vector<ServiceInfo*>::iterator iter;
+	vector<ServiceInfoPtr> serviceInfos = bi->getUsedServices();
+	vector<ServiceInfoPtr>::iterator iter;
 	int foundCounter = 0;
 	for ( iter = serviceInfos.begin(); iter != serviceInfos.end(); ++iter )
 	{
@@ -95,7 +95,7 @@ int TestHelper::isServiceRegisteredByBundle( IRegistry& registry, const string& 
 	{
 		return 0;
 	}
-	vector<ServiceInfo*> serviceInfos = bi->getRegisteredServices();
+	vector<ServiceInfoPtr> serviceInfos = bi->getRegisteredServices();
 	return serviceInfos.size();
 }
 
@@ -106,6 +106,6 @@ int TestHelper::isServiceUsedByBundle( IRegistry& registry, const string& bundle
 	{
 		return 0;
 	}
-	vector<ServiceInfo*> serviceInfos = bi->getUsedServices();
+	vector<ServiceInfoPtr> serviceInfos = bi->getUsedServices();
 	return serviceInfos.size();
 }
