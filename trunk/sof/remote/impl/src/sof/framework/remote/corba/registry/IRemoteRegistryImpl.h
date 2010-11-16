@@ -62,7 +62,7 @@ class IRemoteRegistryImpl : public IRegistryImpl<ThreadingModel>
 		 * @param eventType
 		 *					The service event type (e.g. REGISTER, UNREGISTER).
 		 */
-		virtual bool callServiceListenerObject( const ServiceListenerInfo& info, ServiceInfoPtr serviceInfo, const ServiceEvent::						EventType& eventType );
+		virtual bool callServiceListenerObject( ServiceListenerInfoPtr info, ServiceInfoPtr serviceInfo, const ServiceEvent::						EventType& eventType );
 
 		/**
 		 * Stops the activator of the specified bundel information object.
@@ -91,7 +91,7 @@ class IRemoteRegistryImpl : public IRegistryImpl<ThreadingModel>
 		 * @param info2
 		 *			The info object of the second service listener.
 		 */		 			
-		virtual bool areServiceListenerObjectsEqual( const ServiceListenerInfo& info1, const ServiceListenerInfo& info2 );
+		virtual bool areServiceListenerObjectsEqual( ServiceListenerInfoPtr info1, ServiceListenerInfoPtr info2 );
 
 		/**
 		 * Creates no service registration object on 'remote' side and returns null. The service

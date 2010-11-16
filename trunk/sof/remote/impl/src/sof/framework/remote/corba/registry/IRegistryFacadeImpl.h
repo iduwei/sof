@@ -195,7 +195,7 @@ class IRegistryFacadeImpl : public IRegistry
 		 * @param serviceName
 		 *				The name of the service.
 		 */
-		virtual void addServiceListener( const string& bundleName, ServiceListenerInfo& listenerInfo );
+		virtual void addServiceListener( const string& bundleName, ServiceListenerInfoPtr listenerInfo );
 		
 		/**
 		 * Removes a service listener object from the registry.
@@ -206,7 +206,7 @@ class IRegistryFacadeImpl : public IRegistry
 		 * @param serviceListener
 		 *				The pointer to the service listener object.
 		 */
-		virtual void removeServiceListener( const string& bundleName, const ServiceListenerInfo& info );
+		virtual void removeServiceListener( const string& bundleName, ServiceListenerInfoPtr info );
 		
 };
 

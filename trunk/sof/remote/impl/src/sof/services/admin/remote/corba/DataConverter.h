@@ -72,15 +72,15 @@ class DataConverter
 		static CORBAAdminServiceInfo* convert( ServiceInfoPtr serviceInfo );
 		
 		/**
-		 * Converts a <code>RemoteServiceListenerInfo</code> object into a <code>CORBAAdminServiceListenerInfo</code> object.
+		 * Converts a <code>ServiceListenerInfo</code> object into a <code>CORBAAdminServiceListenerInfo</code> object.
 		 *
 		 * @param props
-		 *					The <code>RemoteServiceListenerInfo</code> object
+		 *					The <code>ServiceListenerInfo</code> object
 		 *
 		 * @return
 		 *					The pointer to the <code>CORBAAdminServiceListenerInfo</code> object.
 		 */
-		static CORBAAdminServiceListenerInfo* convert( const RemoteServiceListenerInfo& serviceListenerInfo );
+		static CORBAAdminServiceListenerInfo* convert( ServiceListenerInfoPtr serviceListenerInfo );
 		
 		/**
 		 * Converts a vector of <code>ServiceInfo</code> objects into a <code>CORBAAdminServiceInfoSequence</code> object.
@@ -102,7 +102,7 @@ class DataConverter
 		 * @return
 		 *					The pointer to the <code>CORBAAdminServiceListenerInfoSequence</code> object.
 		 */
-		static CORBAAdminServiceListenerInfoSequence* convert( const vector<ServiceListenerInfo*>& serviceListenerInfo );
+		static CORBAAdminServiceListenerInfoSequence* convert( const vector<ServiceListenerInfoPtr>& serviceListenerInfo );
 };
 }}}}}
 #endif

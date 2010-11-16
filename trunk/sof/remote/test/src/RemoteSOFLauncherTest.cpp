@@ -69,8 +69,8 @@ class TestHelper
 int TestHelper::isServiceListenerRegisteredByBundle( IRegistry& reg, const string& bundleName, const string& serviceName )
 {
 	BundleInfoBase* bi = reg.getBundleInfo( bundleName );	
-	vector<ServiceListenerInfo*> serviceListenerInfos = bi->getRegisteredListeners();
-	vector<ServiceListenerInfo*>::iterator iter;
+	vector<ServiceListenerInfoPtr> serviceListenerInfos = bi->getRegisteredListeners();
+	vector<ServiceListenerInfoPtr>::iterator iter;
 	int counter = 0;
 	for ( iter = serviceListenerInfos.begin(); iter != serviceListenerInfos.end(); ++iter )
 	{
@@ -120,7 +120,7 @@ int TestHelper::isServiceUsedByBundle( IRegistry& registry, const string& bundle
 int TestHelper::isServiceListenerRegisteredByBundle( IRegistry& reg, const string& bundleName )
 {
 	BundleInfoBase* bi = reg.getBundleInfo( bundleName );	
-	vector<ServiceListenerInfo*> serviceListenerInfos = bi->getRegisteredListeners();
+	vector<ServiceListenerInfoPtr> serviceListenerInfos = bi->getRegisteredListeners();
 	return serviceListenerInfos.size();
 }
 

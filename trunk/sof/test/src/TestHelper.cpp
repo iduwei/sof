@@ -8,8 +8,8 @@ int TestHelper::isServiceListenerRegisteredByBundle( IRegistry& reg, const strin
 	{
 		return 0;
 	}
-	vector<ServiceListenerInfo*> serviceListenerInfos = bi->getRegisteredListeners();
-	vector<ServiceListenerInfo*>::iterator iter;
+	vector<ServiceListenerInfoPtr> serviceListenerInfos = bi->getRegisteredListeners();
+	vector<ServiceListenerInfoPtr>::iterator iter;
 	int counter = 0;
 	for ( iter = serviceListenerInfos.begin(); iter != serviceListenerInfos.end(); ++iter )
 	{
@@ -71,7 +71,7 @@ int TestHelper::isServiceListenerRegisteredByBundle( IRegistry& reg, const strin
 	{
 		return 0;
 	}
-	vector<ServiceListenerInfo*> serviceListenerInfos = bi->getRegisteredListeners();
+	vector<ServiceListenerInfoPtr> serviceListenerInfos = bi->getRegisteredListeners();
 	return serviceListenerInfos.size();
 }
 

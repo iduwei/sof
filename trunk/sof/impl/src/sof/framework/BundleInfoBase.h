@@ -59,7 +59,7 @@ class BundleInfoBase
 		/**
 		 * Contains the registered service listeners.
 		 */
-		vector<ServiceListenerInfo*> registeredListeners;
+		vector<ServiceListenerInfoPtr> registeredListeners;
 
 	protected:
 
@@ -150,7 +150,7 @@ class BundleInfoBase
 		 * @param listenerInfo
 		 *				The service listener information object.
 		 */
-		virtual void addRegisteredListener( ServiceListenerInfo& listenerInfo );
+		virtual void addRegisteredListener( ServiceListenerInfoPtr listenerInfo );
 
 		/**
 		 * Removes the information about a registered service listener.
@@ -158,7 +158,7 @@ class BundleInfoBase
 		 * @param listenerInfo
 		 *				The service listener information object.
 		 */
-		virtual void removeRegisteredListener( const ServiceListenerInfo& listenerInfo );
+		virtual void removeRegisteredListener( ServiceListenerInfoPtr listenerInfo );
 
 		/**
 		 * Returns the name of the bundle.
@@ -193,7 +193,7 @@ class BundleInfoBase
 		 * @return 
 		 *		Vector of <code>ServiceListenerInfo</code> instances.
 		 */
-		virtual vector<ServiceListenerInfo*> getRegisteredListeners() const;
+		virtual vector<ServiceListenerInfoPtr> getRegisteredListeners() const;
 		
 		/**
 		 * Returns the string representation of all information stored

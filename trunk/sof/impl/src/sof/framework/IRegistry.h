@@ -143,7 +143,7 @@ class IRegistry
 		 * @param serviceName
 		 *				The name of the service.
 		 */
-		virtual void addServiceListener( const string& bundleName, ServiceListenerInfo& listenerInfo ) = 0;
+		virtual void addServiceListener( const string& bundleName, ServiceListenerInfoPtr listenerInfo ) = 0;
 		
 		/**
 		 * Removes a service listener object from the registry.
@@ -154,7 +154,7 @@ class IRegistry
 		 * @param serviceListener
 		 *				The pointer to the service listener object.
 		 */
-		virtual void removeServiceListener( const string& bundleName, const ServiceListenerInfo& info ) = 0;
+		virtual void removeServiceListener( const string& bundleName, ServiceListenerInfoPtr info ) = 0;
 		
 };
 

@@ -139,24 +139,24 @@ vector<ServiceInfoPtr>* IRegistryFacadeImpl::getServiceInfo( const string &servi
 	return this->registry.getServiceInfo( serviceName );
 }
 
-void IRegistryFacadeImpl::addServiceListener( const string& bundleName, ServiceListenerInfo& listenerInfo )
+void IRegistryFacadeImpl::addServiceListener( const string& bundleName, ServiceListenerInfoPtr listenerInfo )
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#addServiceListener] Called, bundle name: %1, listener info: %2",
-		bundleName, listenerInfo.toString() );	
-	RemoteServiceListenerInfo* corbaServiceListenerInfo = dynamic_cast<RemoteServiceListenerInfo*> (&listenerInfo);
+		bundleName, listenerInfo->toString() );	
+	RemoteServiceListenerInfo* corbaServiceListenerInfo = dynamic_cast<RemoteServiceListenerInfo*> ( listenerInfo.GetRawPointer() );
 	this->remoteRegistry->registerServiceListener( bundleName.c_str(), corbaServiceListenerInfo->getServiceName().c_str(),
 		corbaServiceListenerInfo->getRemoteServiceListener() );
 	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#addServiceListener] Left" );	
 }
 		
-void IRegistryFacadeImpl::removeServiceListener( const string& bundleName, const ServiceListenerInfo& info )
+void IRegistryFacadeImpl::removeServiceListener( const string& bundleName, ServiceListenerInfoPtr info )
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#removeServiceListener] Called, bundle name: %1, listener info: %1",
-		bundleName, info.toString() );	
+		bundleName, info->toString() );	
 	
-	ServiceListenerInfo* serviceListenerInfo = const_cast<ServiceListenerInfo*> (&info);
+	ServiceListenerInfo* serviceListenerInfo = const_cast<ServiceListenerInfo*> (info.GetRawPointer());
 	RemoteServiceListenerInfo* corbaServiceListenerInfo = dynamic_cast<RemoteServiceListenerInfo*> (serviceListenerInfo);
-	this->remoteRegistry->unregisterServiceListener( bundleName.c_str(), info.getServiceName().c_str(),
+	this->remoteRegistry->unregisterServiceListener( bundleName.c_str(), info->getServiceName().c_str(),
 		corbaServiceListenerInfo->getRemoteServiceListener() );
 }
 		
