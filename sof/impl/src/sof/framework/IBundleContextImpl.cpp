@@ -35,13 +35,13 @@ IServiceRegistration* IBundleContextImpl::registerService( const string& classNa
 void IBundleContextImpl::addServiceListener( IServiceListener::ConstPtr serviceListener, const string &serviceName )
 {
 	logger.log( Logger::LOG_DEBUG, "[IBundleContextImpl#addServiceListener] Called, bundle name: %1, service name: %2", this->bundleName, serviceName );	
-	ServiceListenerInfo* listenerInfo = new ServiceListenerInfo( bundleName, serviceName, serviceListener );		
-	this->registry.addServiceListener( this->bundleName, *listenerInfo );
+	ServiceListenerInfoPtr listenerInfo( new ServiceListenerInfo( bundleName, serviceName, serviceListener ) );		
+	this->registry.addServiceListener( this->bundleName, listenerInfo );
 }
 
 void IBundleContextImpl::removeServiceListener( IServiceListener::ConstPtr serviceListener )
 {
 	logger.log( Logger::LOG_DEBUG, "[IBundleContextImpl#removeServiceListener] Called, bundle name: %1", this->bundleName );	
-	ServiceListenerInfo info( bundleName, "", serviceListener );
+	ServiceListenerInfoPtr info( new ServiceListenerInfo( bundleName, "", serviceListener ) );
 	this->registry.removeServiceListener( this->bundleName, info );
 }

@@ -70,11 +70,11 @@ CORBAAdminServiceInfo* DataConverter::convert( ServiceInfoPtr servInfo )
 	return corbaAdminServiceInfo;
 }
 
-CORBAAdminServiceListenerInfo* DataConverter::convert( const RemoteServiceListenerInfo& serviceListenerInfo )
+CORBAAdminServiceListenerInfo* DataConverter::convert( ServiceListenerInfoPtr serviceListenerInfo )
 {
-	logger.log( Logger::LOG_DEBUG, "[DataConverter#convert] Called, serviceListenerInfo: %1", serviceListenerInfo.toString() );
+	logger.log( Logger::LOG_DEBUG, "[DataConverter#convert] Called, serviceListenerInfo: %1", serviceListenerInfo->toString() );
 	CORBAAdminServiceListenerInfo* corbaAdminServiceListenerInfo = new CORBAAdminServiceListenerInfo();
-	corbaAdminServiceListenerInfo->serviceName = CORBA::string_dup( serviceListenerInfo.getServiceName().c_str() );	
+	corbaAdminServiceListenerInfo->serviceName = CORBA::string_dup( serviceListenerInfo->getServiceName().c_str() );	
 	return corbaAdminServiceListenerInfo;
 }
 
@@ -96,16 +96,15 @@ CORBAAdminServiceInfoSequence* DataConverter::convert( const vector<ServiceInfoP
 	return seq;
 }
 
-CORBAAdminServiceListenerInfoSequence* DataConverter::convert( const vector<ServiceListenerInfo*>& serviceListenerInfo )
+CORBAAdminServiceListenerInfoSequence* DataConverter::convert( const vector<ServiceListenerInfoPtr>& serviceListenerInfo )
 {
 	CORBAAdminServiceListenerInfoSequence* seq = new CORBAAdminServiceListenerInfoSequence();
 	seq->length( serviceListenerInfo.size() );
-	vector<ServiceListenerInfo*>::const_iterator it;
+	vector<ServiceListenerInfoPtr>::const_iterator it;
 	int counter = 0;
 	for( it = serviceListenerInfo.begin(); it != serviceListenerInfo.end(); ++it )
 	{
-		RemoteServiceListenerInfo* servListenerInfoObj = dynamic_cast<RemoteServiceListenerInfo*>(*it);
-		(*seq)[counter] = ( * ( convert( (*servListenerInfoObj) ) ) );
+		(*seq)[counter] = ( * ( convert( *it ) ) );
 		counter++;
 	}
 	return seq;

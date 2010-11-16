@@ -31,13 +31,12 @@ void IRemoteRegistryImpl<ThreadingModel>::deleteActivator( const BundleInfoBase&
 }
 
 template<class ThreadingModel>
-bool IRemoteRegistryImpl<ThreadingModel>::callServiceListenerObject( const ServiceListenerInfo& info, ServiceInfoPtr serviceInfo, const ServiceEvent::EventType& eventType )
+bool IRemoteRegistryImpl<ThreadingModel>::callServiceListenerObject( ServiceListenerInfoPtr info, ServiceInfoPtr serviceInfo, const ServiceEvent::EventType& eventType )
 {
 	logger.log( Logger::LOG_DEBUG, "[IRemoteRegistryImpl#callServiceListenerObject] Called, listenerInfo: %1", 
-		info.toString() );
+		info->toString() );
 			
-	ServiceListenerInfo* serviceListenerInfo = const_cast<ServiceListenerInfo*>( &info );
-	RemoteServiceListenerInfo* corbaListenerInfo = dynamic_cast<RemoteServiceListenerInfo*>( serviceListenerInfo );
+	RemoteServiceListenerInfo* corbaListenerInfo = dynamic_cast<RemoteServiceListenerInfo*>( info.GetRawPointer() );
 	
 	RemoteServiceInfo* corbaServiceInfo = dynamic_cast<RemoteServiceInfo*> (serviceInfo.GetRawPointer());
 
@@ -62,15 +61,13 @@ bool IRemoteRegistryImpl<ThreadingModel>::callServiceListenerObject( const Servi
 }
 
 template<class ThreadingModel>
-bool IRemoteRegistryImpl<ThreadingModel>::areServiceListenerObjectsEqual( const ServiceListenerInfo& info1, const ServiceListenerInfo& info2 )
+bool IRemoteRegistryImpl<ThreadingModel>::areServiceListenerObjectsEqual( ServiceListenerInfoPtr info1, ServiceListenerInfoPtr info2 )
 {
-	logger.log( Logger::LOG_DEBUG, "[IRemoteRegistryImpl#areServiceListenerObjectsEqual] Called, info1: %1, info2: %2", info1.toString(), info2.toString() );
+	logger.log( Logger::LOG_DEBUG, "[IRemoteRegistryImpl#areServiceListenerObjectsEqual] Called, info1: %1, info2: %2", info1->toString(), info2->toString() );
 
-	ServiceListenerInfo* serviceListenerInfo1 = const_cast<ServiceListenerInfo*> (&info1);
-	RemoteServiceListenerInfo* corbaServiceListenerInfo1 = dynamic_cast<RemoteServiceListenerInfo*> (serviceListenerInfo1);
+	RemoteServiceListenerInfo* corbaServiceListenerInfo1 = dynamic_cast<RemoteServiceListenerInfo*> (info1.GetRawPointer());
 	
-	ServiceListenerInfo* serviceListenerInfo2 = const_cast<ServiceListenerInfo*> (&info2);
-	RemoteServiceListenerInfo* corbaServiceListenerInfo2 = dynamic_cast<RemoteServiceListenerInfo*> (serviceListenerInfo2);
+	RemoteServiceListenerInfo* corbaServiceListenerInfo2 = dynamic_cast<RemoteServiceListenerInfo*> (info2.GetRawPointer());
 	
 	if ( corbaServiceListenerInfo1->getRemoteServiceListenerID() == corbaServiceListenerInfo2->getRemoteServiceListenerID() )
 	{

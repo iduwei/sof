@@ -147,10 +147,10 @@ class ServiceListenerInfo
 		virtual string toString() const;		
 };
 
-		/** 
-		 * Smart pointer for <code>ServiceInfo</code> objects.
-		 */
-		typedef SmartPtr<ServiceListenerInfo> ServiceListenerInfoPtr;
+/** 
+ * Smart pointer for <code>ServiceInfo</code> objects.
+ */
+typedef SmartPtr<ServiceListenerInfo> ServiceListenerInfoPtr;
 
 }}
 

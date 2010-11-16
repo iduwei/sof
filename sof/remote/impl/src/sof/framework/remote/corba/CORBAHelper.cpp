@@ -271,15 +271,15 @@ RemoteServiceInfoPtr CORBAHelper::convertToServiceInfo( const string& serviceNam
 	return info;
 }
 
-RemoteServiceListenerInfo& CORBAHelper::convertToServiceListenerInfo( const string& bundleName,
+RemoteServiceListenerInfoPtr CORBAHelper::convertToServiceListenerInfo( const string& bundleName,
 			const string& serviceName,
 			CORBAServiceListener_ptr service )
 {
 	this->logger.log( Logger::LOG_DEBUG, "[CORBAHelper#convertToServiceListenerInfo] Called, bundle name: %1, service name: %2",
 		bundleName, serviceName );	
-	RemoteServiceListenerInfo* info = new RemoteServiceListenerInfo( bundleName, serviceName, CORBAServiceListener::_duplicate( service ),
-		this->objectToString( service ) );
-	return (*info);
+	RemoteServiceListenerInfoPtr info( new RemoteServiceListenerInfo( bundleName, serviceName, CORBAServiceListener::_duplicate( service ),
+		this->objectToString( service ) ) );
+	return info;
 }
 
 RemoteServiceReference CORBAHelper::convertServiceReference( const CORBAServiceReference& ref )

@@ -365,7 +365,7 @@ class CORBAHelper
 		 * @return
 		 *				The created <code>RemoteServiceListenerInfo</code> object.
 		 */
-		RemoteServiceListenerInfo& convertToServiceListenerInfo( const string& bundleName,
+		RemoteServiceListenerInfoPtr convertToServiceListenerInfo( const string& bundleName,
 			const string& serviceName,
 			CORBAServiceListener_ptr serviceListener );
 };

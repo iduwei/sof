@@ -137,5 +137,10 @@ class RemoteServiceListenerInfo : public ServiceListenerInfo
 		
 };
 
+/** 
+ * Smart pointer for <code>RemoteServiceInfo</code> objects.
+ */
+typedef SmartPtr<RemoteServiceListenerInfo> RemoteServiceListenerInfoPtr;
+
 }}}}
 #endif

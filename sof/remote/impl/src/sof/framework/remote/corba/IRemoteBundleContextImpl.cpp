@@ -46,12 +46,12 @@ void IRemoteBundleContextImpl::addRemoteServiceListener( POA_sof::framework::rem
 {
 	logger.log( Logger::LOG_DEBUG, "[IRemoteBundleContextImpl#addRemoteServiceListener] Called, bundle name: %1, service name: %2", this->bundleName, serviceName );
 	CORBA::Object_var object = this->corbaHelper.activateObject( remoteServiceListener );
-	RemoteServiceListenerInfo* serviceListenerInfo = new RemoteServiceListenerInfo( this->bundleName, serviceName, 
+	RemoteServiceListenerInfoPtr serviceListenerInfo( new RemoteServiceListenerInfo( this->bundleName, serviceName, 
 		CORBAServiceListener::_narrow( object ),
-		this->corbaHelper.objectToString( object ) );
+		this->corbaHelper.objectToString( object ) ) );
 	
 	this->listenerMap[remoteServiceListener] = object;
-	return this->registry.addServiceListener( this->bundleName, *serviceListenerInfo );
+	return this->registry.addServiceListener( this->bundleName, serviceListenerInfo );
 }
 
 void IRemoteBundleContextImpl::removeRemoteServiceListener( POA_sof::framework::remote::corba::generated::CORBAServiceListener* remoteServiceListener )
@@ -59,8 +59,8 @@ void IRemoteBundleContextImpl::removeRemoteServiceListener( POA_sof::framework::
 	logger.log( Logger::LOG_DEBUG, "[IRemoteBundleContextImpl#removeServiceListener] Called, bundle name: %1", this->bundleName );	
 	CORBA::Object_var object = this->listenerMap[remoteServiceListener];
 
-	RemoteServiceListenerInfo info( this->bundleName, "", CORBAServiceListener::_narrow( object ),
-		this->corbaHelper.objectToString( object ) );
+	RemoteServiceListenerInfoPtr info( new RemoteServiceListenerInfo( this->bundleName, "", CORBAServiceListener::_narrow( object ),
+		this->corbaHelper.objectToString( object ) ) );
 
 	map<POA_sof::framework::remote::corba::generated::CORBAServiceListener*,
 		CORBA::Object_var>::iterator iter = this->listenerMap.find( remoteServiceListener );

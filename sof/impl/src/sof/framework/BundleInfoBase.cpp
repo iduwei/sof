@@ -132,30 +132,25 @@ void BundleInfoBase::addUsedService( ServiceInfoPtr serviceInfo )
 	this->usedServices.push_back( serviceInfo );
 }
 
-void BundleInfoBase::addRegisteredListener( ServiceListenerInfo& listenerInfo )
+void BundleInfoBase::addRegisteredListener( ServiceListenerInfoPtr listenerInfo )
 {
-	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#addRegisteredListener] Called, service listener info: %1", listenerInfo.toString() );					
-	this->registeredListeners.push_back( &listenerInfo );
+	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#addRegisteredListener] Called, service listener info: %1", listenerInfo->toString() );					
+	this->registeredListeners.push_back( listenerInfo );
 }
 
-void BundleInfoBase::removeRegisteredListener( const ServiceListenerInfo& listenerInfo )
+void BundleInfoBase::removeRegisteredListener( ServiceListenerInfoPtr listenerInfo )
 {
 	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeRegisteredListener] Called, service listener info: %1", 
-		listenerInfo.toString() );		
+		listenerInfo->toString() );		
 	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeRegisteredListener] Iterate over vector of registered listeners." );					
 	
-	vector<ServiceListenerInfo*>::iterator iter;
+	vector<ServiceListenerInfoPtr>::iterator iter;
 	for ( iter = this->registeredListeners.begin(); iter != this->registeredListeners.end(); ++iter )
 	{
-		if ( (*iter)->equals( listenerInfo, (*(*iter )) )   )
+		if ( (*iter).GetRawPointer()->equals( (*(listenerInfo.GetRawPointer())), (*((*iter ).GetRawPointer())) )   )
 		{
 			logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeRegisteredListener] Listener found." );	
-			logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeRegisteredListener] Delete service listener info object." );					
-
-			delete (*iter);
-
-			logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeRegisteredListener] Listener info object deleted." );									
-			logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeRegisteredListener] Remove element from vector of registered listeners." );					
+			logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#removeRegisteredListener] Remove element from vector of registered listeners." );		
 			
 			this->registeredListeners.erase( iter );			
 			return;
@@ -183,7 +178,7 @@ string BundleInfoBase::toString() const
 	}
 
 	stream << "*** Registered service listener ***" << endl;
-	vector<ServiceListenerInfo*>::const_iterator listenerIter;
+	vector<ServiceListenerInfoPtr>::const_iterator listenerIter;
 
 	for ( listenerIter = registeredListeners.begin(); listenerIter != registeredListeners.end(); ++listenerIter )
 	{
@@ -203,7 +198,7 @@ vector<ServiceInfoPtr> BundleInfoBase::getUsedServices() const
 	return this->usedServices;
 }
 
-vector<ServiceListenerInfo*> BundleInfoBase::getRegisteredListeners() const
+vector<ServiceListenerInfoPtr> BundleInfoBase::getRegisteredListeners() const
 {
 	return this->registeredListeners;
 } 

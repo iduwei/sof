@@ -48,7 +48,7 @@ void CORBARegistryObserverImpl::registerServiceListener( const char* bundleName,
 	string bName( bundleName );
 	string sName( serviceName );
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#registerServiceListener] Converting service listener info." );	
-	RemoteServiceListenerInfo& info = this->corbaHelper.convertToServiceListenerInfo( bName, sName, CORBAServiceListener::_duplicate( listener ) );
+	RemoteServiceListenerInfoPtr info = this->corbaHelper.convertToServiceListenerInfo( bName, sName, CORBAServiceListener::_duplicate( listener ) );
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#registerServiceListener] Registering service listener." );	
 	this->registry.addServiceListener( bName, info );
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#registerServiceListener] Left." );
@@ -69,7 +69,7 @@ void CORBARegistryObserverImpl::unregisterServiceListener( const char* bundleNam
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#unregisterServiceListener] Entered." );
 	string bName( bundleName );
 	string sName( serviceName );
-	RemoteServiceListenerInfo& info = this->corbaHelper.convertToServiceListenerInfo( bName, sName, CORBAServiceListener::_duplicate( listener ) );
+	RemoteServiceListenerInfoPtr info = this->corbaHelper.convertToServiceListenerInfo( bName, sName, CORBAServiceListener::_duplicate( listener ) );
 	this->registry.removeServiceListener( bName, info );
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#unregisterServiceListener] Left." );
 }
