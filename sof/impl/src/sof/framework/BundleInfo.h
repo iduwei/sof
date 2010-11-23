@@ -48,12 +48,14 @@ class BundleInfo : public BundleInfoBase
 		 *
 		 * @param bundleName
 		 *			The name of the bundle.
+		 * @param isFwBundle
+					Indicates if bundle is a SOF or user bundle.
 		 * @param act
 		 *			The bundle activator instance.
 		 * @param bundleCtxt
 		 *			The bundle context.
 		 */
-		BundleInfo( const string& bundleName, IBundleActivator* act, IBundleContext::ConstPtr bundleCtxt );
+		BundleInfo( const string& bundleName, bool isFwBundle, IBundleActivator* act, IBundleContext::ConstPtr bundleCtxt );
 
 		/**
 		 * The destructor for cleaning resources.

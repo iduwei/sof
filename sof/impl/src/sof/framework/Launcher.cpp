@@ -93,7 +93,7 @@ void Launcher<ThreadingModel, CreationPolicy>::start( vector<BundleConfiguration
 
 		IBundleContext* bundleCtxt = this->createBundleContext( bundleConfig.getBundleName() );
 		
-		BundleInfoBase* bundleInfo = new BundleInfo( bundleConfig.getBundleName(), bundleActivator, bundleCtxt );		
+		BundleInfoBase* bundleInfo = new BundleInfo( bundleConfig.getBundleName(), false, bundleActivator, bundleCtxt );		
 		this->registry->addBundleInfo( (*bundleInfo) );
 
 		logger.log( Logger::LOG_DEBUG, "[Launcher#start] Start bundle." );
@@ -111,7 +111,7 @@ void Launcher<ThreadingModel, CreationPolicy>::startAdministrationBundle()
 	IBundleActivator* adminBundleActivator = this->objectCreator.createObject( "sof::services::admin::AdministrationActivator" );
 	IBundleContext* bundleCtxt = this->createBundleContext( "AdministrationBundle" );
 		
-	BundleInfoBase* bundleInfo = new BundleInfo( "AdministrationBundle", adminBundleActivator, bundleCtxt );		
+	BundleInfoBase* bundleInfo = new BundleInfo( "AdministrationBundle", true, adminBundleActivator, bundleCtxt );		
 	this->registry->addBundleInfo( (*bundleInfo) );
 
 	logger.log( Logger::LOG_DEBUG, "[Launcher#start] Start bundle." );

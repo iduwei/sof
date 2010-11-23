@@ -7,7 +7,7 @@ using namespace std;
 using namespace sof::framework::remote::corba;
 
 
-RemoteBundleInfo::RemoteBundleInfo( const string& bdleName, IRemoteBundleActivator* act, IBundleContext::ConstPtr bundleCtxt ) : activator(act), BundleInfoBase( bdleName, bundleCtxt )
+RemoteBundleInfo::RemoteBundleInfo( const string& bdleName, bool isSOFBundle, IRemoteBundleActivator* act, IBundleContext::ConstPtr bundleCtxt ) : activator(act), BundleInfoBase( bdleName, isSOFBundle, bundleCtxt )
 {
 	logger.log( Logger::LOG_DEBUG, "[RemoteBundleInfo#ctor] Called." );
 }

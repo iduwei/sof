@@ -47,12 +47,14 @@ class RemoteBundleInfo : public BundleInfoBase
 		 *
 		 * @param bundleName
 		 *			The name of the bundle.
+		 * @param isFwBundle
+		 *			Indicates if bundle is SOF bundle or user bundle.
 		 * @param act
 		 *			The bundle activator instance.
 		 * @param bundleCtxt
 		 *			The bundle context.
 		 */
-		RemoteBundleInfo( const string& bundleName, IRemoteBundleActivator* act, IBundleContext::ConstPtr bundleCtxt );
+		RemoteBundleInfo( const string& bundleName, bool isFwBundle, IRemoteBundleActivator* act, IBundleContext::ConstPtr bundleCtxt );
 
 		/**
 		 * The destructor for cleaning resources.
