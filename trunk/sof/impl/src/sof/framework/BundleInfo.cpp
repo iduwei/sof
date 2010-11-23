@@ -7,7 +7,7 @@ using namespace std;
 using namespace sof::framework;
 
 
-BundleInfo::BundleInfo( const string& bdleName, IBundleActivator* act, IBundleContext::ConstPtr bundleCtxt ) : activator(act), BundleInfoBase( bdleName, bundleCtxt )
+BundleInfo::BundleInfo( const string& bdleName, bool isSOFBundle, IBundleActivator* act, IBundleContext::ConstPtr bundleCtxt ) : activator(act), BundleInfoBase( bdleName, isSOFBundle, bundleCtxt )
 {
 	logger.log( Logger::LOG_DEBUG, "[BundleInfo#ctor] Called." );
 }

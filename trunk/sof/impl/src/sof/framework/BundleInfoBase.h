@@ -61,6 +61,11 @@ class BundleInfoBase
 		 */
 		vector<ServiceListenerInfoPtr> registeredListeners;
 
+		/**
+		 * Indicates if bundle is a SOF bundle or user bundle.
+		 */
+		bool isFwBundle;
+
 	protected:
 
 		/**
@@ -75,12 +80,12 @@ class BundleInfoBase
 		 *
 		 * @param bundleName
 		 *			The name of the bundle.
-		 * @param act
-		 *			The bundle activator instance.
+		 * @param isFwBundle
+		 *			Indicates if bundle is a SOF or user bundle.
 		 * @param bundleCtxt
 		 *			The bundle context.
 		 */
-		BundleInfoBase( const string& bundleName, IBundleContext::ConstPtr bundleCtxt );
+		BundleInfoBase( const string& bundleName, bool isFwBundle, IBundleContext::ConstPtr bundleCtxt );
 
 		/**
 		 * The destructor for cleaning resources.
@@ -195,6 +200,14 @@ class BundleInfoBase
 		 */
 		virtual vector<ServiceListenerInfoPtr> getRegisteredListeners() const;
 		
+		/**
+		 * Returns true if bundle is a framework bundle (started by SOF itself).
+		 *
+		 * @return
+		 *			True, if bundle is a framework bundle otherwise false.
+		 */
+		virtual bool isFrameworkBundle() const;
+
 		/**
 		 * Returns the string representation of all information stored
 		 * in the <code>BundleInfo</code> object.

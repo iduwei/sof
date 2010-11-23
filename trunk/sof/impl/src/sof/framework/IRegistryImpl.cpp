@@ -84,6 +84,12 @@ void IRegistryImpl<ThreadingModel>::removeBundleInfo( const string &bundleName )
 	
 	BundleInfoBase* bi = this->bundleInfoMap[bundleName];
 	
+	if ( bi->isFrameworkBundle() )
+	{
+		logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#removeBundleInfo] Framework bundles are not stopped." );
+		return;
+	}
+
 	this->stopActivator( (*bi) );	
 
 	bi->removeAllUsedServices();

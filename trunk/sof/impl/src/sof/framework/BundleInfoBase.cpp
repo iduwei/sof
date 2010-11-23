@@ -8,7 +8,7 @@ using namespace sof::framework;
 
 Logger& BundleInfoBase::logger = LoggerFactory::getLogger( "Framework" );
 
-BundleInfoBase::BundleInfoBase( const string& bdleName, IBundleContext::ConstPtr bundleCtxt ) : bundleName(bdleName), bundleContext( bundleCtxt )
+BundleInfoBase::BundleInfoBase( const string& bdleName, bool isSOFBundle, IBundleContext::ConstPtr bundleCtxt ) : bundleName(bdleName), isFwBundle( isSOFBundle), bundleContext( bundleCtxt )
 {
 	logger.log( Logger::LOG_DEBUG, "[BundleInfoBase#ctor] Called." );
 }
@@ -156,6 +156,11 @@ void BundleInfoBase::removeRegisteredListener( ServiceListenerInfoPtr listenerIn
 			return;
 		}
 	}
+}
+
+bool BundleInfoBase::isFrameworkBundle() const
+{
+	return this->isFwBundle;
 }
 
 string BundleInfoBase::toString() const
