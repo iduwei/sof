@@ -34,7 +34,7 @@ class BundleActivatorServiceListenerRegistration : public IBundleActivator, publ
 		virtual void removedService( const ServiceReference& ref );
 };
 
-BundleActivatorServiceListenerRegistration::BundleActivatorServiceListenerRegistration() {}
+BundleActivatorServiceListenerRegistration::BundleActivatorServiceListenerRegistration() : tracker3(0) {}
 
 bool BundleActivatorServiceListenerRegistration::addingService( const ServiceReference& ref ) { return true; }
 
@@ -67,6 +67,8 @@ BundleActivatorServiceListenerRegistration::~BundleActivatorServiceListenerRegis
 
 void BundleActivatorServiceListenerRegistration::stop( IBundleContext::ConstPtr context )
 {
+	this->tracker3->stopTracking();
+	delete this->tracker3;
 	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[BundleActivatorServiceListenerRegistration#stop] Called." );		
 }
 
