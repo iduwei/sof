@@ -7,7 +7,8 @@ using namespace sof::util::logging;
 Logger& RemoteServiceTracker::logger = LoggerFactory::getLogger( "Framework" );
 
 RemoteServiceTracker::RemoteServiceTracker( IRemoteBundleContext::ConstPtr bc, const string &servName, 
-							   IRemoteServiceTrackerCustomizer::ConstPtr customizer ) : bundleCtxt( bc ), serviceName( servName ), serviceTracker( customizer )
+							   IRemoteServiceTrackerCustomizer::ConstPtr customizer ) : bundleCtxt( bc ), isTrackingActive(false), 
+							   serviceName(	servName ), serviceTracker( customizer )
 {
 	logger.log( Logger::LOG_DEBUG, "[RemoteServiceTracker#ctor] Called, service name: %1", servName );
 }
