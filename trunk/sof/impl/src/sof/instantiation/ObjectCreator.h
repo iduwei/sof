@@ -298,7 +298,7 @@ template<
 	template <class> class CreationPolicy>
 BaseT* ObjectCreator<BaseT,CreationPolicy>::createLocalObject( const string &key )
 {	
-	getLogger().log( Logger::LOG_ERROR, "[ObjectCreator#createLocalObject] Called, key: %1", key );					
+	getLogger().log( Logger::LOG_DEBUG, "[ObjectCreator#createLocalObject] Called, key: %1", key );					
 	BaseFactory<BaseT>* intantiator = ( *(ObjectCreator<BaseT,NullCreator>::getInstanceMap()) )[key];
 	if ( intantiator == 0 )
 	{
@@ -314,7 +314,7 @@ template<
 	template <class> class CreationPolicy>
 BaseT* ObjectCreator<BaseT,CreationPolicy>::createObjectFromDll( const string &path, const string &dllName, const string &className )
 {	
-	getLogger().log( Logger::LOG_ERROR, "[ObjectCreator#createObjectFromDll] Called, DLL name: %1, class name: %2", dllName, className );	
+	getLogger().log( Logger::LOG_DEBUG, "[ObjectCreator#createObjectFromDll] Called, DLL name: %1, class name: %2", dllName, className );	
 	return CreationPolicy<BaseT>::createObjectFromDll( path, dllName, className );
 }
 
