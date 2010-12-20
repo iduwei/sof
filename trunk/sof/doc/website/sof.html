@@ -496,14 +496,16 @@ Also see AdvancedOptions</pre>
 </div>
 <!--POST-SHADOWAREA-->
 <div id="storeArea">
-<div title="API" modifier="magro74" modified="200912210748" created="200805101011" changecount="6">
+<div title="API" modifier="magr74" modified="201012160518" created="200805101011" changecount="7">
 <pre>The API documentation of following versions are available:
+* [[sof_1.0.1_10120|http://sof.sourceforge.net/api_1.0.1_10120/sof/html/]]
 * [[sof_1.0_9120|http://sof.sourceforge.net/api_1.0_9120/sof/html/]]
 * [[sof_8070|http://sof.sourceforge.net/api_8070/html/]]
 * [[sof_8050|http://sof.sourceforge.net/api_8050/html/]]</pre>
 </div>
-<div title="API Remote SOF" modifier="magro74" modified="200912210749" created="200906162111" changecount="5">
+<div title="API Remote SOF" modifier="magr74" modified="201012160518" created="200906162111" changecount="8">
 <pre>The API documentation of following versions are available:
+* [[sof_1.0.1_10120|http://sof.sourceforge.net/api_1.0.1_10120/remote_sof/html/]]
 * [[sof_1.0_9120|http://sof.sourceforge.net/api_1.0_9120/remote_sof/html/]]
 * [[sof_remote_9070|http://sof.sourceforge.net/api_9070/html/]]</pre>
 </div>
@@ -526,6 +528,13 @@ Also see AdvancedOptions</pre>
 //Remote SOF// represents an extension for //SOF//. That means services can not only be tracked and registered within the same //SOF// container (=process) but across several processes whereas CORBA is used as communication layer.
 [img[http://farm3.static.flickr.com/2481/3566511834_427819b320_o.png]]
 The diagram above shows the simplified architecture of //Remote SOF//. There exist several //SOF// processes (here two) and every //SOF// process hosts several bundles. Bundles are able to register services and service listeners (just as with //SOF//) at the registry component of each //SOF// container. So far there is no big difference to the //SOF// framework. But for notifying other //SOF// processes about (de)registered services and service listeners all calls to the local registry component are delegated to the remote registry component which is implemented as CORBA object and reachable via the CORBA naming service. All calls which are received by the remote registry component are forwarded to all running //SOF// processes.</pre>
+</div>
+<div title="Articles" modifier="magro74" modified="200912301013" created="200912301011" changecount="2">
+<pre>Articles for SOF and Remote SOF can be found here:
+
+http://www.codeproject.com/KB/library/SOF_.aspx
+http://www.codeproject.com/KB/library/Remote_SOF.aspx
+</pre>
 </div>
 <div title="Building" modifier="magro74" modified="200912141936" created="200802181627" changecount="40">
 <pre>!!!Supported Platforms
@@ -553,7 +562,7 @@ The build process for other platforms is not tested yet. Please try following st
 After building SOF the //bin// directory of the //impl// directory contains a library called //sof.lib// which can be linked.
 </pre>
 </div>
-<div title="Building Remote SOF" modifier="magr74" modified="200912170637" created="200905151039" changecount="66">
+<div title="Building Remote SOF" modifier="magr74" modified="201011250512" created="200905151039" changecount="74">
 <pre>!!Building 3rd party CORBA library MICO
 !!!Windows
 //Remote SOF// uses MICO (=CORBA implementation) as third party library for implementing remote accessible services and service listeners. Before //Remote SOF// can be build, the MICO libraries must be build.
@@ -570,18 +579,12 @@ For building other MICO versions or building on different platforms please read 
 !!!Windows
 !!!!Visual Studio
 * Extract the zip file of the //SOF// distribution into a directory
-* Copy the CORBA binaries of the MICO distribution into the //Remote SOF// directory
-** 'idl.exe' and 'nsd.exe' to 'sof\remote\corba\bin'
-** The content of the MICO 'include' directory into 'sof\remote\corba\include'
-** The libraries 'idl2313.lib', 'mico2313.lib', 'micocoss2313.lib', 'pthreadVC2.lib', 'idl2313.dll', 'mico2313.dll', 'micocoss2313.dll', 'pthreadVC2.dll' into 'sof\remote\corba\libs'
+* Copy the CORBA binaries of the MICO distribution into the //Remote SOF// directory as described [[here|CORBA libraries]]
 * Load file called 'sof_remote.sln' in directory 'sof\remote\impl' with Visual Studio
 * Build all projects
 !!!!~SCons
 * Extract the zip file of the //SOF// distribution into a directory
-* Copy the CORBA binaries of the MICO distribution into the //Remote SOF// directory
-** 'idl.exe' and 'nsd.exe' to 'sof\remote\corba\bin'
-** The content of the MICO 'include' directory into 'sof\remote\corba\include'
-** The libraries 'idl2313.lib', 'mico2313.lib', 'micocoss2313.lib', 'pthreadVC2.lib', 'idl2313.dll', 'mico2313.dll', 'micocoss2313.dll', 'pthreadVC2.dll' into 'sof\remote\corba\libs'
+* Copy the CORBA binaries of the MICO distribution into the //Remote SOF// directory as described [[here|CORBA libraries]]
 * Follow the instructions at [[SCons user guide page|http://www.scons.org/]] for installing Python and ~SCons on Windows
 * Open a command shell on Windows and set the path and environment variables for command line builds. This can be done by changing to the //\bin// subdirectory of your Visual C++ installation and running //vcvars32.bat// (or just opening a Visual Studio command shell).
 * Change to the //SOF// root directory and type
@@ -590,16 +593,12 @@ For building other MICO versions or building on different platforms please read 
 !!!Other platforms
 The build process for other platforms is not tested yet. Please try following steps:
 * Extract the zip file of the //SOF// distribution into a directory
-* Copy the CORBA binaries of the MICO distribution into the //Remote SOF// directory
-** 'idl' executable and 'nsd' executable to 'sof\remote\corba\bin'
-** The content of the MICO 'include' directory into 'sof\remote\corba\include'
-** The libraries 'idl2313', 'mico2313', 'micocoss2313', 'pthreadVC2' into 'sof\remote\corba\libs'
+* Copy the CORBA binaries of the MICO distribution into the //Remote SOF// directory as described [[here|CORBA libraries]]
 * Follow the instructions at [[SCons user guide page|http://www.scons.org/]] for installing Python and ~SCons at your current platform
 * Set the path and environment variables for command line builds. 
 * Change to the //SOF// root directory and type
 ** //&quot;&quot;&quot;scons --sconstruct=sof_remote.sconstruct mode=release&quot;&quot;&quot;// for creating a release build
 ** //&quot;&quot;&quot;scons --sconstruct=sof_remote.sconstruct mode=debug&quot;&quot;&quot;// for creating a debug build
-
 !!Using //Remote SOF//
 After building //Remote SOF// the bin directory of the impl directory contains a library called 'sof_remote' which can be linked.
 
@@ -616,6 +615,23 @@ To be done.</pre>
 ![[Starting SOF]]
 ![[Starting Bundles]]
 ![[Stopping Bundles]]</pre>
+</div>
+<div title="CORBA libraries" modifier="magr74" created="201011250513" changecount="1">
+<pre>Copying the CORBA binaries of the MICO distribution into the //Remote SOF// directory:
+* 'idl.exe' and 'nsd.exe' to 'sof\remote\corba\bin'
+* The content of the MICO 'include' directory into 'sof\remote\corba\include'
+* The libraries 'idl2313.lib', 'mico2313.lib', 'micocoss2313.lib', 'pthreadVC2.lib', 'idl2313.dll', 'mico2313.dll', 'micocoss2313.dll', 'pthreadVC2.dll' into 'sof\remote\corba\libs'
+** for debug build name the libraries as follows:
+*** idl2313.lib / idl2313.dll
+*** mico2313.lib / mico2313.dll
+*** micocoss2313.lib / micocoss2313.dll
+*** pthreadVC2.lib / pthreadVC2.dll
+** for release build name the libraries as follows:
+*** idl2313.lib / idl2313.dll
+*** mico2313.lib / mico2313.dll
+*** micocoss2313.lib / micocoss2313.dll
+*** pthreadVC2d.lib / pthreadVC2d.dll
+</pre>
 </div>
 <div title="Console" modifier="magro74" modified="200912220741" created="200804161803" changecount="21">
 <pre>The SOF console provides a text based user interface for starting and stopping bundles. The console can be started by calling {{{sof_console.exe}}} which is located in directory '//sof\console\bin//'. See [[Starting SOF]] for further information.
@@ -682,8 +698,30 @@ The SOF supports developing modular software which consists of components (bundl
 <pre>!![[Building|Building Remote SOF]]
 !![[Using Remote SOF]]</pre>
 </div>
-<div title="Download" modifier="magro74" modified="200912220828" created="200805101452" changecount="52">
+<div title="Download" modifier="magr74" modified="201012200459" created="200805101452" changecount="90">
 <pre>Following stable builds are available. For downloading the software please click [[here|http://sourceforge.net/project/showfiles.php?group_id=217435]].
+* ''sof_1.0.1_10120 (last stable version, includes SOF and Remote SOF)''
+** ''Note:''
+*** There is no new //~SofAdminUI// version. Please use the //~SofAdminUI// of the previous release //sof_1.0_9120//
+** Features:
+*** Unit tests for //Remote SOF// are available now. Please look at 'sof/remote/test' directory.
+*** Project configurations for debug builds (Visual Studio) added.
+*** Smart pointer implementation for avoiding memory leaks added.
+** Bugfixes:
+*** ~RemoteServiceTracker not exception safe [[2927344|https://sourceforge.net/tracker/?func=detail&amp;aid=2927344&amp;group_id=217435&amp;atid=1040234]]
+*** [SOF] Remove redundancy in registry class [[ID 2819393|https://sourceforge.net/tracker/?func=detail&amp;aid=2819393&amp;group_id=217435&amp;atid=1040234]]
+*** Concrete naming service address has to be removed [[ID 2940740|https://sourceforge.net/tracker/?func=detail&amp;aid=2940740&amp;group_id=217435&amp;atid=1040234]]
+*** Problem when stopping all bundles in console [[ID 2021277|https://sourceforge.net/tracker/?func=detail&amp;aid=2021277&amp;group_id=217435&amp;atid=1040234]]
+*** Problems found with [[CppCheck|http://sourceforge.net/projects/cppcheck/]] fixed.
+*** Crash when dumping all bundles in console [[ID 3067288|https://sourceforge.net/tracker/?func=detail&amp;aid=3067288&amp;group_id=217435&amp;atid=1040234]]
+*** Memory leak of ~RemoteServiceInfo objects [[ID 2970487|https://sourceforge.net/tracker/?func=detail&amp;aid=2970487&amp;group_id=217435&amp;atid=1040234]]
+*** Remote registry not synchronizable [[ID 2952968|https://sourceforge.net/tracker/?func=detail&amp;aid=2952968&amp;group_id=217435&amp;atid=1040234]]
+*** Remote registry not exception safe [[ID 2928038|https://sourceforge.net/tracker/?func=detail&amp;aid=2928038&amp;group_id=217435&amp;atid=1040234]]
+*** Logger implementation not thread safe [[ID 2936130|https://sourceforge.net/tracker/?func=detail&amp;aid=2936130&amp;group_id=217435&amp;atid=1040234]]
+*** ~ServiceTracker not exception safe [[ID 2927343|https://sourceforge.net/tracker/?func=detail&amp;aid=2927343&amp;group_id=217435&amp;atid=1040234]]
+*** GCC compile error (enum)  [[ID 2936129|https://sourceforge.net/tracker/?func=detail&amp;aid=2936129&amp;group_id=217435&amp;atid=1040234]]
+*** Concrete naming service address has to be removed [[ID 2940740|https://sourceforge.net/tracker/?func=detail&amp;aid=2940740&amp;group_id=217435&amp;atid=1040234]]
+*** Compile Errors in ~VC2008 fixed (thanks to Philipp Kursawe) [[ID 3000083|http://sourceforge.net/tracker/?func=detail&amp;aid=3000083&amp;group_id=217435&amp;atid=1040234]] 
 * ''sof_1.0_9120 (includes SOF and Remote SOF'')
 ** Release notes:
 *** Features:
@@ -971,17 +1009,19 @@ loadRemoteFile = function(url,callback,params)
 //}}}
 </pre>
 </div>
-<div title="MainMenu" modifier="magr74" modified="200908130537" created="200802080839" changecount="25">
+<div title="MainMenu" modifier="magro74" modified="200912301010" created="200802080839" changecount="27">
 <pre>[img[netzwerk|http://farm3.static.flickr.com/2271/2249573201_120174d813_o.png]]
 [[News]]
 [[About]]
+[[Articles]]
 [[Project Structure]]
 [[Documentation|Documentation]]
 [[API|API]]
 [[Download|Download]]
 [[SOF Console|Console]]
-[[Open Issues|Open Issues]]
 [[Remote SOF]]
+[[Open Issues]]
+
 </pre>
 </div>
 <div title="News" modifier="magro74" modified="200912210755" created="200908130539" changecount="11">
@@ -992,13 +1032,19 @@ Merry Christmas!
 ''July 8, 2009'' 
 Remote SOF is available. It represents an extension for SOF and supports calling distributed bundles by using CORBA as communication layer.</pre>
 </div>
-<div title="Open Issues" modifier="magr74" modified="200807180928" created="200802150652" changecount="6">
-<pre>* Remote access to the SOF container
-** via Browser
-** via TCP and proprietary GUI
-* Making SOF distributable
-** Services can be registered and tracked across several processes and machines
-* Introducing a platform independent build tool
+<div title="Open Issues" modifier="magr74" modified="201011160625" created="200802150652" changecount="12">
+<pre>* Directly ask the bundle context for service references (instead of being notified)
+* Using cmake as build tool
+* Improving error robustness
+* More features for ~SofAdminUI
+** Starting and stopping bundles
+** Code generation of infrastructure code (registering listeners, tracking services etc.)
+* Unit tests for Remote SOF
+* Adding dependencies between bundles
+** Examples:
+*** Bundle A requires version 2.0 of bundle B
+*** Bundle A requires version 1.2 of service B
+* Unloading bundle libraries
 </pre>
 </div>
 <div title="Project Structure" modifier="magro74" modified="200905211946" created="200802181620" changecount="7">
@@ -1405,18 +1451,18 @@ merge(config.shadowTiddlers,{
 //}}}
 </pre>
 </div>
-<div title="UploadLog" modifier="magro74" modified="200912220848" created="200802080629">
+<div title="UploadLog" modifier="magr74" modified="201012200459" created="200802080629">
 <pre>| !date | !user | !location | !storeUrl | !uploadDir | !toFilename | !backupdir | !origin |
-| 21/12/2009 10:41:41 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 22/12/2009 08:14:33 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 22/12/2009 08:24:43 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 22/12/2009 08:32:33 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 22/12/2009 08:40:09 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 22/12/2009 08:40:14 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok | ok |
-| 22/12/2009 08:46:13 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 22/12/2009 09:28:46 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 22/12/2009 09:44:49 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 22/12/2009 09:48:39 | magro74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
+| 23/11/2010 21:37:31 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 23/11/2010 21:45:17 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 23/11/2010 21:46:11 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 23/11/2010 21:56:10 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 24/11/2010 06:00:40 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 25/11/2010 06:10:55 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 25/11/2010 06:13:30 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 25/11/2010 06:17:19 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 16/12/2010 06:20:31 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 20/12/2010 05:59:41 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
 </div>
 <div title="UploadPlugin" modifier="YourName" modified="200802080624" created="200706061221" tags="systemConfig">
 <pre>/***
