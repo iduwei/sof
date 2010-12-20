@@ -1,0 +1,35 @@
+VariantDir( 'build', 'src', duplicate=0 )
+Import( 'env' )
+
+sources = [
+	'build/sof/framework/remote/corba/CORBAHelper.cpp',
+	'build/sof/framework/remote/corba/IRemoteBundleContextImpl.cpp',
+	'build/sof/framework/remote/corba/RemoteBundleInfo.cpp',
+	'build/sof/framework/remote/corba/RemoteServiceEvent.cpp',
+	'build/sof/framework/remote/corba/RemoteServiceInfo.cpp',
+	'build/sof/framework/remote/corba/RemoteServiceListenerInfo.cpp',
+	'build/sof/framework/remote/corba/RemoteServiceReference.cpp',
+	'build/sof/framework/remote/corba/RemoteServiceTracker.cpp',
+
+	'build/sof/framework/remote/corba/generated/CORBAObjects.cpp',
+
+	'build/sof/framework/remote/corba/namingservice/CORBANamingServiceFactory.cpp',
+	'build/sof/framework/remote/corba/namingservice/CORBANamingServiceImpl.cpp',
+
+	'build/sof/framework/remote/corba/registry/CORBARegistryObserverImpl.cpp',
+	'build/sof/framework/remote/corba/registry/IRegistryFacadeImpl.cpp',
+
+	'build/sof/services/admin/remote/RemoteAdministrationActivator.cpp',
+
+	'build/sof/services/admin/remote/corba/CORBAAdminServiceImpl.cpp',
+	'build/sof/services/admin/remote/corba/DataConverter.cpp',
+
+	'build/sof/services/admin/remote/corba/generated/CORBAAdminObjects.cpp'
+	]
+	
+objectFiles = env.Object( 
+	sources, 
+	CPPPATH = ['#/remote/corba/include', '#/remote/corba/include/pthreads', '#impl/src'] )
+	
+env.StaticLibrary( 'bin/sof_remote', objectFiles ) 
+
