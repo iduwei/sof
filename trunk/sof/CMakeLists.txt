@@ -1,0 +1,88 @@
+cmake_minimum_required(VERSION 2.6)
+
+if ( UNIX )
+    # preprocessor definition
+    ADD_DEFINITIONS( -DUNIX )
+ 
+    #necessary for dlopen, dlsym calls etc.
+    LINK_LIBRARIES(${CMAKE_THREAD_LIBS} ${CMAKE_DL_LIBS})
+ 
+    # Types of dynamic libraries are hidden
+    SET( CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden" )
+    
+    # setting CORBA MICO libraries directory
+    SET_PROPERTY ( GLOBAL PROPERTY MICO_LIBS $ENV{MICO_HOME}/lib )
+    
+    # setting name of MICO ORB library (differs between UNIX and Windows)
+    SET_PROPERTY ( GLOBAL PROPERTY MICO_ORB mico2.3.13 )
+    
+    # setting name of MICO naming library (differs between UNIX and Windows)
+    SET_PROPERTY ( GLOBAL PROPERTY MICO_COSS micocoss2.3.13 )
+    
+    # setting name pthread library (differs between UNIX and Windows)
+    SET_PROPERTY ( GLOBAL PROPERTY MICO_PTHREAD "-pthread" )
+    
+    # sof_remote_test run script
+    SET_PROPERTY ( GLOBAL PROPERTY SOF_REMOTE_TEST_SCRIPT "run_remote_test.sh" )    
+    
+    # sof_remote_console run script
+    SET_PROPERTY ( GLOBAL PROPERTY SOF_REMOTE_CONSOLE_SCRIPT "run_remote_console.sh" ) 
+    
+    # naming service run script
+    SET_PROPERTY ( GLOBAL PROPERTY SOF_NAMING_SERVICE_SCRIPT "run_ns.sh" ) 
+    
+    # naming service admin run script
+    SET_PROPERTY ( GLOBAL PROPERTY SOF_NAMING_SERVICE_ADMIN_SCRIPT "run_nsadmin.sh" ) 
+    
+    # naming service admin run script
+    SET_PROPERTY ( GLOBAL PROPERTY SOF_REGISTRY_SCRIPT "run_registry.sh" ) 
+    
+endif ( UNIX )
+
+if ( WIN32 )
+    ADD_DEFINITIONS( -DWIN32 )
+    
+    # setting CORBA MICO libraries directory
+    SET_PROPERTY ( GLOBAL PROPERTY MICO_LIBS $ENV{MICO_HOME}/win32-bin/lib )
+    
+    # setting name of MICO ORB library (differs between UNIX and Windows)
+    SET_PROPERTY ( GLOBAL PROPERTY MICO_ORB mico2313 ) 
+    
+    # setting name of MICO naming library (differs between UNIX and Windows)
+    SET_PROPERTY ( GLOBAL PROPERTY MICO_COSS micocoss2313 )
+    
+    # setting name pthread library (differs between UNIX and Windows)
+    SET_PROPERTY ( GLOBAL PROPERTY MICO_PTHREAD pthreadVC2 )
+    
+    # sof_remote_test run script
+    SET_PROPERTY ( GLOBAL PROPERTY SOF_REMOTE_TEST_SCRIPT "run_remote_test.bat" )  
+    
+    # sof_remote_console run script
+    SET_PROPERTY ( GLOBAL PROPERTY SOF_REMOTE_CONSOLE_SCRIPT "run_remote_console.bat" )  
+    
+    # naming service run script
+    SET_PROPERTY ( GLOBAL PROPERTY SOF_NAMING_SERVICE_SCRIPT "run_ns.bat" ) 
+    
+    # naming service admin run script
+    SET_PROPERTY ( GLOBAL PROPERTY SOF_NAMING_SERVICE_ADMIN_SCRIPT "run_nsadmin.bat" ) 
+    
+    # naming service admin run script
+    SET_PROPERTY ( GLOBAL PROPERTY SOF_REGISTRY_SCRIPT "run_registry.bat" ) 
+endif ( WIN32 )
+
+SUBDIRS(
+    impl 
+    extern/CppUnitLite 
+    console examples 
+    examples/bundle1 
+    examples/bundle2 
+    remote/impl 
+    remote/console 
+    remote/registry 
+    test 
+    test/TestDll1 
+    test/TestDll2 
+    remote/test
+    remote/examples/bundle1
+    remote/examples/bundle2
+    )
