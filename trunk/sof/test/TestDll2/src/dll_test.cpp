@@ -1,58 +1,35 @@
-// Dies ist die Haupt-DLL.
-
+#ifdef WIN32
 #include <windows.h>
+#endif 
 
 #include <stdlib.h>
 #include <string>
 #include <iostream>
+
 #include "sof/instantiation/ObjectCreator.h"
 #include "sof/framework/IBundleActivator.h"
-#include "TestBundleActivator.h"
-#include "sof/util/logging/Logger.h"
-#include "sof/util/logging/LoggerFactory.h"
-
-
-#define DLL extern "C" __declspec(dllexport)
 
 using namespace std;
 using namespace sof::instantiation;
 using namespace sof::framework;
 using namespace sof::util::logging;
 
+#ifdef WIN32
+#define DLL extern "C" __declspec(dllexport)
 
 BOOL APIENTRY DllMain( HANDLE hModule, 
                        DWORD  ul_reason_for_call, 
                        LPVOID lpReserved
 					 )
-{		
-	if(ul_reason_for_call==DLL_THREAD_ATTACH)
-  {
-	  LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[dll_test2#DllMain] Called, dll thread attach." );
-  }
-
-if(ul_reason_for_call==DLL_THREAD_DETACH)
-  {
-	  LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[dll_test2#DllMain] Called, dll thread detach." );
-  }
-
-if(ul_reason_for_call==DLL_PROCESS_ATTACH)
-  {
-	  LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[dll_test2#DllMain] Called, dll process attach." );
-  }
-
-if(ul_reason_for_call==DLL_PROCESS_DETACH)
-  {
-	  LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[dll_test2#DllMain] Called, dll process detach." );
-  }
-	LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[dll_test2#DllMain] Left." );
-    return TRUE;
+{				
+	return TRUE;
 }
-
+#elif UNIX
+#define DLL extern "C" __attribute__((visibility("default")))
+#endif
 
 DLL IBundleActivator* createObject( const string &className )
 {	
 	ObjectCreator<IBundleActivator> OC_BUNDLE_ACTIVATOR;
-
-	LoggerFactory::getLogger( "Test" ).log( Logger::LOG_DEBUG, "[dll_test2#createObject] Loading instance of class '%1'", className );
-	return OC_BUNDLE_ACTIVATOR.createObject( className );	
+	return OC_BUNDLE_ACTIVATOR.createObject( className );					
 }

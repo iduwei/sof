@@ -6,14 +6,21 @@
 #include "TestHarness.h"
 #include "Test.h"
  
-#ifdef WIN32
 #include "sof/framework/Launcher.h"
 #include "sof/framework/BundleInfoBase.h"
 #include "sof/framework/IRegistry.h"
 #include "sof/config/BundleConfiguration.h"
 #include "sof/util/logging/Logger.h"
 #include "sof/util/logging/LoggerFactory.h"
+
+#ifdef WIN32
 #include "sof/instantiation/win/WinDllCreator.h"
+#endif
+
+#ifdef UNIX
+#include "sof/instantiation/unix/SharedLibLoader.h"
+#endif
+
 #include "sof/util/threading/SingleThreaded.h"
 
 #include "../TestBundleActivator.h"
@@ -24,8 +31,20 @@ using namespace std;
 
 using namespace sof::config;
 using namespace sof::framework;
-using namespace sof::instantiation::win;
 
+#ifdef WIN32
+using namespace sof::instantiation::win;
+#define CREATOR WinDllCreator
+#define DLL1 "sof_TestDll1.dll"
+#define DLL2 "sof_TestDll2.dll"
+#endif
+
+#ifdef UNIX
+using namespace sof::instantiation::unix_;
+#define CREATOR SharedLibLoader
+#define DLL1 "libsof_TestDll1.so"
+#define DLL2 "libsof_TestDll2.so"
+#endif
 
 /**
  * Tests whether it is possible to load bundles locally and from DLL.
@@ -34,13 +53,13 @@ TEST( Launcher, Load )
 {
 	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[LauncherTest] *** Launcher-Load Test" );
 			
-	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", "sof_TestDll2.dll" );
+	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", DLL2 );
 	BundleConfiguration bundleConf2( "bundle2", "TestBundleActivator" );
 	vector<BundleConfiguration> bundleConfVec;
 	bundleConfVec.push_back( bundleConf1 );
 	bundleConfVec.push_back( bundleConf2 );
 	
-	Launcher<SingleThreaded,WinDllCreator> launcher;
+	Launcher<SingleThreaded,CREATOR> launcher;
 	launcher.start( bundleConfVec );	
 }
 
@@ -51,13 +70,13 @@ TEST( Launcher, RegisterServiceListeners )
 {
 	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[LauncherTest] *** Launcher-RegisterServiceListeners Test" );
 			
-	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", "sof_TestDll2.dll" );
+	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", DLL2 );
 	BundleConfiguration bundleConf2( "bundle2", "TestBundleActivator" );
 	vector<BundleConfiguration> bundleConfVec;
 	bundleConfVec.push_back( bundleConf1 );
 	bundleConfVec.push_back( bundleConf2 );
 	
-	Launcher<SingleThreaded,WinDllCreator> launcher;
+	Launcher<SingleThreaded,CREATOR> launcher;
 	launcher.start( bundleConfVec );
 
 	IRegistry& registry = launcher.getRegistry();
@@ -79,7 +98,7 @@ TEST( Launcher, UsedServices )
 	// Registers service listener for 'ServiceB'
 	// Registers 'ServiceA' with properties 'instance=1'
 	// Registers 'ServiceA' with properties 'instance=2'
-	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", "sof_TestDll2.dll" );
+	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", DLL2 );
 
 	// Registers service listener for 'ServiceA'
 	// Registers 'ServiceB' with properties 'instance=1'
@@ -89,7 +108,7 @@ TEST( Launcher, UsedServices )
 	bundleConfVec.push_back( bundleConf1 );
 	bundleConfVec.push_back( bundleConf2 );
 	
-	Launcher<SingleThreaded,WinDllCreator>  launcher;
+	Launcher<SingleThreaded,CREATOR>  launcher;
 	launcher.start( bundleConfVec );
 
 	IRegistry& registry = launcher.getRegistry();
@@ -110,13 +129,13 @@ TEST( Launcher, RegisterServices )
 {
 	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[LauncherTest] *** Launcher-RegisterServices Test" );
 			
-	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", "sof_TestDll2.dll" );
+	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", DLL2 );
 	BundleConfiguration bundleConf2( "bundle2", "TestBundleActivator" );
 	vector<BundleConfiguration> bundleConfVec;
 	bundleConfVec.push_back( bundleConf1 );
 	bundleConfVec.push_back( bundleConf2 );
 	
-	Launcher<SingleThreaded,WinDllCreator>  launcher;
+	Launcher<SingleThreaded,CREATOR>  launcher;
 	launcher.start( bundleConfVec );
 
 	IRegistry& registry = launcher.getRegistry();
@@ -135,13 +154,13 @@ TEST( Launcher, DeregisterService )
 {
 	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[LauncherTest] *** Launcher-DeregisterService Test" );
 			
-	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", "sof_TestDll2.dll" );
+	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", DLL2 );
 	BundleConfiguration bundleConf2( "bundle2", "TestBundleActivator" );
 	vector<BundleConfiguration> bundleConfVec;
 	bundleConfVec.push_back( bundleConf1 );
 	bundleConfVec.push_back( bundleConf2 );
 	
-	Launcher<SingleThreaded,WinDllCreator>  launcher;
+	Launcher<SingleThreaded,CREATOR>  launcher;
 	launcher.start( bundleConfVec );
 
 	TestBundleActivator::unregisterServiceB();
@@ -174,7 +193,7 @@ TEST( Launcher, DeregisterListener )
 	// Registers service listener for 'ServiceB'
 	// Registers 'ServiceA' with properties 'instance=1'
 	// Registers 'ServiceA' with properties 'instance=2'
-	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", "sof_TestDll2.dll" );
+	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", DLL2 );
 
 	// Registers service listener for 'ServiceA'
 	// Registers 'ServiceB' with properties 'instance=1'	
@@ -184,7 +203,7 @@ TEST( Launcher, DeregisterListener )
 	bundleConfVec.push_back( bundleConf1 );
 	bundleConfVec.push_back( bundleConf2 );
 	
-	Launcher<SingleThreaded,WinDllCreator>  launcher;
+	Launcher<SingleThreaded,CREATOR>  launcher;
 	launcher.start( bundleConfVec );
 
 	IRegistry& registry = launcher.getRegistry();
@@ -209,7 +228,7 @@ TEST( Launcher, StopBundle )
 	// Registers service listener for 'ServiceB'
 	// Registers 'ServiceA' with properties 'instance=1'
 	// Registers 'ServiceA' with properties 'instance=2'
-	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", "sof_TestDll2.dll" );
+	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", DLL2 );
 
 	// Registers service listener for 'ServiceA'
 	// Registers 'ServiceB' with properties 'instance=1'	
@@ -219,7 +238,7 @@ TEST( Launcher, StopBundle )
 	bundleConfVec.push_back( bundleConf1 );
 	bundleConfVec.push_back( bundleConf2 );
 	
-	Launcher<SingleThreaded,WinDllCreator>  launcher;
+	Launcher<SingleThreaded,CREATOR>  launcher;
 	launcher.start( bundleConfVec );
 
 	IRegistry& registry = launcher.getRegistry();
@@ -240,13 +259,13 @@ TEST( Launcher, StopAllBundles )
 {
 	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[LauncherTest] *** Launcher-StopAllBundles Test" );
 			
-	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", "sof_TestDll2.dll" );
+	BundleConfiguration bundleConf1( "bundle1", "BundleActivator2", ".", DLL2 );
 	BundleConfiguration bundleConf2( "bundle2", "TestBundleActivator" );
 	vector<BundleConfiguration> bundleConfVec;
 	bundleConfVec.push_back( bundleConf1 );
 	bundleConfVec.push_back( bundleConf2 );
 	
-	Launcher<SingleThreaded,WinDllCreator>  launcher;
+	Launcher<SingleThreaded,CREATOR>  launcher;
 	launcher.start( bundleConfVec );
 
 	IRegistry& registry = launcher.getRegistry();
@@ -260,4 +279,3 @@ TEST( Launcher, StopAllBundles )
 	CHECK( result == false );
 }
 
-#endif

@@ -477,6 +477,14 @@
 							>
 						</File>
 					</Filter>
+					<Filter
+						Name="unix"
+						>
+						<File
+							RelativePath=".\src\sof\instantiation\ux\SharedLibLoader.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="util"

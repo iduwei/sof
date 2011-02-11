@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <limits>
 
 using namespace std;
 using namespace sof::util::logging;
@@ -14,7 +15,7 @@ LoggerImpl::LoggerImpl( const string& channel ):logCh(channel)
 	this->levels[1] = "ERROR";
 	this->levels[2] = "TRACE";
 	this->levels[3] = "DEBUG";
-	this->level = UINT_MAX;
+	this->level = std::numeric_limits<unsigned int>::max();
 }
 
 void LoggerImpl::log( LogLevel level, const string& message, int param1,

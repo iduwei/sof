@@ -5,6 +5,10 @@
 #include "sof/instantiation/win/WinDllCreator.h"
 #endif
 
+#ifdef UNIX
+#include "sof/instantiation/unix/SharedLibLoader.h"
+#endif
+
 #include "sof/instantiation/NullCreator.h"
 #include "sof/util/threading/SingleThreaded.h"
 
@@ -15,6 +19,10 @@ using namespace sof::framework::remote::corba;
 
 #ifdef WIN32
 using namespace sof::instantiation::win;
+#endif
+
+#ifdef UNIX
+using namespace sof::instantiation::unix_;
 #endif
 
 
@@ -59,8 +67,8 @@ int main( int argc, char **argv)
 
 	#ifdef WIN32
 		RemoteSOFLauncher<SingleThreaded,WinDllCreator> launcher( corbaHelper, processName );
-	#else
-		RemoteSOFLauncher<SingleThreaded,NullCreator> launcher( corbaHelper, processName );
+	#elif UNIX
+		RemoteSOFLauncher<SingleThreaded,SharedLibLoader> launcher( corbaHelper, processName );
 	#endif
 	
 	launcher.setLogLevel( logLevel );

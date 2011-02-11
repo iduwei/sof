@@ -1,11 +1,12 @@
 #include <iostream>
-#include <vector>
-
 #include "sof/framework/Launcher.h"
-#include "sof/config/BundleConfiguration.h"
 
 #ifdef WIN32
 #include "sof/instantiation/win/WinDllCreator.h"
+#endif
+
+#ifdef UNIX
+#include "sof/instantiation/unix/SharedLibLoader.h"
 #endif
 
 #include "sof/instantiation/NullCreator.h"
@@ -13,11 +14,14 @@
 
 using namespace std;
 using namespace sof::framework;
-using namespace sof::config;
 using namespace sof::util::threading;
 
 #ifdef WIN32
 using namespace sof::instantiation::win;
+#endif
+
+#ifdef UNIX
+using namespace sof::instantiation::unix_;
 #endif
 
 int main(int argc, char* argv[])
@@ -42,14 +46,22 @@ int main(int argc, char* argv[])
 
 	#ifdef WIN32
 		Launcher<SingleThreaded,WinDllCreator> launcher;
+	#elif UNIX
+		Launcher<SingleThreaded,SharedLibLoader> launcher;
 	#else
 		Launcher<SingleThreaded,NullCreator> launcher;
 	#endif
 	
 	launcher.setLogLevel( logLevel );
 
-	BundleConfiguration bundle1( "bundle1", "BundleActivator1", ".", "sof_examples_bundle1.dll" );
-	BundleConfiguration bundle2( "bundle2", "BundleActivator2", ".", "sof_examples_bundle2.dll" );
+	#ifdef WIN32
+		BundleConfiguration bundle1( "bundle1", "BundleActivator1", ".", "sof_examples_bundle1.dll" );
+		BundleConfiguration bundle2( "bundle2", "BundleActivator2", ".", "sof_examples_bundle2.dll" );
+	#elif UNIX
+		BundleConfiguration bundle1( "bundle1", "BundleActivator1", ".", "libsof_examples_bundle1.so" );
+		BundleConfiguration bundle2( "bundle2", "BundleActivator2", ".", "libsof_examples_bundle2.so" );
+	#endif
+
 	vector<BundleConfiguration> configuration;
 	configuration.push_back( bundle1 );
 	configuration.push_back( bundle2 );

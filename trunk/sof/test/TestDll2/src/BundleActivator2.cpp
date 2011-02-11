@@ -3,7 +3,6 @@
 #include <iostream>
 
 #include "sof/instantiation/ObjectCreator.h"
-#include "sof/instantiation/win/WinDllCreator.h"
 
 #include "sof/util/logging/Logger.h"
 #include "sof/util/logging/LoggerFactory.h"
@@ -15,7 +14,6 @@
 using namespace std;
 
 using namespace sof::instantiation;
-using namespace sof::instantiation::win;
 using namespace sof::framework;
 
 

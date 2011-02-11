@@ -49,6 +49,7 @@ TEST( ConfigFileReader, ReadValidFileCheckContent )
 		int counter = 0;
 		for ( iter = bc.begin(); iter != bc.end(); ++iter )
 		{
+			cout << (*iter).toString() << endl;
 			CHECK( (*iter).getBundleName() == bundleNames[counter] );
 			CHECK( (*iter).getClassName() == activatorNames[counter] );
 			CHECK( (*iter).getLibraryPath() == libPaths[counter] );
