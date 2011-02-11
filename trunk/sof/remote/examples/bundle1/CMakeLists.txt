@@ -1,0 +1,25 @@
+PROJECT (SOF_REMOTE_EXAMPLE_BUNDLE1)
+
+SET (SOURCES 
+	src/BundleActivator1.cpp
+    src/dll.cpp
+    src/MultiplierImpl.cpp
+    ../common/src/Multiplier.cpp
+	)
+    
+
+INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/impl/src ${CMAKE_SOURCE_DIR}/remote/impl/src ${CMAKE_SOURCE_DIR}/remote/examples/bundle1/src ${CMAKE_SOURCE_DIR}/remote/examples/common/src $ENV{MICO_HOME}/include $ENV{MICO_HOME}/contrib/pthreads )
+
+GET_PROPERTY( MICO_LIBRARY_PATH GLOBAL PROPERTY MICO_LIBS )
+GET_PROPERTY( MICO_ORB_LIB GLOBAL PROPERTY MICO_ORB )
+GET_PROPERTY( MICO_COSS_LIB GLOBAL PROPERTY MICO_COSS )
+GET_PROPERTY( MICO_PTHREAD_LIB GLOBAL PROPERTY MICO_PTHREAD )
+
+LINK_DIRECTORIES( ${CMAKE_BINARY_DIR}/remote/impl ${MICO_LIBRARY_PATH} )
+
+
+ADD_LIBRARY( sof_remote_examples_bundle1 SHARED ${SOURCES} )
+
+TARGET_LINK_LIBRARIES( sof_remote_examples_bundle1 sof_remote ${MICO_ORB_LIB} ${MICO_COSS_LIB} ${MICO_PTHREAD_LIB} )
+
+
