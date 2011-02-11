@@ -61,6 +61,19 @@ class ObjectCreator
 
 	friend class ObjectCreator;
 
+	public:
+
+		/**
+		 * Returns the map instance which caches objects of type
+		 * <code>BaseFactory</code>.<br>
+		 * If the map object is not available yet, a new one
+		 * will be created.
+		 *
+		 * @return 
+		 *			The map instance.
+		 */
+		static map< string,BaseFactory<BaseT>* >* getInstanceMap();
+
 	private:					
 
 		/**
@@ -84,17 +97,6 @@ class ObjectCreator
 		 * The name of the DLL from which a object is created.
 		 */
 		string dllName;
-
-		/**
-		 * Returns the map instance which caches objects of type
-		 * <code>BaseFactory</code>.<br>
-		 * If the map object is not available yet, a new one
-		 * will be created.
-		 *
-		 * @return 
-		 *			The map instance.
-		 */
-		static map< string,BaseFactory<BaseT>* >* getInstanceMap();
 
 	public:		
 

@@ -30,7 +30,7 @@ void Foo<ThreadingModel>::doAnything()
 {
 	cout << "[ThreadingTest#Foo#doAnything] Enter." << endl;
 	string s;
-	Lock l;
+	SingleThreaded::Lock l;
 	cout << "[ThreadingTest#Foo#doAnything] Leave." << endl;
 }
 

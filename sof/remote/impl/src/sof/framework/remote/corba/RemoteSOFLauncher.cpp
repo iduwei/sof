@@ -92,13 +92,13 @@ void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::start( vector<BundleConf
 			continue;
 		}
 
-		logger.log( Logger::LOG_ERROR, "[RemoteSOFLauncher#start] Create bundle context." );
+		logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#start] Create bundle context." );
 		IBundleContext* bundleCtxt = this->createBundleContext( bundleConfig.getBundleName() );
 		
-		logger.log( Logger::LOG_ERROR, "[RemoteSOFLauncher#start] Create bundle info." );		
+		logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#start] Create bundle info." );		
 		RemoteBundleInfo* bundleInfo = new RemoteBundleInfo( bundleConfig.getBundleName(), false, bundleActivator, bundleCtxt );		
 
-		logger.log( Logger::LOG_ERROR, "[RemoteSOFLauncher#start] Add bundle info object to registry." );	
+		logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#start] Add bundle info object to registry." );	
 		this->registry->addBundleInfo( *bundleInfo );
 
 		logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#start] Start bundle." );

@@ -5,6 +5,7 @@
 #include "sof/framework/remote/corba/RemoteServiceListenerInfo.h"
 #include "sof/framework/remote/corba/RemoteServiceReference.h"
 #include "sof/framework/remote/corba/RemoteServiceInfo.h"
+#include "../RemoteBundleInfo.h"
 #include "../CORBAHelper.h"
 
 namespace sof { namespace framework { namespace remote { namespace corba { namespace registry {

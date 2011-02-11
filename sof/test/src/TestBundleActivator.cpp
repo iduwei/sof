@@ -4,14 +4,12 @@
 
 #include "sof/framework/Properties.h"
 #include "sof/instantiation/ObjectCreator.h"
-#include "sof/instantiation/win/WinDllCreator.h"
 
 #include "UnitTestLogger.h"
 
 using namespace std;
 using namespace sof::framework;
 using namespace sof::instantiation;
-using namespace sof::instantiation::win;
 using namespace sof::util::logging;
 
 IBundleContext* TestBundleActivator::context = 0;

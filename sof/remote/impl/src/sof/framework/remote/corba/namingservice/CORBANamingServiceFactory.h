@@ -26,7 +26,7 @@ class CORBANamingServiceFactory
 		 * @return
 		 *			The created <code>CORBANamingService</code> object.
 		 */
-		CORBANamingService* CORBANamingServiceFactory::createNamingService( CORBA::ORB_var orb );
+		CORBANamingService* createNamingService( CORBA::ORB_var orb );
 
 };
 

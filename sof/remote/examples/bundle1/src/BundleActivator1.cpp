@@ -26,7 +26,7 @@ void BundleActivator1::start(IRemoteBundleContext::ConstPtr context)
 
 	this->service1 = new MultiplierImpl();
 	this->serviceReg1 = context->registerRemoteService( "Multiplier", this->service1, props );
-
+	
 	props.put( "instance", "2" );
 
 	this->service2 = new MultiplierImpl();

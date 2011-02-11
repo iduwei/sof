@@ -1,3 +1,3 @@
-PATH=%PATH%;..\..\corba\libs
+PATH=%PATH%;%MICO_HOME%\win32-bin\lib;%MICO_HOME%\win32-bin
 
-..\..\corba\bin\nsd -ORBIIOPAddr inet:localhost:5000 
+nsd -ORBIIOPAddr inet:localhost:5000 

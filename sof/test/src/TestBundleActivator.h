@@ -19,7 +19,7 @@ class TestBundleActivator : public IBundleActivator, public IServiceTrackerCusto
 		IServiceBImpl serviceB;
 
 	public:		
-		virtual TestBundleActivator::~TestBundleActivator();
+		virtual ~TestBundleActivator();
 		virtual void start( IBundleContext::ConstPtr context );
 		virtual void stop( IBundleContext::ConstPtr context );
 		virtual bool addingService( const ServiceReference& ref );

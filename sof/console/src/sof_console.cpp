@@ -5,6 +5,10 @@
 #include "sof/instantiation/win/WinDllCreator.h"
 #endif
 
+#ifdef UNIX
+#include "sof/instantiation/unix/SharedLibLoader.h"
+#endif
+
 #include "sof/instantiation/NullCreator.h"
 #include "sof/util/threading/SingleThreaded.h"
 
@@ -14,6 +18,10 @@ using namespace sof::util::threading;
 
 #ifdef WIN32
 using namespace sof::instantiation::win;
+#endif
+
+#ifdef UNIX
+using namespace sof::instantiation::unix_;
 #endif
 
 int main(int argc, char* argv[])
@@ -38,6 +46,8 @@ int main(int argc, char* argv[])
 
 	#ifdef WIN32
 		Launcher<SingleThreaded,WinDllCreator> launcher;
+	#elif UNIX
+		Launcher<SingleThreaded,SharedLibLoader> launcher;
 	#else
 		Launcher<SingleThreaded,NullCreator> launcher;
 	#endif
@@ -45,4 +55,3 @@ int main(int argc, char* argv[])
 	launcher.startAdministrationBundle();
 	return 0;
 }
-

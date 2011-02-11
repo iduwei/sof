@@ -12,6 +12,10 @@
 #include "sof/instantiation/win/WinDllCreator.h"
 #endif
 
+#ifdef UNIX
+#include "sof/instantiation/unix/SharedLibLoader.h"
+#endif
+
 #include "../BaseTestClass.h"
 #include "../ITest.h"
 #include "../ITestImpl.h"
@@ -25,9 +29,18 @@ using namespace sof::instantiation;
 
 #ifdef WIN32
 using namespace sof::instantiation::win;
+#define CREATOR WinDllCreator
+#define DLL1 "sof_TestDll1.dll"
+#define DLL2 "sof_TestDll2.dll"
 #endif
 
-#ifdef WIN32
+#ifdef UNIX
+using namespace sof::instantiation::unix_;
+#define CREATOR SharedLibLoader
+#define DLL1 "libsof_TestDll1.so"
+#define DLL2 "libsof_TestDll2.so"
+#endif
+
 
 /**
  * Checks whether the object loader is able to load objects from
@@ -38,7 +51,7 @@ TEST( WinObjectCreator, LoadingFromDll )
 	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[WinObjectCreatorTest] *** ObjectLoader-LoadingDll Test" );	
 	
 	// loading object of type 'ITestImpl' from DLL './TestDll1.dll'
-	ObjectCreator<ITest,WinDllCreator> OC( false, ".", "sof_TestDll1.dll" );	
+	ObjectCreator<ITest,CREATOR> OC( false, ".", DLL1 );	
 	ITest* test = OC.createObject( "ITestImpl" );
 	CHECK( 69 == test->getValue() );	
 }
@@ -52,7 +65,7 @@ TEST( WinObjectCreator, LoadingFromDllDifferentType )
 {
 	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[WinObjectCreatorTest] *** ObjectLoader-LoadingFromDllDifferentType Test" );	
 	
-	ObjectCreator<ITest,WinDllCreator> OC( false, ".", "sof_TestDll1.dll" );	
+	ObjectCreator<ITest,CREATOR> OC( false, ".", DLL1 );	
 	ITest* test = OC.createObject( "ITestImpl2" );
 	CHECK( 42 == test->getValue() );	
 }
@@ -67,7 +80,7 @@ TEST( WinObjectCreator, LoadingFromDllAfterLocalSearch )
 {
 	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[WinObjectCreatorTest] *** ObjectLoader-LoadingFromDllAfterLocalSearch Test" );	
 
-	ObjectCreator<ITest,WinDllCreator> OC( true, ".", "sof_TestDll1.dll" );	
+	ObjectCreator<ITest,CREATOR> OC( true, ".", DLL1 );	
 	ITest* test = OC.createObject( "ITestImpl2" );
 	CHECK( 42 == test->getValue() );	
 }
@@ -81,7 +94,7 @@ TEST( WinObjectCreator, LoadingLocalObjectByConfiguredSearchingInDLL )
 {
 	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[WinObjectCreatorTest] *** ObjectLoader-LoadingLocalObjectByConfiguredSearchingInDLL Test" );	
 
-	ObjectCreator<ITest,WinDllCreator> OC( true, ".", "sof_TestDll1.dll" );	
+	ObjectCreator<ITest,CREATOR> OC( true, ".", DLL1 );	
 	ITest* test = OC.createObject( "ITestImpl" );
 	CHECK( 13 == test->getValue() );	
 }
@@ -95,7 +108,7 @@ TEST( WinObjectCreator, LoadingSeveralObjectsOfDifferentTypes )
 {
 	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[WinObjectCreatorTest] *** ObjectLoader-LoadingSeveralObjectsOfDifferentTypes Test" );	
 
-	ObjectCreator<ITest,WinDllCreator> OC( true, ".", "sof_TestDll1.dll" );	
+	ObjectCreator<ITest,CREATOR> OC( true, ".", DLL1 );	
 	ITest* testObject1 = OC.createObject( "ITestImpl" );
 	CHECK( 13 == testObject1->getValue() );	
 
@@ -106,7 +119,6 @@ TEST( WinObjectCreator, LoadingSeveralObjectsOfDifferentTypes )
 	CHECK( 42 == testObject3->getValue() );	
 }
 
-#endif
 
 /**
  * The object loader is defined to return
@@ -118,7 +130,7 @@ TEST( WinObjectCreator, LoadingDll3 )
 {
 	/*
 	cout << "*** ObjectLoader-LoadingDll3 Test" << endl;
-	ObjectLoader<ITest> OL( false, "C:/software_entwicklung/Test/osgi_sof/test/bin", "TestDll1.dll" );
+	ObjectLoader<ITest> OL( false, "C:/software_entwicklung/Test/osgi_sof/test/bin", DLL1 );
 	
 	ITest* test = OL.loadObject( "ITestImpl" );
 	cout << "value: " << (test->getValue()) << endl;
