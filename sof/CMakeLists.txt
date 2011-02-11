@@ -73,7 +73,8 @@ endif ( WIN32 )
 SUBDIRS(
     impl 
     extern/CppUnitLite 
-    console examples 
+    console 
+    examples 
     examples/bundle1 
     examples/bundle2 
     remote/impl 
