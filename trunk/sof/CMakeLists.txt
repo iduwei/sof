@@ -52,7 +52,13 @@ if ( WIN32 )
     SET_PROPERTY ( GLOBAL PROPERTY MICO_COSS micocoss2313 )
     
     # setting name pthread library (differs between UNIX and Windows)
-    SET_PROPERTY ( GLOBAL PROPERTY MICO_PTHREAD pthreadVC2 )
+    if ( CMAKE_BUILD_TYPE MATCHES Debug )
+        MESSAGE( STATUS debug )
+        SET_PROPERTY ( GLOBAL PROPERTY MICO_PTHREAD pthreadVC2d )
+    else ( CMAKE_BUILD_TYPE MATCHES Debug )
+        MESSAGE( STATUS release )
+        SET_PROPERTY ( GLOBAL PROPERTY MICO_PTHREAD pthreadVC2 )
+    endif ( CMAKE_BUILD_TYPE MATCHES Debug )
     
     # sof_remote_test run script
     SET_PROPERTY ( GLOBAL PROPERTY SOF_REMOTE_TEST_SCRIPT "run_remote_test.bat" )  
