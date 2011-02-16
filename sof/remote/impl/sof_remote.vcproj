@@ -41,7 +41,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\impl\src;..\corba\include\pthreads;..\corba\include;..\corba\include\windows"
+				AdditionalIncludeDirectories="..\..\impl\src;&quot;$(MICO_HOME)\contrib\pthreads&quot;;&quot;$(MICO_HOME)\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
@@ -103,7 +103,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\impl\src;..\corba\include\pthreads;..\corba\include;..\corba\include\windows"
+				AdditionalIncludeDirectories="..\..\impl\src;&quot;$(MICO_HOME)\contrib\pthreads&quot;;&quot;$(MICO_HOME)\include&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_LIB"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"

@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\common\src;..\..\..\impl\src;..\..\corba\include\pthreads;..\..\impl\src;..\..\corba\include;..\..\corba\include\windows"
+				AdditionalIncludeDirectories="..\common\src;..\..\..\impl\src;&quot;$(MICO_HOME)\contrib\pthreads&quot;;..\..\impl\src;&quot;$(MICO_HOME)\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -119,7 +119,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\..\impl\src;..\..\corba\include\pthreads;..\..\impl\src;..\..\corba\include;..\..\corba\include\windows;..\common\src"
+				AdditionalIncludeDirectories="..\..\..\impl\src;&quot;$(MICO_HOME)\contrib\pthreads&quot;;..\..\impl\src;&quot;$(MICO_HOME)\include&quot;;..\common\src"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
