@@ -7,8 +7,9 @@ SET (SOURCES
     ../common/src/Multiplier.cpp
 	)
     
+GET_PROPERTY( MICO_INCLUDE_DIR GLOBAL PROPERTY MICO_INCLUDE )
 
-INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/impl/src ${CMAKE_SOURCE_DIR}/remote/impl/src ${CMAKE_SOURCE_DIR}/remote/examples/bundle1/src ${CMAKE_SOURCE_DIR}/remote/examples/common/src $ENV{MICO_HOME}/include $ENV{MICO_HOME}/contrib/pthreads )
+INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/impl/src ${CMAKE_SOURCE_DIR}/remote/impl/src ${CMAKE_SOURCE_DIR}/remote/examples/bundle1/src ${CMAKE_SOURCE_DIR}/remote/examples/common/src ${MICO_INCLUDE_DIR} )
 
 GET_PROPERTY( MICO_LIBRARY_PATH GLOBAL PROPERTY MICO_LIBS )
 GET_PROPERTY( MICO_ORB_LIB GLOBAL PROPERTY MICO_ORB )
