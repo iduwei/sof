@@ -11,7 +11,7 @@ if ( UNIX )
     SET( CMAKE_CXX_FLAGS "${CMAKE_C_FLAGS} -fvisibility=hidden" )
     
     # setting CORBA MICO libraries directory
-    SET_PROPERTY ( GLOBAL PROPERTY MICO_LIBS $ENV{MICO_HOME}/lib )
+    SET_PROPERTY ( GLOBAL PROPERTY MICO_LIBS $ENV{MICO_HOME}/libs )
     
     # setting name of MICO ORB library (differs between UNIX and Windows)
     SET_PROPERTY ( GLOBAL PROPERTY MICO_ORB mico2.3.13 )
@@ -36,6 +36,9 @@ if ( UNIX )
     
     # naming service admin run script
     SET_PROPERTY ( GLOBAL PROPERTY SOF_REGISTRY_SCRIPT "run_registry.sh" ) 
+    
+    # MICO include directory
+    SET_PROPERTY ( GLOBAL PROPERTY MICO_INCLUDE $ENV{MICO_HOME}/include ) 
     
 endif ( UNIX )
 
@@ -74,6 +77,9 @@ if ( WIN32 )
     
     # naming service admin run script
     SET_PROPERTY ( GLOBAL PROPERTY SOF_REGISTRY_SCRIPT "run_registry.bat" ) 
+    
+    # MICO include directory
+    SET_PROPERTY ( GLOBAL PROPERTY MICO_INCLUDE $ENV{MICO_HOME}/include $ENV{MICO_HOME}/contrib/pthreads ) 
 endif ( WIN32 )
 
 SUBDIRS(
