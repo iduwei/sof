@@ -82,20 +82,36 @@ if ( WIN32 )
     SET_PROPERTY ( GLOBAL PROPERTY MICO_INCLUDE $ENV{MICO_HOME}/include $ENV{MICO_HOME}/contrib/pthreads ) 
 endif ( WIN32 )
 
-SUBDIRS(
-    impl 
-    extern/CppUnitLite 
-    console 
-    examples 
-    examples/bundle1 
-    examples/bundle2 
-    remote/impl 
-    remote/console 
-    remote/registry 
-    test 
-    test/TestDll1 
-    test/TestDll2 
-    remote/test
-    remote/examples/bundle1
-    remote/examples/bundle2
+if ( SOF_REMOTE )
+    MESSAGE( STATUS "Build Remote SOF" )
+    SUBDIRS(
+        impl 
+        extern/CppUnitLite 
+        console 
+        examples 
+        examples/bundle1 
+        examples/bundle2 
+        remote/impl 
+        remote/console 
+        remote/registry 
+        test 
+        test/TestDll1 
+        test/TestDll2 
+        remote/test
+        remote/examples/bundle1
+        remote/examples/bundle2
     )
+else ( SOF_REMOTE )
+    MESSAGE( STATUS "Build SOF" )
+    SUBDIRS(
+        impl 
+        extern/CppUnitLite 
+        console 
+        examples 
+        examples/bundle1 
+        examples/bundle2 
+        test 
+        test/TestDll1 
+        test/TestDll2 
+    )
+endif ( SOF_REMOTE )
