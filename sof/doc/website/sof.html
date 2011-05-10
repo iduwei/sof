@@ -536,7 +536,7 @@ http://www.codeproject.com/KB/library/SOF_.aspx
 http://www.codeproject.com/KB/library/Remote_SOF.aspx
 </pre>
 </div>
-<div title="Building" modifier="magro74" modified="200912141936" created="200802181627" changecount="40">
+<div title="Building" modifier="magr74" modified="201103011210" created="200802181627" changecount="41">
 <pre>!!!Supported Platforms
 Basically //SOF// is implemented platform independent and can be compiled and run for all possible platforms where a standard C++ compiler is available. 
 [[SCons|http://www.scons.org/]] is the command line build tool which allows building //SOF// for different platforms. Since //SOF// was implemented on a Windows PC with Visual Studio C++ 2008 there are also Visual Studio project files available for building the framework. 
@@ -609,6 +609,140 @@ This makes sure that the necessary MICO ~DLLs are found during runtime.
 !!Other platforms
 To be done.</pre>
 </div>
+<div title="Building Remote SOF (new)" modifier="magr74" modified="201105031104" created="201103042338" changecount="21">
+<pre>!!Building 3rd party CORBA library MICO
+//Remote SOF// uses MICO (=CORBA implementation) as third party library for implementing remote accessible services and service listeners. Before //Remote SOF// can be build, the MICO libraries must be build.
+!!!Windows
+Execute following steps for building MICO version 2.3.13 on Windows with Visual C++. 
+* Download the MICO distribution (http://www.mico.org/mico-2.3.13.zip)
+* Extract the zip file
+* Start the Visual Studio command shell
+* Change into MICO main directory 
+* Enter 'nmake /f Makefile.win32'
+Afterwards MICO is build as a ''dynamic'' library. Binaries (executables, ~DLLs, ~LIBs) are placed into 'mico\win32-bin' and 'mico\win32-bin\lib' directory. 
+!!!Unix/Linux
+Execute following steps for building MICO version 2.3.13 on Unix/Linux with GNU GCC. 
+* Download the MICO distribution (http://www.mico.org/mico-2.3.13.zip)
+* Change into MICO main directory 
+* Run the configure script: //./configure//
+* Use gmake to start compilation and install the programs and libraries, possibly becoming root before installation:
+** //gmake//
+** //gmake install//
+Afterwards MICO is build as a ''dynamic'' library which is located in the 'mico/libs' directory. Executables are placed in specific folders:
+* mico/coss/naming: //nsd//, //nsadmin//
+* mico/tools: //iordump//
+* mico/idl: //idl//
+!!!Other platforms
+For building other MICO versions or building on different platforms please read the MICO documentation.
+!!Building //Remote SOF//
+First of all please set the //~MICO_HOME// environment variable to the //MICO// root directory. It is used by Visual Studio project files as well as by //~CMake// build scripts.
+!!!Windows
+!!!!Visual Studio
+* Extract the zip file of the //Remote SOF// distribution into a directory
+* Load file called 'sof_remote.sln' in directory 'sof\remote\impl' with Visual Studio
+* Build all projects
+!!!!~CMake (with Visual C++ compiler)
+* Please install ~CMake (look at http://www.cmake.org for latest releases and documentation)
+* Open a command shell on Windows and set the path and environment variables for command line builds. This can be done by changing to the //\bin// subdirectory of your Visual C++ installation and running //vcvars32.bat// (or just opening a Visual Studio command shell).
+* Make sure that the //MICO_HOME// environment variable is set.
+* Change to a directory where you want to build //SOF// and type:
+** //&quot;&quot;&quot;cmake -G &quot;NMake Makefiles&quot; &lt;source-dir&gt; -DSOF_REMOTE=true -DCMAKE_BUILD_TYPE=Release&quot;&quot;&quot;// for creating a release build
+** //&quot;&quot;&quot;cmake -G &quot;NMake Makefiles&quot; &lt;source-dir&gt; -DSOF_REMOTE=true -DCMAKE_BUILD_TYPE=Debug&quot;&quot;&quot;// for creating a debug build
+** The &lt;source-dir&gt; parameter defines the root directory where the //SOF// source files are located.
+* Type //nmake help// for listing possible build targets:
+** //sof_remote// -&gt; building the //Remote SOF// library
+** //sof_remote_test// -&gt; building the //Remote SOF// unit tests
+** //sof_remote_console// -&gt; building the //Remote SOF// console application providing a command line interface for starting and stopping bundles
+* Enter //nmake install// for building all targets
+!!!Unix/Linux
+!!!!~CMake (with GNU GCC compiler)
+* Please install ~CMake (look at http://www.cmake.org for latest releases and documentation)
+* Make sure that the //MICO_HOME// environment variable is set.
+* Change to a directory where you want to build //SOF// and type:
+** //&quot;&quot;&quot;cmake -G &quot;Unix Makefiles&quot; &lt;source-dir&gt; -DSOF_REMOTE=true -DCMAKE_BUILD_TYPE=Release&quot;&quot;&quot;// for creating a release build
+** //&quot;&quot;&quot;cmake -G &quot;Unix Makefiles&quot; &lt;source-dir&gt; -DSOF_REMOTE=true -DCMAKE_BUILD_TYPE=Debug&quot;&quot;&quot;// for creating a debug build
+** The &lt;source-dir&gt; parameter defines the root directory where the //SOF// source files are located.
+* Type //make help// for listing possible build targets:
+** //sof_remote// -&gt; building the //SOF// library
+** //sof_remote_test// -&gt; building the //SOF// unit tests
+** //sof_remote_console// -&gt; building the //SOF// console application providing a command line interface for starting and stopping bundles
+* Enter //make install// for building all targets
+''Note:''
+Following compiler versions were tested so far:
+* Windows: VC++ 9 (15.00)
+* Linux: Ubuntu 10.10, GNU GCC 4.4.5
+!!!Using //Remote SOF//
+After building //Remote SOF// the //&lt;remote_sof_build_dir&gt;/remote/impl// directory contains a library called //sof_remote.lib// which can be linked.
+!!!!Running the //Remote SOF// console
+For running the SOF console you have to make sure that you have executed the //install// target (e.g. nmake install).
+Afterwards you have to
+* open a command shell and change to the 'remote/registry' directory in the build directory
+* enter 'run_ns.bat' (on Windows) and 'run_ns.sh' (on Unix/Linux) for starting the CORBA naming service
+* open another command shell and change to the 'remote/registry' directory in the build directory
+* enter 'run_registry.bat' (on Windows) and 'run_registry.sh' (on Unix/Linux) for starting the registry process
+* open another command shell and change to the 'remote/console' directory in the build directory
+* enter 'run_remote_console.bat -proc_name:XXX' (on Windows) and 'run_remote_console.sh -proc_name:XXX' (on Unix/Linux)
+* The console is started and can be used.
+!!!!Running unit tests
+For running the SOF unit tests you have to make sure that you have built the //install// target (e.g. nmake install).
+Note: After entering 'nmake help' all possible build targets are listed.
+Afterwards you have to 
+* change to the 'remote/test' directory in the build directory
+* enter 'run_remote_test.bat' (on Windows) or 'run_remote_test.sh' (on Unix/Linux) for starting the unix tests
+The unit tests will be successful, if 'There were no test failures' is printed out.
+</pre>
+</div>
+<div title="Building SOF (new)" modifier="magr74" modified="201105031112" created="201103011217" changecount="25">
+<pre>!!!Supported Platforms
+Basically //SOF// is implemented platform independent and can be compiled and run for all possible platforms where a standard C++ compiler is available. 
+[[SCons|http://www.scons.org/]] is the command line build tool which allows building //SOF// for different platforms. Since //SOF// was implemented on a Windows PC with Visual Studio C++ 2008 there are also Visual Studio project files available for building the framework. 
+!!!Building SOF
+!!!!Windows
+!!!!!Visual Studio
+Start the Visual Studio, go to the //sof/impl// directory and load the //sof.sln// (Microsoft Visual Studio Solution) file. Afterwards the build process can be started with Visual Studio.
+!!!!!~CMake (with Visual C++ compiler)
+* Please install ~CMake (look at http://www.cmake.org for latest releases and documentation)
+* Open a command shell on Windows and set the path and environment variables for command line builds. This can be done by changing to the //\bin// subdirectory of your Visual C++ installation and running //vcvars32.bat// (or just opening a Visual Studio command shell).
+* Change to a directory where you want to build //SOF// and type:
+** //&quot;&quot;&quot;cmake -G &quot;NMake Makefiles&quot; &lt;source-dir&gt; -DSOF_REMOTE=false -DCMAKE_BUILD_TYPE=Release&quot;&quot;&quot;// for creating a release build
+** //&quot;&quot;&quot;cmake -G &quot;NMake Makefiles&quot; &lt;source-dir&gt; -DSOF_REMOTE=false -DCMAKE_BUILD_TYPE=Debug&quot;&quot;&quot;// for creating a debug build
+** The &lt;source-dir&gt; parameter defines the root directory where the //SOF// source files are located.
+* Type //nmake help// for listing possible build targets:
+** //sof// -&gt; building the //SOF// library
+** //sof_test// -&gt; building the //SOF// unit tests
+** //sof_console// -&gt; building the //SOF// console application providing a command line interface for starting and stopping bundles
+** //sof_examples// -&gt; building the //SOF// examples
+* Enter //nmake install// for building all targets
+!!!!Unix/Linux
+!!!!!~CMake (with GNU GCC compiler)
+* Please install ~CMake (look at http://www.cmake.org for latest releases and documentation)
+* Change to a directory where you want to build //SOF// and type:
+** //&quot;&quot;&quot;cmake -G &quot;Unix Makefiles&quot; &lt;source-dir&gt; -DSOF_REMOTE=false -DCMAKE_BUILD_TYPE=Release&quot;&quot;&quot;// for creating a release build
+** //&quot;&quot;&quot;cmake -G &quot;Unix Makefiles&quot; &lt;source-dir&gt; -DSOF_REMOTE=false -DCMAKE_BUILD_TYPE=Debug&quot;&quot;&quot;// for creating a debug build
+** The &lt;source-dir&gt; parameter defines the root directory where the //SOF// source files are located.
+* Type //make help// for listing possible build targets:
+** //sof// -&gt; building the //SOF// library
+** //sof_test// -&gt; building the //SOF// unit tests
+** //sof_console// -&gt; building the //SOF// console application providing a command line interface for starting and stopping bundles
+** //sof_examples// -&gt; building the //SOF// examples
+* Enter //make install// for building all targets
+''Note:''
+Following compiler versions were tested so far:
+* Windows: VC++ 9 (15.00)
+* Linux: Ubuntu 10.10, GNU GCC 4.4.5
+!!!Using SOF
+After building SOF the //&lt;sof_build_dir&gt;/impl// directory contains a library called //sof.lib// which can be linked.
+!!!!Running the //SOF// console
+For running the //SOF// console you have to make sure that you have built all targets or have built the //sof_console// target at least. 
+''Note'': After entering 'nmake help' all possible build targets are listed.
+Afterwards you must change to the //console// directory and start the //sof_console// executable.
+
+!!!!Running unit tests
+For running the //SOF// unit tests you have to make sure that you have built all targets or have built the //sof_test// target at least. 
+''Note'': After entering 'nmake help' all possible build targets are listed.
+Afterwards you must change to the //test// directory and start the //sof_test// executable. The unit tests will be successful, if 'There were no test failures' is printed out.
+</pre>
+</div>
 <div title="Bundle Lifecycle" modifier="magr74" modified="200805071917" created="200803110608" changecount="17">
 <pre>This chapter describes how bundles are created, started and stopped by the framework.
 ![[Instantiation of the Bundle Activator]]
@@ -633,8 +767,8 @@ To be done.</pre>
 *** pthreadVC2d.lib / pthreadVC2d.dll
 </pre>
 </div>
-<div title="Console" modifier="magro74" modified="200912220741" created="200804161803" changecount="21">
-<pre>The SOF console provides a text based user interface for starting and stopping bundles. The console can be started by calling {{{sof_console.exe}}} which is located in directory '//sof\console\bin//'. See [[Starting SOF]] for further information.
+<div title="Console" modifier="magr74" modified="201104281639" created="200804161803" changecount="22">
+<pre>The SOF console provides a text based user interface for starting and stopping bundles. The console can be started by calling {{{sof_console.exe}}} which is located in directory '//console//'. See [[Starting SOF]] for further information.
 
 [img[http://farm4.static.flickr.com/3251/2678806149_914f03de0d_o.gif]]
 
@@ -684,9 +818,10 @@ If you enter 'help' the console prints out all possible commands which can be ex
 <div title="DefaultTiddlers" modifier="magro74" created="200802110608" changecount="1">
 <pre>[[About]]</pre>
 </div>
-<div title="Documentation" modifier="magro74" modified="200905151040" created="200802161605" changecount="32">
+<div title="Documentation" modifier="magr74" modified="201105031112" created="200802161605" changecount="35">
 <pre>!The ''S''ervice ''O''riented ''F''ramework (SOF)
 The SOF supports developing modular software which consists of components (bundles). Each component can register services which can be used by other bundles. 
+!![[Building SOF (new)]]
 !![[Building]]
 !![[Implementing a bundle]]
 !![[Bundle Lifecycle]]
@@ -694,12 +829,18 @@ The SOF supports developing modular software which consists of components (bundl
 !![[Registering services]]
 !![[Tracking services]]</pre>
 </div>
-<div title="Documentation - Remote SOF" modifier="magro74" modified="200912220708" created="200905151038" changecount="2">
-<pre>!![[Building|Building Remote SOF]]
+<div title="Documentation - Remote SOF" modifier="magr74" modified="201103042338" created="200905151038" changecount="4">
+<pre>!![[Building (new)|Building Remote SOF (new)]]
+!![[Building|Building Remote SOF]]
 !![[Using Remote SOF]]</pre>
 </div>
-<div title="Download" modifier="magr74" modified="201012200459" created="200805101452" changecount="90">
+<div title="Download" modifier="magr74" modified="201105031120" created="200805101452" changecount="95">
 <pre>Following stable builds are available. For downloading the software please click [[here|http://sourceforge.net/project/showfiles.php?group_id=217435]].
+* ''sof_1.2_11030 (future version, includes SOF and Remote SOF)''
+** ''Note:''
+*** There is no new //~SofAdminUI// version. Please use the //~SofAdminUI// of the previous release //sof_1.0.1_10120//
+** Features:
+*** //SOF// and //Remote SOF// can be build now for Unix/Linux as well. Please follow the links for building [[SOF|Building SOF (new)]] and [[Remote SOF|Building Remote SOF (new)]] by using the build tool ~CMake. ''The build tool ~SCons will no longer be supported''.
 * ''sof_1.0.1_10120 (last stable version, includes SOF and Remote SOF)''
 ** ''Note:''
 *** There is no new //~SofAdminUI// version. Please use the //~SofAdminUI// of the previous release //sof_1.0_9120//
@@ -773,7 +914,7 @@ The SOF supports developing modular software which consists of components (bundl
 <div title="Download Remote SOF" modifier="magro74" modified="200906021918" created="200906021917" changecount="3">
 <pre>Please look at SOF's [[download|Download]] section where you can find further information. There is no extra download package for the //Remote SOF// software. //SOF// and //Remote SOF// are packed together in one zip file.</pre>
 </div>
-<div title="Implementing a bundle" modifier="magr74" modified="200806151507" created="200802181643" changecount="45">
+<div title="Implementing a bundle" modifier="magr74" modified="201104281625" created="200802181643" changecount="48">
 <pre>For implementing a bundle the {{{sof::framework::IBundleActivator}}} interface has to be implemented:
 {{{
 class IBundleActivator
@@ -818,65 +959,48 @@ Local means, that the class which implements the {{{IBundleActivator}}} interfac
 !Implementing a DLL Bundle
 Loading bundles from a dynamic link library is dependent on the used operating system. 
 For implementing a bundle which is loaded from a Windows DLL following operations have to be done:
-* A {{{DllMain}}} method has to be implemented (instead of implementing a common {{{main}}} method for executable code)
-* The DLL code must provide the method {{{ITest* createObject( const string &amp;className )}}}. This method uses the {{{ObjectCreator}}} class (provided by //SOF//) for creating the {{{IBundleActivator}}} object by name.
+* Only for Windows: A {{{DllMain}}} method has to be implemented (instead of implementing a common {{{main}}} method for executable code)
+* The DLL code must provide the method {{{IBundleActivator* createObject( const string &amp;className )}}}. This method uses the {{{ObjectCreator}}} class (provided by //SOF//) for creating the {{{IBundleActivator}}} object by name.
 * A bundle activator class has to be implemented.
 * The bundle classes (the bundle activator, the class containing the {{{DllMain}}} etc.) must be build as DLL with the IDE.
 
+The following code block displays the necessary operations for implementing a DLL for Windows and Unix/Linux as well and can be reused.
+
 {{{
+#ifdef WIN32
 #include &lt;windows.h&gt;
+#endif 
 
 #include &lt;stdlib.h&gt;
 #include &lt;string&gt;
 #include &lt;iostream&gt;
 
-#include &quot;dll_test.h&quot;
-#include &quot;ITest.h&quot;
-
 #include &quot;sof/instantiation/ObjectCreator.h&quot;
 #include &quot;sof/framework/IBundleActivator.h&quot;
-#include &quot;sof/util/logging/LoggerFactory.h&quot;
-#include &quot;sof/util/logging/Logger.h&quot;
-
-
-
-#define DLL extern &quot;C&quot; __declspec(dllexport)
 
 using namespace std;
 using namespace sof::instantiation;
 using namespace sof::framework;
-using namespace sof::util::logging;
 
+#ifdef WIN32
+#define DLL extern &quot;C&quot; __declspec(dllexport)
 
 BOOL APIENTRY DllMain( HANDLE hModule, 
                        DWORD  ul_reason_for_call, 
                        LPVOID lpReserved
 					 )
 {				
-	if(ul_reason_for_call==DLL_THREAD_ATTACH)
-	{
-	  LoggerFactory::getLogger( &quot;Test&quot; ).log( Logger::DEBUG, &quot;[dll_test1#DllMain] Called, dll thread attach.&quot; );
-	} else if(ul_reason_for_call==DLL_THREAD_DETACH)
-	{
-	  LoggerFactory::getLogger( &quot;Test&quot; ).log( Logger::DEBUG, &quot;[dll_test1#DllMain] Called, dll thread detach.&quot; );
-	} else if(ul_reason_for_call==DLL_PROCESS_ATTACH)
-	{
-	  LoggerFactory::getLogger( &quot;Test&quot; ).log( Logger::DEBUG, &quot;[dll_test1#DllMain] Called, dll process attach.&quot; );
-	} else if(ul_reason_for_call==DLL_PROCESS_DETACH)
-	{
-	  LoggerFactory::getLogger( &quot;Test&quot; ).log( Logger::DEBUG, &quot;[dll_test1#DllMain] Called, dll process detach.&quot; );
-	} 
-
-	LoggerFactory::getLogger( &quot;Test&quot; ).log( Logger::DEBUG, &quot;[dll_test1#DllMain] Left.&quot; );
 	return TRUE;
 }
 
+#elif UNIX
+#define DLL extern &quot;C&quot; __attribute__((visibility(&quot;default&quot;)))
+#endif
 
-DLL ITest* createObject( const string &amp;className )
+DLL IBundleActivator* createObject( const string &amp;className )
 {	
 	ObjectCreator&lt;IBundleActivator&gt; OC_BUNDLE_ACTIVATOR;
 
-	LoggerFactory::getLogger( &quot;Test&quot; ).log( Logger::DEBUG, &quot;[dll_test1#createObject] Loading instance of class '%1'.&quot;, className );
 	return OC_BUNDLE_ACTIVATOR.createObject( className );					
 }
 }}}</pre>
@@ -1032,22 +1156,27 @@ Merry Christmas!
 ''July 8, 2009'' 
 Remote SOF is available. It represents an extension for SOF and supports calling distributed bundles by using CORBA as communication layer.</pre>
 </div>
-<div title="Open Issues" modifier="magr74" modified="201011160625" created="200802150652" changecount="12">
+<div title="Open Issues" modifier="magr74" modified="201102100636" created="200802150652" changecount="14">
 <pre>* Directly ask the bundle context for service references (instead of being notified)
 * Using cmake as build tool
+* Unloading bundle libraries
+* Implementing OSGI services like
+** Log service
+** HTTP service etc.
 * Improving error robustness
 * More features for ~SofAdminUI
 ** Starting and stopping bundles
 ** Code generation of infrastructure code (registering listeners, tracking services etc.)
-* Unit tests for Remote SOF
+* Unit tests
+** Evaluating other unit test frameworks like 'google test'
 * Adding dependencies between bundles
 ** Examples:
 *** Bundle A requires version 2.0 of bundle B
 *** Bundle A requires version 1.2 of service B
-* Unloading bundle libraries
+
 </pre>
 </div>
-<div title="Project Structure" modifier="magro74" modified="200905211946" created="200802181620" changecount="7">
+<div title="Project Structure" modifier="magr74" modified="201104261115" created="200802181620" changecount="14">
 <pre>[&lt;img[netzwerk|http://farm4.static.flickr.com/3202/2679653624_fc6aed3ace_o.gif]]
 ''The SOF software consists of the four projects:''
 * //impl//: The SOF kernel
@@ -1057,8 +1186,8 @@ Remote SOF is available. It represents an extension for SOF and supports calling
 
 ''Each project can consist of following sub directories:''
 * //src//: Contains header and source files
-* //build//: Used for building the project
-* //bin//: Contains the output of the build process, e.g. an '.exe' of '.dll' file
+* //build//: Used for building the project (no longer used by new build system ~CMake)
+* //bin//: Contains run scripts for starting SOF processes or unit tests and contains the output of the build process, e.g. an '.exe' of '.dll' file (is not applicable to ~CMake which uses a separate output directory)
 
 The 'doc' directory contains the SOF documentation including the API documentation and the website content as local file. For implemented unit tests an extern unit test library is necessary called '~CppUniteLite' which is located in the 'extern directory'.
 
@@ -1066,22 +1195,24 @@ The 'doc' directory contains the SOF documentation including the API documentati
 
 </pre>
 </div>
-<div title="Project Structure - Remote SOF" modifier="magro74" modified="200912210745" created="200905211946" changecount="5">
+<div title="Project Structure - Remote SOF" modifier="magr74" modified="201104261123" created="200905211946" changecount="14">
 <pre>[&lt;img[remote_sof_project_structure|http://farm4.static.flickr.com/3573/3551576055_569cbd97ca_o.gif]]
-''The //Remote SOF// software consists of the three projects:''
+''The //Remote SOF// software consists of the four projects:''
 * //impl//: The //Remote SOF kernel// which extends the //SOF// kernel
 * //examples//: Examples of implemented bundles (which register/track services)
 * //registry//: The registry which delegates the registering/deregistering of services and service listeners to all //SOF// processes.
+* //test//: Implements unit tests.
 
 ''Each project can consist of following sub directories:''
 * //src//: Contains header and source files
-* //build//: Used for building the project
-* //bin//: Contains the output of the build process, e.g. an '.exe' of '.dll' file
+* //build//: Used for building the project (no longer used by new build system ~CMake)
+* //bin//: Contains run scripts for starting SOF processes or unit tests and contains the output of the build process, e.g. an '.exe' of '.dll' file (is not applicable to ~CMake which uses a separate output directory)
 
 The 'corba' directory contains following sub directories:
 * //bin//: Contains executable CORBA MICO files (e.g. for running the CORBA naming service, running the IDL compiler etc.).
 * //include//: Contains the CORBA MICO header files.
 * //libs//: Contains the CORBA MICO libraries.
+''Note:'' The 'corba' directory is no longer used by the new build system ~CMake and the Visual Studio project files. The home directory of the //MICO// installation is directly referenced by ~CMake build files and Visual Studio project files.
 
 </pre>
 </div>
@@ -1451,18 +1582,18 @@ merge(config.shadowTiddlers,{
 //}}}
 </pre>
 </div>
-<div title="UploadLog" modifier="magr74" modified="201012200459" created="200802080629">
+<div title="UploadLog" modifier="magr74" modified="201105031127" created="200802080629">
 <pre>| !date | !user | !location | !storeUrl | !uploadDir | !toFilename | !backupdir | !origin |
-| 23/11/2010 21:37:31 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 23/11/2010 21:45:17 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 23/11/2010 21:46:11 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 23/11/2010 21:56:10 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 24/11/2010 06:00:40 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 25/11/2010 06:10:55 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 25/11/2010 06:13:30 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 25/11/2010 06:17:19 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 16/12/2010 06:20:31 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 20/12/2010 05:59:41 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
+| 28/04/2011 18:38:29 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 28/04/2011 18:39:30 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 28/04/2011 18:40:57 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 28/04/2011 18:46:22 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 03/05/2011 12:49:22 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 03/05/2011 13:05:06 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 03/05/2011 13:05:38 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 03/05/2011 13:15:50 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 03/05/2011 13:20:52 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 03/05/2011 13:27:57 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
 </div>
 <div title="UploadPlugin" modifier="YourName" modified="200802080624" created="200706061221" tags="systemConfig">
 <pre>/***
