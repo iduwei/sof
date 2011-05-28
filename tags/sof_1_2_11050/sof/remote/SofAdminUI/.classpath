@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="libs/avalon-framework.jar" sourcepath="SofAdminUIsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="libs/excalibur-configuration.jar" sourcepath="SofAdminUIsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="libs/jacorb.jar" sourcepath="SofAdminUIsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="libs/logkit.jar" sourcepath="SofAdminUIsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="libs/openorb_ins.jar" sourcepath="SofAdminUIsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="libs/openorb.jar" sourcepath="SofAdminUIsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="libs/xerces.jar" sourcepath="SofAdminUIsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="libs/slf4j-api-1.5.6.jar" sourcepath="SofAdminUIsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="libs/slf4j-jdk14-1.5.6.jar" sourcepath="SofAdminUIsrc.zip"/>
+	<classpathentry exported="true" kind="lib" path="resources/icons" sourcepath="resources/icons"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
