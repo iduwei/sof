@@ -78,20 +78,23 @@ void IRemoteBundleContextImpl::removeRemoteServiceListener( POA_sof::framework::
 
 IServiceRegistration* IRemoteBundleContextImpl::registerService( const string &className, IService::ConstPtr service, const Properties &dict )
 {
-	SOFException exc( "registerService: Not supported function!" );
-	throw exc;
+	logger.log( Logger::LOG_DEBUG, "[IRemoteBundleContextImpl#registerService] Called, bundle name: %1, service name: %2", this->bundleName, className );
+	ServiceInfoPtr serviceInfo( new ServiceInfo( className, service, dict ) );
+	return this->registry.addServiceInfo( this->bundleName, serviceInfo );
 }
 
 void IRemoteBundleContextImpl::addServiceListener( IServiceListener::ConstPtr serviceListener, const string &serviceName )
 {
-	SOFException exc( "addServiceListener: Not supported function!" );
-	throw exc;
+	logger.log( Logger::LOG_DEBUG, "[IRemoteBundleContextImpl#addServiceListener] Called, bundle name: %1, service name: %2", this->bundleName, serviceName );
+	ServiceListenerInfoPtr listenerInfo( new ServiceListenerInfo( bundleName, serviceName, serviceListener ) );
+	this->registry.addServiceListener( this->bundleName, listenerInfo );
 }
 
 void IRemoteBundleContextImpl::removeServiceListener( IServiceListener::ConstPtr serviceListener )
 {
-	SOFException exc( "removeServiceListener: Not supported function!" );
-	throw exc;
+	logger.log( Logger::LOG_DEBUG, "[IRemoteBundleContextImpl#removeServiceListener] Called, bundle name: %1", this->bundleName );
+	ServiceListenerInfoPtr info( new ServiceListenerInfo( bundleName, "", serviceListener ) );
+	this->registry.removeServiceListener( this->bundleName, info );
 }
 
 CORBAHelper& IRemoteBundleContextImpl::getCORBAHelper()

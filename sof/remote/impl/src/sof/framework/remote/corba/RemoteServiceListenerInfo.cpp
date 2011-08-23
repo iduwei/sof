@@ -1,6 +1,7 @@
 #include "RemoteServiceListenerInfo.h"
 
 #include <sstream>
+#include <typeinfo>
 
 #include "sof/framework/SOFException.h"
 
@@ -40,8 +41,7 @@ CORBAServiceListener_var RemoteServiceListenerInfo::getRemoteServiceListener()
 
 IServiceListener::ConstPtr RemoteServiceListenerInfo::getServiceListenerObj() const
 {
-	SOFException exc( "Function not supported by remote SOF." );
-	throw exc;
+	return this->serviceListenerObj;
 }
 
 string RemoteServiceListenerInfo::toString() const
@@ -79,21 +79,29 @@ bool RemoteServiceListenerInfo::operator==( const RemoteServiceListenerInfo& ser
 
 bool RemoteServiceListenerInfo::equals( const ServiceListenerInfo& serviceInfo1, const ServiceListenerInfo& serviceInfo2 )
 {
-	// TODO: check if const_cast is really necessary?
-	ServiceListenerInfo* remoteServInfo1 = const_cast<ServiceListenerInfo*> (&serviceInfo1);
-	RemoteServiceListenerInfo* remoteServiceInfo1 = dynamic_cast<RemoteServiceListenerInfo*> (remoteServInfo1);
-	
-	ServiceListenerInfo* remoteServInfo2 = const_cast<ServiceListenerInfo*> (&serviceInfo2);
-	RemoteServiceListenerInfo* remoteServiceInfo2 = dynamic_cast<RemoteServiceListenerInfo*> (remoteServInfo2);
-	
-	if ( remoteServiceInfo1->getBundleName() == remoteServiceInfo2->getBundleName() &&
-		remoteServiceInfo1->getRemoteServiceListenerID() == remoteServiceInfo2->getRemoteServiceListenerID() &&
-		remoteServiceInfo1->getServiceName() == remoteServiceInfo2->getServiceName() )
+	logger.log( Logger::LOG_DEBUG, "[RemoteServiceListenerInfo#equals] Called." );
+	if ( typeid(serviceInfo1) == typeid(serviceInfo2 ) )
 	{
-		return true;
+		logger.log( Logger::LOG_DEBUG, "[RemoteServiceListenerInfo#equals] Same types, compare." );
+
+		const RemoteServiceListenerInfo* remoteServiceInfo1 = dynamic_cast<const RemoteServiceListenerInfo*> (&serviceInfo1);
+
+		const RemoteServiceListenerInfo* remoteServiceInfo2 = dynamic_cast<const RemoteServiceListenerInfo*> (&serviceInfo2);
+
+		if ( remoteServiceInfo1->getBundleName() == remoteServiceInfo2->getBundleName() &&
+			remoteServiceInfo1->getRemoteServiceListenerID() == remoteServiceInfo2->getRemoteServiceListenerID() &&
+			remoteServiceInfo1->getServiceName() == remoteServiceInfo2->getServiceName() )
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	else
 	{
+		logger.log( Logger::LOG_DEBUG, "[RemoteServiceListenerInfo#equals] Different types, return false." );
 		return false;
 	}
 }

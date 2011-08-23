@@ -6,6 +6,7 @@ SET (SOURCES
     src/CustomizedCORBAHelper.cpp
     src/Multiplier.cpp
     src/MultiplierImpl.cpp
+    src/IDividerImpl.cpp
     src/RemoteSOFLauncherTest.cpp
     src/sof_remote_test.cpp
     src/UnitTestLogger.cpp

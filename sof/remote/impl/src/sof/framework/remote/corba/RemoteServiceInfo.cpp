@@ -1,5 +1,6 @@
 #include "RemoteServiceInfo.h"
 
+#include <typeinfo>
 #include "sof/framework/SOFException.h"
 
 using namespace sof::framework;
@@ -48,8 +49,7 @@ string RemoteServiceInfo::toString() const
 
 IService::ConstPtr RemoteServiceInfo::getService() const
 {
-	SOFException exc( "Function not supported by remote SOF!" );
-	throw exc;
+	return this->service;
 }
 
 bool RemoteServiceInfo::operator==( const RemoteServiceInfo& serviceInfo )
@@ -73,21 +73,28 @@ RemoteServiceInfo& RemoteServiceInfo::operator=( const RemoteServiceInfo &remote
 
 bool RemoteServiceInfo::equals( const ServiceInfo& info1, const ServiceInfo& info2 )
 {
-	logger.log( Logger::LOG_DEBUG, "[RemoteServiceInfo#equals] Called." );	
-	ServiceInfo* servInfo1 = const_cast<ServiceInfo*> (&info1);
-	ServiceInfo* servInfo2 = const_cast<ServiceInfo*> (&info2);
-	
-	RemoteServiceInfo* remoteInfo1 = dynamic_cast<RemoteServiceInfo*>( servInfo1 );
-	RemoteServiceInfo* remoteInfo2 = dynamic_cast<RemoteServiceInfo*>( servInfo2 );
-
-	if ( remoteInfo1->getServiceName() == remoteInfo2->getServiceName() &&
-		remoteInfo1->getProperties() == remoteInfo2->getProperties() &&
-		remoteInfo1->getRemoteServiceID() == remoteInfo2->getRemoteServiceID() )
+	logger.log( Logger::LOG_DEBUG, "[RemoteServiceInfo#equals] Called." );
+	if ( typeid(info1) == typeid( info2 ) )
 	{
-		return true;
+		logger.log( Logger::LOG_DEBUG, "[RemoteServiceInfo#equals] Same types, compare." );
+
+		const RemoteServiceInfo* remoteInfo1 = dynamic_cast<const RemoteServiceInfo*>( &info1 );
+		const RemoteServiceInfo* remoteInfo2 = dynamic_cast<const RemoteServiceInfo*>( &info2 );
+	
+		if ( remoteInfo1->getServiceName() == remoteInfo2->getServiceName() &&
+			remoteInfo1->getProperties() == remoteInfo2->getProperties() &&
+			remoteInfo1->getRemoteServiceID() == remoteInfo2->getRemoteServiceID() )
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	else
 	{
+		logger.log( Logger::LOG_DEBUG, "[RemoteServiceInfo#equals] Different types, return false." );
 		return false;
 	}
 }

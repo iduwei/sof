@@ -1,5 +1,5 @@
-#ifndef SERVICE_TRACKER_H
-#define SERVICE_TRACKER_H
+#ifndef REMOTE_SERVICE_TRACKER_H
+#define REMOTE_SERVICE_TRACKER_H
 
 #include <string>
 
@@ -23,8 +23,8 @@ namespace sof { namespace framework { namespace remote { namespace corba {
 
 /**
  * The <code>ServiceTracker</code> class implements the
- * <code>IServiceListener</code> interface and listens for
- * registered and unregistered services.<br>
+ * <code>CORBAServiceListener</code> interface and listens for
+ * registered and unregistered remote services.<br>
  * The service tracker class simplifies the work of application
  * developers for tracking services.
  *
@@ -63,7 +63,7 @@ class RemoteServiceTracker : public POA_sof::framework::remote::corba::generated
 	public:
 
 		/**
-		 * Creates instances of class <code>ServiceTracker</code>.
+		 * Creates instances of class <code>RemoteServiceTracker</code>.
 		 *
 		 * @param bc
 		 *			The bundle context.
@@ -85,14 +85,14 @@ class RemoteServiceTracker : public POA_sof::framework::remote::corba::generated
 
 		/**
 		 * Starts tracking for the specified service name. From now on
-		 * the <code>IServiceTrackerCustomizer</code> instance is notified
+		 * the <code>IRemoteServiceTrackerCustomizer</code> instance is notified
 		 * if a service is registered or deregistered.
 		 */
 		void startTracking();
 		
 		/**
 		 * Stops service tracking. From now on
-		 * the <code>IServiceTrackerCustomizer</code> instance 
+		 * the <code>IRemoteServiceTrackerCustomizer</code> instance
 		 * is no longer notified
 		 * if a service is registered or deregistered.
 		 */

@@ -192,6 +192,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\src\IDividerImpl.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\src\Multiplier.cpp"
 				>
 			</File>
@@ -227,6 +231,14 @@
 			</File>
 			<File
 				RelativePath=".\src\CustomizedCORBAHelper.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\IDivider.h"
+				>
+			</File>
+			<File
+				RelativePath=".\src\IDividerImpl.h"
 				>
 			</File>
 			<File

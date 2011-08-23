@@ -30,7 +30,7 @@ namespace sof { namespace framework {
  */
 class ServiceTracker : public IServiceListener
 {
-	private:
+	protected:
 
 		/** 
 		 * Indicates that service tracking is active.
@@ -79,14 +79,14 @@ class ServiceTracker : public IServiceListener
 		/**
 		 * Destroys the service tracker object.
 		 */
-		~ServiceTracker();
+		virtual ~ServiceTracker();
 
 		/**
 		 * Starts tracking for the specified service name. From now on
 		 * the <code>IServiceTrackerCustomizer</code> instance is notified
 		 * if a service is registered or deregistered.
 		 */
-		void startTracking();
+		virtual void startTracking();
 		
 		/**
 		 * Stops service tracking. From now on
@@ -94,7 +94,7 @@ class ServiceTracker : public IServiceListener
 		 * is no longer notified
 		 * if a service is registered or deregistered.
 		 */
-		void stopTracking();
+		virtual void stopTracking();
 
 		/**
 		 * Is called by the framework if the lifecycle of a service
@@ -106,7 +106,7 @@ class ServiceTracker : public IServiceListener
 		 * @return True, if the service tracker is interested in the
 		 *			changed service, otherwise false.
 		 */
-		bool serviceChanged( const ServiceEvent &serviceEvent );
+		virtual bool serviceChanged( const ServiceEvent &serviceEvent );
 		
 };
 
