@@ -9,6 +9,7 @@ SET (SOF_REMOTE_SOURCES
     src/sof/framework/remote/corba/RemoteServiceListenerInfo.cpp
     src/sof/framework/remote/corba/RemoteServiceReference.cpp
     src/sof/framework/remote/corba/RemoteServiceTracker.cpp
+    src/sof/framework/remote/corba/LocalServiceTracker.cpp    
     src/sof/framework/remote/corba/generated/CORBAObjects.cpp
     src/sof/framework/remote/corba/namingservice/CORBANamingServiceFactory.cpp
     src/sof/framework/remote/corba/namingservice/CORBANamingServiceImpl.cpp

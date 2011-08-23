@@ -6,6 +6,8 @@
 #include "sof/framework/remote/corba/IRemoteServiceTrackerCustomizer.h"
 #include "sof/framework/IServiceRegistration.h"
 #include "sof/framework/remote/corba/RemoteServiceTracker.h"
+#include "sof/framework/remote/corba/LocalServiceTracker.h"
+#include "sof/framework/remote/corba/ILocalServiceTrackerCustomizer.h"
 
 #include "MultiplierImpl.h"
 
@@ -14,7 +16,8 @@ using namespace sof::framework::remote::corba;
 /**
  * Implements a test bundle and registers services.
  */
-class BundleActivator1 : public IRemoteBundleActivator, public IRemoteServiceTrackerCustomizer
+class BundleActivator1 : public IRemoteBundleActivator, public IRemoteServiceTrackerCustomizer,
+	public ILocalServiceTrackerCustomizer
 {
 	private:
 
@@ -22,6 +25,11 @@ class BundleActivator1 : public IRemoteBundleActivator, public IRemoteServiceTra
 		 * Tracks the test services.
 		 */
 		RemoteServiceTracker* tracker;
+
+		/**
+		 * Tracks local services.
+		 */
+		LocalServiceTracker* localTracker;
 
 		/**
 		 * The registration object of service 1.
@@ -66,14 +74,24 @@ class BundleActivator1 : public IRemoteBundleActivator, public IRemoteServiceTra
 		virtual void stop( IRemoteBundleContext::ConstPtr context );
 
 		/**
-		 * Listener method is called when services are started.
+		 * Listener method is called when remote services are started.
 		 */
 		virtual bool addingService( const RemoteServiceReference& ref );
 
 		/**
-		 * Listener method is called when services were removed.
+		 * Listener method is called when remote services were removed.
 		 */
 		virtual void removedService( const RemoteServiceReference& ref );
+
+		/**
+		 * Listener method is called when local services were started.
+		 */
+		virtual bool addingService( const ServiceReference& ref );
+
+		/**
+		 * Listener method is called when local services were removed.
+		 */
+		virtual void removedService( const ServiceReference& ref );
 };
 
 #endif

@@ -83,6 +83,8 @@ void IRegistryImpl<ThreadingModel>::removeBundleInfo( const string &bundleName )
 	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#removeBundleInfo] Called, bundleName: %1", bundleName );
 	
 	BundleInfoBase* bi = this->bundleInfoMap[bundleName];
+	logger.log( Logger::LOG_DEBUG, "[IRegistryImpl#removeBundleInfo] Called, bundle Info: %1", bi->toString() );
+
 	
 	if ( bi->isFrameworkBundle() )
 	{
