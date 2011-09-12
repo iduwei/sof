@@ -161,7 +161,19 @@ void IRegistryFacadeImpl::addServiceListener( const string& bundleName, ServiceL
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#addServiceListener] Called, bundle name: %1, listener info: %2",
 		bundleName, listenerInfo->toString() );	
-	this->registry.addServiceListener( bundleName, listenerInfo );
+
+	if ( listenerInfo->getServiceListenerObj() == NULL )
+	{
+		logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#removeServiceInfo] Add remote service listener." );
+		RemoteServiceListenerInfo* corbaServiceListenerInfo = dynamic_cast<RemoteServiceListenerInfo*> ( listenerInfo.GetRawPointer() );
+				this->remoteRegistry->registerServiceListener( bundleName.c_str(), corbaServiceListenerInfo->getServiceName().c_str(),
+					corbaServiceListenerInfo->getRemoteServiceListener() );
+	}
+	else
+	{
+		logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#removeServiceInfo] Add local service listener." );
+		this->registry.addServiceListener( bundleName, listenerInfo );
+	}
 	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#addServiceListener] Left" );	
 }
 		
@@ -170,7 +182,19 @@ void IRegistryFacadeImpl::removeServiceListener( const string& bundleName, Servi
 	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#removeServiceListener] Called, bundle name: %1, listener info: %1",
 		bundleName, info->toString() );	
 	
-	this->registry.removeServiceListener( bundleName, info );
+	if ( info->getServiceListenerObj() == NULL )
+	{
+		logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#removeServiceInfo] Remove remote service listener." );
+		ServiceListenerInfo* serviceListenerInfo = const_cast<ServiceListenerInfo*> (info.GetRawPointer());
+			RemoteServiceListenerInfo* corbaServiceListenerInfo = dynamic_cast<RemoteServiceListenerInfo*> (serviceListenerInfo);
+			this->remoteRegistry->unregisterServiceListener( bundleName.c_str(), info->getServiceName().c_str(),
+				corbaServiceListenerInfo->getRemoteServiceListener() );
+	}
+	else
+	{
+		logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#removeServiceInfo] Remove local service listener." );
+		this->registry.removeServiceListener( bundleName, info );
+	}
 	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#removeServiceListener] Left" );
 }
 		
