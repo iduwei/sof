@@ -4,6 +4,7 @@ SET (SOURCES
 	src/BundleActivator2.cpp
     src/dll.cpp
     ../common/src/Multiplier.cpp
+    ../common/src/IDividerImpl.cpp
 	)
    
 GET_PROPERTY( MICO_INCLUDE_DIR GLOBAL PROPERTY MICO_INCLUDE )

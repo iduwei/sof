@@ -11,6 +11,9 @@ using namespace sof::framework::remote::corba;
 BundleActivator2::BundleActivator2() 
 {
 	this->tracker = 0;
+	this->service = 0;
+	this->serviceReg1 = 0;
+	this->serviceReg2 = 0;
 }
 
 BundleActivator2::~BundleActivator2() 
@@ -22,12 +25,31 @@ void BundleActivator2::start(IRemoteBundleContext::ConstPtr context)
 {
 	this->tracker = new RemoteServiceTracker( context, "Multiplier", this );
 	this->tracker->startTracking();
+
+	Properties props;
+	props.put( "instance", "1" );
+
+	this->service1 = new IDividerImpl();
+	this->serviceReg1 = context->registerService( "Divider", this->service1, props );
+
+	props.put( "instance", "2" );
+
+	this->service2 = new IDividerImpl();
+	this->serviceReg2 = context->registerService( "Divider", this->service2, props );
 }
 
 void BundleActivator2::stop(IRemoteBundleContext::ConstPtr context) 
 {
 	this->tracker->stopTracking();
 	delete ( this->tracker );
+
+	this->serviceReg1->unregister();
+	delete this->serviceReg1;
+	delete this->service1;
+
+	this->serviceReg2->unregister();
+	delete this->serviceReg2;
+	delete this->service2;
 }
 
 bool BundleActivator2::addingService( const RemoteServiceReference& ref )
