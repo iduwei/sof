@@ -187,6 +187,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\common\src\IDividerImpl.h"
+				>
+			</File>
+			<File
 				RelativePath="..\common\src\Multiplier.h"
 				>
 			</File>
@@ -208,6 +212,10 @@
 			</File>
 			<File
 				RelativePath=".\src\dll.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\common\src\IDividerImpl.cpp"
 				>
 			</File>
 			<File
