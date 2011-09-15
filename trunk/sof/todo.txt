@@ -1,0 +1,155 @@
+---------------- INFOS --------------------------------
+
+Registry
+map<string, BundleInfo*> bundleInfoMap;
+map<string, vector<ServiceInfo*>* > serviceInfoMap;
+map<string, vector<ServiceListenerInfo*>* > serviceListenerMap;	
+
+bundleinfo
+IBundleActivator* activator;
+IBundleContext::ConstPtr bundleContext;
+vector<ServiceInfo*> registeredServices;
+vector<ServiceInfo*> usedServices;
+vector<ServiceListenerInfo*> registeredListeners;
+
+stbdll test_bundle BundleActivator2 ../../test/bin sof_TestDll2.dll
+
+stbfile C:/software_entwicklung/Test/sof/test/bin/test_config_file.sof
+
+- Logging funktioniert nicht richtig, trotz nolog wird geloggt.
+	- Erklärung: das Setzen des Log-Levels für externe Bundles funktioniert nicht, dort wird 
+		auf level DEBUG geloggt.
+
+- neue angelegte Objekte, die auch wieder bereinigt werden müssen
+	ServiceInfo - OK
+	IServiceRegistrationImpl - muss von User erledigt werden, nach unregister
+	IBundleContextImpl - OK
+	BundleInfo - OK
+	ServiceListenerInfo - OK
+	ServiceTracker - muss von User erledigt werden
+	BundleActivator
+
+- Memory Management
+	- Remote Service Info
+		- erzeugt in RemoteBundleContext
+		- TODO: delete notwendig in IRegistryFacadeImpl
+	- RemoteServiceInfo: IRemoteBundleContextImpl -> Erzeugen eines RemoteServiceInfo Objects -> IRegistryFacadeImpl -> an Remote Registry
+		- von Remote-Registry an CORBARegistryObserverImpl -> Erzeugen eines RemoteServiceInfo Objects <- Problem
+	- IRemoteRegistryImpl und IRegistryFacadeImpl in RemoteSofLauncher angelegt
+		
+---------- Mounten des shared folders -------------
+
+sudo mount -t vboxsf temp /mnt/shared
+
+
+---------- CMake ------------------------
+cmake -G "Eclipse CDT4 - NMake Makefiles" -DECLIPSE_CDT4_GENERATE_SOURCE_PROJECT=TRUE ..\sof -DSOF_REMOTE=true -DCMAKE_BUILD_TYPE=Debug 
+cmake -G "Eclipse CDT4 - NMake Makefiles" ..\sof -DSOF_REMOTE=true -DCMAKE_BUILD_TYPE=Debug 
+
+
+--------- Bauen mit CMake ------------------
+
+cmake -G "Unix Makefiles" ../sof
+
+
+
+--------------------- TODOs -------------------------------------
+
+
+- SOF lokal und remote unterstützen
+- make target für CORBA Generierung
+- Eclipse target testen
+- Trennen von Source und Include Files?
+- CORBA ohne Registry
+- classloading Verzeichnis löschen
+- Test-Klassen windows Abhängigkeit entfernen (Verzeichnis)
+- Methoden um ServiceReferences direkt abzufragen
+
+
+-------- Compilieren von mico -------------
+
+- wie in install.txt beschrieben
+- #include <limits.h> einfügen in fast_array.c -> Doku
+
+
+- Projekt sof compilierbar machen
+	- include foldder einführen
+	- Features:
+		- Abhängigkeiten zu anderen Bundles definieren? (falls nur getReference genutzt wird)
+		- LogService
+		- ConfigAdminService (konfigurieren zur Laufzeit)
+		- EventService
+		- Bundle updaten
+			- Bundle ID vergeben
+			- Bundle-Pfad mit aufnehmen?!
+	
+	
+- IRegistryImpl#addServiceInfo returns IRegistration object, wir aber im Observer nicht benutzt, dafür smartPtr verwenden,
+	- besser: erst gar kein Objekt erzeugen?!
+- RemoteServiceListenerInfo:operator= richtig?
+
+- unload library implementieren bei bundles
+	
+- Objekte mit new:
+	ServiceInfo, 
+	ServiceListenerInfo, 
+	BundleInfo,
+	BundleInfoBase 2,2 OK 
+	RemoteServiceInfo, 12, 8
+	RemoteServiceListenerInfo, 8, 4
+	IServiceRegistrationImpl - 4, 2
+	IRemoteBundleContextImpl - OK
+	RemoteBundleInfo - OK
+
+- RemoteServiceTracker
+	- Memory Leak, UsedServices,
+	- Mögliche Lösung: in IRemoteRegistryImpl bzw. RemoteBundleInfo, removeUsedServce überschreiben und Objekt löschen, ist das aber möglich
+- RemoteServiceInfo Speicherleck
+- ERROR logs entfernen, die keine Errors sind, siehe run_remote_sof_test
+- const_casts entfernen
+
+- CORBAHelper, convertServiceReference geändert in NIcht-Pointer
+	- TODO: convertToServiceInfo,convertToServiceListenerInfo
+- ping in IDL entfernen
+- Drüber nachdenken, ob in IServiceRegistrationImpl im Destruktor ein unregister gemacht werden sollte, falls noch nicht geschehen
+
+- remote sof: Test: Service registrieren und tracken gleichzeitig -> doppelte Used-Services?
+	- wird addUsedService zweimal aufgerufen, einmal im RemoteServiceTracker und einmal in IRegistryImpl?
+	
+- cppcheck Results einpflegen
+- IAdministrationService und CORBAAdminService verschmelzen zu einem Remote-Service für Console und Remote-Aufruf
+- Unabhängigkeit von Naming-Service	
+- weitermachen bei RemoteServiceTracker, exceptionSafe
+	- ServiceReference nicht dynamisch, sondern auf dem Stack erzeugen (siehe RemoteServiceTracker, ServiceTracker, IRegistryImpl#notifyListenersAboutRegisteredService)
+- Bugs fixen, siehe Sourceforge
+
+- RemoteSOFLauncher, startAdminService weitermachen
+	- Beenden des Remote AdminServices
+- TODO: drüber nachdenken, ob in IRegistryImpl ein Vector oder Vector-zeiger zurückgeliefert werden soll.
+- Fertig: Kontroller der operator== und equal Methoden in den Info-Objekten (ServiceListenerInfo etc.)
+	- Operator== kann nicht für vererbte Klassen benutzt werden, deshalb equal
+- TODO: Implementierung von Copy-Konstruktor, Zuweisungsoperator und Vergleichsoperator überprüfen
+- TODO: CORBAregistryImpl
+	- release für PTR-Objekte (VAR)
+	- deregister Observer, ansonsten wird vector immer größer und es werden nicht mehr vorhandene
+		Observer benachrichtigt
+
+
+- Checken, warum man das corbaHelper.start() nicht in den RemoteSOFLauncher verlegen kann
+	-> Abbruch mit Fehler zur Laufzeit
+	
+- Remote SOF Online Documentation
+
+- Prüfen Bereinigung von CORBAServiceReference- Objekten
+	- Verbesserung: Casten von ServiceReference-Objekten in addingService vermeiden
+- Prüfen, ob in convertServiceInfo RemoteService_var anstatt RemoteService_ptr verwendet werden sollte
+
+- Locks überprüfen
+
+- Doku: Projektabhängigkeiten dokumentieren
+	
+- start, stop , startBundle, stopBundle -> Unit tests implementiern
+
+
+
+
