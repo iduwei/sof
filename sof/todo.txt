@@ -46,6 +46,8 @@ sudo mount -t vboxsf temp /mnt/shared
 cmake -G "Eclipse CDT4 - NMake Makefiles" -DECLIPSE_CDT4_GENERATE_SOURCE_PROJECT=TRUE ..\sof -DSOF_REMOTE=true -DCMAKE_BUILD_TYPE=Debug 
 cmake -G "Eclipse CDT4 - NMake Makefiles" ..\sof -DSOF_REMOTE=true -DCMAKE_BUILD_TYPE=Debug 
 
+cmake -G "Unix Makefiles" ../sof/sof -DSOF_REMOTE=true -DCMAKE_BUILD_TYPE=Debug 
+
 
 --------- Bauen mit CMake ------------------
 
@@ -57,6 +59,14 @@ cmake -G "Unix Makefiles" ../sof
 
 
 - SOF lokal und remote unterstützen
+- local services ubuntu
+    - start bu1 in console
+    - start bu2 in anderer console
+    - stop bu2 
+    - start bu2 in console von bu1
+    - 4 listener sichtbar - NOK
+    - stop beide bundles -> seg fault -> NOK
+
 - make target für CORBA Generierung
 - Eclipse target testen
 - Trennen von Source und Include Files?
@@ -101,10 +111,7 @@ cmake -G "Unix Makefiles" ../sof
 	IRemoteBundleContextImpl - OK
 	RemoteBundleInfo - OK
 
-- RemoteServiceTracker
-	- Memory Leak, UsedServices,
-	- Mögliche Lösung: in IRemoteRegistryImpl bzw. RemoteBundleInfo, removeUsedServce überschreiben und Objekt löschen, ist das aber möglich
-- RemoteServiceInfo Speicherleck
+
 - ERROR logs entfernen, die keine Errors sind, siehe run_remote_sof_test
 - const_casts entfernen
 
