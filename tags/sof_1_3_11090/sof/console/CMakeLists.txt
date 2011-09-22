@@ -1,0 +1,14 @@
+PROJECT (SOF_CONSOLE)
+
+SET (SOURCES 
+	src/sof_console.cpp
+	)
+    
+
+INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/impl/src )
+LINK_DIRECTORIES( ${CMAKE_BINARY_DIR}/impl )
+
+
+ADD_EXECUTABLE( sof_console ${SOURCES} )
+TARGET_LINK_LIBRARIES( sof_console sof )
+

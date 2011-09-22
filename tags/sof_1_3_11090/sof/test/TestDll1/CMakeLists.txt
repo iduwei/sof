@@ -1,0 +1,30 @@
+PROJECT (SOF_TEST_DLL1)
+
+SET (SOURCES 
+    src/dll_test.cpp
+	src/ITestImpl.cpp
+	src/ITestImpl2.cpp
+	)
+    
+INCLUDE_DIRECTORIES( ${CMAKE_SOURCE_DIR}/impl/src ${CMAKE_SOURCE_DIR}/test/src )
+LINK_DIRECTORIES( ${CMAKE_BINARY_DIR}/impl )
+
+
+ADD_LIBRARY( sof_TestDll1 SHARED ${SOURCES} )
+
+if ( UNIX )
+    SET_TARGET_PROPERTIES( sof_TestDll1 PROPERTIES 
+        LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/test
+    )   
+endif ( UNIX )
+
+if ( WIN32 )
+    SET_TARGET_PROPERTIES( sof_TestDll1 PROPERTIES 
+        RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/test
+    )   
+endif ( WIN32 )
+
+TARGET_LINK_LIBRARIES( sof_TestDll1 sof )
+
+
+
