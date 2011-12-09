@@ -57,7 +57,7 @@ cmake -G "Unix Makefiles" ../sof
 
 --------------------- TODOs -------------------------------------
 
-
+- doxygen über cmake
 - SOF lokal und remote unterstützen
 - local services ubuntu
     - start bu1 in console
