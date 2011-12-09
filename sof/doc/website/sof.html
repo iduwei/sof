@@ -496,15 +496,20 @@ Also see AdvancedOptions</pre>
 </div>
 <!--POST-SHADOWAREA-->
 <div id="storeArea">
-<div title="API" modifier="magr74" modified="201012160518" created="200805101011" changecount="7">
+<div title="API" modifier="magr74" modified="201110110400" created="200805101011" changecount="11">
 <pre>The API documentation of following versions are available:
+* [[sof_1.3_11090|http://sof.sourceforge.net/api_1.3_11090/sof/html/]]
+* [[sof_1.2_11050|http://sof.sourceforge.net/api_1.2_11050/sof/html/]]
 * [[sof_1.0.1_10120|http://sof.sourceforge.net/api_1.0.1_10120/sof/html/]]
 * [[sof_1.0_9120|http://sof.sourceforge.net/api_1.0_9120/sof/html/]]
 * [[sof_8070|http://sof.sourceforge.net/api_8070/html/]]
 * [[sof_8050|http://sof.sourceforge.net/api_8050/html/]]</pre>
 </div>
-<div title="API Remote SOF" modifier="magr74" modified="201012160518" created="200906162111" changecount="8">
+<div title="API Remote SOF" modifier="magr74" modified="201110110400" created="200906162111" changecount="10">
 <pre>The API documentation of following versions are available:
+* [[sof_1.3_11090|http://sof.sourceforge.net/api_1.3_11090/remote_sof/html/]]
+* [[sof_1.2_11050|http://sof.sourceforge.net/api_1.2_11050/remote_sof/html/]]
+* [[sof_1.0.1_10120|http://sof.sourceforge.net/api_1.0.1_10120/remote_sof/html/]]
 * [[sof_1.0.1_10120|http://sof.sourceforge.net/api_1.0.1_10120/remote_sof/html/]]
 * [[sof_1.0_9120|http://sof.sourceforge.net/api_1.0_9120/remote_sof/html/]]
 * [[sof_remote_9070|http://sof.sourceforge.net/api_9070/html/]]</pre>
@@ -536,80 +541,7 @@ http://www.codeproject.com/KB/library/SOF_.aspx
 http://www.codeproject.com/KB/library/Remote_SOF.aspx
 </pre>
 </div>
-<div title="Building" modifier="magr74" modified="201103011210" created="200802181627" changecount="41">
-<pre>!!!Supported Platforms
-Basically //SOF// is implemented platform independent and can be compiled and run for all possible platforms where a standard C++ compiler is available. 
-[[SCons|http://www.scons.org/]] is the command line build tool which allows building //SOF// for different platforms. Since //SOF// was implemented on a Windows PC with Visual Studio C++ 2008 there are also Visual Studio project files available for building the framework. 
-!!!Building SOF
-!!!!Windows
-!!!!!Visual Studio
-Start the Visual Studio, go to the //sof/impl// directory and load the //sof.sln// (Microsoft Visual Studio Solution) file. Afterwards the build process can be started with Visual Studio.
-!!!!!~SCons
-* Follow the instructions at [[SCons user guide page|http://www.scons.org/]] for installing Python and ~SCons
-* Open a command shell on Windows and set the path and environment variables for command line builds. This can be done by changing to the //\bin// subdirectory of your Visual C++ installation and running //vcvars32.bat// (or just opening a Visual Studio command shell).
-* Change to the //SOF// root directory and type
-** //&quot;&quot;&quot;scons --sconstruct=sof.sconstruct mode=release&quot;&quot;&quot;// for creating a release build
-** //&quot;&quot;&quot;scons --sconstruct=sof.sconstruct mode=debug&quot;&quot;&quot;// for creating a debug build
-!!!!Other platforms
-!!!!!~SCons
-The build process for other platforms is not tested yet. Please try following steps:
-* Follow the instructions at [[SCons user guide page|http://www.scons.org/]] for installing Python and ~SCons at your current platform
-* Set the path and environment variables for command line builds. 
-* Change to the //SOF// root directory and type
-** //&quot;&quot;&quot;scons --sconstruct=sof.sconstruct mode=release&quot;&quot;&quot;// for creating a release build
-** //&quot;&quot;&quot;scons --sconstruct=sof.sconstruct mode=debug&quot;&quot;&quot;// for creating a debug build
-!!!Using SOF
-After building SOF the //bin// directory of the //impl// directory contains a library called //sof.lib// which can be linked.
-</pre>
-</div>
-<div title="Building Remote SOF" modifier="magr74" modified="201011250512" created="200905151039" changecount="74">
-<pre>!!Building 3rd party CORBA library MICO
-!!!Windows
-//Remote SOF// uses MICO (=CORBA implementation) as third party library for implementing remote accessible services and service listeners. Before //Remote SOF// can be build, the MICO libraries must be build.
-Execute following steps for building MICO version 2.3.13 on Windows with Visual C++. 
-* Download the MICO distribution (http://www.mico.org/mico-2.3.13.zip)
-* Extract the zip file
-* Start the Visual Studio command shell
-* Change into MICO main directory 
-* Enter 'nmake /f Makefile.win32'
-Afterwards MICO is build as a ''dynamic'' library. Binaries (executables, ~DLLs, ~LIBs) are placed into 'mico\win32-bin' and 'mico\win32-bin\lib' directory. 
-!!!Other platforms
-For building other MICO versions or building on different platforms please read the MICO documentation.
-!!Building //Remote SOF//
-!!!Windows
-!!!!Visual Studio
-* Extract the zip file of the //SOF// distribution into a directory
-* Copy the CORBA binaries of the MICO distribution into the //Remote SOF// directory as described [[here|CORBA libraries]]
-* Load file called 'sof_remote.sln' in directory 'sof\remote\impl' with Visual Studio
-* Build all projects
-!!!!~SCons
-* Extract the zip file of the //SOF// distribution into a directory
-* Copy the CORBA binaries of the MICO distribution into the //Remote SOF// directory as described [[here|CORBA libraries]]
-* Follow the instructions at [[SCons user guide page|http://www.scons.org/]] for installing Python and ~SCons on Windows
-* Open a command shell on Windows and set the path and environment variables for command line builds. This can be done by changing to the //\bin// subdirectory of your Visual C++ installation and running //vcvars32.bat// (or just opening a Visual Studio command shell).
-* Change to the //SOF// root directory and type
-** //&quot;&quot;&quot;scons --sconstruct=sof_remote.sconstruct mode=release&quot;&quot;&quot;// for creating a release build
-** //&quot;&quot;&quot;scons --sconstruct=sof_remote.sconstruct mode=debug&quot;&quot;&quot;// for creating a debug build
-!!!Other platforms
-The build process for other platforms is not tested yet. Please try following steps:
-* Extract the zip file of the //SOF// distribution into a directory
-* Copy the CORBA binaries of the MICO distribution into the //Remote SOF// directory as described [[here|CORBA libraries]]
-* Follow the instructions at [[SCons user guide page|http://www.scons.org/]] for installing Python and ~SCons at your current platform
-* Set the path and environment variables for command line builds. 
-* Change to the //SOF// root directory and type
-** //&quot;&quot;&quot;scons --sconstruct=sof_remote.sconstruct mode=release&quot;&quot;&quot;// for creating a release build
-** //&quot;&quot;&quot;scons --sconstruct=sof_remote.sconstruct mode=debug&quot;&quot;&quot;// for creating a debug build
-!!Using //Remote SOF//
-After building //Remote SOF// the bin directory of the impl directory contains a library called 'sof_remote' which can be linked.
-
-''Windows note:'' Due to the fact that MICO is build dynamically (no static MICO libraries) the PATH variable of the Windows console has to be extended before the executables using the //Remote SOF// library can be executed:
-PATH=%PATH%;%SOFHOME%\remote\corba\libs\win32-bin
-This makes sure that the necessary MICO ~DLLs are found during runtime.
-
-!!Other platforms
-To be done.</pre>
-</div>
-<div title="Building Remote SOF (new)" modifier="magr74" modified="201105031104" created="201103042338" changecount="21">
+<div title="Building Remote SOF" modifier="magr74" modified="201105111411" created="201103042338" changecount="75">
 <pre>!!Building 3rd party CORBA library MICO
 //Remote SOF// uses MICO (=CORBA implementation) as third party library for implementing remote accessible services and service listeners. Before //Remote SOF// can be build, the MICO libraries must be build.
 !!!Windows
@@ -692,10 +624,10 @@ Afterwards you have to
 The unit tests will be successful, if 'There were no test failures' is printed out.
 </pre>
 </div>
-<div title="Building SOF (new)" modifier="magr74" modified="201105031112" created="201103011217" changecount="25">
+<div title="Building SOF" modifier="magr74" modified="201109160359" created="201103011217" changecount="27">
 <pre>!!!Supported Platforms
 Basically //SOF// is implemented platform independent and can be compiled and run for all possible platforms where a standard C++ compiler is available. 
-[[SCons|http://www.scons.org/]] is the command line build tool which allows building //SOF// for different platforms. Since //SOF// was implemented on a Windows PC with Visual Studio C++ 2008 there are also Visual Studio project files available for building the framework. 
+[[CMake|http://http://www.cmake.org/]] is the command line build tool which allows building //SOF// for different platforms. Since //SOF// was implemented on a Windows PC with Visual Studio C++ 2008 there are also Visual Studio project files available for building the framework. 
 !!!Building SOF
 !!!!Windows
 !!!!!Visual Studio
@@ -818,25 +750,31 @@ If you enter 'help' the console prints out all possible commands which can be ex
 <div title="DefaultTiddlers" modifier="magro74" created="200802110608" changecount="1">
 <pre>[[About]]</pre>
 </div>
-<div title="Documentation" modifier="magr74" modified="201105031112" created="200802161605" changecount="35">
+<div title="Documentation" modifier="magr74" modified="201105111408" created="200802161605" changecount="37">
 <pre>!The ''S''ervice ''O''riented ''F''ramework (SOF)
 The SOF supports developing modular software which consists of components (bundles). Each component can register services which can be used by other bundles. 
-!![[Building SOF (new)]]
-!![[Building]]
+!![[Building SOF]]
 !![[Implementing a bundle]]
 !![[Bundle Lifecycle]]
 !![[Implementing a service]]
 !![[Registering services]]
 !![[Tracking services]]</pre>
 </div>
-<div title="Documentation - Remote SOF" modifier="magr74" modified="201103042338" created="200905151038" changecount="4">
-<pre>!![[Building (new)|Building Remote SOF (new)]]
-!![[Building|Building Remote SOF]]
-!![[Using Remote SOF]]</pre>
+<div title="Documentation - Remote SOF" modifier="magr74" modified="201111250437" created="200905151038" changecount="8">
+<pre>!![[Building Remote SOF|Building Remote SOF]]
+!![[Using Remote SOF]]
+!![[Local Services within Remote SOF Container]]</pre>
 </div>
-<div title="Download" modifier="magr74" modified="201105101109" created="200805101452" changecount="96">
+<div title="Download" modifier="YourName" modified="201112092153" created="200805101452" changecount="99">
 <pre>Following stable builds are available. For downloading the software please click [[here|http://sourceforge.net/project/showfiles.php?group_id=217435]].
-* ''sof_1.2_11050 (future version, includes SOF and Remote SOF)''
+* ''sof_1.3_11090 (last stable version, includes SOF and Remote SOF)''
+** ''Note:''
+*** There is no new //~SofAdminUI// version. Please use the //~SofAdminUI// of the previous release //sof_1.0.1_10120//
+** Bugfixes:
+*** Visual Studio project files - ~MICO_HOME [[ID 3309130|http://sourceforge.net/tracker/?func=detail&amp;aid=3309130&amp;group_id=217435&amp;atid=1040234]]
+** Features:
+*** //Remote SOF// supports registering and tracking local services as well (please see [[here|Local Services within Remote SOF Container]]).
+* ''sof_1.2_11050 (last stable version, includes SOF and Remote SOF)''
 ** ''Note:''
 *** There is no new //~SofAdminUI// version. Please use the //~SofAdminUI// of the previous release //sof_1.0.1_10120//
 ** Features:
@@ -1133,6 +1071,25 @@ loadRemoteFile = function(url,callback,params)
 //}}}
 </pre>
 </div>
+<div title="Local Services within Remote SOF Container" modifier="YourName" modified="201112092147" created="201111250451" changecount="13">
+<pre>//Remote SOF// makes it possible to track and register services across //Remote SOF// container running in different processes. For that you have to use following methods of the {{{IRemoteBundleContext}}} class:
+{{{
+virtual IServiceRegistration* registerRemoteService( const string &amp;className, POA_sof::framework::remote::corba::generated::CORBAService* remoteService, const Properties &amp;dict ) = 0;
+
+virtual void addRemoteServiceListener( POA_sof::framework::remote::corba::generated::CORBAServiceListener* remoteServiceListener, const string &amp;serviceName ) = 0;
+}}}
+
+Services which are supposed to be only called by bundles living in the same //Remote SOF// container don't have to be registered as 'remote service' but can be registered as local services:
+{{{
+virtual IServiceRegistration* registerService( const string &amp;className, IService::ConstPtr service, const Properties &amp;dict );
+}}}
+For tracking local services you have to register local service listeners:
+{{{
+virtual void addServiceListener( IServiceListener::ConstPtr serviceListener, const string &amp;serviceName ) = 0;
+}}}
+Of course it is possible to register services which are only called inside a //Remote SOF// container as remote services but would cause unnecessary overhead due to the involved CORBA layer.
+</pre>
+</div>
 <div title="MainMenu" modifier="magro74" modified="200912301010" created="200802080839" changecount="27">
 <pre>[img[netzwerk|http://farm3.static.flickr.com/2271/2249573201_120174d813_o.png]]
 [[News]]
@@ -1148,8 +1105,11 @@ loadRemoteFile = function(url,callback,params)
 
 </pre>
 </div>
-<div title="News" modifier="magro74" modified="200912210755" created="200908130539" changecount="11">
-<pre>''December 21, 2009'' 
+<div title="News" modifier="magr74" modified="201105111423" created="200908130539" changecount="13">
+<pre>''May 10, 2011''
+SOF 1.2 out now! The new build system (~CMake) of SOF version 1.2 allows to build SOF for Windows and Unix/Linux platforms as well. Please look [[here|Download]] for the release notes.
+
+''December 21, 2009'' 
 New version ''SOF 1.0'' (including the frameworks SOF and Remote SOF) available. Please look [[here|Download]] for the release notes.
 Merry Christmas!
 
@@ -1582,18 +1542,18 @@ merge(config.shadowTiddlers,{
 //}}}
 </pre>
 </div>
-<div title="UploadLog" modifier="magr74" modified="201105101109" created="200802080629">
+<div title="UploadLog" modifier="YourName" modified="201112092153" created="200802080629">
 <pre>| !date | !user | !location | !storeUrl | !uploadDir | !toFilename | !backupdir | !origin |
-| 28/04/2011 18:39:30 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 28/04/2011 18:40:57 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 28/04/2011 18:46:22 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 03/05/2011 12:49:22 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 03/05/2011 13:05:06 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 03/05/2011 13:05:38 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 03/05/2011 13:15:50 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
-| 03/05/2011 13:20:52 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 03/05/2011 13:27:57 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
-| 10/05/2011 13:09:58 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
+| 25/11/2011 05:52:15 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 25/11/2011 06:06:37 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 30/11/2011 06:03:18 | magr74 | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 09/12/2011 22:46:16 | YourName | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | failed |
+| 09/12/2011 22:46:36 | YourName | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 09/12/2011 22:47:27 | YourName | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 09/12/2011 22:48:02 | YourName | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |
+| 09/12/2011 22:48:14 | YourName | [[/|http://sof.tiddlyspot.com/]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 09/12/2011 22:53:33 | YourName | [[index.20111209.1349080000.html|http://sof.tiddlyspot.com/_sites/s/so/sof/sof/backup/index.20111209.1349080000.html]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . | ok |
+| 09/12/2011 22:53:56 | YourName | [[index.20111209.1349080000.html|http://sof.tiddlyspot.com/_sites/s/so/sof/sof/backup/index.20111209.1349080000.html]] | [[store.cgi|http://sof.tiddlyspot.com/store.cgi]] | . | [[index.html | http://sof.tiddlyspot.com/index.html]] | . |</pre>
 </div>
 <div title="UploadPlugin" modifier="YourName" modified="200802080624" created="200706061221" tags="systemConfig">
 <pre>/***
