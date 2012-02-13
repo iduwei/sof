@@ -115,3 +115,25 @@ else ( SOF_REMOTE )
         test/TestDll2 
     )
 endif ( SOF_REMOTE )
+
+
+# add a target to generate API documentation with Doxygen
+FIND_PACKAGE( Doxygen )
+if(DOXYGEN_FOUND)
+    file( MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/doc/api/sof )
+    file( MAKE_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/doc/api/sof_remote )
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doc/doxygen/Doxyfile ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile @ONLY)
+    CONFIGURE_FILE(${CMAKE_CURRENT_SOURCE_DIR}/doc/doxygen/Doxyfile_remote ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile_remote @ONLY)
+    ADD_CUSTOM_TARGET(doc
+        ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Generating SOF API documentation with Doxygen" VERBATIM
+        )
+    ADD_CUSTOM_TARGET(doc_remote
+        ${DOXYGEN_EXECUTABLE} ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile_remote
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Generating Remote SOF API documentation with Doxygen" VERBATIM
+        )
+else (DOXYGEN_FOUND)
+    MESSAGE( STATUS "Doxygen NOT found." )
+endif(DOXYGEN_FOUND)
