@@ -15,8 +15,7 @@ SET (SOURCES
 	src/TestClass.cpp
 	src/ThreadingTest.cpp
 	src/UnitTestLogger.cpp
-	src/win/LauncherTest.cpp
-	src/win/WinObjectCreatorTest.cpp
+	src/LauncherTest.cpp
 	)
     
 INSTALL( FILES ${CMAKE_SOURCE_DIR}/test/config/config_file_reader_test.sof DESTINATION ${CMAKE_BINARY_DIR}/test )

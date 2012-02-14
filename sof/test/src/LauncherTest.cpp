@@ -23,9 +23,9 @@
 
 #include "sof/util/threading/SingleThreaded.h"
 
-#include "../TestBundleActivator.h"
-#include "../UnitTestLogger.h"
-#include "../TestHelper.h"
+#include "TestBundleActivator.h"
+#include "UnitTestLogger.h"
+#include "TestHelper.h"
 
 using namespace std;
 
@@ -60,6 +60,7 @@ TEST( Launcher, Load )
 	bundleConfVec.push_back( bundleConf2 );
 	
 	Launcher<SingleThreaded,CREATOR> launcher;
+	//launcher.setLogLevel( Logger::LOG_NOLOG );
 	launcher.start( bundleConfVec );	
 }
 
