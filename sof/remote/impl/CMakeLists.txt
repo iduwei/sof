@@ -20,8 +20,10 @@ SET (SOF_REMOTE_SOURCES
     src/sof/services/admin/remote/corba/DataConverter.cpp
     src/sof/services/admin/remote/corba/generated/CORBAAdminObjects.cpp
  )
-
+ 
 ADD_LIBRARY( sof_remote STATIC ${SOF_REMOTE_SOURCES} )
+
+ADD_DEPENDENCIES( sof_remote compile_idl )
 
 GET_PROPERTY( MICO_INCLUDE_DIR GLOBAL PROPERTY MICO_INCLUDE )
 

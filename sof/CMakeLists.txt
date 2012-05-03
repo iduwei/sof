@@ -48,6 +48,9 @@ if ( WIN32 )
     # setting CORBA MICO libraries directory
     SET_PROPERTY ( GLOBAL PROPERTY MICO_LIBS $ENV{MICO_HOME}/win32-bin/lib )
     
+    # setting CORBA MICO bin directory
+    SET_PROPERTY ( GLOBAL PROPERTY MICO_BIN $ENV{MICO_HOME}/win32-bin )
+    
     # setting name of MICO ORB library (differs between UNIX and Windows)
     SET_PROPERTY ( GLOBAL PROPERTY MICO_ORB mico2313 ) 
     
@@ -80,6 +83,7 @@ if ( WIN32 )
     
     # MICO include directory
     SET_PROPERTY ( GLOBAL PROPERTY MICO_INCLUDE $ENV{MICO_HOME}/include $ENV{MICO_HOME}/contrib/pthreads ) 
+    
 endif ( WIN32 )
 
 if ( SOF_REMOTE )
@@ -94,6 +98,7 @@ if ( SOF_REMOTE )
         remote/impl 
         remote/console 
         remote/registry 
+        remote/idl
         test 
         test/TestDll1 
         test/TestDll2 
