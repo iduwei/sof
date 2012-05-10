@@ -28,6 +28,9 @@ if ( UNIX )
     # sof_remote_console run script
     SET_PROPERTY ( GLOBAL PROPERTY SOF_REMOTE_CONSOLE_SCRIPT "run_remote_console.sh" ) 
     
+    # sof_remote_console run script without using the CORBA naming service
+    SET_PROPERTY ( GLOBAL PROPERTY SOF_REMOTE_CONSOLE__NO_NS_SCRIPT "run_remote_console_no_ns.sh" ) 
+    
     # naming service run script
     SET_PROPERTY ( GLOBAL PROPERTY SOF_NAMING_SERVICE_SCRIPT "run_ns.sh" ) 
     
@@ -36,6 +39,9 @@ if ( UNIX )
     
     # naming service admin run script
     SET_PROPERTY ( GLOBAL PROPERTY SOF_REGISTRY_SCRIPT "run_registry.sh" ) 
+    
+    # naming service admin run script without using the CORBA naming service
+    SET_PROPERTY ( GLOBAL PROPERTY SOF_REGISTRY_NO_NS_SCRIPT "run_registry_no_ns.sh" ) 
     
     # MICO include directory
     SET_PROPERTY ( GLOBAL PROPERTY MICO_INCLUDE $ENV{MICO_HOME}/include ) 
@@ -72,6 +78,9 @@ if ( WIN32 )
     # sof_remote_console run script
     SET_PROPERTY ( GLOBAL PROPERTY SOF_REMOTE_CONSOLE_SCRIPT "run_remote_console.bat" )  
     
+    # sof_remote_console run script without using the CORBA naming service
+    SET_PROPERTY ( GLOBAL PROPERTY SOF_REMOTE_CONSOLE__NO_NS_SCRIPT "run_remote_console_no_ns.bat" ) 
+    
     # naming service run script
     SET_PROPERTY ( GLOBAL PROPERTY SOF_NAMING_SERVICE_SCRIPT "run_ns.bat" ) 
     
@@ -80,6 +89,9 @@ if ( WIN32 )
     
     # naming service admin run script
     SET_PROPERTY ( GLOBAL PROPERTY SOF_REGISTRY_SCRIPT "run_registry.bat" ) 
+    
+    # naming service admin run script without using the CORBA naming service
+    SET_PROPERTY ( GLOBAL PROPERTY SOF_REGISTRY_NO_NS_SCRIPT "run_registry_no_ns.bat" ) 
     
     # MICO include directory
     SET_PROPERTY ( GLOBAL PROPERTY MICO_INCLUDE $ENV{MICO_HOME}/include $ENV{MICO_HOME}/contrib/pthreads ) 
