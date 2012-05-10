@@ -18,7 +18,6 @@ using namespace sof::util::threading;
 int main( int argc, char **argv)
 {
 	vector<string> args;
-
 	for ( int i=0; i<argc; i++ )
 	{
 		args.push_back( argv[i] );
@@ -29,7 +28,12 @@ int main( int argc, char **argv)
 	// Note: Use Mutex-Class if you want to synchronize the access to the remote registry!
 	CORBARegistryImpl<SingleThreaded> registry;
 	CORBA::Object_var obj = corbaHelper.activateObject( &registry );
-	corbaHelper.registerObject( obj, CORBAHelper::REMOTE_REGISTRY_PATH, CORBAHelper::REMOTE_REGISTRY_NAME );
+	if ( corbaHelper.useNamingService() )
+	{
+		cout << "Use naming service." << endl;
+		corbaHelper.registerObject( obj, CORBAHelper::REMOTE_REGISTRY_PATH, CORBAHelper::REMOTE_REGISTRY_NAME );
+		cout << "Registry object registered at naming service." << endl;
+	}
 	cout << "Registry service started!" << endl;
 	corbaHelper.startAndWait();
     return 0;

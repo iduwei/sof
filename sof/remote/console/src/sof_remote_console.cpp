@@ -32,6 +32,7 @@ int main( int argc, char **argv)
 	vector<string> args;
 
 	string processName;
+	string ipAddress;
 
 	for ( int i=0; i<argc; i++ )
 	{
@@ -54,6 +55,10 @@ int main( int argc, char **argv)
 		{
 			processName = arg.substr( 11, arg.length() );
 		}
+		else if ( arg.find( "-registry_addr:") == 0 )
+		{
+			ipAddress = arg.substr( 15, arg.length() );
+		}
 	}
 
 	if ( processName.length() == 0 )
@@ -66,9 +71,9 @@ int main( int argc, char **argv)
 	corbaHelper.start();
 
 	#ifdef WIN32
-		RemoteSOFLauncher<SingleThreaded,WinDllCreator> launcher( corbaHelper, processName );
+		RemoteSOFLauncher<SingleThreaded,WinDllCreator> launcher( corbaHelper, processName, ipAddress );
 	#elif UNIX
-		RemoteSOFLauncher<SingleThreaded,SharedLibLoader> launcher( corbaHelper, processName );
+		RemoteSOFLauncher<SingleThreaded,SharedLibLoader> launcher( corbaHelper, processNamem, ipAddress );
 	#endif
 	
 	launcher.setLogLevel( logLevel );

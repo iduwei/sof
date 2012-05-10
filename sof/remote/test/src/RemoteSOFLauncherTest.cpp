@@ -177,7 +177,7 @@ TEST( Services, RemoteSOFLauncherTest )
 	CustomizedCORBAHelper corbaHelper( args );
 	corbaHelper.start();
 
-	RemoteSOFLauncher<> launcher( corbaHelper, "foo" );
+	RemoteSOFLauncher<> launcher( corbaHelper, "foo", "" );
 	launcher.start( bundleConfVec );		
 
 	IRegistry& registry = launcher.getRegistry();

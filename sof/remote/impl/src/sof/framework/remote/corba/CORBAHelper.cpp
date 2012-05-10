@@ -10,11 +10,20 @@ const string CORBAHelper::REMOTE_REGISTRY_NAME = "registry_object";
 
 Logger& CORBAHelper::logger = LoggerFactory::getLogger( "Framework" );
 
-CORBAHelper::CORBAHelper( const vector<string>& args )
+CORBAHelper::CORBAHelper( const vector<string>& args ) : ns( NULL )
 {
 	this->logger.log( Logger::LOG_DEBUG, "[CORBAHelper#ctor] Called." );
-	this->ns = 0;
 	this->initORB( args );
+	vector<string>::const_iterator it = find( args.begin(), args.end(), "-ORBIIOPAddr" );
+	if ( it != args.end() )
+	{
+		this->logger.log( Logger::LOG_DEBUG, "[CORBAHelper#ctor] Do not use naming service." );
+	}
+	else
+	{
+		this->logger.log( Logger::LOG_DEBUG, "[CORBAHelper#ctor] Initialize naming service accessor." );
+		this->ns = this->createNamingService();
+	}
 }
 
 CORBAHelper::~CORBAHelper()
@@ -58,11 +67,6 @@ void CORBAHelper::initORB( const vector<string>& args )
 		orb->resolve_initial_references("RootPOA");
     this->rootPOA = PortableServer::POA::_narrow( poaobj);
     this->rootPOAManager = rootPOA->the_POAManager();
-	this->logger.log( Logger::LOG_DEBUG, "[CORBAHelper#initORB] Creating the naming service accessor class." );
-	this->ns = this->createNamingService();
-
-	this->logger.log( Logger::LOG_DEBUG, "[CORBAHelper#initORB] Creating the naming service accessor class - done." );
-
 	try 
 	{
 		CORBA::PolicyList policies;
@@ -106,6 +110,11 @@ void CORBAHelper::initORB( const vector<string>& args )
 	{
 		this->logger.log( Logger::LOG_ERROR, "[CORBAHelper#initORB] CORBA SystemException occurred: %1", string( sysEx._repoid() ) );	  
 	}
+}
+
+bool CORBAHelper::useNamingService()
+{
+	return ( this->ns != NULL );
 }
 
 CORBANamingService* CORBAHelper::createNamingService()
@@ -194,6 +203,21 @@ CORBA::Object_var CORBAHelper::activateObject( const PortableServer::Servant& se
 
 	return obj;
 }
+
+CORBA::Object_var CORBAHelper::bindToObject( const string& repositoryId, const string& address )
+{
+	this->logger.log( Logger::LOG_DEBUG, "[CORBAHelper#bindToObject] Called, %1, %2", repositoryId, address );
+
+	CORBA::Object_var obj = this->orb->bind( repositoryId.c_str(), address.c_str() );
+	if ( CORBA::is_nil( obj ) )
+	{
+		logger.log( Logger::LOG_ERROR, "[CORBAHelper#bindToObject] Object is null." );
+	}
+
+	logger.log( Logger::LOG_DEBUG, "[CORBAHelper#bindToObject] Return object." );
+	return obj;
+}
+
 
 string CORBAHelper::objectToString( CORBA::Object_var obj )
 {
