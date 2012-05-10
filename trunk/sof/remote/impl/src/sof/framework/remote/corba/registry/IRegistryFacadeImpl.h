@@ -63,6 +63,11 @@ class IRegistryFacadeImpl : public IRegistry
 		CORBARegistryObserverImpl* regObserver;
 
 		/**
+		 * Defines the IP address of the <code>CORBARegistry</code> object.
+		 */
+		string ipAddress;
+
+		/**
 		 * Initializes the object.
 		 */
 		virtual void init();
@@ -77,8 +82,11 @@ class IRegistryFacadeImpl : public IRegistry
 		 *
 		 * @param registry
 		 *				The local registry object.
+		 *
+		 * @param ipAddress
+		 * 				The IP address where the <code>CORBARegistry</code> object is reachable.
 		 */
-		IRegistryFacadeImpl( CORBAHelper& corbaHelper, IRegistry& registry );
+		IRegistryFacadeImpl( CORBAHelper& corbaHelper, IRegistry& registry, const string& ipAddress );
 
 		/**
 		 * Destroys objects of type <code>IRegistryFacadeImpl</code>.

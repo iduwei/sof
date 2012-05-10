@@ -17,7 +17,7 @@ using namespace sof::framework::remote::corba::registry;
 
 Logger& IRegistryFacadeImpl::logger = LoggerFactory::getLogger( "Framework" );
 
-IRegistryFacadeImpl::IRegistryFacadeImpl( CORBAHelper& corbaHelperObj, IRegistry& reg ) : corbaHelper( corbaHelperObj ), registry( reg )
+IRegistryFacadeImpl::IRegistryFacadeImpl( CORBAHelper& corbaHelperObj, IRegistry& reg, const string& address ) : corbaHelper( corbaHelperObj ), registry( reg ), ipAddress( address )
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#ctor] Called." );
 	this->init();
@@ -33,11 +33,21 @@ IRegistryFacadeImpl::~IRegistryFacadeImpl()
 void IRegistryFacadeImpl::init()
 {
 	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#init] Called, finding registry object." );
-	list<CORBA::Object_var> objects = this->corbaHelper.findObjects( CORBAHelper::REMOTE_REGISTRY_PATH );
-	list<CORBA::Object_var>::iterator pos;
-	CORBA::Object_var registryObj = *(objects.begin());
+	CORBA::Object_var registryObj;
+
+	if ( this->ipAddress.length() == 0 )
+	{
+		list<CORBA::Object_var> objects = this->corbaHelper.findObjects( CORBAHelper::REMOTE_REGISTRY_PATH );
+		list<CORBA::Object_var>::iterator pos;
+		registryObj = *(objects.begin());
+	}
+	else
+	{
+		registryObj = this->corbaHelper.bindToObject( "IDL:sof/framework/remote/corba/generated/CORBARegistry:1.0", this->ipAddress );
+	}
+
 	this->remoteRegistry = CORBARegistry::_narrow( registryObj);
-	
+
 	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#init] Called, creating registry observer object." );
 	this->regObserver = new CORBARegistryObserverImpl( this->registry, this->corbaHelper );
 	logger.log( Logger::LOG_DEBUG, "[IRegistryFacadeImpl#init] Called, activating registry observer object." );

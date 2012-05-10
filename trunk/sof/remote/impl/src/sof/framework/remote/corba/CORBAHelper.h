@@ -142,6 +142,13 @@ class CORBAHelper
 		 */
 		virtual ~CORBAHelper();
 
+		/**
+		 * Indicates if naming service should be used.
+		 *
+		 * @return True, if naming service should be used, otherwise false.
+		 */
+		bool useNamingService();
+
 		/** 
 		 * Creates an activates a CORBA object.
 		 *
@@ -224,6 +231,17 @@ class CORBAHelper
 		 *				The CORBA object.
 		 */
 		CORBA::Object_var stringToObject( string objString );
+
+		/**
+		 * Binds an CORBA object to the given repository ID and IP address.
+		 *
+		 * @param repositoryId
+		 * 				The repository ID of the CORBA object.
+		 *
+		 * @param address
+		 * 				The IP address of the CORBA object.
+		 */
+		CORBA::Object_var bindToObject( const string& repositoryId, const string& address );
 
 		/**
 		 * Starts the CORBA orb whereas the orb runs in a separate thread.

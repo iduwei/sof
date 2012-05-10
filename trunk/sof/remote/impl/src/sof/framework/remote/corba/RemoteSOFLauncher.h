@@ -50,6 +50,11 @@ class RemoteSOFLauncher : public IAdministrationProvider
 		string processName;
 
 		/**
+		 * The IP address where the <code>CORBARegistry</code> object is reachable.
+		 */
+		string ipAddress;
+
+		/**
 		 * The <code>ObjectCreator</code> instance which is used
 		 * for instantiating the <code>IBundleActivator</code>
 		 * objects.
@@ -70,10 +75,13 @@ class RemoteSOFLauncher : public IAdministrationProvider
 		/**
 		 * Creates the registry instance.
 		 *
+		 * @param ip
+		 * 			The IP address of the <code>CORBARegistry</code> object.
+		 *
 		 * @return
 		 *		The registry instance.
 		 */
-		virtual IRegistry* createRegistry();
+		virtual IRegistry* createRegistry( const string& ip );
 
 		/**
 		 * Creates the bundle context instances.
@@ -104,8 +112,11 @@ class RemoteSOFLauncher : public IAdministrationProvider
 	     * 
 		 * @param procName
 		 *				The name of the SOF process.
+		 *
+		 * @param ip
+		 * 			The IP address of the <code>CORBARegistry</code> object.
 		 */
-		RemoteSOFLauncher( CORBAHelper& corbaHelper, const string& procName );
+		RemoteSOFLauncher( CORBAHelper& corbaHelper, const string& procName, const string& ip );
 
 		/**
 		 * Destroys the <code>Launcher</code> instance.

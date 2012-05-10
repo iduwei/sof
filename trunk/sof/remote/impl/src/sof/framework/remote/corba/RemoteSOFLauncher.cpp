@@ -6,10 +6,11 @@ Logger& RemoteSOFLauncher<ThreadingModel, CreationPolicy>::logger = LoggerFactor
 template<
 	class ThreadingModel,
 	template <class> class CreationPolicy>
-RemoteSOFLauncher<ThreadingModel, CreationPolicy>::RemoteSOFLauncher( CORBAHelper& cHelper, const string& procName ) : corbaHelper( cHelper ), processName( procName )
+RemoteSOFLauncher<ThreadingModel, CreationPolicy>::RemoteSOFLauncher( CORBAHelper& cHelper, const string& procName, const string& ip ) :
+	corbaHelper( cHelper ), processName( procName ), ipAddress( ip )
 {
 	logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#ctor] Called." );
-	this->registry = this->createRegistry();
+	this->registry = this->createRegistry( this->ipAddress );
 }
 
 template<
@@ -41,13 +42,13 @@ void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::setLogLevel( Logger::Log
 template<
 	class ThreadingModel,
 	template <class> class CreationPolicy>
-IRegistry* RemoteSOFLauncher<ThreadingModel, CreationPolicy>::createRegistry()
+IRegistry* RemoteSOFLauncher<ThreadingModel, CreationPolicy>::createRegistry( const string& ip)
 {
 	// TODO: create IRegistryFacadeImpl
 	logger.log( Logger::LOG_DEBUG, "[RemoteSOFLauncher#createRegistry] Called." );
 	// TODO: memory leak, fix it!
 	this->registry =  new IRemoteRegistryImpl<ThreadingModel>( this->corbaHelper );
-	return new IRegistryFacadeImpl( this->corbaHelper, (*registry) );
+	return new IRegistryFacadeImpl( this->corbaHelper, (*registry), ip );
 }
 
 template<
@@ -235,5 +236,8 @@ void RemoteSOFLauncher<ThreadingModel, CreationPolicy>::startRemoteAdminService(
 	
 	CORBAAdminServiceImpl* adminService = new CORBAAdminServiceImpl( ( *this ) );
 	CORBA::Object_var obj = this->corbaHelper.activateObject( adminService );
-	this->corbaHelper.registerObject( obj, CORBAHelper::REMOTE_ADMIN_PATH, this->processName );
+	if ( this->corbaHelper.useNamingService() )
+	{
+		this->corbaHelper.registerObject( obj, CORBAHelper::REMOTE_ADMIN_PATH, this->processName );
+	}
 }
