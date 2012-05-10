@@ -57,8 +57,28 @@ cmake -G "Unix Makefiles" ../sof
 
 --------------------- TODOs -------------------------------------
 
-- doxygen über cmake
-- SOF lokal und remote unterstützen
++ Test ohne WIN
+	- WinObjectCreator Test in ObjectCreatorTest verlagert
+    - Done
+	- Bauen und Testen
+    
++ doxygen über cmake
+    - done
+    - testen
+    
+- make target für CORBA Generierung
+    - in Arbeit
+    
+- idl compiler starten
+    TODO: generierte Files werden unter sof_build abgelegt
+    dependency in impl hinzugefügt, scheint jetzt zu funktionieren, allerdings ist das <CORBA...> das Problem
+    use-quotes war die Lösung
+    
+    
+    LINUX-Lösung: Für linux das gleiche
+      
+    bevor nmake compile_idl -> PATH=%PATH%;%MICO_HOME%\win32-bin\lib
+
 - local services ubuntu
     - start bu1 in console
     - start bu2 in anderer console
@@ -67,12 +87,22 @@ cmake -G "Unix Makefiles" ../sof
     - 4 listener sichtbar - NOK
     - stop beide bundles -> seg fault -> NOK
 
-- make target für CORBA Generierung
+
 - Eclipse target testen
 - Trennen von Source und Include Files?
+
 - CORBA ohne Registry
+    - soweit ok, allerdings admin-service
+    - CORBAHelper#ctor Fehlersuche
+	- registry starten mit ./registry -ORBIIOPAddr inet:monica.cs.rpi.edu:8765
+	- client:
+		CORBA::Object_var obj = orb->bind ("IDL:Account:1.0", tag, argv[1]); -> argv[1] = inet:localhost:8765
+    		assert (!CORBA::is_nil (obj));
+   		 Account_var client = Account::_narrow( obj );
+	- IRegistryFacadeImpl, address und repId übergeben
+
 - classloading Verzeichnis löschen
-- Test-Klassen windows Abhängigkeit entfernen (Verzeichnis)
+
 - Methoden um ServiceReferences direkt abzufragen
 
 
