@@ -29,7 +29,7 @@ if ( UNIX )
     SET_PROPERTY ( GLOBAL PROPERTY SOF_REMOTE_CONSOLE_SCRIPT "run_remote_console.sh" ) 
     
     # sof_remote_console run script without using the CORBA naming service
-    SET_PROPERTY ( GLOBAL PROPERTY SOF_REMOTE_CONSOLE__NO_NS_SCRIPT "run_remote_console_no_ns.sh" ) 
+    SET_PROPERTY ( GLOBAL PROPERTY SOF_REMOTE_CONSOLE_NO_NS_SCRIPT "run_remote_console_no_ns.sh" ) 
     
     # naming service run script
     SET_PROPERTY ( GLOBAL PROPERTY SOF_NAMING_SERVICE_SCRIPT "run_ns.sh" ) 
