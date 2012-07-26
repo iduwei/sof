@@ -65,7 +65,14 @@ cmake -G "Unix Makefiles" ../sof
 + doxygen über cmake
     - done
     - testen
-    
+
+- windows
+        - CORBAObjects wird nicht gebaut
+- linux 
+        - Fehler beim Compilieren von COrBAHelper
+- Eclipse
+        - wahrscheinlich nicht lauffähig Juno mit eclipse generator
+        
 - make target für CORBA Generierung
     - in Arbeit
     
