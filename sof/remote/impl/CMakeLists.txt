@@ -1,6 +1,20 @@
 PROJECT (REMOTE_SOF)
     
+# SET_SOURCE_FILES_PROPERTIES( 
+#    src/sof/framework/remote/corba/generated/CORBAObjects.cpp 
+#    src/sof/services/admin/remote/corba/generated/CORBAAdminObjects.cpp 
+#    PROPERTIES GENERATED TRUE )
+
+SET( GENERATED_SRC 
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/sof/services/admin/remote/corba/generated/CORBAAdminObjects.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/sof/framework/remote/corba/generated/CORBAObjects.cpp 
+    )
+    
+SET_SOURCE_FILES_PROPERTIES ( 
+    ${GENERATED_SRC} PROPERTIES GENERATED true )
+    
 SET (SOF_REMOTE_SOURCES 
+    ${GENERATED_SRC}
 	src/sof/framework/remote/corba/CORBAHelper.cpp
     src/sof/framework/remote/corba/IRemoteBundleContextImpl.cpp
     src/sof/framework/remote/corba/RemoteBundleInfo.cpp
@@ -10,7 +24,6 @@ SET (SOF_REMOTE_SOURCES
     src/sof/framework/remote/corba/RemoteServiceReference.cpp
     src/sof/framework/remote/corba/RemoteServiceTracker.cpp
     src/sof/framework/remote/corba/LocalServiceTracker.cpp    
-    src/sof/framework/remote/corba/generated/CORBAObjects.cpp
     src/sof/framework/remote/corba/namingservice/CORBANamingServiceFactory.cpp
     src/sof/framework/remote/corba/namingservice/CORBANamingServiceImpl.cpp
     src/sof/framework/remote/corba/registry/CORBARegistryObserverImpl.cpp
@@ -18,7 +31,6 @@ SET (SOF_REMOTE_SOURCES
     src/sof/services/admin/remote/RemoteAdministrationActivator.cpp
     src/sof/services/admin/remote/corba/CORBAAdminServiceImpl.cpp
     src/sof/services/admin/remote/corba/DataConverter.cpp
-    src/sof/services/admin/remote/corba/generated/CORBAAdminObjects.cpp
  )
  
 ADD_LIBRARY( sof_remote STATIC ${SOF_REMOTE_SOURCES} )
