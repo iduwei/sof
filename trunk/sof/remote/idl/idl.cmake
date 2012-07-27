@@ -5,9 +5,13 @@ if ( WIN32 )
 endif ( WIN32 )
 
 if ( UNIX )
-    SET ( ENV{PATH} $ENV{MICO_HOME}/libs )
-    FIND_PROGRAM( CORBAIDL $ENV{MICO_HOME}/idl/idl    )    
-    MESSAGE( STATUS ${CORBAIDL} )
+    SET ( ENV{LD_LIBRARY_PATH} $ENV{MICO_HOME}/libs)
+    SET ( ENV{PATH} $ENV{MICO_HOME}/cpp)
+    FIND_PROGRAM( CORBAIDL $ENV{MICO_HOME}/idl/idl )   
+    MESSAGE( STATUS "----> PATH mico home: $ENV{MICO_HOME}" ) 
+
+    MESSAGE( STATUS "----> PATH library path: $ENV{LD_LIBRARY_PATH}" ) 
+    MESSAGE( STATUS "----> idl exe: ${CORBAIDL}" ) 
 endif ( UNIX )
 
 EXECUTE_PROCESS(
@@ -16,4 +20,5 @@ EXECUTE_PROCESS(
     RESULT_VARIABLE ret_var )
 
 MESSAGE( STATUS "--> Return value of executed process: -> ${ret_var}")
+   
 
