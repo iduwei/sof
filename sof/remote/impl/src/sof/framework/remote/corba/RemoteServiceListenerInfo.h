@@ -80,7 +80,7 @@ class RemoteServiceListenerInfo : public ServiceListenerInfo
 		 * @return
 		 *		The CORBA object.
 		 */
-		virtual CORBAServiceListener_var getRemoteServiceListener();
+		virtual CORBAServiceListener_var getRemoteServiceListener() const;
 
 		/**
 		 * Return the local service listener object.
