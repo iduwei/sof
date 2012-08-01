@@ -41,7 +41,8 @@ void RemoteServiceTracker::stopTracking()
 CORBA::Boolean RemoteServiceTracker::serviceChanged( const CORBAServiceEvent &remoteServiceEvent )
 {
 	logger.log( Logger::LOG_DEBUG, "[RemoteServiceTracker#serviceChanged] Called." );
-	RemoteServiceEvent serviceEvent = this->bundleCtxt->getCORBAHelper().convertEvent( remoteServiceEvent );
+
+	RemoteServiceEvent serviceEvent = this->bundleCtxt->getCORBAHelper().convertEvent( const_cast<CORBAServiceEvent&>(remoteServiceEvent) );
 	bool flag = false;
 
 	// Bugfix: RemoteServiceTracker not exception safe - ID: 2927344
