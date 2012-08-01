@@ -16,7 +16,7 @@ RemoteServiceReference::RemoteServiceReference( const RemoteServiceReference& se
 	this->props = serviceRef.props;	
 	this->service = serviceRef.service;
 	this->remoteObjectID = serviceRef.remoteObjectID;
-	this->remoteService = CORBAService::_duplicate( serviceRef.remoteService );
+	this->remoteService = CORBAService::_duplicate( serviceRef.getRemoteService() );
 }
 
 RemoteServiceReference& RemoteServiceReference::operator=( const RemoteServiceReference &serviceRef ) 
@@ -26,7 +26,7 @@ RemoteServiceReference& RemoteServiceReference::operator=( const RemoteServiceRe
     {
 		this->serviceName = serviceRef.serviceName;
 		this->props = serviceRef.props;
-		this->remoteService = CORBAService::_duplicate( serviceRef.remoteService );
+		this->remoteService = CORBAService::_duplicate( serviceRef.getRemoteService() );
 		this->remoteObjectID = serviceRef.remoteObjectID;
     }
     return *this; 
