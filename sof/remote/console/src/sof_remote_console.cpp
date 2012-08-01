@@ -73,7 +73,7 @@ int main( int argc, char **argv)
 	#ifdef WIN32
 		RemoteSOFLauncher<SingleThreaded,WinDllCreator> launcher( corbaHelper, processName, ipAddress );
 	#elif UNIX
-		RemoteSOFLauncher<SingleThreaded,SharedLibLoader> launcher( corbaHelper, processNamem, ipAddress );
+		RemoteSOFLauncher<SingleThreaded,SharedLibLoader> launcher( corbaHelper, processName, ipAddress );
 	#endif
 	
 	launcher.setLogLevel( logLevel );
