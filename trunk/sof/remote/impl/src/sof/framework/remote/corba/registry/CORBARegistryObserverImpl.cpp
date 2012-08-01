@@ -36,7 +36,7 @@ void CORBARegistryObserverImpl::registerService( const char* bundleName, const c
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#registerService] Entered." );
 	string bName( bundleName );
 	string sName( serviceName );
-	RemoteServiceInfoPtr info = this->corbaHelper.convertToServiceInfo( serviceName, CORBAService::_duplicate( service ), props );
+	RemoteServiceInfoPtr info = this->corbaHelper.convertToServiceInfo( serviceName, CORBAService::_duplicate( service ), const_cast<CORBAServiceProps&> (props) );
 	// Note: addServiceInfo call returns NULL (for service registration object)
 	this->registry.addServiceInfo( bName, info );
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#registerService] Left." );
@@ -59,7 +59,7 @@ void CORBARegistryObserverImpl::unregisterService( const char* bundleName, const
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#unregisterService] Entered." );
 	string bName( bundleName );
 	string sName( serviceName );
-	RemoteServiceInfoPtr info = this->corbaHelper.convertToServiceInfo( serviceName, CORBAService::_duplicate( service ), props );
+	RemoteServiceInfoPtr info = this->corbaHelper.convertToServiceInfo( serviceName, CORBAService::_duplicate( service ), const_cast<CORBAServiceProps&> (props) );
 	this->registry.removeServiceInfo( bName, info );
 	logger.log( Logger::LOG_DEBUG, "[CORBARegistryObserverImpl#unregisterService] Left." );
 }
