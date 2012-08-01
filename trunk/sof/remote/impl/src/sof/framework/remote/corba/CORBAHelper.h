@@ -277,7 +277,7 @@ class CORBAHelper
 		 *			The <code>RemoteServiceReference</code> object.
 		 *			
 		 */
-		RemoteServiceReference convertServiceReference( const CORBAServiceReference& reference );
+		RemoteServiceReference convertServiceReference( CORBAServiceReference& reference );
 
 		/**		 
 		 * Converts a <code>RemoteServiceReference</code> object into a 
@@ -303,7 +303,7 @@ class CORBAHelper
 		 *			The <code>RemoteServiceEvent</code> object.
 		 *			
 		 */
-		RemoteServiceEvent convertEvent( const CORBAServiceEvent& servEvent );
+		RemoteServiceEvent convertEvent( CORBAServiceEvent& servEvent );
 
 		/**		 
 		 * Converts a <code>RemoteServiceEvent</code> object into a 
@@ -342,7 +342,7 @@ class CORBAHelper
 		 *			The <code>Properties</code> object.
 		 *			
 		 */
-	    Properties convertServiceProperties( const CORBAServiceProps& props );
+	    Properties convertServiceProperties( CORBAServiceProps& props );
 
 		/**
 		 * TODO: check if returning a reference is necessary.
@@ -363,7 +363,7 @@ class CORBAHelper
 		 *				The created <code>RemoteServiceInfo</code> object.
 		 */
 		RemoteServiceInfoPtr convertToServiceInfo( const string& serviceName,
-			CORBAService_ptr service, const CORBAServiceProps& props );
+			CORBAService_ptr service, CORBAServiceProps& props );
 
 		/**
 		 * TODO: check if returning a reference is necessary.
