@@ -26,7 +26,7 @@ RemoteServiceListenerInfo::RemoteServiceListenerInfo( const RemoteServiceListene
 {
 	logger.log( Logger::LOG_DEBUG, "[RemoteServiceListenerInfo#copy-ctor] Called." );
 	this->objID = info.objID;
-	this->remoteServiceObject = CORBAServiceListener::_duplicate( info.remoteServiceObject );
+	this->remoteServiceObject = CORBAServiceListener::_duplicate( info.getRemoteServiceListener() );
 }
 
 string RemoteServiceListenerInfo::getRemoteServiceListenerID() const
@@ -34,7 +34,7 @@ string RemoteServiceListenerInfo::getRemoteServiceListenerID() const
 	return this->objID;
 }
 
-CORBAServiceListener_var RemoteServiceListenerInfo::getRemoteServiceListener()
+CORBAServiceListener_var RemoteServiceListenerInfo::getRemoteServiceListener() const
 {
 	return this->remoteServiceObject;
 }
@@ -67,7 +67,7 @@ RemoteServiceListenerInfo& RemoteServiceListenerInfo::operator=( const RemoteSer
 		this->bundleName = remoteServiceListenerInfo.bundleName;
 		this->serviceName = remoteServiceListenerInfo.serviceName;
 		this->objID = remoteServiceListenerInfo.objID;
-		this->remoteServiceObject = CORBAServiceListener::_duplicate( remoteServiceListenerInfo.remoteServiceObject );
+		this->remoteServiceObject = CORBAServiceListener::_duplicate( remoteServiceListenerInfo.getRemoteServiceListener() );
     }
     return *this; 
 }
