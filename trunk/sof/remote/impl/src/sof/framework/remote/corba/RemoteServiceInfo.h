@@ -97,7 +97,7 @@ class RemoteServiceInfo : public ServiceInfo
 		 * @return
 		 *			The CORBA object which represents the remote service.
 		 */
-		virtual CORBAService_var getRemoteService();
+		virtual CORBAService_var getRemoteService() const;
 
 		/**
 		 * TODO: check whether this method is necessary.
