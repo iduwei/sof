@@ -1,5 +1,5 @@
 #include "CORBAHelper.h"
-
+#include <algorithm>
 using namespace std;
 
 using namespace sof::framework::remote::corba;
@@ -285,7 +285,7 @@ void CORBAHelper::cleanUp()
 }
 
 RemoteServiceInfoPtr CORBAHelper::convertToServiceInfo( const string& serviceName,
-			CORBAService_ptr service, const CORBAServiceProps& props )
+			CORBAService_ptr service, CORBAServiceProps& props )
 {	
 	logger.log( Logger::LOG_DEBUG, "[CORBAHelper#convertToServiceInfo] Called, serviceName: %1", serviceName );
 	string objID = this->objectToString( service );
@@ -306,7 +306,7 @@ RemoteServiceListenerInfoPtr CORBAHelper::convertToServiceListenerInfo( const st
 	return info;
 }
 
-RemoteServiceReference CORBAHelper::convertServiceReference( const CORBAServiceReference& ref )
+RemoteServiceReference CORBAHelper::convertServiceReference( CORBAServiceReference& ref )
 {
 	logger.log( Logger::LOG_DEBUG, "[CORBAHelper#convertServiceReference] Called." );
 	Properties properties = this->convertServiceProperties( ref.props );
@@ -355,7 +355,7 @@ CORBAServiceProps CORBAHelper::convertServiceProperties( const Properties& props
 	return remoteServiceProps;
 }
 
-Properties CORBAHelper::convertServiceProperties( const CORBAServiceProps& props )
+Properties CORBAHelper::convertServiceProperties( CORBAServiceProps& props )
 {
 	logger.log( Logger::LOG_DEBUG, "[CORBAHelper#convertServiceProperties] Called." );
 	CORBAServiceProps::_keys_seq keys = props.keys;
@@ -393,7 +393,7 @@ CORBAServiceReference CORBAHelper::convertServiceReference( const RemoteServiceR
 	return remoteRef;
 }
 
-RemoteServiceEvent CORBAHelper::convertEvent( const CORBAServiceEvent& eventObj )
+RemoteServiceEvent CORBAHelper::convertEvent( CORBAServiceEvent& eventObj )
 {
 	logger.log( Logger::LOG_DEBUG, "[CORBAHelper#convertEvent] Called." );
 	
