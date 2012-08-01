@@ -18,7 +18,7 @@ RemoteServiceInfo::RemoteServiceInfo( const RemoteServiceInfo& remoteServiceInfo
 {
 	logger.log( Logger::LOG_DEBUG, "[RemoteServiceInfo#copy-ctor] Called." );
 	this->objID = remoteServiceInfo.objID;
-	this->remoteServiceObject = CORBAService::_duplicate( remoteServiceInfo.remoteServiceObject );
+	this->remoteServiceObject = CORBAService::_duplicate( remoteServiceInfo.getRemoteService() );
 }
 
 RemoteServiceInfo::~RemoteServiceInfo()
@@ -31,7 +31,7 @@ string RemoteServiceInfo::getRemoteServiceID() const
 	return this->objID;
 }
 
-CORBAService_var RemoteServiceInfo::getRemoteService()
+CORBAService_var RemoteServiceInfo::getRemoteService() const
 {
 	return this->remoteServiceObject;
 }
@@ -66,7 +66,7 @@ RemoteServiceInfo& RemoteServiceInfo::operator=( const RemoteServiceInfo &remote
 		this->serviceName = remoteServiceInfo.serviceName;
 		this->props = remoteServiceInfo.props;
 		this->objID = remoteServiceInfo.objID;
-		this->remoteServiceObject = CORBAService::_duplicate( remoteServiceInfo.remoteServiceObject );		
+		this->remoteServiceObject = CORBAService::_duplicate( remoteServiceInfo.getRemoteService() );		
     }
     return *this; 
 }
