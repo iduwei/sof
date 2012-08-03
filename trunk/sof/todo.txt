@@ -47,6 +47,7 @@ cmake -G "Eclipse CDT4 - NMake Makefiles" -DECLIPSE_CDT4_GENERATE_SOURCE_PROJECT
 cmake -G "Eclipse CDT4 - NMake Makefiles" ..\sof -DSOF_REMOTE=true -DCMAKE_BUILD_TYPE=Debug 
 
 cmake -G "Unix Makefiles" ../sof/sof -DSOF_REMOTE=true -DCMAKE_BUILD_TYPE=Debug 
+cmake -G "Eclipse CDT4 - Unix Makefiles" ../sof -DSOF_REMOTE=true -DCMAKE_BUILD_TYPE=Debug 
 
 
 --------- Bauen mit CMake ------------------
@@ -54,6 +55,8 @@ cmake -G "Unix Makefiles" ../sof/sof -DSOF_REMOTE=true -DCMAKE_BUILD_TYPE=Debug
 cmake -G "Unix Makefiles" ../sof
 
 
+------------------ TODOs Linux---------------------------------------
+linux:
 
 --------------------- TODOs -------------------------------------
 
