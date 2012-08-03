@@ -1,10 +1,5 @@
 PROJECT (REMOTE_SOF)
     
-# SET_SOURCE_FILES_PROPERTIES( 
-#    src/sof/framework/remote/corba/generated/CORBAObjects.cpp 
-#    src/sof/services/admin/remote/corba/generated/CORBAAdminObjects.cpp 
-#    PROPERTIES GENERATED TRUE )
-
 SET( GENERATED_SRC 
     ${CMAKE_CURRENT_SOURCE_DIR}/src/sof/services/admin/remote/corba/generated/CORBAAdminObjects.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/sof/framework/remote/corba/generated/CORBAObjects.cpp 
