@@ -6,6 +6,7 @@
 #include "TestHarness.h"
 #include "Test.h"
 
+
 #include "sof/config/ConfigFileReader.h"
 #include "sof/config/ConfigurationException.h"
 
@@ -18,8 +19,7 @@ using namespace sof::config;
 
 string bundleNames[] = { "test_bundle1", "test_bundle2", "test_bundle3" };
 string activatorNames[] = { "TestBundleActivator1", "TestBundleActivator2", "TestBundleActivator3" };
-string libPaths[] = { BundleConfiguration::NO_LIB_PATH, "c:/temp/libraries", "c:/temp/foo/libraries" };
-string libNames[] = { BundleConfiguration::NO_LIB_NAME, "test_bundle2.dll", "test_bundle3.dll" };
+
 
 TEST( ConfigFileReader, ReadValidFileCheckNumberOfConfigEntries )
 {
@@ -41,6 +41,9 @@ TEST( ConfigFileReader, ReadValidFileCheckNumberOfConfigEntries )
 TEST( ConfigFileReader, ReadValidFileCheckContent )
 {
 	UnitTestLogger::getInstance().log( Logger::LOG_DEBUG, "[ConfigFileReaderTest] *** ConfigFileReader-ReadValidFileCheckContent Test" );
+
+	string libPaths[] = { BundleConfiguration::NO_LIB_PATH, "c:/temp/libraries", "c:/temp/foo/libraries" };
+	string libNames[] = { BundleConfiguration::NO_LIB_NAME, "test_bundle2.dll", "test_bundle3.dll" };
 
 	try
 	{
