@@ -71,21 +71,16 @@ linux:
 
 - windows
         - CORBAObjects wird nicht gebaut
-- linux 
-        - Fehler beim Compilieren von COrBAHelper
-- Eclipse
-        - wahrscheinlich nicht lauffähig Juno mit eclipse generator
+
         
 - make target für CORBA Generierung
     - in Arbeit
+	- ok,aber noch kein Check, dass Files schon verfügbar
     
 - idl compiler starten
     TODO: generierte Files werden unter sof_build abgelegt
     dependency in impl hinzugefügt, scheint jetzt zu funktionieren, allerdings ist das <CORBA...> das Problem
     use-quotes war die Lösung
-    
-    
-    LINUX-Lösung: Für linux das gleiche
       
     bevor nmake compile_idl -> PATH=%PATH%;%MICO_HOME%\win32-bin\lib
 
