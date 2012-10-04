@@ -30,7 +30,16 @@ SET (SOF_REMOTE_SOURCES
  
 ADD_LIBRARY( sof_remote STATIC ${SOF_REMOTE_SOURCES} )
 
-ADD_DEPENDENCIES( sof_remote compile_idl )
+# TODO: could this check be done easier?
+IF (NOT EXISTS '${CMAKE_CURRENT_SOURCE_DIR}/src/sof/services/admin/remote/corba/generated/CORBAAdminObjects.cpp' )
+	MESSAGE( STATUS "-----> not existing" )
+	ADD_DEPENDENCIES( sof_remote compile_idl )
+ENDIF (NOT EXISTS '${CMAKE_CURRENT_SOURCE_DIR}/src/sof/services/admin/remote/corba/generated/CORBAAdminObjects.cpp' ) 
+
+IF (NOT EXISTS '${CMAKE_CURRENT_SOURCE_DIR}/src/sof/framework/remote/corba/generated/CORBAObjects.cpp'  )
+	MESSAGE( STATUS "-----> not existing" )
+	ADD_DEPENDENCIES( sof_remote compile_idl )
+ENDIF (NOT EXISTS '${CMAKE_CURRENT_SOURCE_DIR}/src/sof/framework/remote/corba/generated/CORBAObjects.cpp'  ) 
 
 GET_PROPERTY( MICO_INCLUDE_DIR GLOBAL PROPERTY MICO_INCLUDE )
 
