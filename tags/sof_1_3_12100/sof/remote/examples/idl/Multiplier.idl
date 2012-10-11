@@ -1,0 +1,8 @@
+// -*- c++ -*-
+
+#include "../../idl/CORBAObjects.idl"
+
+interface Multiplier : sof::framework::remote::corba::generated::CORBAService
+{
+	long multiply( in long x, in long y );
+};

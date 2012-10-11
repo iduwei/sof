@@ -1,0 +1,10 @@
+Import( 'env' )
+VariantDir( 'build', 'src', duplicate=0 )
+
+sources = [
+	'build/BundleActivator1.cpp',
+	'build/dll.cpp',
+]
+env.SharedLibrary( '#/examples/bin/sof_examples_bundle1', sources, CPPPATH = ['#/impl/src','#/examples/common/src'], LIBS='sof', LIBPATH='#/impl/bin' )
+	
+
