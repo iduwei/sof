@@ -49,6 +49,8 @@ cmake -G "Eclipse CDT4 - NMake Makefiles" ..\sof -DSOF_REMOTE=true -DCMAKE_BUILD
 cmake -G "Unix Makefiles" ../sof/sof -DSOF_REMOTE=true -DCMAKE_BUILD_TYPE=Debug 
 cmake -G "Eclipse CDT4 - Unix Makefiles" ../sof -DSOF_REMOTE=true -DCMAKE_BUILD_TYPE=Debug 
 
+stbdll bundle1 BundleActivator1 C:/temp/sof_build_win/remote/examples/bundle1 sof_remote_examples_bundle1.dll
+stbdll bundle2 BundleActivator2 C:/temp/sof_build_win/remote/examples/bundle2 sof_remote_examples_bundle2.dll
 
 --------- Bauen mit CMake ------------------
 
@@ -60,30 +62,14 @@ linux:
 
 --------------------- TODOs -------------------------------------
 
-+ Test ohne WIN
-	- WinObjectCreator Test in ObjectCreatorTest verlagert
-    - Done
-	- Bauen und Testen
-    
-+ doxygen über cmake
-    - done
-    - testen
 
-- windows
-        - CORBAObjects wird nicht gebaut
-
+- Doc auf Homepage, für apidoc, registry ohne ns, Verzeichnisse setzen (IDLCompiler?) etc.
+        nmake compile_idl -> PATH=%PATH%;%MICO_HOME%\win32-bin\lib
+        gen.bat löschen
         
 - make target für CORBA Generierung
-    - in Arbeit
 	- ok,aber noch kein Check, dass Files schon verfügbar
     
-- idl compiler starten
-    TODO: generierte Files werden unter sof_build abgelegt
-    dependency in impl hinzugefügt, scheint jetzt zu funktionieren, allerdings ist das <CORBA...> das Problem
-    use-quotes war die Lösung
-      
-    bevor nmake compile_idl -> PATH=%PATH%;%MICO_HOME%\win32-bin\lib
-
 - local services ubuntu
     - start bu1 in console
     - start bu2 in anderer console
@@ -92,29 +78,11 @@ linux:
     - 4 listener sichtbar - NOK
     - stop beide bundles -> seg fault -> NOK
 
-
-- Eclipse target testen
 - Trennen von Source und Include Files?
-
-- CORBA ohne Registry
-    - soweit ok, allerdings admin-service
-    - CORBAHelper#ctor Fehlersuche
-	- registry starten mit ./registry -ORBIIOPAddr inet:monica.cs.rpi.edu:8765
-	- client:
-		CORBA::Object_var obj = orb->bind ("IDL:Account:1.0", tag, argv[1]); -> argv[1] = inet:localhost:8765
-    		assert (!CORBA::is_nil (obj));
-   		 Account_var client = Account::_narrow( obj );
-	- IRegistryFacadeImpl, address und repId übergeben
 
 - classloading Verzeichnis löschen
 
 - Methoden um ServiceReferences direkt abzufragen
-
-
--------- Compilieren von mico -------------
-
-- wie in install.txt beschrieben
-- #include <limits.h> einfügen in fast_array.c -> Doku
 
 
 - Projekt sof compilierbar machen
@@ -192,6 +160,9 @@ linux:
 	
 - start, stop , startBundle, stopBundle -> Unit tests implementiern
 
+-------- Compilieren von mico -------------
 
+- wie in install.txt beschrieben
+- #include <limits.h> einfügen in fast_array.c -> Doku
 
 
